@@ -1,1 +1,1 @@
-./Debug/gui.cpp.o ./Debug/main.cpp.o ./Debug/DailyWorkParser.cpp.o ./Debug/gason.cpp.o ./Debug/win_resources.rc.o   
+./Debug/gui.cpp.o ./Debug/main.cpp.o ./Debug/DailyWorkParser.cpp.o ./Debug/win_resources.rc.o   

@@ -35,10 +35,11 @@ bool MainApp::OnInit()
 
 MainFrame::MainFrame(wxWindow *parent) : MainFrameBase( parent )
 {
-    LoadDatesTree();
  //   dwparser.ConnectCallback([&this](int i) { this.callbackFunction(i); })
     dwparser.ConnectCallback([this](std::string msg) { this->OnStatusBarMessage(msg); });
-    dwparser.Parse();
+    if ( ! dwparser.Parse()) 
+        LoadDatesTree();
+ 
 }
 
 MainFrame::~MainFrame()
@@ -57,12 +58,7 @@ void MainFrame::OnExitClick(wxCommandEvent& event)
 
 void MainFrame::LoadDatesTree()
 {
-    wxTreeItemId rootID=m_treeDates->AddRoot(wxT("Un arbre"));
-    for (int i=0;i<10;i++) {
-        wxTreeItemId id=m_treeDates->AppendItem(rootID,wxString::Format(wxT("Element : %d"),i+1));
-        for(int j=0;j<2*i+2;j++)
-            m_treeDates->AppendItem(id,wxString::Format(wxT("Element : %d:%d"),i+1,j+1));
-    }
+    dwparser.LoadDatesTree(m_treeDates);    
 }
 
 // Double clique

@@ -3,8 +3,10 @@
 
 #include <string>
 #include <functional>
+#include <rapidjson/document.h>
+#include <wx/treectrl.h>
 
-typedef std::function<void(std::string)> CallbackFunction;
+typedef std::function<void(std::string)> CallbackMessageInfo;
 //typedef std::function<int(int)> CallbackFunction;
 
 class DailyWorkParser
@@ -12,12 +14,14 @@ class DailyWorkParser
 public:
     DailyWorkParser();
     ~DailyWorkParser();
-    void ConnectCallback(CallbackFunction cb) ;
-    void Parse();
+    void ConnectCallback(CallbackMessageInfo cb) ;
+    int Parse();
+    int LoadDatesTree(wxTreeCtrl* Tree);
     
 private:
     // The callback provided by the client via ConnectCallback().
-    CallbackFunction m_cb;
+    CallbackMessageInfo m_cbMessageInfo;
+   rapidjson::Document d;
 };
 
 #endif // DAILYWORKPARSER_H
