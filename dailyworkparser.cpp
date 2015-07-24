@@ -21,7 +21,7 @@ void DailyWorkParser::ConnectCallback(CallbackMessageInfo cb)
 int DailyWorkParser::Parse()
 {    
 //   const char* json = "{\"project\":\"rapidjson\",\"stars\":10}";
-    const char* json = "{ \"data\":[ {\"date\":\"2015-07-24\",\"work\":\"rien\"}," 
+    const char* json = "{ \"dailywork\":[ {\"date\":\"2015-07-24\",\"work\":\"rien\"}," 
                                "{\"date\":\"2015-07-23\",\"work\":\"nothing\"},"
                                "{\"date\":\"2015-07-22\",\"work\":\"niet\"} ] }";
     if (d.Parse(json).HasParseError()) {
