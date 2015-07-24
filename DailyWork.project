@@ -97,6 +97,8 @@
   <VirtualDirectory Name="include">
     <File Name="gui.h"/>
     <File Name="main.h"/>
+    <File Name="DailyWorkParser.h"/>
+    <File Name="DailyWorkParser.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="resources">
     <File Name="gui.fbp"/>
