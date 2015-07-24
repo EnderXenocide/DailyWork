@@ -13,7 +13,7 @@ CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
 User                   :=Trinquard
-Date                   :=23/07/2015
+Date                   :=24/07/2015
 CodeLitePath           :="C:\Program Files\CodeLite"
 LinkerName             :=C:/Utils/TDM-GCC-64/bin/g++.exe
 SharedObjectLinkerName :=C:/Utils/TDM-GCC-64/bin/g++.exe -shared -fPIC
@@ -52,7 +52,7 @@ LibPath                := $(LibraryPathSwitch).
 AR       := C:/Utils/TDM-GCC-64/bin/ar.exe rcu
 CXX      := C:/Utils/TDM-GCC-64/bin/g++.exe
 CC       := C:/Utils/TDM-GCC-64/bin/gcc.exe
-CXXFLAGS :=  -g -O0 -Wall $(shell wx-config --cxxflags --unicode=yes --debug=yes) $(Preprocessors)
+CXXFLAGS :=  -g -O0 -std=c++11 -Wall $(shell wx-config --cxxflags --unicode=yes --debug=yes) $(Preprocessors)
 CFLAGS   :=  -g -O0 -Wall $(shell wx-config --cxxflags --unicode=yes --debug=yes) $(Preprocessors)
 ASFLAGS  := 
 AS       := C:/Utils/TDM-GCC-64/bin/as.exe
@@ -64,7 +64,7 @@ AS       := C:/Utils/TDM-GCC-64/bin/as.exe
 CodeLiteDir:=C:\Program Files\CodeLite
 WXWIN:=C:\Utils\wxWidgets-3.0.2
 WXCFG:=gcc_dll\mswu
-Objects0=$(IntermediateDirectory)/gui.cpp$(ObjectSuffix) $(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IntermediateDirectory)/win_resources.rc$(ObjectSuffix) 
+Objects0=$(IntermediateDirectory)/gui.cpp$(ObjectSuffix) $(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IntermediateDirectory)/DailyWorkParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/gason.cpp$(ObjectSuffix) $(IntermediateDirectory)/win_resources.rc$(ObjectSuffix) 
 
 
 
@@ -110,6 +110,22 @@ $(IntermediateDirectory)/main.cpp$(DependSuffix): main.cpp
 
 $(IntermediateDirectory)/main.cpp$(PreprocessSuffix): main.cpp
 	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/main.cpp$(PreprocessSuffix) "main.cpp"
+
+$(IntermediateDirectory)/DailyWorkParser.cpp$(ObjectSuffix): DailyWorkParser.cpp $(IntermediateDirectory)/DailyWorkParser.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "I:/Workspace/CodeLiteC++/DailyWork/DailyWorkParser.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/DailyWorkParser.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/DailyWorkParser.cpp$(DependSuffix): DailyWorkParser.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/DailyWorkParser.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/DailyWorkParser.cpp$(DependSuffix) -MM "DailyWorkParser.cpp"
+
+$(IntermediateDirectory)/DailyWorkParser.cpp$(PreprocessSuffix): DailyWorkParser.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/DailyWorkParser.cpp$(PreprocessSuffix) "DailyWorkParser.cpp"
+
+$(IntermediateDirectory)/gason.cpp$(ObjectSuffix): gason.cpp $(IntermediateDirectory)/gason.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "I:/Workspace/CodeLiteC++/DailyWork/gason.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/gason.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/gason.cpp$(DependSuffix): gason.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/gason.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/gason.cpp$(DependSuffix) -MM "gason.cpp"
+
+$(IntermediateDirectory)/gason.cpp$(PreprocessSuffix): gason.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/gason.cpp$(PreprocessSuffix) "gason.cpp"
 
 $(IntermediateDirectory)/win_resources.rc$(ObjectSuffix): win_resources.rc
 	$(RcCompilerName) -i "I:/Workspace/CodeLiteC++/DailyWork/win_resources.rc" $(RcCmpOptions)   $(ObjectSwitch)$(IntermediateDirectory)/win_resources.rc$(ObjectSuffix) $(RcIncludePath)

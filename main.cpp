@@ -36,6 +36,8 @@ bool MainApp::OnInit()
 MainFrame::MainFrame(wxWindow *parent) : MainFrameBase( parent )
 {
     LoadDatesTree();
+    dwparser.ConnectCallback([&this](wxString msg) { this.callbackFunction(msg; })
+    dwparser.Parse();
 }
 
 MainFrame::~MainFrame()
@@ -66,8 +68,15 @@ void MainFrame::LoadDatesTree()
 void MainFrame::OnCalendarDblClick(wxCalendarEvent& event) 
 { 
     wxTreeItemId ItemID=m_treeDates->GetSelection();
-    if (ItemID != NULL)
-        m_treeDates->Delete(ItemID);
+    wxString msg = m_treeDates->GetItemText(ItemID);
+    OnStatusBarMessage(msg); //.ToStdString());
+//    if (ItemID != NULL)
+ //       m_treeDates->Delete(ItemID);
  //wxWindowBase child;
    // m_treeDates->AddChild()
 }  
+
+void MainFrame::OnStatusBarMessage(wxString msg)
+{
+	m_statusBar->SetStatusText(msg);
+}
