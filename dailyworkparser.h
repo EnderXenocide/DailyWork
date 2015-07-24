@@ -1,10 +1,8 @@
 #ifndef DAILYWORKPARSER_H
 #define DAILYWORKPARSER_H
 
-#include <wx/string.h>
-
-//typedef std::function<(wxString)> CallbackFunction;
-typedef std::function<int(int)> CallbackFunction;
+typedef std::function<void(std::string)> CallbackFunction;
+//typedef std::function<int(int)> CallbackFunction;
 
 class DailyWorkParser
 {
@@ -15,7 +13,7 @@ public:
     void Parse();
     
 private:
-    // The callback provided by the client via connectCallback().
+    // The callback provided by the client via ConnectCallback().
     CallbackFunction m_cb;
 };
 

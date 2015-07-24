@@ -28,6 +28,6 @@ void DailyWorkParser::Parse()
         fprintf(stderr, "%s at %zd\n", jsonStrError(status), endptr - source);
         exit(EXIT_FAILURE);
     }*/
-    //m_cb("ok");
-    m_cb(5);
+    m_cb("ok");
+    //m_cb(5);
 }
