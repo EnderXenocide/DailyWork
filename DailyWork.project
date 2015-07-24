@@ -23,13 +23,11 @@
     <File Name="gui.cpp"/>
     <File Name="main.cpp"/>
     <File Name="DailyWorkParser.cpp"/>
-    <File Name="gason.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="gui.h"/>
     <File Name="main.h"/>
     <File Name="DailyWorkParser.h"/>
-    <File Name="gason.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="resources">
     <File Name="gui.fbp"/>
@@ -47,6 +45,7 @@
     </GlobalSettings>
     <Configuration Name="Debug" CompilerType="MinGW ( gcc.exe (tdm64-1) 5.1.0 )" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
       <Compiler Options="-g;-O0;-std=c++11;-Wall;$(shell wx-config --cxxflags --unicode=yes --debug=yes)" C_Options="-g;-O0;-Wall;$(shell wx-config --cxxflags --unicode=yes --debug=yes)" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
+        <IncludePath Value="I:/Workspace/CodeLiteC++/rapidjson/include"/>
         <Preprocessor Value="__WX__"/>
       </Compiler>
       <Linker Options="-mwindows;$(shell wx-config --debug=yes --libs --unicode=yes)" Required="yes"/>

@@ -38,7 +38,7 @@ MakeDirCommand         :=makedir
 RcCmpOptions           := $(shell wx-config --rcflags)
 RcCompilerName         :=C:/Utils/TDM-GCC-64/bin/windres.exe
 LinkOptions            :=  -mwindows $(shell wx-config --debug=yes --libs --unicode=yes)
-IncludePath            :=  $(IncludeSwitch). 
+IncludePath            :=  $(IncludeSwitch). $(IncludeSwitch)I:/Workspace/CodeLiteC++/rapidjson/include 
 IncludePCH             := 
 RcIncludePath          := 
 Libs                   := 

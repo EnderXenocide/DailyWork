@@ -37,7 +37,7 @@ MainFrame::MainFrame(wxWindow *parent) : MainFrameBase( parent )
 {
     LoadDatesTree();
  //   dwparser.ConnectCallback([&this](int i) { this.callbackFunction(i); })
-    dwparser.ConnectCallback([&this](std::string msg) { this.OnStatusBarMessage(msg); })
+    dwparser.ConnectCallback([this](std::string msg) { this->OnStatusBarMessage(msg); });
     dwparser.Parse();
 }
 
