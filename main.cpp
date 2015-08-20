@@ -12,6 +12,9 @@
  *********************************************************************/
 
 #include "main.h"
+#include "easylogging++.h"
+
+INITIALIZE_EASYLOGGINGPP
 
 // initialize the application
 IMPLEMENT_APP(MainApp);
@@ -22,6 +25,7 @@ IMPLEMENT_APP(MainApp);
 
 bool MainApp::OnInit()
 {
+    START_EASYLOGGINGPP(wxGetApp().argc, wxGetApp().argv);
 	SetTopWindow( new MainFrame( NULL ) );
 	GetTopWindow()->Show();
 	
@@ -75,5 +79,7 @@ void MainFrame::OnCalendarDblClick(wxCalendarEvent& event)
 
 void MainFrame::OnStatusBarMessage(std::string msg)
 {
-	m_statusBar->SetStatusText(msg);
+	//std::cout << msg << std::endl;
+    LOG(INFO) << msg ;
+    m_statusBar->SetStatusText(msg);
 }

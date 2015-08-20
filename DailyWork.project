@@ -28,6 +28,7 @@
     <File Name="gui.h"/>
     <File Name="main.h"/>
     <File Name="DailyWorkParser.h"/>
+    <File Name="easylogging++.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="resources">
     <File Name="gui.fbp"/>
