@@ -64,7 +64,7 @@ AS       := C:/Utils/TDM-GCC-64/bin/as.exe
 CodeLiteDir:=C:\Program Files\CodeLite
 WXWIN:=C:\Utils\wxWidgets-3.0.2
 WXCFG:=gcc_dll\mswu
-Objects0=$(IntermediateDirectory)/gui.cpp$(ObjectSuffix) $(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IntermediateDirectory)/DailyWorkParser.cpp$(ObjectSuffix) $(IntermediateDirectory)/win_resources.rc$(ObjectSuffix) 
+Objects0=$(IntermediateDirectory)/gui.cpp$(ObjectSuffix) $(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IntermediateDirectory)/dailyworkparser.cpp$(ObjectSuffix) $(IntermediateDirectory)/win_resources.rc$(ObjectSuffix) 
 
 
 
@@ -111,13 +111,13 @@ $(IntermediateDirectory)/main.cpp$(DependSuffix): main.cpp
 $(IntermediateDirectory)/main.cpp$(PreprocessSuffix): main.cpp
 	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/main.cpp$(PreprocessSuffix) "main.cpp"
 
-$(IntermediateDirectory)/DailyWorkParser.cpp$(ObjectSuffix): DailyWorkParser.cpp $(IntermediateDirectory)/DailyWorkParser.cpp$(DependSuffix)
-	$(CXX) $(IncludePCH) $(SourceSwitch) "I:/Workspace/CodeLiteC++/DailyWork/DailyWorkParser.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/DailyWorkParser.cpp$(ObjectSuffix) $(IncludePath)
-$(IntermediateDirectory)/DailyWorkParser.cpp$(DependSuffix): DailyWorkParser.cpp
-	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/DailyWorkParser.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/DailyWorkParser.cpp$(DependSuffix) -MM "DailyWorkParser.cpp"
+$(IntermediateDirectory)/dailyworkparser.cpp$(ObjectSuffix): dailyworkparser.cpp $(IntermediateDirectory)/dailyworkparser.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "I:/Workspace/CodeLiteC++/DailyWork/dailyworkparser.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/dailyworkparser.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/dailyworkparser.cpp$(DependSuffix): dailyworkparser.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/dailyworkparser.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/dailyworkparser.cpp$(DependSuffix) -MM "dailyworkparser.cpp"
 
-$(IntermediateDirectory)/DailyWorkParser.cpp$(PreprocessSuffix): DailyWorkParser.cpp
-	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/DailyWorkParser.cpp$(PreprocessSuffix) "DailyWorkParser.cpp"
+$(IntermediateDirectory)/dailyworkparser.cpp$(PreprocessSuffix): dailyworkparser.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/dailyworkparser.cpp$(PreprocessSuffix) "dailyworkparser.cpp"
 
 $(IntermediateDirectory)/win_resources.rc$(ObjectSuffix): win_resources.rc
 	$(RcCompilerName) -i "I:/Workspace/CodeLiteC++/DailyWork/win_resources.rc" $(RcCmpOptions)   $(ObjectSwitch)$(IntermediateDirectory)/win_resources.rc$(ObjectSuffix) $(RcIncludePath)

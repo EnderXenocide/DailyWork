@@ -42,13 +42,14 @@ MainFrame::MainFrame(wxWindow *parent) : MainFrameBase( parent )
  //   dwparser.ConnectCallback([&this](int i) { this.callbackFunction(i); })
     dwparser.ConnectCallback([this](std::string msg) { this->OnStatusBarMessage(msg); });
     if ( ! dwparser.Parse()) 
-        LoadDatesTree();
- 
+        LoadDatesTree(); 
 }
 
 MainFrame::~MainFrame()
 {
 }
+
+// BEGIN EVENTS
 
 void MainFrame::OnCloseFrame(wxCloseEvent& event)
 {
@@ -60,12 +61,6 @@ void MainFrame::OnExitClick(wxCommandEvent& event)
 	Destroy();
 }
 
-void MainFrame::LoadDatesTree()
-{
-    dwparser.LoadDatesTree(m_treeDates, FALSE);  // LoadDatesTreeHierarchy  unimplemented
-}
-
-// Double clique
 void MainFrame::OnCalendarDblClick(wxCalendarEvent& event) 
 { 
     wxTreeItemId ItemID=m_treeDates->GetSelection();
@@ -77,9 +72,24 @@ void MainFrame::OnCalendarDblClick(wxCalendarEvent& event)
    // m_treeDates->AddChild()
 }  
 
+void MainFrame::OnTreeSelChanged( wxTreeEvent& event )
+{
+    wxString texte = dwparser.GetWorkFromTree(m_treeDates);
+    m_editor->Clear();
+    m_editor->WriteText(texte);
+}
+
 void MainFrame::OnStatusBarMessage(std::string msg)
 {
 	//std::cout << msg << std::endl;
     LOG(INFO) << msg ;
-    m_statusBar->SetStatusText(msg);
+    m_statusBar->SetStatusText(wxString::FromUTF8(msg.c_str()));
 }
+
+// END EVENTS
+
+void MainFrame::LoadDatesTree()
+{
+    dwparser.LoadDatesTree(m_treeDates, FALSE);  // LoadDatesTreeHierarchy  unimplemented
+}
+

@@ -1,6 +1,6 @@
-#include "DailyWorkParser.h"
+#include "dailyworkparser.h"
 #include <iostream>
-//#include <cstdio>
+#include "dwitemdata.h"
 #include "rapidjson/document.h"
 #include "rapidjson/error/en.h"
 
@@ -38,37 +38,37 @@ int DailyWorkParser::Parse()
     return 0;   
 }
 
-int DailyWorkParser::LoadDatesTree(wxTreeCtrl* Tree, bool withHierarchy) 
+int DailyWorkParser::LoadDatesTree(wxTreeCtrl* tree, bool withHierarchy) 
 {
+    tree->DeleteAllItems();
+    tree->SetWindowStyle(wxTR_HIDE_ROOT);
+    wxTreeItemId rootID = tree->AddRoot(wxT("Dates"));
+   const Value& data = document["dailywork"];
+   assert(data.IsArray());
+
     int retour;
     if (withHierarchy)
-        retour = LoadDatesTreeHierarchy(Tree) ;
+        retour = LoadDatesTreeHierarchy(tree, rootID, data) ;
     else
-        retour = LoadDatesTreeSimple(Tree) ;
+        retour = LoadDatesTreeSimple(tree, rootID, data) ;
     if (!retour)
-        m_cbMessageInfo("Dates chargées"); //todo unicode
+        m_cbMessageInfo("Dates chargées"); 
     else
-        m_cbMessageInfo("Erreur chargement arbre"); //todo unicode
+        m_cbMessageInfo("Erreur de chargement des dates"); 
     return 0;
 }
 
-int DailyWorkParser::LoadDatesTreeSimple(wxTreeCtrl* Tree) 
+int DailyWorkParser::LoadDatesTreeSimple(wxTreeCtrl* tree, wxTreeItemId rootID, const rapidjson::Value& data) 
 {
-    Tree->DeleteAllItems();
-    Tree->SetWindowStyle(wxTR_HIDE_ROOT);
-    wxTreeItemId rootID = Tree->AddRoot(wxT("Dates"));
-   const Value& data = document["dailywork"];
-   assert(data.IsArray());
-   //for(Value::ConstMemberIterator it = data.MemberBegin(); it != data.MembersEnd(); it++) {
     for (SizeType i = 0; i < data.Size(); i++) {
         const Value& c = data[i];
         const char* aDate = c["date"].GetString(); 
         int day, month, year;
         std::sscanf(aDate, "%4d-%2d-%2d",  &year, &month,  &day);
-        Tree->AppendItem(rootID, wxString::Format(wxT("%2d/%2d/%d"), day, month, year));        
+        wxTreeItemId itemID = tree->AppendItem(rootID, wxString::Format(wxT("%2d/%2d/%d"), day, month, year));  
+        DWItemData* itemData = new DWItemData(c["work"].GetString());
+        tree->SetItemData(itemID, itemData);
     }
-    Tree->Expand(rootID);
-    m_cbMessageInfo("Dates chargées"); //todo unicode
 //   for (Value::ConstValueIterator itr = data.Begin(); itr != d.End(); ++itr)
 //        printf("%d ", itr->GetInt());
 
@@ -81,22 +81,23 @@ int DailyWorkParser::LoadDatesTreeSimple(wxTreeCtrl* Tree)
     return 0;
 }
 
-int DailyWorkParser::LoadDatesTreeHierarchy(wxTreeCtrl* Tree) 
-{   
-    Tree->DeleteAllItems();
-    Tree->SetWindowStyle(wxTR_DEFAULT_STYLE);
-   const Value& data = document["dailywork"];
-   assert(data.IsArray());
+int DailyWorkParser::LoadDatesTreeHierarchy(wxTreeCtrl* tree, wxTreeItemId rootID, const rapidjson::Value& data) 
+{   //TODO fonction à faire 
 
    //for(Value::ConstMemberIterator it = data.MemberBegin(); it != data.MembersEnd(); it++) {
-    wxTreeItemId rootID = Tree->AddRoot(wxT("Un arbre"));
-    for (SizeType i = 0; i < data.Size(); i++) {
-        const Value& c = data[i];
-        const char* aDate = c["date"].GetString(); 
-        int day, month, year;
-        std::sscanf(aDate, "%4d-%2d-%2d",  &year, &month,  &day);
-        Tree->AppendItem(rootID, wxString::Format(wxT("%2d/%2d/%d"), day, month, year));        
-    }
-    Tree->Expand(rootID);
+    //wxTreeItemId rootID = Tree->AddRoot(wxT("Un arbre"));
+//    tree->Expand(rootID);
     return 0;
+}
+
+std::string DailyWorkParser::GetWorkFromTree(wxTreeCtrl* tree)
+{
+    wxTreeItemId itemID=tree->GetSelection();
+    DWItemData* itemData=(DWItemData*) tree->GetItemData(itemID);
+    if (itemData != NULL)
+        return std::string(itemData->GetDesc());
+    else {
+        m_cbMessageInfo("Aucun élément"); 
+        return "";        
+    }
 }
