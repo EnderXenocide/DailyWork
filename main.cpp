@@ -62,7 +62,7 @@ void MainFrame::OnExitClick(wxCommandEvent& event)
 
 void MainFrame::LoadDatesTree()
 {
-    dwparser.LoadDatesTree(m_treeDates);    
+    dwparser.LoadDatesTree(m_treeDates, FALSE);  // LoadDatesTreeHierarchy  unimplemented
 }
 
 // Double clique

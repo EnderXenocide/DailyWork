@@ -16,12 +16,13 @@ public:
     ~DailyWorkParser();
     void ConnectCallback(CallbackMessageInfo cb) ;
     int Parse();
-    int LoadDatesTree(wxTreeCtrl* Tree);
-    
+    int LoadDatesTree(wxTreeCtrl* Tree, bool withHierarchy);
 private:
     // The callback provided by the client via ConnectCallback().
     CallbackMessageInfo m_cbMessageInfo;
-   rapidjson::Document d;
+    rapidjson::Document document;
+    int LoadDatesTreeHierarchy(wxTreeCtrl* Tree);
+    int LoadDatesTreeSimple(wxTreeCtrl* Tree);
 };
 
 #endif // DAILYWORKPARSER_H
