@@ -64,7 +64,7 @@ AS       := C:/Utils/TDM-GCC-64/bin/as.exe
 CodeLiteDir:=C:\Program Files\CodeLite
 WXWIN:=C:\Utils\wxWidgets-3.0.2
 WXCFG:=gcc_dll\mswu
-Objects0=$(IntermediateDirectory)/gui.cpp$(ObjectSuffix) $(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IntermediateDirectory)/dailyworkparser.cpp$(ObjectSuffix) $(IntermediateDirectory)/win_resources.rc$(ObjectSuffix) 
+Objects0=$(IntermediateDirectory)/gui.cpp$(ObjectSuffix) $(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IntermediateDirectory)/dailyworkparser.cpp$(ObjectSuffix) $(IntermediateDirectory)/richtext.cpp$(ObjectSuffix) $(IntermediateDirectory)/win_resources.rc$(ObjectSuffix) 
 
 
 
@@ -118,6 +118,14 @@ $(IntermediateDirectory)/dailyworkparser.cpp$(DependSuffix): dailyworkparser.cpp
 
 $(IntermediateDirectory)/dailyworkparser.cpp$(PreprocessSuffix): dailyworkparser.cpp
 	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/dailyworkparser.cpp$(PreprocessSuffix) "dailyworkparser.cpp"
+
+$(IntermediateDirectory)/richtext.cpp$(ObjectSuffix): richtext.cpp $(IntermediateDirectory)/richtext.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "I:/Workspace/CodeLiteC++/DailyWork/richtext.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/richtext.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/richtext.cpp$(DependSuffix): richtext.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/richtext.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/richtext.cpp$(DependSuffix) -MM "richtext.cpp"
+
+$(IntermediateDirectory)/richtext.cpp$(PreprocessSuffix): richtext.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/richtext.cpp$(PreprocessSuffix) "richtext.cpp"
 
 $(IntermediateDirectory)/win_resources.rc$(ObjectSuffix): win_resources.rc
 	$(RcCompilerName) -i "I:/Workspace/CodeLiteC++/DailyWork/win_resources.rc" $(RcCmpOptions)   $(ObjectSwitch)$(IntermediateDirectory)/win_resources.rc$(ObjectSuffix) $(RcIncludePath)

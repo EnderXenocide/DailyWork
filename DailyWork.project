@@ -23,6 +23,7 @@
     <File Name="gui.cpp"/>
     <File Name="main.cpp"/>
     <File Name="dailyworkparser.cpp"/>
+    <File Name="richtext.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="gui.h"/>
