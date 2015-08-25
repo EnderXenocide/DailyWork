@@ -431,14 +431,29 @@ void MainFrame::OnCalendarSelChanged(wxCalendarEvent& event)
 void MainFrame::OnTreeSelChanged( wxTreeEvent& event )
 {
     wxString texte = wxGetApp().GetDWParser()->GetWorkFromTree(m_treeDates);
-    
+    wxStringInputStream final(texte);
     if (m_editor->IsModified() ) {
             //todo save
     }    
-    m_editor->Clear();
-    m_editor->ResetAndClearCommands();
-    m_editor->LoadFile(SIStream,wxRICHTEXT_TYPE_RTF);
-    //m_editor->WriteText(texte);
+//    m_editor->BeginSuppressUndo();
+    wxRichTextBuffer & rtb = m_editor->GetBuffer();
+    rtb.ResetAndClearCommands();
+    rtb.Clear();
+//    bool retour = rtb.LoadFile(final); // == 0
+//    //rtb.AddParagraph(wxT("Testeeds"));
+//    rtb.UpdateRanges();
+//    m_editor->EndSuppressUndo();
+//
+////    bool retour = rtb.LoadFile(final, wxRICHTEXT_TYPE_RTF); 
+////    rtb.UpdateRanges();
+////    rtb.Invalidate(wxRICHTEXT_ALL);
+////    m_editor->EndSuppressUndo();
+////    m_editor->LayoutContent();
+//// //   m_editor->Invalidate();
+//    m_editor->Refresh(false); 
+    //OnStatusBarMessage(texte.ToStdString());
+   
+    m_editor->WriteText(wxString::FromUTF8(texte.c_str()));
     //LOG(INFO) << texte ;
 }
 

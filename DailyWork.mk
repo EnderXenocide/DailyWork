@@ -119,10 +119,6 @@ $(IntermediateDirectory)/dailyworkparser.cpp$(DependSuffix): dailyworkparser.cpp
 $(IntermediateDirectory)/dailyworkparser.cpp$(PreprocessSuffix): dailyworkparser.cpp
 	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/dailyworkparser.cpp$(PreprocessSuffix) "dailyworkparser.cpp"
 
-
-
-
-
 $(IntermediateDirectory)/gui2.cpp$(ObjectSuffix): gui2.cpp $(IntermediateDirectory)/gui2.cpp$(DependSuffix)
 	$(CXX) $(IncludePCH) $(SourceSwitch) "I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/gui2.cpp$(ObjectSuffix) $(IncludePath)
 $(IntermediateDirectory)/gui2.cpp$(DependSuffix): gui2.cpp

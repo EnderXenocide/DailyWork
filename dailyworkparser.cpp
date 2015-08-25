@@ -41,17 +41,6 @@ int DailyWorkParser::Parse()
 //    return -1;
     
     if (document.Parse<0>(ss.str().c_str()).HasParseError()) {    
-
-//    std::ifstream file( "dailywork.json");
-//    if ( ! file )  { 
-//        m_cbMessageInfo("Fichier non trouvé");
-//        return -1;
-//    }    
-//    StringStream is;
-//    is << file.rdbuf();
-//    file.close();
-//    if (document.ParseStream<0>(is).HasParseError()) {    
-
         ParseErrorCode parseErrorCode = document.GetParseError();
         std::string strErreur = wxString::Format( 
         "Erreur de lecture du fichier (offset %u): %s\n",
