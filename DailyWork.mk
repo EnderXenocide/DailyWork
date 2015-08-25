@@ -13,7 +13,7 @@ CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
 User                   :=Trinquard
-Date                   :=21/08/2015
+Date                   :=25/08/2015
 CodeLitePath           :="C:\Program Files\CodeLite"
 LinkerName             :=C:/Utils/TDM-GCC-64/bin/g++.exe
 SharedObjectLinkerName :=C:/Utils/TDM-GCC-64/bin/g++.exe -shared -fPIC
@@ -64,7 +64,7 @@ AS       := C:/Utils/TDM-GCC-64/bin/as.exe
 CodeLiteDir:=C:\Program Files\CodeLite
 WXWIN:=C:\Utils\wxWidgets-3.0.2
 WXCFG:=gcc_dll\mswu
-Objects0=$(IntermediateDirectory)/gui.cpp$(ObjectSuffix) $(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IntermediateDirectory)/dailyworkparser.cpp$(ObjectSuffix) $(IntermediateDirectory)/richtext.cpp$(ObjectSuffix) $(IntermediateDirectory)/win_resources.rc$(ObjectSuffix) 
+Objects0=$(IntermediateDirectory)/gui.cpp$(ObjectSuffix) $(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IntermediateDirectory)/dailyworkparser.cpp$(ObjectSuffix) $(IntermediateDirectory)/gui2.cpp$(ObjectSuffix) $(IntermediateDirectory)/myrichtext.cpp$(ObjectSuffix) $(IntermediateDirectory)/win_resources.rc$(ObjectSuffix) 
 
 
 
@@ -119,13 +119,25 @@ $(IntermediateDirectory)/dailyworkparser.cpp$(DependSuffix): dailyworkparser.cpp
 $(IntermediateDirectory)/dailyworkparser.cpp$(PreprocessSuffix): dailyworkparser.cpp
 	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/dailyworkparser.cpp$(PreprocessSuffix) "dailyworkparser.cpp"
 
-$(IntermediateDirectory)/richtext.cpp$(ObjectSuffix): richtext.cpp $(IntermediateDirectory)/richtext.cpp$(DependSuffix)
-	$(CXX) $(IncludePCH) $(SourceSwitch) "I:/Workspace/CodeLiteC++/DailyWork/richtext.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/richtext.cpp$(ObjectSuffix) $(IncludePath)
-$(IntermediateDirectory)/richtext.cpp$(DependSuffix): richtext.cpp
-	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/richtext.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/richtext.cpp$(DependSuffix) -MM "richtext.cpp"
 
-$(IntermediateDirectory)/richtext.cpp$(PreprocessSuffix): richtext.cpp
-	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/richtext.cpp$(PreprocessSuffix) "richtext.cpp"
+
+
+
+$(IntermediateDirectory)/gui2.cpp$(ObjectSuffix): gui2.cpp $(IntermediateDirectory)/gui2.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/gui2.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/gui2.cpp$(DependSuffix): gui2.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/gui2.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/gui2.cpp$(DependSuffix) -MM "gui2.cpp"
+
+$(IntermediateDirectory)/gui2.cpp$(PreprocessSuffix): gui2.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/gui2.cpp$(PreprocessSuffix) "gui2.cpp"
+
+$(IntermediateDirectory)/myrichtext.cpp$(ObjectSuffix): myrichtext.cpp $(IntermediateDirectory)/myrichtext.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "I:/Workspace/CodeLiteC++/DailyWork/myrichtext.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/myrichtext.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/myrichtext.cpp$(DependSuffix): myrichtext.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/myrichtext.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/myrichtext.cpp$(DependSuffix) -MM "myrichtext.cpp"
+
+$(IntermediateDirectory)/myrichtext.cpp$(PreprocessSuffix): myrichtext.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/myrichtext.cpp$(PreprocessSuffix) "myrichtext.cpp"
 
 $(IntermediateDirectory)/win_resources.rc$(ObjectSuffix): win_resources.rc
 	$(RcCompilerName) -i "I:/Workspace/CodeLiteC++/DailyWork/win_resources.rc" $(RcCmpOptions)   $(ObjectSwitch)$(IntermediateDirectory)/win_resources.rc$(ObjectSuffix) $(RcIncludePath)

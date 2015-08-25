@@ -20,12 +20,12 @@
 #include <wx/font.h>
 #include <wx/colour.h>
 #include <wx/settings.h>
-#include <wx/toolbar.h>
-#include <wx/treectrl.h>
 #include <wx/calctrl.h>
+#include <wx/treectrl.h>
 #include <wx/sizer.h>
 #include <wx/richtext/richtextctrl.h>
 #include <wx/statusbr.h>
+#include <wx/toolbar.h>
 #include <wx/frame.h>
 
 ///////////////////////////////////////////////////////////////////////////
@@ -41,18 +41,17 @@ class MainFrameBase : public wxFrame
 	protected:
 		wxMenuBar* m_menuBar;
 		wxMenu* m_menuFile;
-		wxToolBar* m_toolBar;
-		wxTreeCtrl* m_treeDates;
 		wxCalendarCtrl* m_calendar;
+		wxTreeCtrl* m_treeDates;
 		wxRichTextCtrl* m_editor;
-		wxToolBar* m_toolBar1;
 		wxStatusBar* m_statusBar;
+		wxToolBar* m_mainToolBar;
 		
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnCloseFrame( wxCloseEvent& event ) { event.Skip(); }
 		virtual void OnExitClick( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnTreeSelChanged( wxTreeEvent& event ) { event.Skip(); }
 		virtual void OnCalendarDblClick( wxCalendarEvent& event ) { event.Skip(); }
+		virtual void OnTreeSelChanged( wxTreeEvent& event ) { event.Skip(); }
 		
 	
 	public:

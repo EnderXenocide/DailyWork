@@ -14,14 +14,27 @@
 #ifndef __main__
 #define __main__
 
-// For compilers that support precompilation, includes "wx/wx.h".
-#include "wx/wxprec.h"
+
+#include "dailyworkparser.h"
+#include "gui2.h"
 
 // main wxWidgets header file
 #include <wx/wx.h>
 
-#include "dailyworkparser.h"
 
+#if wxUSE_HELP
+#include "wx/cshelp.h"
+#endif
+
+#include "wx/richtext/richtextctrl.h"
+#include "wx/richtext/richtextstyles.h"
+#include "wx/richtext/richtextxml.h"
+#include "wx/richtext/richtexthtml.h"
+#include "wx/richtext/richtextformatdlg.h"
+#include "wx/richtext/richtextsymboldlg.h"
+#include "wx/richtext/richtextstyledlg.h"
+#include "wx/richtext/richtextprint.h"
+#include "wx/richtext/richtextimagedlg.h"
 ////////////////////////////////////////////////////////////////////////////////
 // application class declaration 
 ////////////////////////////////////////////////////////////////////////////////
@@ -29,143 +42,28 @@
 class MainApp : public wxApp
 {
 public:
-    virtual bool OnInit();        
+    virtual bool OnInit();
     virtual int OnExit();
 
     void CreateStyles();
+    void InitDailyWorkParser();
+    DailyWorkParser* GetDWParser() const { return (DailyWorkParser*) &dwparser; }    
 
     wxRichTextStyleSheet* GetStyleSheet() const { return m_styleSheet; }
-    wxRichTextStyleSheet*   m_styleSheet;
-
+ 
 #if wxUSE_PRINTING_ARCHITECTURE
     wxRichTextPrinting* GetPrinting() const { return m_printing; }
-    wxRichTextPrinting* m_printing;
-#endif
+    wxRichTextPrinting*     m_printing;
+#endif   
+
+     MainFrame* frame; 
+
+private:
+    wxRichTextStyleSheet*   m_styleSheet;
+    DailyWorkParser dwparser;    
 };
 
 // declare global static function wxGetApp()
 DECLARE_APP(MainApp)
-
-////////////////////////////////////////////////////////////////////////////////
-// main application frame declaration 
-////////////////////////////////////////////////////////////////////////////////
-
-class MainFrame : public wxFrame
-{
-public:
-    // ctor(s)
-    MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos = wxDefaultPosition,
-        const wxSize& size = wxDefaultSize, long style = wxDEFAULT_FRAME_STYLE);
-    virtual ~MainFrame();
- 
-    // event handlers (these functions should _not_ be virtual)
-    void OnQuit(wxCommandEvent& event);
-    void OnAbout(wxCommandEvent& event);
-
-    void OnOpen(wxCommandEvent& event);
-    void OnSave(wxCommandEvent& event);
-    void OnSaveAs(wxCommandEvent& event);
-
-    void OnBold(wxCommandEvent& event);
-    void OnItalic(wxCommandEvent& event);
-    void OnUnderline(wxCommandEvent& event);
-
-    void OnStrikethrough(wxCommandEvent& event);
-    void OnSuperscript(wxCommandEvent& event);
-    void OnSubscript(wxCommandEvent& event);
-
-    void OnUpdateBold(wxUpdateUIEvent& event);
-    void OnUpdateItalic(wxUpdateUIEvent& event);
-    void OnUpdateUnderline(wxUpdateUIEvent& event);
-    void OnUpdateStrikethrough(wxUpdateUIEvent& event);
-    void OnUpdateSuperscript(wxUpdateUIEvent& event);
-    void OnUpdateSubscript(wxUpdateUIEvent& event);
-
-    void OnAlignLeft(wxCommandEvent& event);
-    void OnAlignCentre(wxCommandEvent& event);
-    void OnAlignRight(wxCommandEvent& event);
-
-    void OnUpdateAlignLeft(wxUpdateUIEvent& event);
-    void OnUpdateAlignCentre(wxUpdateUIEvent& event);
-    void OnUpdateAlignRight(wxUpdateUIEvent& event);
-
-    void OnIndentMore(wxCommandEvent& event);
-    void OnIndentLess(wxCommandEvent& event);
-
-    void OnFont(wxCommandEvent& event);
-    void OnImage(wxCommandEvent& event);
-    void OnUpdateImage(wxUpdateUIEvent& event);
-    void OnParagraph(wxCommandEvent& event);
-    void OnFormat(wxCommandEvent& event);
-    void OnUpdateFormat(wxUpdateUIEvent& event);
-
-    void OnInsertSymbol(wxCommandEvent& event);
-
-    void OnLineSpacingHalf(wxCommandEvent& event);
-    void OnLineSpacingDouble(wxCommandEvent& event);
-    void OnLineSpacingSingle(wxCommandEvent& event);
-
-    void OnParagraphSpacingMore(wxCommandEvent& event);
-    void OnParagraphSpacingLess(wxCommandEvent& event);
-
-    void OnNumberList(wxCommandEvent& event);
-    void OnBulletsAndNumbering(wxCommandEvent& event);
-    void OnItemizeList(wxCommandEvent& event);
-    void OnRenumberList(wxCommandEvent& event);
-    void OnPromoteList(wxCommandEvent& event);
-    void OnDemoteList(wxCommandEvent& event);
-    void OnClearList(wxCommandEvent& event);
-
-    void OnTableAddColumn(wxCommandEvent& event);
-    void OnTableAddRow(wxCommandEvent& event);
-    void OnTableDeleteColumn(wxCommandEvent& event);
-    void OnTableDeleteRow(wxCommandEvent& event);
-    void OnTableFocusedUpdateUI(wxUpdateUIEvent& event);
-    void OnTableHasCellsUpdateUI(wxUpdateUIEvent& event);
-
-    void OnReload(wxCommandEvent& event);
-
-    void OnViewHTML(wxCommandEvent& event);
-
-    void OnSwitchStyleSheets(wxCommandEvent& event);
-    void OnManageStyles(wxCommandEvent& event);
-
-    void OnInsertURL(wxCommandEvent& event);
-    void OnURL(wxTextUrlEvent& event);
-    void OnStyleSheetReplacing(wxRichTextEvent& event);
-
-#if wxUSE_PRINTING_ARCHITECTURE
-    void OnPrint(wxCommandEvent& event);
-    void OnPreview(wxCommandEvent& event);
-#endif
-    void OnPageSetup(wxCommandEvent& event);
-
-    void OnInsertImage(wxCommandEvent& event);
-
-    void OnSetFontScale(wxCommandEvent& event);
-    void OnSetDimensionScale(wxCommandEvent& event);
-   void OnStatusBarMessage(std::string msg);
-    
-protected:
-    DailyWorkParser dwparser;
-    // protected event handlers
-    virtual void OnCloseFrame( wxCloseEvent& event );
-    virtual void OnExitClick( wxCommandEvent& event );
-    void OnCalendarDblClick( wxCalendarEvent& event ); 
-    void OnTreeSelChanged( wxTreeEvent& event );
-    // end protected event handlers
-    void LoadDatesTree();
-    // Forward command events to the current rich text control, if any
-    bool ProcessEvent(wxEvent& event);
-
-    // Write text
-    void WriteInitialText();
-
-private:
-    // any class wishing to process wxWidgets events must use this macro
-    wxDECLARE_EVENT_TABLE();
-
-    MyRichTextCtrl* m_richTextCtrl;
-};
 
 #endif //__main__

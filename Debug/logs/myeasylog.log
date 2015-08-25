@@ -1,0 +1,109 @@
+2015-08-21 11:03:56,828 INFO  [default] Dates chargées
+2015-08-21 11:03:56,831 INFO  [default] 24/ 7/2015
+2015-08-21 11:04:15,039 INFO  [default] 23/ 7/2015
+2015-08-21 11:04:16,216 INFO  [default] 22/ 7/2015
+2015-08-21 11:04:17,240 INFO  [default] 24/ 7/2015
+2015-08-21 11:04:17,968 INFO  [default] 23/ 7/2015
+2015-08-21 11:04:18,432 INFO  [default] 22/ 7/2015
+2015-08-21 14:41:08,121 INFO  [default] Dates chargées
+2015-08-21 14:41:08,175 INFO  [default] work
+2015-08-21 14:41:10,489 INFO  [default] work
+2015-08-21 14:41:11,361 INFO  [default] work
+2015-08-21 14:41:11,946 INFO  [default] work
+2015-08-21 15:06:34,817 INFO  [default] Dates chargées
+2015-08-21 15:06:34,819 INFO  [default] rien
+2015-08-21 15:11:10,001 INFO  [default] niet
+2015-08-21 15:11:11,289 INFO  [default] nothing
+2015-08-21 15:11:12,514 INFO  [default] rien
+2015-08-21 15:11:33,715 INFO  [default] Dates chargées
+2015-08-21 15:11:33,724 INFO  [default] rien
+2015-08-21 15:12:53,911 INFO  [default] Dates chargées
+2015-08-21 15:14:32,338 INFO  [default] Dates chargées
+2015-08-21 17:38:57,780 INFO  [default] Dates chargées
+2015-08-25 09:48:16,581 INFO  [default] Dates chargées
+2015-08-25 09:51:17,105 INFO  [default] Dates chargées
+2015-08-25 10:04:09,701 INFO  [default] Dates chargées
+2015-08-25 10:20:32,437 INFO  [default] Dates chargées
+2015-08-25 10:22:45,830 INFO  [default] Dates chargées
+2015-08-25 10:23:28,210 INFO  [default] 22/ 7/2015
+2015-08-25 10:23:29,150 INFO  [default] 22/ 7/2015
+2015-08-25 10:23:30,930 INFO  [default] 22/ 7/2015
+2015-08-25 10:23:33,290 INFO  [default] 22/ 7/2015
+2015-08-25 10:23:37,340 INFO  [default] 24/ 7/2015
+2015-08-25 11:28:15,735 INFO  [default] Erreur de lecture du fichier
+2015-08-25 11:32:00,959 INFO  [default] Erreur de lecture du fichier
+2015-08-25 11:34:47,757 INFO  [default] Dates chargées
+2015-08-25 11:35:53,677 INFO  [default] Dates chargées
+2015-08-25 11:37:54,049 INFO  [default] {"dailywork":[ 
+{"date":"2015-07-24","work":"rien"}," 
+"{"date":"2015-07-23","work":"nothing"},"
+"{"date":"2015-07-22","work":"niet"} 
+],
+"version":1}
+2015-08-25 11:41:29,561 INFO  [default] {"dailywork":[ 
+{"date":"2015-07-24","work":"rien"}," 
+"{"date":"2015-07-23","work":"nothing"},"
+"{"date":"2015-07-22","work":"niet"} 
+],
+"version":1}
+2015-08-25 11:47:33,282 INFO  [default] {"dailywork":[ 
+{"date":"2015-07-24","work":"rien à déclarer"}," 
+"{"date":"2015-07-23","work":"nothing É"},"
+"{"date":"2015-07-22","work":"niet "} 
+],
+"version":1}
+2015-08-25 11:49:28,592 INFO  [default] {"dailywork":[ 
+{"date":"2015-07-24","work":"rien à déclarer"}," 
+"{"date":"2015-07-23","work":"nothing É"},"
+"{"date":"2015-07-22","work":"niet "} 
+],
+"version":1}
+2015-08-25 11:53:15,602 INFO  [default] {"dailywork":[ 
+{"date":"2015-07-24","work":"rien à déclarer"}," 
+"{"date":"2015-07-23","work":"nothing É"},"
+"{"date":"2015-07-22","work":"niet "} 
+],
+"version":1}
+2015-08-25 14:04:19,032 INFO  [default] Erreur de lecture du fichier (offset 66): erreur
+
+2015-08-25 14:06:19,152 INFO  [default] Erreur de lecture du fichier (offset 66): erreur
+
+2015-08-25 14:08:24,462 INFO  [default] Erreur de lecture du fichier (offset 66): Invalid escape character in string.
+
+2015-08-25 14:10:06,952 INFO  [default] Dates chargées
+2015-08-25 14:12:22,923 INFO  [default] Dates chargées
+2015-08-25 14:12:30,953 INFO  [default] rien à déclarer
+2015-08-25 14:13:55,543 INFO  [default] niet
+2015-08-25 14:13:56,263 INFO  [default] nothing É
+2015-08-25 14:15:09,433 INFO  [default] Erreur de lecture du fichier (offset 145): Invalid escape character in string.
+
+2015-08-25 14:43:19,139 INFO  [default] Erreur de lecture du fichier (offset 272): Invalid escape character in string.
+
+2015-08-25 14:48:30,312 INFO  [default] Dates chargées
+2015-08-25 14:48:30,342 INFO  [default] rien à déclarer
+2015-08-25 14:48:36,802 INFO  [default] nothing É
+2015-08-25 14:48:37,462 INFO  [default] {\rtf1
+2015-08-25 14:49:01,112 INFO  [default] Erreur de lecture du fichier (offset 144): Invalid escape character in string.
+
+2015-08-25 14:49:55,932 INFO  [default] Dates chargées
+2015-08-25 14:49:58,352 INFO  [default] rien à déclarer
+2015-08-25 14:49:58,362 INFO  [default] nothing É
+2015-08-25 14:49:59,302 INFO  [default] {\rtf1\ansi\ansicpg1252\deff0\deflang1036
+\viewkind4\uc1\pard\f0\fs16 en debuggage:
+\par ctrl + click souris : liste les objets
+\par ctrl + F3 : pile d'appel (des fonctions)
+\par \f1
+\par \f0 GExpert:\f1
+\par \f0 ctrl+alt+;  comment
+\par \pard ctrl+alt+, uncomment\f2
+\par }
+2015-08-25 14:50:06,562 INFO  [default] Dates chargées
+2015-08-25 14:50:09,792 INFO  [default] {\rtf1\ansi\ansicpg1252\deff0\deflang1036
+\viewkind4\uc1\pard\f0\fs16 en debuggage:
+\par ctrl + click souris : liste les objets
+\par ctrl + F3 : pile d'appel (des fonctions)
+\par \f1
+\par \f0 GExpert:\f1
+\par \f0 ctrl+alt+;  comment
+\par \pard ctrl+alt+, uncomment\f2
+\par }

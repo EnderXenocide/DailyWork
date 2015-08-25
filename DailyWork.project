@@ -23,7 +23,8 @@
     <File Name="gui.cpp"/>
     <File Name="main.cpp"/>
     <File Name="dailyworkparser.cpp"/>
-    <File Name="richtext.cpp"/>
+    <File Name="gui2.cpp"/>
+    <File Name="myrichtext.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="gui.h"/>
@@ -31,6 +32,8 @@
     <File Name="easylogging++.h"/>
     <File Name="dwitemdata.h"/>
     <File Name="dailyworkparser.h"/>
+    <File Name="gui2.h"/>
+    <File Name="myrichtext.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="resources">
     <File Name="gui.fbp"/>
