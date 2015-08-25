@@ -1,5 +1,7 @@
 #include "gui2.h"
 
+#include "main.h"
+
 DECLARE_APP(MainApp)
 
 ///////////////////////////////////////////////////////////////////////////
@@ -311,7 +313,7 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
 #if wxUSE_STATUSBAR
     if ( !is_pda )
     {
-        m_statusBar = CreateStatusBar(2);
+        m_statusBar = CreateStatusBar(1);
         SetStatusText(wxT("Welcome to wxRichTextCtrl!"));
     }
 #endif
@@ -402,7 +404,7 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
 
 	this->Centre( wxBOTH );
 
-    WriteInitialText();
+//    WriteInitialText();
  //	// Connect Events
 //	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( MainFrame::OnCloseFrame ) );
 //	this->Connect( menuFileExit->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnExitClick ) );
@@ -431,6 +433,7 @@ void MainFrame::OnTreeSelChanged( wxTreeEvent& event )
     wxString texte = wxGetApp().GetDWParser()->GetWorkFromTree(m_treeDates);
     m_editor->Clear();
     m_editor->WriteText(texte);
+    LOG(INFO) << texte ;
 }
 
 void MainFrame::OnStatusBarMessage(std::string msg)
@@ -835,7 +838,8 @@ bool MainFrame::ProcessEvent(wxEvent& event)
 
 void MainFrame::OnOpen(wxCommandEvent& WXUNUSED(event))
 {
-    wxString path;
+    wxGetApp().InitDailyWorkParser();
+    /*wxString path;
     wxString filename;
     wxArrayInt fileTypes;
 
@@ -863,7 +867,7 @@ void MainFrame::OnOpen(wxCommandEvent& WXUNUSED(event))
                            : wxRICHTEXT_TYPE_TEXT;
             m_editor->LoadFile(path, fileType);
         }
-    }
+    }*/
 }
 
 void MainFrame::OnSave(wxCommandEvent& event)

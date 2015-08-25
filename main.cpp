@@ -13,7 +13,7 @@
 
 #include "main.h"
 #include "easylogging++.h"
-#include "gui2.h"
+
 
 INITIALIZE_EASYLOGGINGPP
 
@@ -92,19 +92,19 @@ bool MainApp::OnInit()
     // create the main application window
     wxSize size = wxGetDisplaySize();
     size.Scale(0.75, 0.75);
-    MainFrame* frame = new MainFrame(wxT("wxRichTextCtrl Sample"), wxID_ANY, wxDefaultPosition, size);
+    frame = new MainFrame(wxT("DailyWork"), wxID_ANY, wxDefaultPosition, size);
 
 #if wxUSE_PRINTING_ARCHITECTURE
     m_printing->SetParentWindow(frame);
 #endif
 
+    MainFrame* sameframe  = frame;
+    dwparser.ConnectCallback([sameframe](std::string msg) { sameframe->OnStatusBarMessage(msg); });
+    InitDailyWorkParser();
+    
     // and show it (the frames, unlike simple controls, are not shown when
     // created initially)
     frame->Show(true);
-
-    dwparser.ConnectCallback([frame](std::string msg) { frame->OnStatusBarMessage(msg); });
-    if ( ! dwparser.Parse()) 
-        dwparser.LoadDatesTree(frame->m_treeDates, FALSE);  // LoadDatesTreeHierarchy  unimplemented
 
     // success: wxApp::OnRun() will be called which will enter the main message
     // loop and the application will run. If we returned false here, the
@@ -270,4 +270,9 @@ void MainApp::CreateStyles()
 
     m_styleSheet->AddListStyle(outlineList);
 
+}
+void MainApp::InitDailyWorkParser()
+{
+if ( ! dwparser.Parse()) 
+    dwparser.LoadDatesTree(frame->m_treeDates, FALSE);  // LoadDatesTreeHierarchy  unimplemented
 }

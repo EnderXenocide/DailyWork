@@ -24,20 +24,23 @@ void DailyWorkParser::ConnectCallback(CallbackMessageInfo cb)
 
 int DailyWorkParser::Parse()
 {    
-    const char* json = "{\"dailywork\":[ {\"date\":\"2015-07-24\",\"work\":\"rien\"}," 
-                               "{\"date\":\"2015-07-23\",\"work\":\"nothing\"},"
-                               "{\"date\":\"2015-07-22\",\"work\":\"niet\"} ] }";
-    if (document.Parse(json).HasParseError()) {
+//    const char* json = "{\"dailywork\":[ {\"date\":\"2015-07-24\",\"work\":\"rien\"}," 
+//                               "{\"date\":\"2015-07-23\",\"work\":\"nothing\"},"
+//                               "{\"date\":\"2015-07-22\",\"work\":\"niet\"} ] }";
+//    if (document.Parse(json).HasParseError()) {
 
-//    std::ifstream ifs( "dailywork.json");
-//    if ( ! ifs )  { 
-//        m_cbMessageInfo("Fichier non trouvé");
-//        return -1;
-//    }    
-//    std::stringstream ss;
-//    ss << ifs.rdbuf();
-//    ifs.close();
-//    if (document.Parse<0>(ss.str().c_str()).HasParseError()) {    
+    std::ifstream ifs( "dailywork.json");
+    if ( ! ifs )  { 
+        m_cbMessageInfo("Fichier non trouvé");
+        return -1;
+    }    
+    std::stringstream ss;
+    ss << ifs.rdbuf();
+    ifs.close();
+//    m_cbMessageInfo(ss.str());
+//    return -1;
+    
+    if (document.Parse<0>(ss.str().c_str()).HasParseError()) {    
 
 //    std::ifstream file( "dailywork.json");
 //    if ( ! file )  { 
@@ -48,15 +51,15 @@ int DailyWorkParser::Parse()
 //    is << file.rdbuf();
 //    file.close();
 //    if (document.ParseStream<0>(is).HasParseError()) {    
-        //rapidjson::ParseErrorCode parseErrorCode = d.GetParseErrorCode();
-        fprintf(stderr, "\nError(offset %u): %s\n", 
+
+        ParseErrorCode parseErrorCode = document.GetParseError();
+        std::string strErreur = wxString::Format( 
+        "Erreur de lecture du fichier (offset %u): %s\n",
         (unsigned) document.GetErrorOffset(),
-        "erreur"); //rapidjson::GetParseError_En(parseErrorCode)
-        m_cbMessageInfo("Erreur de lecture du fichier");
+        GetParseError_En(parseErrorCode) ).ToStdString();
+        m_cbMessageInfo(strErreur); 
         return -1;
     }
-   // m_cbMessageInfo(ss.str());
- 
    return 0;   
     
     // ECRITURE fwrite (buffer.GetString(), buffer.GetSize(), 1, wFile);
@@ -117,11 +120,11 @@ int DailyWorkParser::LoadDatesTreeHierarchy(wxTreeCtrl* tree, wxTreeItemId rootI
 std::string DailyWorkParser::GetWorkFromTree(wxTreeCtrl* tree)
 {
     wxTreeItemId itemID=tree->GetSelection();
-    DWItemData* itemData=(DWItemData*) tree->GetItemData(itemID);
-    if (itemData != NULL)
-        return std::string(itemData->GetDesc());
-    else {
-        m_cbMessageInfo("Aucun élément"); 
-        return "";        
-    }
+    if (itemID != NULL) {
+        DWItemData* itemData=(DWItemData*) tree->GetItemData(itemID);
+        if (itemData != NULL)
+            return std::string(itemData->GetDesc());
+    }   
+    m_cbMessageInfo("Aucun élément"); 
+    return "";        
 }

@@ -16,6 +16,7 @@
 
 
 #include "dailyworkparser.h"
+#include "gui2.h"
 
 // main wxWidgets header file
 #include <wx/wx.h>
@@ -45,20 +46,21 @@ public:
     virtual int OnExit();
 
     void CreateStyles();
+    void InitDailyWorkParser();
+    DailyWorkParser* GetDWParser() const { return (DailyWorkParser*) &dwparser; }    
 
     wxRichTextStyleSheet* GetStyleSheet() const { return m_styleSheet; }
-    wxRichTextStyleSheet*   m_styleSheet;
-
+ 
 #if wxUSE_PRINTING_ARCHITECTURE
     wxRichTextPrinting* GetPrinting() const { return m_printing; }
     wxRichTextPrinting*     m_printing;
 #endif   
 
-    DailyWorkParser* GetDWParser() const { return (DailyWorkParser*) &dwparser; }    
+     MainFrame* frame; 
 
 private:
+    wxRichTextStyleSheet*   m_styleSheet;
     DailyWorkParser dwparser;    
-    void LoadDatesTree();
 };
 
 // declare global static function wxGetApp()

@@ -34,7 +34,6 @@
 #include "wx/richtext/richtextimagedlg.h"
 
 #include "myrichtext.h"
-#include "main.h"
 #include "easylogging++.h"
 
 
