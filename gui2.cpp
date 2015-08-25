@@ -431,9 +431,15 @@ void MainFrame::OnCalendarSelChanged(wxCalendarEvent& event)
 void MainFrame::OnTreeSelChanged( wxTreeEvent& event )
 {
     wxString texte = wxGetApp().GetDWParser()->GetWorkFromTree(m_treeDates);
+    
+    if (m_editor->IsModified() ) {
+            //todo save
+    }    
     m_editor->Clear();
-    m_editor->WriteText(texte);
-    LOG(INFO) << texte ;
+    m_editor->ResetAndClearCommands();
+    m_editor->LoadFile(SIStream,wxRICHTEXT_TYPE_RTF);
+    //m_editor->WriteText(texte);
+    //LOG(INFO) << texte ;
 }
 
 void MainFrame::OnStatusBarMessage(std::string msg)
