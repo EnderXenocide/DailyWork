@@ -1,8 +1,10 @@
 #include "dailyworkparser.h"
-#include <iostream>
 #include "dwitemdata.h"
 #include "rapidjson/document.h"
 #include "rapidjson/error/en.h"
+#include <fstream>
+#include <sstream>
+#include <iostream>
 
 using namespace rapidjson;
 
@@ -22,11 +24,30 @@ void DailyWorkParser::ConnectCallback(CallbackMessageInfo cb)
 
 int DailyWorkParser::Parse()
 {    
-//   const char* json = "{\"project\":\"rapidjson\",\"stars\":10}";
     const char* json = "{\"dailywork\":[ {\"date\":\"2015-07-24\",\"work\":\"rien\"}," 
                                "{\"date\":\"2015-07-23\",\"work\":\"nothing\"},"
                                "{\"date\":\"2015-07-22\",\"work\":\"niet\"} ] }";
     if (document.Parse(json).HasParseError()) {
+
+//    std::ifstream ifs( "dailywork.json");
+//    if ( ! ifs )  { 
+//        m_cbMessageInfo("Fichier non trouvé");
+//        return -1;
+//    }    
+//    std::stringstream ss;
+//    ss << ifs.rdbuf();
+//    ifs.close();
+//    if (document.Parse<0>(ss.str().c_str()).HasParseError()) {    
+
+//    std::ifstream file( "dailywork.json");
+//    if ( ! file )  { 
+//        m_cbMessageInfo("Fichier non trouvé");
+//        return -1;
+//    }    
+//    StringStream is;
+//    is << file.rdbuf();
+//    file.close();
+//    if (document.ParseStream<0>(is).HasParseError()) {    
         //rapidjson::ParseErrorCode parseErrorCode = d.GetParseErrorCode();
         fprintf(stderr, "\nError(offset %u): %s\n", 
         (unsigned) document.GetErrorOffset(),
@@ -34,8 +55,11 @@ int DailyWorkParser::Parse()
         m_cbMessageInfo("Erreur de lecture du fichier");
         return -1;
     }
-    //rapidjson::Value& s = d["project"];
-    return 0;   
+   // m_cbMessageInfo(ss.str());
+ 
+   return 0;   
+    
+    // ECRITURE fwrite (buffer.GetString(), buffer.GetSize(), 1, wFile);
 }
 
 int DailyWorkParser::LoadDatesTree(wxTreeCtrl* tree, bool withHierarchy) 
