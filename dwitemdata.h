@@ -2,15 +2,16 @@
 #define DWITEMDATA_H
 
 #include <wx/treectrl.h>
+#include <rapidjson/document.h>
 
 class DWItemData : public wxTreeItemData
 {
 public:
-    DWItemData (const wxString desc ) : wxTreeItemData(), m_desc(desc) {};
+    DWItemData (rapidjson::Value* value) : wxTreeItemData() {m_value = value; };
     ~DWItemData() {};
-    const wxString& GetDesc() const { return m_desc; };   
+    rapidjson::Value* GetValue() const { return m_value; };   
 private:
-    wxString m_desc;
+    rapidjson::Value* m_value; // pair date/texte
 };
 
 #endif // DWITEMDATA_H

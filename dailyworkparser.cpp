@@ -28,7 +28,7 @@ int DailyWorkParser::Parse()
 //                               "{\"date\":\"2015-07-22\",\"work\":\"niet\"} ] }";
 //    if (document.Parse(json).HasParseError()) {
 
-    std::ifstream ifs( "dailywork.json");
+    std::ifstream ifs(JSON_FILE);
     if ( ! ifs )  { 
         m_cbMessageInfo("Fichier non trouvé");
         return -1;
@@ -58,7 +58,7 @@ int DailyWorkParser::LoadDatesTree(wxTreeCtrl* tree, bool withHierarchy)
     tree->DeleteAllItems();
     tree->SetWindowStyle(wxTR_HIDE_ROOT);
     wxTreeItemId rootID = tree->AddRoot(wxT("Dates"));
-   const Value& data = document["dailywork"];
+   Value& data = document["dailywork"];
    assert(data.IsArray());
 
     int retour;
@@ -73,15 +73,15 @@ int DailyWorkParser::LoadDatesTree(wxTreeCtrl* tree, bool withHierarchy)
     return 0;
 }
 
-int DailyWorkParser::LoadDatesTreeSimple(wxTreeCtrl* tree, wxTreeItemId rootID, const rapidjson::Value& data) 
+int DailyWorkParser::LoadDatesTreeSimple(wxTreeCtrl* tree, wxTreeItemId rootID, rapidjson::Value& data) 
 {
     for (SizeType i = 0; i < data.Size(); i++) {
-        const Value& c = data[i];
+        Value& c = data[i];
         const char* aDate = c["date"].GetString(); 
         int day, month, year;
         std::sscanf(aDate, "%4d-%2d-%2d",  &year, &month,  &day);
         wxTreeItemId itemID = tree->AppendItem(rootID, wxString::Format(wxT("%2d/%2d/%d"), day, month, year));  
-        DWItemData* itemData = new DWItemData(c["work"].GetString());
+        DWItemData* itemData = new DWItemData(&c);
         tree->SetItemData(itemID, itemData);
     }
 //   for (Value::ConstValueIterator itr = data.Begin(); itr != d.End(); ++itr)
@@ -96,7 +96,7 @@ int DailyWorkParser::LoadDatesTreeSimple(wxTreeCtrl* tree, wxTreeItemId rootID, 
     return 0;
 }
 
-int DailyWorkParser::LoadDatesTreeHierarchy(wxTreeCtrl* tree, wxTreeItemId rootID, const rapidjson::Value& data) 
+int DailyWorkParser::LoadDatesTreeHierarchy(wxTreeCtrl* tree, wxTreeItemId rootID, rapidjson::Value& data) 
 {   //TODO fonction à faire 
 
    //for(Value::ConstMemberIterator it = data.MemberBegin(); it != data.MembersEnd(); it++) {
@@ -110,16 +110,37 @@ std::string DailyWorkParser::GetWorkFromTree(wxTreeCtrl* tree)
     wxTreeItemId itemID=tree->GetSelection();
     if (itemID != NULL) {
         DWItemData* itemData=(DWItemData*) tree->GetItemData(itemID);
-        if (itemData != NULL)
-            return std::string(itemData->GetDesc());
+        if (itemData != NULL) {
+             Value& pair =  *itemData->GetValue(); 
+            return pair["work"].GetString();            
+        }
     }   
     m_cbMessageInfo("Aucun élément"); 
     return "";        
 }
-int DailyWorkParser::UpdateWork(DWItemData* itemData, std::string text)
 
+int DailyWorkParser::UpdateWork(DWItemData* itemData, std::string text)
 {
-//    if (itemData != NULL)
-//        itemData->Se
+    if (itemData != NULL) {
+        //char buffer[1024];
+        //int len = sprintf(buffer, "%s", text); 
+        Value& pair =  *itemData->GetValue(); 
+        pair["work"].SetString(text.data(), text.size(), document.GetAllocator());
+       //memset(buffer, 0, sizeof(len));
+   }
+    else {
+        m_cbMessageInfo("Mise à jour impossible");
+        return -1;        
+    }
     return 0;
+}
+
+int DailyWorkParser::Save()
+{
+    FILE* fp = fopen(JSON_FILE, "wb"); // non-Windows use "w"
+    char writeBuffer[65536];
+    FileWriteStream os(fp, writeBuffer, sizeof(writeBuffer));
+    Writer<FileWriteStream> writer(os);
+    document.Accept(writer);
+    fclose(fp);
 }

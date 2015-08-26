@@ -2,6 +2,7 @@
 
 #include "main.h"
 
+
 DECLARE_APP(MainApp)
 
 ///////////////////////////////////////////////////////////////////////////
@@ -74,9 +75,6 @@ enum
     ID_RICHTEXT_CTRL,
     ID_RICHTEXT_STYLE_LIST,
     ID_RICHTEXT_STYLE_COMBO, 
-    
- //   ID_CALENDAR_SEL_CHANGED, 
-//    ID_TREE_SEL_CHANGED
 };
 
 // ----------------------------------------------------------------------------
@@ -415,11 +413,13 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
 void MainFrame::ConnectSelChanged() {
  // conection fait aprés chargement 
 	m_treeDates->Connect( wxEVT_TREE_SEL_CHANGED, wxTreeEventHandler( MainFrame::OnTreeSelChanged ), NULL, this );
+	m_treeDates->Connect( wxEVT_TREE_SEL_CHANGING, wxTreeEventHandler( MainFrame::OnTreeSelChanging ), NULL, this );    
 	m_calendar->Connect( wxEVT_CALENDAR_SEL_CHANGED, wxCalendarEventHandler( MainFrame::OnCalendarSelChanged ), NULL, this );
 }
 
 void MainFrame::DisconnectSelhanged() {
     m_treeDates->Disconnect( wxEVT_COMMAND_TREE_SEL_CHANGED, wxTreeEventHandler( MainFrame::OnTreeSelChanged ), NULL, this );
+	m_treeDates->Disconnect( wxEVT_TREE_SEL_CHANGING, wxTreeEventHandler( MainFrame::OnTreeSelChanging ), NULL, this );
 	m_calendar->Disconnect( wxEVT_CALENDAR_SEL_CHANGED, wxCalendarEventHandler( MainFrame::OnCalendarSelChanged ), NULL, this );  
 }
     
@@ -439,19 +439,35 @@ void MainFrame::OnCalendarSelChanged(wxCalendarEvent& event)
    // m_treeDates->AddChild()
 }  
 
+void MainFrame::OnTreeSelChanging( wxTreeEvent& event )
+{
+    wxRichTextBuffer & rtb = m_editor->GetBuffer();
+    if (rtb.IsModified() ) {
+        wxTreeItemId itemID=m_treeDates->GetSelection();
+        if (itemID != NULL) {
+            DWItemData* itemData=(DWItemData*) m_treeDates->GetItemData(itemID);
+            if (itemData != NULL) {
+                wxStringOutputStream OldStream;    
+                rtb.SaveFile(OldStream, wxRICHTEXT_TYPE_TEXT);
+                wxGetApp().GetDWParser()->UpdateWork(itemData, OldStream.GetString().ToStdString()); //todo save
+                return ;
+            }
+        }
+        OnStatusBarMessage("Erreur de mise à jour");   
+    }    
+}
+
 void MainFrame::OnTreeSelChanged( wxTreeEvent& event )
 {
     wxString texte = wxGetApp().GetDWParser()->GetWorkFromTree(m_treeDates);
     wxStringInputStream final(texte);
     wxRichTextBuffer & rtb = m_editor->GetBuffer();
-    if (rtb.IsModified() ) {
-//        wxStringOuputStream OldStream;    
-//        rtb.SaveFile(OldStream, wxRICHTEXT_TYPE_TEXT);
-//        wxGetApp().GetDWParser()->  //todo save
-    }    
-//    m_editor->BeginSuppressUndo();
-     rtb.ResetAndClearCommands();
+    rtb.ResetAndClearCommands();
     rtb.Clear();
+    m_editor->WriteText(wxString::FromUTF8(texte.c_str()));
+    //LOG(INFO) << texte ;
+    
+//    m_editor->BeginSuppressUndo();
 //    bool retour = rtb.LoadFile(final); // == 0
 //    //rtb.AddParagraph(wxT("Testeeds"));
 //    rtb.UpdateRanges();
@@ -465,8 +481,6 @@ void MainFrame::OnTreeSelChanged( wxTreeEvent& event )
 //    m_editor->Refresh(false); 
     //OnStatusBarMessage(texte.ToStdString());
    
-    m_editor->WriteText(wxString::FromUTF8(texte.c_str()));
-    //LOG(INFO) << texte ;
 }
 
 void MainFrame::OnStatusBarMessage(std::string msg)
@@ -871,7 +885,8 @@ bool MainFrame::ProcessEvent(wxEvent& event)
 
 void MainFrame::OnOpen(wxCommandEvent& WXUNUSED(event))
 {
-    //wxGetApp().InitDailyWorkParser();
+    wxGetApp().InitDailyWorkParser();
+    /*
     wxString path;
     wxString filename;
     wxArrayInt fileTypes;
@@ -900,17 +915,20 @@ void MainFrame::OnOpen(wxCommandEvent& WXUNUSED(event))
                            : wxRICHTEXT_TYPE_TEXT;
             m_editor->LoadFile(path, fileType);
         }
-    }
+    }*/
 }
 
 void MainFrame::OnSave(wxCommandEvent& event)
 {
+    wxGetApp().GetDWParser()->Save();
+    /*
     if (m_editor->GetFilename().empty())
     {
         OnSaveAs(event);
         return;
     }
     m_editor->SaveFile();
+     */
 }
 
 void MainFrame::OnSaveAs(wxCommandEvent& WXUNUSED(event))

@@ -4,6 +4,8 @@
 #include <string>
 #include <functional>
 #include <rapidjson/document.h>
+#include <rapidjson/filewritestream.h>
+#include <rapidjson/writer.h>
 #include <wx/treectrl.h>
 
 #include "dwitemdata.h"
@@ -21,13 +23,15 @@ public:
     int LoadDatesTree(wxTreeCtrl* tree, bool withHierarchy);
     std::string GetWorkFromTree(wxTreeCtrl* tree);
     int UpdateWork(DWItemData* itemData, std::string text);
+    int Save();
 
 private:
     // The callback provided by the client via ConnectCallback().
     CallbackMessageInfo m_cbMessageInfo;
     rapidjson::Document document;
-    int LoadDatesTreeHierarchy(wxTreeCtrl* tree, wxTreeItemId rootID, const rapidjson::Value& data);
-    int LoadDatesTreeSimple(wxTreeCtrl* tree, wxTreeItemId rootID, const rapidjson::Value& data);
+    const char* JSON_FILE = "dailywork.json";
+    int LoadDatesTreeHierarchy(wxTreeCtrl* tree, wxTreeItemId rootID, rapidjson::Value& data);
+    int LoadDatesTreeSimple(wxTreeCtrl* tree, wxTreeItemId rootID, rapidjson::Value& data);
 };
 
 #endif // DAILYWORKPARSER_H

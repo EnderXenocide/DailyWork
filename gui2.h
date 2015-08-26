@@ -12,7 +12,7 @@
 #include <wx/menu.h>
 #include <wx/gdicmn.h>
 #include <wx/font.h>
-#include <wx/colour.h>
+//#include <wx/colour.h>
 #include <wx/settings.h>
 #include <wx/treectrl.h>
 #include <wx/calctrl.h>
@@ -90,6 +90,7 @@ public:
 protected:  
     // Virtual event handlers, overide them in your derived class
     void OnCloseFrame( wxCloseEvent& event );
+    void OnTreeSelChanging( wxTreeEvent& event );
     void OnTreeSelChanged( wxTreeEvent& event );
     void OnCalendarSelChanged( wxCalendarEvent& event );
 

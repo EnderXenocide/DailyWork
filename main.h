@@ -53,14 +53,16 @@ public:
  
 #if wxUSE_PRINTING_ARCHITECTURE
     wxRichTextPrinting* GetPrinting() const { return m_printing; }
-    wxRichTextPrinting*     m_printing;
 #endif   
 
      MainFrame* frame; 
 
 private:
     wxRichTextStyleSheet*   m_styleSheet;
-    DailyWorkParser dwparser;    
+    DailyWorkParser dwparser; 
+#if wxUSE_PRINTING_ARCHITECTURE
+    wxRichTextPrinting*     m_printing;
+#endif      
 };
 
 // declare global static function wxGetApp()
