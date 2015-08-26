@@ -8,8 +8,7 @@ class DWItemData : public wxTreeItemData
 public:
     DWItemData (const wxString desc ) : wxTreeItemData(), m_desc(desc) {};
     ~DWItemData() {};
-    const wxString& GetDesc() const { return m_desc; };
-    
+    const wxString& GetDesc() const { return m_desc; };   
 private:
     wxString m_desc;
 };

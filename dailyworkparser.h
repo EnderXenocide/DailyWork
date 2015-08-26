@@ -6,6 +6,8 @@
 #include <rapidjson/document.h>
 #include <wx/treectrl.h>
 
+#include "dwitemdata.h"
+
 typedef std::function<void(std::string)> CallbackMessageInfo;
 //typedef std::function<int(int)> CallbackFunction;
 
@@ -18,6 +20,8 @@ public:
     int Parse();
     int LoadDatesTree(wxTreeCtrl* tree, bool withHierarchy);
     std::string GetWorkFromTree(wxTreeCtrl* tree);
+    int UpdateWork(DWItemData* itemData, std::string text);
+
 private:
     // The callback provided by the client via ConnectCallback().
     CallbackMessageInfo m_cbMessageInfo;

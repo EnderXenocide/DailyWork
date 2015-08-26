@@ -1,5 +1,4 @@
 #include "dailyworkparser.h"
-#include "dwitemdata.h"
 #include "rapidjson/document.h"
 #include "rapidjson/error/en.h"
 #include <fstream>
@@ -116,4 +115,11 @@ std::string DailyWorkParser::GetWorkFromTree(wxTreeCtrl* tree)
     }   
     m_cbMessageInfo("Aucun élément"); 
     return "";        
+}
+int DailyWorkParser::UpdateWork(DWItemData* itemData, std::string text)
+
+{
+//    if (itemData != NULL)
+//        itemData->Se
+    return 0;
 }

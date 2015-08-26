@@ -75,8 +75,8 @@ enum
     ID_RICHTEXT_STYLE_LIST,
     ID_RICHTEXT_STYLE_COMBO, 
     
-    ID_CALENDAR_SEL_CHANGED, 
-    ID_TREE_SEL_CHANGED
+ //   ID_CALENDAR_SEL_CHANGED, 
+//    ID_TREE_SEL_CHANGED
 };
 
 // ----------------------------------------------------------------------------
@@ -173,8 +173,8 @@ wxBEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_MENU(ID_SET_FONT_SCALE, MainFrame::OnSetFontScale)
     EVT_MENU(ID_SET_DIMENSION_SCALE, MainFrame::OnSetDimensionScale)
     
-    EVT_TREE_SEL_CHANGED(ID_TREE_SEL_CHANGED, MainFrame::OnTreeSelChanged)
-    EVT_CALENDAR_SEL_CHANGED(ID_CALENDAR_SEL_CHANGED, MainFrame::OnCalendarSelChanged)
+//    EVT_TREE_SEL_CHANGED(ID_TREE_SEL_CHANGED, MainFrame::OnTreeSelChanged)
+//    EVT_CALENDAR_SEL_CHANGED(ID_CALENDAR_SEL_CHANGED, MainFrame::OnCalendarSelChanged)
 
 wxEND_EVENT_TABLE()
 
@@ -186,9 +186,7 @@ MainFrame::~MainFrame()
 	// Disconnect Events
 //	this->Disconnect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( MainFrame::OnCloseFrame ) );
 //	this->Disconnect( wxID_EXIT, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnExitClick ) );
-	m_treeDates->Disconnect( wxEVT_COMMAND_TREE_SEL_CHANGED, wxTreeEventHandler( MainFrame::OnTreeSelChanged ), NULL, this );
-	m_calendar->Disconnect( wxEVT_CALENDAR_SEL_CHANGED, wxCalendarEventHandler( MainFrame::OnCalendarSelChanged ), NULL, this );
-
+    DisconnectSelhanged();	
 }
 
 
@@ -404,14 +402,27 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
 
 	this->Centre( wxBOTH );
 
-//    WriteInitialText();
+    WriteInitialText();
  //	// Connect Events
 //	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( MainFrame::OnCloseFrame ) );
 //	this->Connect( menuFileExit->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnExitClick ) );
+
+// connection fait aprés chargement  dwparser
+//	m_treeDates->Connect( wxEVT_TREE_SEL_CHANGED, wxTreeEventHandler( MainFrame::OnTreeSelChanged ), NULL, this );
+//	m_calendar->Connect( wxEVT_CALENDAR_SEL_CHANGED, wxCalendarEventHandler( MainFrame::OnCalendarSelChanged ), NULL, this );
+}   
+    
+void MainFrame::ConnectSelChanged() {
+ // conection fait aprés chargement 
 	m_treeDates->Connect( wxEVT_TREE_SEL_CHANGED, wxTreeEventHandler( MainFrame::OnTreeSelChanged ), NULL, this );
 	m_calendar->Connect( wxEVT_CALENDAR_SEL_CHANGED, wxCalendarEventHandler( MainFrame::OnCalendarSelChanged ), NULL, this );
-}   
+}
 
+void MainFrame::DisconnectSelhanged() {
+    m_treeDates->Disconnect( wxEVT_COMMAND_TREE_SEL_CHANGED, wxTreeEventHandler( MainFrame::OnTreeSelChanged ), NULL, this );
+	m_calendar->Disconnect( wxEVT_CALENDAR_SEL_CHANGED, wxCalendarEventHandler( MainFrame::OnCalendarSelChanged ), NULL, this );  
+}
+    
 void MainFrame::OnCloseFrame(wxCloseEvent& event)
 {
 	Destroy();
@@ -432,18 +443,19 @@ void MainFrame::OnTreeSelChanged( wxTreeEvent& event )
 {
     wxString texte = wxGetApp().GetDWParser()->GetWorkFromTree(m_treeDates);
     wxStringInputStream final(texte);
-    if (m_editor->IsModified() ) {
-            //todo save
+    wxRichTextBuffer & rtb = m_editor->GetBuffer();
+    if (rtb.IsModified() ) {
+//        wxStringOuputStream OldStream;    
+//        rtb.SaveFile(OldStream, wxRICHTEXT_TYPE_TEXT);
+//        wxGetApp().GetDWParser()->  //todo save
     }    
 //    m_editor->BeginSuppressUndo();
-    wxRichTextBuffer & rtb = m_editor->GetBuffer();
-    rtb.ResetAndClearCommands();
+     rtb.ResetAndClearCommands();
     rtb.Clear();
 //    bool retour = rtb.LoadFile(final); // == 0
 //    //rtb.AddParagraph(wxT("Testeeds"));
 //    rtb.UpdateRanges();
-//    m_editor->EndSuppressUndo();
-//
+//    m_editor->EndSuppressUndo();//
 ////    bool retour = rtb.LoadFile(final, wxRICHTEXT_TYPE_RTF); 
 ////    rtb.UpdateRanges();
 ////    rtb.Invalidate(wxRICHTEXT_ALL);
@@ -859,8 +871,8 @@ bool MainFrame::ProcessEvent(wxEvent& event)
 
 void MainFrame::OnOpen(wxCommandEvent& WXUNUSED(event))
 {
-    wxGetApp().InitDailyWorkParser();
-    /*wxString path;
+    //wxGetApp().InitDailyWorkParser();
+    wxString path;
     wxString filename;
     wxArrayInt fileTypes;
 
@@ -888,7 +900,7 @@ void MainFrame::OnOpen(wxCommandEvent& WXUNUSED(event))
                            : wxRICHTEXT_TYPE_TEXT;
             m_editor->LoadFile(path, fileType);
         }
-    }*/
+    }
 }
 
 void MainFrame::OnSave(wxCommandEvent& event)

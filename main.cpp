@@ -101,10 +101,10 @@ bool MainApp::OnInit()
     MainFrame* sameframe  = frame;
     dwparser.ConnectCallback([sameframe](std::string msg) { sameframe->OnStatusBarMessage(msg); });
     InitDailyWorkParser();
-    
     // and show it (the frames, unlike simple controls, are not shown when
     // created initially)
     frame->Show(true);
+    frame->ConnectSelChanged();
 
     // success: wxApp::OnRun() will be called which will enter the main message
     // loop and the application will run. If we returned false here, the
