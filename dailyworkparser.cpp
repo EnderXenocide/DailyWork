@@ -4,8 +4,10 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include "easylogging++.h"
 
 using namespace rapidjson;
+
 
 DailyWorkParser::DailyWorkParser()
 {    
@@ -115,7 +117,7 @@ std::string DailyWorkParser::GetWorkFromTree(wxTreeCtrl* tree)
             return pair["work"].GetString();            
         }
     }   
-    m_cbMessageInfo("Aucun élément"); 
+    LOG(ERROR) << "Aucun élément"; 
     return "";        
 }
 
@@ -129,7 +131,7 @@ int DailyWorkParser::UpdateWork(DWItemData* itemData, std::string text)
        //memset(buffer, 0, sizeof(len));
    }
     else {
-        m_cbMessageInfo("Mise à jour impossible");
+        LOG(ERROR) << "Mise à jour impossible";
         return -1;        
     }
     return 0;
