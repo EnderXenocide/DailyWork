@@ -27,6 +27,7 @@ IMPLEMENT_APP(MainApp);
 bool MainApp::OnInit()
 {
     START_EASYLOGGINGPP(wxGetApp().argc, wxGetApp().argv);
+    LOG(DEBUG ) << "START";
 //	SetTopWindow( new MainFrame( NULL ) );
 //	GetTopWindow()->Show();
 	
@@ -99,12 +100,14 @@ bool MainApp::OnInit()
 #endif
 
     MainFrame* sameframe  = frame;
+
+    frame->ConnectSelChanged();
+
     dwparser.ConnectCallback([sameframe](std::string msg) { sameframe->OnStatusBarMessage(msg); });
     InitDailyWorkParser();
     // and show it (the frames, unlike simple controls, are not shown when
     // created initially)
     frame->Show(true);
-    frame->ConnectSelChanged();
 
     // success: wxApp::OnRun() will be called which will enter the main message
     // loop and the application will run. If we returned false here, the
@@ -271,8 +274,14 @@ void MainApp::CreateStyles()
     m_styleSheet->AddListStyle(outlineList);
 
 }
+
 void MainApp::InitDailyWorkParser()
 {
 if ( ! dwparser.Parse()) 
+   LoadDailyWorkInTree();
+}
+
+void MainApp::LoadDailyWorkInTree()
+{
     dwparser.LoadDatesTree(frame->m_treeDates, FALSE);  // LoadDatesTreeHierarchy  unimplemented
 }

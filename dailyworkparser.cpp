@@ -57,11 +57,12 @@ int DailyWorkParser::Parse()
 
 int DailyWorkParser::LoadDatesTree(wxTreeCtrl* tree, bool withHierarchy) 
 {
+    LOG(INFO) << "Loading Tree with json data..." ;
     tree->DeleteAllItems();
     tree->SetWindowStyle(wxTR_HIDE_ROOT);
     wxTreeItemId rootID = tree->AddRoot(wxT("Dates"));
-   Value& data = document["dailywork"];
-   assert(data.IsArray());
+    Value& data = document["dailywork"];
+    assert(data.IsArray());
 
     int retour;
     if (withHierarchy)
@@ -70,19 +71,21 @@ int DailyWorkParser::LoadDatesTree(wxTreeCtrl* tree, bool withHierarchy)
         retour = LoadDatesTreeSimple(tree, rootID, data) ;
     if (!retour)
         m_cbMessageInfo("Dates chargées"); 
-    else
+    else {
         m_cbMessageInfo("Erreur de chargement des dates"); 
+        LOG(ERROR) << "Erreur de chargement des dates" ;
+    }
+    LOG(INFO) << "Tree Loaded" ;
     return 0;
 }
 
 int DailyWorkParser::LoadDatesTreeSimple(wxTreeCtrl* tree, wxTreeItemId rootID, rapidjson::Value& data) 
 {
+    LOG(INFO) << "Loading Tree Simple... " ;
     for (SizeType i = 0; i < data.Size(); i++) {
         Value& c = data[i];
-        const char* aDate = c["date"].GetString(); 
-        int day, month, year;
-        std::sscanf(aDate, "%4d-%2d-%2d",  &year, &month,  &day);
-        wxTreeItemId itemID = tree->AppendItem(rootID, wxString::Format(wxT("%2d/%2d/%d"), day, month, year));  
+        wxString sDate = ToTreeDate(GetDateFromItem(c)); 
+        wxTreeItemId itemID = tree->AppendItem(rootID, sDate);  
         DWItemData* itemData = new DWItemData(&c);
         tree->SetItemData(itemID, itemData);
     }
@@ -113,8 +116,8 @@ std::string DailyWorkParser::GetWorkFromTree(wxTreeCtrl* tree)
     if (itemID != NULL) {
         DWItemData* itemData=(DWItemData*) tree->GetItemData(itemID);
         if (itemData != NULL) {
-             Value& pair =  *itemData->GetValue(); 
-            return pair["work"].GetString();            
+            Value& pair =  *itemData->GetValue(); 
+            return GetWorkFromItem(pair);
         }
     }   
     LOG(ERROR) << "Aucun élément"; 
@@ -124,10 +127,11 @@ std::string DailyWorkParser::GetWorkFromTree(wxTreeCtrl* tree)
 int DailyWorkParser::UpdateWork(DWItemData* itemData, std::string text)
 {
     if (itemData != NULL) {
-        //char buffer[1024];
+         //char buffer[1024];
         //int len = sprintf(buffer, "%s", text); 
+        //teste qui marche : text = "éàer";
         Value& pair =  *itemData->GetValue(); 
-        pair["work"].SetString(text.data(), text.size(), document.GetAllocator());
+        SetWorkFromItem(pair, text);
        //memset(buffer, 0, sizeof(len));
    }
     else {
@@ -145,4 +149,36 @@ int DailyWorkParser::Save()
     Writer<FileWriteStream> writer(os);
     document.Accept(writer);
     fclose(fp);
+    return 0;
+}
+int DailyWorkParser::AddDateToTree(wxTreeCtrl* tree, rapidjson::Value& data, wxTreeItemId addBeforeId)
+{
+
+}
+
+std::string DailyWorkParser::GetDateFromItem(rapidjson::Value& item)
+{
+    return item["date"].GetString(); 
+}
+
+std::string DailyWorkParser::GetWorkFromItem(rapidjson::Value& item)
+{
+    return item["work"].GetString(); 
+}
+
+/*
+ * Ex : Transfome une date 2015-12-31 en 31/12/2015
+ * */
+wxString DailyWorkParser::ToTreeDate(std::string aDWDate)
+{
+    int day, month, year;
+    std::sscanf(aDWDate.c_str(), "%4d-%2d-%2d",  &year, &month,  &day);
+    return wxString::Format(wxT("%2d/%2d/%d"), day, month, year) ;
+}
+
+int DailyWorkParser::SetWorkFromItem(rapidjson::Value& item, std::string text)
+{
+    assert(item.IsObject());
+    item["work"].SetString(text.data(), text.size(), document.GetAllocator());
+    return 0;
 }

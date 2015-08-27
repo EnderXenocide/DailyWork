@@ -28,7 +28,7 @@ enum
     ID_FORMAT_PARAGRAPH,
     ID_FORMAT_CONTENT,
 
-    ID_RELOAD,
+    //ID_RELOAD,
 
     ID_INSERT_SYMBOL,
     ID_INSERT_URL,
@@ -134,7 +134,7 @@ wxBEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_MENU(ID_FORMAT_PARAGRAPH_SPACING_MORE,  MainFrame::OnParagraphSpacingMore)
     EVT_MENU(ID_FORMAT_PARAGRAPH_SPACING_LESS,  MainFrame::OnParagraphSpacingLess)
 
-    EVT_MENU(ID_RELOAD,  MainFrame::OnReload)
+    //EVT_MENU(ID_RELOAD,  MainFrame::OnReload)
 
     EVT_MENU(ID_INSERT_SYMBOL,  MainFrame::OnInsertSymbol)
     EVT_MENU(ID_INSERT_URL,  MainFrame::OnInsertURL)
@@ -210,8 +210,8 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     fileMenu->Append(wxID_OPEN, wxT("&Open\tCtrl+O"), wxT("Open a file"));
     fileMenu->Append(wxID_SAVE, wxT("&Save\tCtrl+S"), wxT("Save a file"));
     fileMenu->Append(wxID_SAVEAS, wxT("&Save As...\tF12"), wxT("Save to a new file"));
-    fileMenu->AppendSeparator();
-    fileMenu->Append(ID_RELOAD, wxT("&Reload Text\tF2"), wxT("Reload the initial text"));
+//    fileMenu->AppendSeparator();
+//    fileMenu->Append(ID_RELOAD, wxT("&Reload Text\tF2"), wxT("Reload the initial text"));
     fileMenu->AppendSeparator();
     fileMenu->Append(ID_PAGE_SETUP, wxT("Page Set&up..."), wxT("Page setup"));
 #if wxUSE_PRINTING_ARCHITECTURE
@@ -365,7 +365,7 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
   //  mainSizer->Add(toolBar, 0, wxEXPAND);
 
     toolBar->AddTool(wxID_OPEN, wxEmptyString, wxBitmap(open_xpm), _("Open"));
-    toolBar->AddTool(wxID_SAVEAS, wxEmptyString, wxBitmap(save_xpm), _("Save"));
+    toolBar->AddTool(wxID_SAVE, wxEmptyString, wxBitmap(save_xpm), _("Save"));
     toolBar->AddSeparator();
     toolBar->AddTool(wxID_CUT, wxEmptyString, wxBitmap(cut_xpm), _("Cut"));
     toolBar->AddTool(wxID_COPY, wxEmptyString, wxBitmap(copy_xpm), _("Copy"));
@@ -400,12 +400,12 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
 
 	this->Centre( wxBOTH );
 
-    WriteInitialText();
+ //   WriteInitialText();
+ 
  //	// Connect Events
 //	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( MainFrame::OnCloseFrame ) );
 //	this->Connect( menuFileExit->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnExitClick ) );
-
-// connection fait aprés chargement  dwparser
+//todo prevenir wxEVT_TREE_SEL_CHANGING au demarage connection fait aprés chargement  dwparser 
 //	m_treeDates->Connect( wxEVT_TREE_SEL_CHANGED, wxTreeEventHandler( MainFrame::OnTreeSelChanged ), NULL, this );
 //	m_calendar->Connect( wxEVT_CALENDAR_SEL_CHANGED, wxCalendarEventHandler( MainFrame::OnCalendarSelChanged ), NULL, this );
 }   
@@ -421,6 +421,26 @@ void MainFrame::DisconnectSelhanged() {
     m_treeDates->Disconnect( wxEVT_COMMAND_TREE_SEL_CHANGED, wxTreeEventHandler( MainFrame::OnTreeSelChanged ), NULL, this );
 	m_treeDates->Disconnect( wxEVT_TREE_SEL_CHANGING, wxTreeEventHandler( MainFrame::OnTreeSelChanging ), NULL, this );
 	m_calendar->Disconnect( wxEVT_CALENDAR_SEL_CHANGED, wxCalendarEventHandler( MainFrame::OnCalendarSelChanged ), NULL, this );  
+}
+
+void MainFrame::UpdateDWWork()
+{
+    wxRichTextBuffer & rtb = m_editor->GetBuffer();
+    if (rtb.IsModified() ) {
+        wxTreeItemId itemID=m_treeDates->GetSelection();
+        if (itemID != NULL) {
+            DWItemData* itemData=(DWItemData*) m_treeDates->GetItemData(itemID);
+            if (itemData != NULL) {
+                LOG(DEBUG ) << "Edit modified : " << rtb.GetText().ToUTF8();
+                wxGetApp().GetDWParser()->UpdateWork(itemData, rtb.GetText().ToUTF8().data()); 
+                return ;
+            }
+            LOG(ERROR) << "No DWItemData for the wxTreeItemId selected";
+        }
+        else {
+            LOG(DEBUG ) << "wxTreeItemId is null";
+        }
+    }    
 }
     
 void MainFrame::OnCloseFrame(wxCloseEvent& event)
@@ -441,37 +461,27 @@ void MainFrame::OnCalendarSelChanged(wxCalendarEvent& event)
 
 void MainFrame::OnTreeSelChanging( wxTreeEvent& event )
 {
-    wxRichTextBuffer & rtb = m_editor->GetBuffer();
-    if (rtb.IsModified() ) {
-        wxTreeItemId itemID=m_treeDates->GetSelection();
-        if (itemID != NULL) {
-            DWItemData* itemData=(DWItemData*) m_treeDates->GetItemData(itemID);
-            if (itemData != NULL) {
-                wxStringOutputStream OldStream;    
-                rtb.SaveFile(OldStream, wxRICHTEXT_TYPE_TEXT);
-                wxGetApp().GetDWParser()->UpdateWork(itemData, OldStream.GetString().ToStdString()); //todo save
-                return ;
-            }
-        }
-        OnStatusBarMessage("Erreur de mise à jour");   
-    }    
+    UpdateDWWork();
 }
 
 void MainFrame::OnTreeSelChanged( wxTreeEvent& event )
 {
     wxString texte = wxGetApp().GetDWParser()->GetWorkFromTree(m_treeDates);
+    LOG(DEBUG ) << "Text to show in editor : " << texte;   
     wxStringInputStream final(texte);
     wxRichTextBuffer & rtb = m_editor->GetBuffer();
+    m_editor->BeginSuppressUndo();
     rtb.ResetAndClearCommands();
     rtb.Clear();
     m_editor->WriteText(wxString::FromUTF8(texte.c_str()));
+    m_editor->EndSuppressUndo();
+    m_editor->DiscardEdits();
     //LOG(INFO) << texte ;
     
-//    m_editor->BeginSuppressUndo();
 //    bool retour = rtb.LoadFile(final); // == 0
 //    //rtb.AddParagraph(wxT("Testeeds"));
 //    rtb.UpdateRanges();
-//    m_editor->EndSuppressUndo();//
+//    
 ////    bool retour = rtb.LoadFile(final, wxRICHTEXT_TYPE_RTF); 
 ////    rtb.UpdateRanges();
 ////    rtb.Invalidate(wxRICHTEXT_ALL);
@@ -486,7 +496,7 @@ void MainFrame::OnTreeSelChanged( wxTreeEvent& event )
 void MainFrame::OnStatusBarMessage(std::string msg)
 {
 	//std::cout << msg << std::endl;
-    LOG(INFO) << msg ;
+    //LOG(INFO) << msg ;
     m_statusBar->SetStatusText(wxString::FromUTF8(msg.c_str()));
 }
 
@@ -885,6 +895,7 @@ bool MainFrame::ProcessEvent(wxEvent& event)
 
 void MainFrame::OnOpen(wxCommandEvent& WXUNUSED(event))
 {
+    LOG(INFO) << "Ouverture du fichier json " ;
     wxGetApp().InitDailyWorkParser();
     /*
     wxString path;
@@ -920,6 +931,7 @@ void MainFrame::OnOpen(wxCommandEvent& WXUNUSED(event))
 
 void MainFrame::OnSave(wxCommandEvent& event)
 {
+    UpdateDWWork(); // met à jour/ou pas le texte ecrit dans le richedit dans DWparser
     wxGetApp().GetDWParser()->Save();
     /*
     if (m_editor->GetFilename().empty())
@@ -933,6 +945,7 @@ void MainFrame::OnSave(wxCommandEvent& event)
 
 void MainFrame::OnSaveAs(wxCommandEvent& WXUNUSED(event))
 {
+    /*
     wxString filter = wxRichTextBuffer::GetExtWildcard(false, true);
     wxString path;
     wxString filename;
@@ -959,7 +972,7 @@ void MainFrame::OnSaveAs(wxCommandEvent& WXUNUSED(event))
             wxLogDebug(wxT("Saving took %ldms"), t);
             wxMessageBox(wxString::Format(wxT("Saving took %ldms"), t));
         }
-    }
+    }*/
 }
 
 void MainFrame::OnBold(wxCommandEvent& WXUNUSED(event))
@@ -1286,11 +1299,11 @@ void MainFrame::OnParagraphSpacingLess(wxCommandEvent& WXUNUSED(event))
     }
 }
 
-void MainFrame::OnReload(wxCommandEvent& WXUNUSED(event))
-{
-    m_editor->Clear();
-    WriteInitialText();
-}
+//void MainFrame::OnReload(wxCommandEvent& WXUNUSED(event))
+//{
+//    m_editor->Clear();
+//    WriteInitialText();
+//}
 
 void MainFrame::OnViewHTML(wxCommandEvent& WXUNUSED(event))
 {
@@ -1674,3 +1687,4 @@ void MainFrame::OnSetDimensionScale(wxCommandEvent& WXUNUSED(event))
         m_editor->SetDimensionScale(scale, true);
     }
 }
+

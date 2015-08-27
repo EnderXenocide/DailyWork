@@ -47,6 +47,7 @@ public:
 
     void CreateStyles();
     void InitDailyWorkParser();
+    void LoadDailyWorkInTree();
     DailyWorkParser* GetDWParser() const { return (DailyWorkParser*) &dwparser; }    
 
     wxRichTextStyleSheet* GetStyleSheet() const { return m_styleSheet; }

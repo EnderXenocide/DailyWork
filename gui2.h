@@ -190,6 +190,7 @@ protected:
 private:
     // any class wishing to process wxWidgets events must use this macro
     wxDECLARE_EVENT_TABLE();
+    void UpdateDWWork();
 };
 
 #endif //__GUI_H__
