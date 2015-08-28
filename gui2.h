@@ -93,6 +93,7 @@ protected:
     void OnTreeSelChanging( wxTreeEvent& event );
     void OnTreeSelChanged( wxTreeEvent& event );
     void OnCalendarSelChanged( wxCalendarEvent& event );
+    void OnCalendarDblClick( wxCalendarEvent& event );
 
     // event handlers (these functions should _not_ be virtual)
     void OnQuit(wxCommandEvent& event);

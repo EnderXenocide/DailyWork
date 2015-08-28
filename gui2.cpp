@@ -179,15 +179,6 @@ wxEND_EVENT_TABLE()
 
 // BEGIN EVENTS
 
-MainFrame::~MainFrame()
-{
-	// Disconnect Events
-//	this->Disconnect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( MainFrame::OnCloseFrame ) );
-//	this->Disconnect( wxID_EXIT, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnExitClick ) );
-    DisconnectSelhanged();	
-}
-
-
 // frame constructor
 MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
         const wxSize& size, long style)
@@ -405,13 +396,23 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
  //	// Connect Events
 //	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( MainFrame::OnCloseFrame ) );
 //	this->Connect( menuFileExit->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnExitClick ) );
-//todo prevenir wxEVT_TREE_SEL_CHANGING au demarage connection fait aprés chargement  dwparser 
-//	m_treeDates->Connect( wxEVT_TREE_SEL_CHANGED, wxTreeEventHandler( MainFrame::OnTreeSelChanged ), NULL, this );
-//	m_calendar->Connect( wxEVT_CALENDAR_SEL_CHANGED, wxCalendarEventHandler( MainFrame::OnCalendarSelChanged ), NULL, this );
+    ConnectSelChanged();
+    m_calendar->Connect( wxEVT_CALENDAR_DOUBLECLICKED, wxCalendarEventHandler( MainFrame::OnCalendarDblClick ), NULL, this );
 }   
-    
+ 
+MainFrame::~MainFrame()
+{
+	// Disconnect Events
+//	this->Disconnect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( MainFrame::OnCloseFrame ) );
+//	this->Disconnect( wxID_EXIT, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnExitClick ) );
+    DisconnectSelhanged();	
+ 	m_calendar->Disconnect( wxEVT_CALENDAR_DOUBLECLICKED, wxCalendarEventHandler( MainFrame::OnCalendarDblClick ), NULL, this );    
+}
+
+   
 void MainFrame::ConnectSelChanged() {
  // conection fait aprés chargement 
+//todo prevenir wxEVT_TREE_SEL_CHANGING au demarage connection fait aprés chargement  dwparser 
 	m_treeDates->Connect( wxEVT_TREE_SEL_CHANGED, wxTreeEventHandler( MainFrame::OnTreeSelChanged ), NULL, this );
 	m_treeDates->Connect( wxEVT_TREE_SEL_CHANGING, wxTreeEventHandler( MainFrame::OnTreeSelChanging ), NULL, this );    
 	m_calendar->Connect( wxEVT_CALENDAR_SEL_CHANGED, wxCalendarEventHandler( MainFrame::OnCalendarSelChanged ), NULL, this );
@@ -424,11 +425,12 @@ void MainFrame::DisconnectSelhanged() {
 }
 
 void MainFrame::UpdateDWWork()
-{
+{ 
+    //todo garder function ici ? car same style que DailyWorkParser::GetWorkFromTree
     wxRichTextBuffer & rtb = m_editor->GetBuffer();
     if (rtb.IsModified() ) {
         wxTreeItemId itemID=m_treeDates->GetSelection();
-        if (itemID != NULL) {
+        if (itemID.IsOk()) {
             DWItemData* itemData=(DWItemData*) m_treeDates->GetItemData(itemID);
             if (itemData != NULL) {
                 LOG(DEBUG ) << "Edit modified : " << rtb.GetText().ToUTF8();
@@ -448,15 +450,19 @@ void MainFrame::OnCloseFrame(wxCloseEvent& event)
 	Destroy();
 }
 
+void MainFrame::OnCalendarDblClick(wxCalendarEvent& event)
+{
+    //chercher date dans tree
+    wxDateTime selDate = m_calendar->GetDate();
+    wxGetApp().GetDWParser()->AddDateToTree(m_treeDates, selDate, true);
+}
+
+
 void MainFrame::OnCalendarSelChanged(wxCalendarEvent& event) 
 { 
     wxTreeItemId ItemID=m_treeDates->GetSelection();
     wxString msg = m_treeDates->GetItemText(ItemID);
     OnStatusBarMessage(msg.ToStdString());
-//    if (ItemID != NULL)
- //       m_treeDates->Delete(ItemID);
- //wxWindowBase child;
-   // m_treeDates->AddChild()
 }  
 
 void MainFrame::OnTreeSelChanging( wxTreeEvent& event )
@@ -933,7 +939,8 @@ void MainFrame::OnSave(wxCommandEvent& event)
 {
     UpdateDWWork(); // met à jour/ou pas le texte ecrit dans le richedit dans DWparser
     wxGetApp().GetDWParser()->Save();
-    /*
+    OnStatusBarMessage("Enregister");
+     /*
     if (m_editor->GetFilename().empty())
     {
         OnSaveAs(event);
@@ -1687,4 +1694,3 @@ void MainFrame::OnSetDimensionScale(wxCommandEvent& WXUNUSED(event))
         m_editor->SetDimensionScale(scale, true);
     }
 }
-

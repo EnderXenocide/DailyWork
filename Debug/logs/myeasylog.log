@@ -216,3 +216,34 @@ suite -fds
 2015-08-27 17:43:31,067 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::OnTreeSelChanged(wxTreeEvent&)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:470] Text to show in editor : rien à déclarerÉ
 suite -fds 
 2015-08-27 17:45:24,074 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::OnTreeSelChanged(wxTreeEvent&)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:470] Text to show in editor : nothing É
+2015-08-28 16:38:10,704 DEBUG [default] [Trinquard@TRINQUARD-PC] [virtual bool MainApp::OnInit()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:30] START
+2015-08-28 16:38:11,957 INFO  [default] Loading Tree with json data...
+2015-08-28 16:38:11,957 INFO  [default] Loading Tree Simple... 
+2015-08-28 16:38:11,958 INFO  [default] Tree Loaded
+2015-08-28 16:39:05,733 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::UpdateDWWork()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:443] wxTreeItemId is null
+2015-08-28 16:39:07,869 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::OnTreeSelChanged(wxTreeEvent&)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:476] Text to show in editor : rien à déclarerÉ
+suite -fds 
+2015-08-28 17:09:13,877 DEBUG [default] [Trinquard@TRINQUARD-PC] [virtual bool MainApp::OnInit()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:30] START
+2015-08-28 17:09:14,432 INFO  [default] Loading Tree with json data...
+2015-08-28 17:09:14,432 INFO  [default] Loading Tree Simple... 
+2015-08-28 17:09:14,434 INFO  [default] Tree Loaded
+2015-08-28 17:09:24,028 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::UpdateDWWork()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:443] wxTreeItemId is null
+2015-08-28 17:09:24,028 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::OnTreeSelChanged(wxTreeEvent&)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:476] Text to show in editor : rien à déclarerÉ
+suite -fds 
+2015-08-28 17:09:27,130 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::OnTreeSelChanged(wxTreeEvent&)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:476] Text to show in editor : nothing É
+2015-08-28 17:09:27,602 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::OnTreeSelChanged(wxTreeEvent&)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:476] Text to show in editor : uncommenté123
+2015-08-28 17:09:30,755 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::UpdateDWWork()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:436] Edit modified : uncommenté1231
+2015-08-28 17:09:30,755 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::OnTreeSelChanged(wxTreeEvent&)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:476] Text to show in editor : nothing É
+2015-08-28 17:09:31,434 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::OnTreeSelChanged(wxTreeEvent&)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:476] Text to show in editor : uncommenté1231
+2015-08-28 17:09:35,682 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::UpdateDWWork()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:436] Edit modified : uncomment
+2015-08-28 17:09:35,683 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::OnTreeSelChanged(wxTreeEvent&)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:476] Text to show in editor : nothing É
+2015-08-28 17:09:36,098 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::OnTreeSelChanged(wxTreeEvent&)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:476] Text to show in editor : uncomment
+2015-08-28 17:51:24,176 DEBUG [default] [Trinquard@TRINQUARD-PC] [virtual bool MainApp::OnInit()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:30] START
+2015-08-28 17:51:25,214 INFO  [default] Loading Tree with json data...
+2015-08-28 17:51:25,214 INFO  [default] Loading Tree Simple... 
+2015-08-28 17:56:39,588 DEBUG [default] [Trinquard@TRINQUARD-PC] [virtual bool MainApp::OnInit()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:30] START
+2015-08-28 17:56:40,142 INFO  [default] Loading Tree with json data...
+2015-08-28 17:56:40,142 INFO  [default] Loading Tree Simple... 
+2015-08-28 17:57:44,222 DEBUG [default] [Trinquard@TRINQUARD-PC] [virtual bool MainApp::OnInit()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:30] START
+2015-08-28 17:57:44,758 INFO  [default] Loading Tree with json data...
+2015-08-28 17:57:44,758 INFO  [default] Loading Tree Simple... 

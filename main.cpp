@@ -101,9 +101,8 @@ bool MainApp::OnInit()
 
     MainFrame* sameframe  = frame;
 
-    frame->ConnectSelChanged();
-
     dwparser.ConnectCallback([sameframe](std::string msg) { sameframe->OnStatusBarMessage(msg); });
+    dwparser.SetTreeWithHierarchy(false);  // LoadDatesTreeHierarchy  unimplemented
     InitDailyWorkParser();
     // and show it (the frames, unlike simple controls, are not shown when
     // created initially)
@@ -283,5 +282,5 @@ if ( ! dwparser.Parse())
 
 void MainApp::LoadDailyWorkInTree()
 {
-    dwparser.LoadDatesTree(frame->m_treeDates, FALSE);  // LoadDatesTreeHierarchy  unimplemented
+    dwparser.LoadDatesTree(frame->m_treeDates); 
 }
