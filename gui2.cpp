@@ -75,6 +75,8 @@ enum
     ID_RICHTEXT_CTRL,
     ID_RICHTEXT_STYLE_LIST,
     ID_RICHTEXT_STYLE_COMBO, 
+    
+    ID_HIERACHY,
 };
 
 // ----------------------------------------------------------------------------
@@ -91,6 +93,8 @@ wxBEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_MENU(wxID_OPEN,  MainFrame::OnOpen)
     EVT_MENU(wxID_SAVE,  MainFrame::OnSave)
     EVT_MENU(wxID_SAVEAS,  MainFrame::OnSaveAs)
+    
+    EVT_MENU(ID_HIERACHY,  MainFrame::OnShowHirerarchicalTree) 
 
     EVT_MENU(ID_FORMAT_BOLD,  MainFrame::OnBold)
     EVT_MENU(ID_FORMAT_ITALIC,  MainFrame::OnItalic)
@@ -201,6 +205,12 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     fileMenu->Append(wxID_OPEN, wxT("&Open\tCtrl+O"), wxT("Open a file"));
     fileMenu->Append(wxID_SAVE, wxT("&Save\tCtrl+S"), wxT("Save a file"));
     fileMenu->Append(wxID_SAVEAS, wxT("&Save As...\tF12"), wxT("Save to a new file"));
+    
+    fileMenu->AppendSeparator();
+    fileMenu->AppendCheckItem(ID_HIERACHY, wxT("&Hierarchical Tree"), wxT("Toggle Simple/Hierarchical Tree"));
+    fileMenu->Check(ID_HIERACHY, wxGetApp().GetDWParser()->IsHierarchicalTree());    
+    fileMenu->Enable(ID_HIERACHY, false);
+    
 //    fileMenu->AppendSeparator();
 //    fileMenu->Append(ID_RELOAD, wxT("&Reload Text\tF2"), wxT("Reload the initial text"));
     fileMenu->AppendSeparator();
@@ -281,17 +291,17 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     insertMenu->Append(ID_INSERT_IMAGE, _("&Image..."));
 
     // now append the freshly created menu to the menu bar...
-    wxMenuBar *menuBar = new wxMenuBar();
-    menuBar->Append(fileMenu, wxT("&File"));
-    menuBar->Append(editMenu, wxT("&Edit"));
-    menuBar->Append(formatMenu, wxT("F&ormat"));
-    menuBar->Append(listsMenu, wxT("&Lists"));
-    menuBar->Append(tableMenu, wxT("&Tables"));
-    menuBar->Append(insertMenu, wxT("&Insert"));
-    menuBar->Append(helpMenu, wxT("&Help"));
+    m_menuBar = new wxMenuBar();
+    m_menuBar->Append(fileMenu, wxT("&File"));
+    m_menuBar->Append(editMenu, wxT("&Edit"));
+    m_menuBar->Append(formatMenu, wxT("F&ormat"));
+    m_menuBar->Append(listsMenu, wxT("&Lists"));
+    m_menuBar->Append(tableMenu, wxT("&Tables"));
+    m_menuBar->Append(insertMenu, wxT("&Insert"));
+    m_menuBar->Append(helpMenu, wxT("&Help"));
 
     // ... and attach this menu bar to the frame
-    SetMenuBar(menuBar);
+    SetMenuBar(m_menuBar);
 
     // create a status bar just for fun (by default with 1 pane only)
     // but don't create it on limited screen space (WinCE)
@@ -511,6 +521,19 @@ void MainFrame::OnStatusBarMessage(std::string msg)
 	//std::cout << msg << std::endl;
     //LOG(INFO) << msg ;
     m_statusBar->SetStatusText(wxString::FromUTF8(msg.c_str()));
+}
+
+void MainFrame::EnableShowHirerarchicalTree(bool hiearchy)
+{
+     m_menuBar->Enable(ID_HIERACHY, hiearchy);
+}
+
+void MainFrame::OnShowHirerarchicalTree(wxCommandEvent& event)
+{
+    bool c = m_menuBar->IsChecked(ID_HIERACHY);
+  //  m_menuBar->Check(ID_HIERACHY, !c);
+    wxGetApp().GetDWParser()->SetHierarchicalTree(c); 
+    wxGetApp().LoadDailyWorkInTree();  
 }
 
 // END EVENTS
@@ -1701,3 +1724,4 @@ void MainFrame::OnSetDimensionScale(wxCommandEvent& WXUNUSED(event))
         m_editor->SetDimensionScale(scale, true);
     }
 }
+

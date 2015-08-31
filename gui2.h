@@ -70,7 +70,6 @@ class MainFrame : public wxFrame
 {
 public:
     wxMenuBar* m_menuBar;
-    wxMenu* m_menuFile;
     wxTreeCtrl* m_treeDates;
     wxCalendarCtrl* m_calendar;
     wxToolBar* m_richTextToolBar;
@@ -86,6 +85,7 @@ public:
     void OnStatusBarMessage(std::string msg);
     void ConnectSelChanged();
     void DisconnectSelhanged();
+    void EnableShowHirerarchicalTree(bool hiearchy);
     
 protected:  
     // Virtual event handlers, overide them in your derived class
@@ -94,6 +94,8 @@ protected:
     void OnTreeSelChanged( wxTreeEvent& event );
     void OnCalendarSelChanged( wxCalendarEvent& event );
     void OnCalendarDblClick( wxCalendarEvent& event );
+    
+    void OnShowHirerarchicalTree(wxCommandEvent& event);
 
     // event handlers (these functions should _not_ be virtual)
     void OnQuit(wxCommandEvent& event);
@@ -102,6 +104,7 @@ protected:
     void OnOpen(wxCommandEvent& event);
     void OnSave(wxCommandEvent& event);
     void OnSaveAs(wxCommandEvent& event);
+    
 
     void OnBold(wxCommandEvent& event);
     void OnItalic(wxCommandEvent& event);

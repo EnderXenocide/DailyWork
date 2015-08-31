@@ -99,10 +99,11 @@ bool MainApp::OnInit()
     m_printing->SetParentWindow(frame);
 #endif
 
-    MainFrame* sameframe  = frame;
+    dwparser.SetHierarchicalTree(true); // avant creation de la frame pour le menu ShowHierarchicalTree
 
+    MainFrame* sameframe  = frame;    
+    
     dwparser.ConnectCallback([sameframe](std::string msg) { sameframe->OnStatusBarMessage(msg); });
-    dwparser.SetTreeWithHierarchy(false);  // LoadDatesTreeHierarchy  unimplemented
     InitDailyWorkParser();
     // and show it (the frames, unlike simple controls, are not shown when
     // created initially)
@@ -276,8 +277,12 @@ void MainApp::CreateStyles()
 
 void MainApp::InitDailyWorkParser()
 {
-if ( ! dwparser.Parse()) 
-   LoadDailyWorkInTree();
+    if (dwparser.Parse()) 
+        frame->EnableShowHirerarchicalTree(false);
+    else    {
+        frame->EnableShowHirerarchicalTree(true);
+        LoadDailyWorkInTree();       
+    }
 }
 
 void MainApp::LoadDailyWorkInTree()

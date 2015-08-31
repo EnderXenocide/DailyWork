@@ -40,8 +40,8 @@ public:
     wxString ToTreeDate(TDate date);
     TDate DWToDate(std::string DWDate);
     int Save();
-    DailyWorkParser& SetTreeWithHierarchy(bool hierarchy) {this->treeWithHierarchy = hierarchy;return *this; }
-    bool IsTreeWithHierarchy() const {return treeWithHierarchy; }
+    DailyWorkParser& SetHierarchicalTree(bool hierarchy) {this->treeWithHierarchy = hierarchy;return *this; }
+    bool IsHierarchicalTree() const {return treeWithHierarchy; }
 
 private:
     const char* JSON_FILE = "dailywork.json";

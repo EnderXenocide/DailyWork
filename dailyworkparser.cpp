@@ -64,8 +64,10 @@ int DailyWorkParser::LoadDatesTree(wxTreeCtrl* tree)
         retour = LoadDatesTreeHierarchy(tree, rootID, dataArray);
     else
         retour = LoadDatesTreeSimple(tree, rootID, dataArray);
-    if(!retour)
+    if(!retour) {
         m_cbMessageInfo("Dates chargées");
+        tree->ExpandAll();
+    }
     else {
         m_cbMessageInfo("Erreur de chargement des dates");
         LOG(ERROR) << "Erreur de chargement des dates";
@@ -196,8 +198,8 @@ int DailyWorkParser::AddDateToTree(wxTreeCtrl* tree, TDate date, bool selectItem
     wxTreeItemId itemId;
     if(treeWithHierarchy) {
         itemId = AddItem(tree, tree->GetRootItem(), wxString::Format("%4d", date.annee));
-        itemId = AddItem(tree, itemId, wxString::Format("%2d", date.mois));
-        itemId = AddItem(tree, itemId, wxString::Format("%2d", date.jour));
+        itemId = AddItem(tree, itemId, wxString::Format("%02d", date.mois));
+        itemId = AddItem(tree, itemId, wxString::Format("%02d", date.jour));
     } else {
         itemId = AddItem(tree, tree->GetRootItem(), ToTreeDate(date));
     }
@@ -219,14 +221,15 @@ wxTreeItemId DailyWorkParser::AddItem(wxTreeCtrl* tree, wxTreeItemId parent, wxS
         wxString itemText = tree->GetItemText(itemId);
         if(itemText == text)
             return itemId;                         // pas besoin d'ajouter l'item
-        else if(text < itemText) {                 // item voulu doit se trouver avant
+        else if(text > itemText) {                 // item voulu doit se trouver après
             itemId = tree->GetPrevSibling(itemId); // on prend l'item precedent pour pouvoir inserer celui qu'on veux
             if(itemId.IsOk())
                 return tree->InsertItem(parent, itemId, text);
             else                                          // pas d'item avant
                 return tree->InsertItem(parent, 0, text); // insert item en premier
         }
-        tree->GetNextChild(parent, cookie);
+        //tree->GetNextSibling(itemId);
+        itemId  = tree->GetNextChild(parent, cookie);
     }
     return tree->AppendItem(parent, text); // item voulu pas trouver
 }
@@ -246,7 +249,6 @@ Value* DailyWorkParser::AddValue(TDate date)
 
 TDate  DailyWorkParser::DWToDate(std::string DWDate)
 {
-    int year, month, day;
     TDate date;
     int n = std::sscanf(DWDate.c_str(), JSON_DATE_FORMAT, &date.annee, &date.mois, &date.jour);
     if (n<3)  {
