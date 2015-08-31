@@ -453,16 +453,23 @@ void MainFrame::OnCloseFrame(wxCloseEvent& event)
 void MainFrame::OnCalendarDblClick(wxCalendarEvent& event)
 {
     //chercher date dans tree
-    wxDateTime selDate = m_calendar->GetDate();
+    wxDateTime wxdate = m_calendar->GetDate();
+    tm selDate;
+    selDate.tm_mday = wxdate.GetDay();
+    selDate.tm_mon = wxdate.GetMonth();
+    selDate.tm_year = wxdate.GetYear()-1900;
     wxGetApp().GetDWParser()->AddDateToTree(m_treeDates, selDate, true);
 }
 
 
 void MainFrame::OnCalendarSelChanged(wxCalendarEvent& event) 
 { 
+    //todo à remplacer
     wxTreeItemId ItemID=m_treeDates->GetSelection();
-    wxString msg = m_treeDates->GetItemText(ItemID);
-    OnStatusBarMessage(msg.ToStdString());
+    if (ItemID.IsOk()) {
+        wxString msg = m_treeDates->GetItemText(ItemID);
+        OnStatusBarMessage(msg.ToStdString());        
+    }
 }  
 
 void MainFrame::OnTreeSelChanging( wxTreeEvent& event )

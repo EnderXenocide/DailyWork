@@ -25,7 +25,7 @@ int DailyWorkParser::Parse()
     //                               "{\"date\":\"2015-07-23\",\"work\":\"nothing\"},"
     //                               "{\"date\":\"2015-07-22\",\"work\":\"niet\"} ] }";
     //    if (document.Parse(json).HasParseError()) {
-
+    LOG(INFO) << "Parse file";
     std::ifstream ifs(JSON_FILE);
     if(!ifs) {
         m_cbMessageInfo("Fichier non trouvé");
@@ -158,7 +158,7 @@ int DailyWorkParser::Save()
     return 0;
 }
 
-wxDateTime DailyWorkParser::GetDateFromItem(Value& item)
+std::tm DailyWorkParser::GetDateFromItem(Value& item)
 {
     return DWToDate(item[JSON_DATE].GetString());
 }
@@ -171,24 +171,18 @@ std::string DailyWorkParser::GetWorkFromItem(Value& item)
 /*
  * Ex : Transfome une date en 2015-12-31
  * */
-wxString DailyWorkParser::ToDWDate(wxDateTime date)
+wxString DailyWorkParser::ToDWDate(tm date)
 {
-    int year = date.GetYear();
-    int month = date.GetMonth();
-    int day = date.GetDay();
-    return wxString::Format(JSON_DATE_FORMAT, day, month, year);
+    return wxString::Format(JSON_DATE_FORMAT, date.tm_mday, date.tm_mon+1, date.tm_year+1900);
 }
 
 /*
  * Ex : Transfome une date 2015-12-31 en 31/12/2015
  * */
-wxString DailyWorkParser::ToTreeDate(wxDateTime date)
+wxString DailyWorkParser::ToTreeDate(tm date)
 {
-    int year = date.GetYear();
-    int month = date.GetMonth();
-    int day = date.GetDay();
     //    std::sscanf(aDWDate.c_str(), JSON_DATE_FORMAT, &year, &month, &day);
-    return wxString::Format(TREE_DATE_FORMAT, day, month, year);
+    return wxString::Format(TREE_DATE_FORMAT, date.tm_mday, date.tm_mon+1, date.tm_year+1900);
 }
 
 int DailyWorkParser::SetWorkFromItem(rapidjson::Value& item, std::string text)
@@ -198,18 +192,15 @@ int DailyWorkParser::SetWorkFromItem(rapidjson::Value& item, std::string text)
     return 0;
 }
 
-int DailyWorkParser::AddDateToTree(wxTreeCtrl* tree, wxDateTime date, bool selectItem)
+int DailyWorkParser::AddDateToTree(wxTreeCtrl* tree, tm date, bool selectItem)
 {
     Value* value = AddValue(date);
 
     wxTreeItemId itemId;
     if(treeWithHierarchy) {
-        int year = date.GetYear();
-        int month = date.GetMonth();
-        int day = date.GetDay();
-        itemId = AddItem(tree, tree->GetRootItem(), wxString(std::to_string(year)));
-        itemId = AddItem(tree, itemId, wxString(std::to_string(month)));
-        itemId = AddItem(tree, itemId, wxString(std::to_string(day)));
+        itemId = AddItem(tree, tree->GetRootItem(), wxString::Format("%4d", date.tm_year+1900));
+        itemId = AddItem(tree, itemId, wxString::Format("%2d", date.tm_mon+1));
+        itemId = AddItem(tree, itemId, wxString::Format("%2d", date.tm_mday));
     } else {
         itemId = AddItem(tree, tree->GetRootItem(), ToTreeDate(date));
     }
@@ -243,7 +234,7 @@ wxTreeItemId DailyWorkParser::AddItem(wxTreeCtrl* tree, wxTreeItemId parent, wxS
     return tree->AppendItem(parent, text); // item voulu pas trouver
 }
 
-Value* DailyWorkParser::AddValue(wxDateTime date)
+Value* DailyWorkParser::AddValue(tm date)
 {
     wxString DWDate = ToDWDate(date);
     Document::AllocatorType& allocator = document.GetAllocator();
@@ -253,16 +244,21 @@ Value* DailyWorkParser::AddValue(wxDateTime date)
     value.AddMember("date", valueString, allocator);  //todo JSON_DATE ne marche pas
     value.AddMember("work", "", allocator); //todo JSON_WORK ne marche pas
     document[JSON_ARRAY].PushBack(value, allocator);
-    return &value;
+    return &value; //todo valid ?
 }
 
-wxDateTime DailyWorkParser::DWToDate(std::string DWDate)
+tm  DailyWorkParser::DWToDate(std::string DWDate)
 {
     int year, month, day;
     int n = std::sscanf(DWDate.c_str(), JSON_DATE_FORMAT, &year, &month, &day);
     if (n<3)  {
         LOG(ERROR) << "Can't convert " << DWDate << "to date";
-        return wxDateTime::Now();
+        time_t now = time(0);
+        // convert now to tm struct for UTC
+        tm* gmtm = gmtime(&now);
+        return *gmtm;
     }
-    return wxDateTime(day, month, year); //todo à corriger  
+    tm timev;
+    timev.tm_year = year-1900; timev.tm_mon = month-1; timev.tm_mday = day; 
+    return timev; 
 }

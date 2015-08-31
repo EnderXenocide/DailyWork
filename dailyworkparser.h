@@ -7,9 +7,10 @@
 #include <rapidjson/filewritestream.h>
 #include <rapidjson/writer.h>
 #include <wx/treectrl.h>
-#include <wx/datetime.h>
+#include <ctime>
 
 #include "dwitemdata.h"
+
 
 using namespace rapidjson;
 
@@ -23,16 +24,16 @@ public:
     ~DailyWorkParser();
     void ConnectCallback(CallbackMessageInfo cb);
     int Parse();
-    int AddDateToTree(wxTreeCtrl* tree, wxDateTime date, bool selectItem = false);
+    int AddDateToTree(wxTreeCtrl* tree, tm date, bool selectItem = false);
     int LoadDatesTree(wxTreeCtrl* tree);
     std::string GetWorkFromTree(wxTreeCtrl* tree);
     int UpdateWork(DWItemData* itemData, std::string text);
-    wxDateTime GetDateFromItem(Value& item);
+    tm GetDateFromItem(Value& item);
     std::string GetWorkFromItem(Value& item);
     int SetWorkFromItem(Value& item, std::string text);
-    wxString ToDWDate(wxDateTime date);
-    wxString ToTreeDate(wxDateTime date);
-    wxDateTime DWToDate(std::string DWDate);
+    wxString ToDWDate(tm date);
+    wxString ToTreeDate(tm date);
+    tm DWToDate(std::string DWDate);
     int Save();
     DailyWorkParser& SetTreeWithHierarchy(bool hierarchy) {this->treeWithHierarchy = hierarchy;return *this; }
     bool IsTreeWithHierarchy() const {return treeWithHierarchy; }
@@ -40,7 +41,7 @@ public:
 private:
     const char* JSON_FILE = "dailywork.json";
     const char* JSON_DATE_FORMAT = "%4d-%2d-%2d";
-    const char* TREE_DATE_FORMAT = "%2d/%2d/%d";
+    const char* TREE_DATE_FORMAT = "%2d/%2d/%4d";
     const char* JSON_WORK = "work";
     const char* JSON_DATE = "date";
     const char* JSON_ARRAY = "dailywork";
@@ -52,7 +53,7 @@ private:
     int LoadDatesTreeHierarchy(wxTreeCtrl* tree, wxTreeItemId rootID, Value& dataArray);
     int LoadDatesTreeSimple(wxTreeCtrl* tree, wxTreeItemId rootID, Value& dataArray);
     wxTreeItemId AddItem(wxTreeCtrl* tree, wxTreeItemId parent, wxString text);
-    Value* AddValue(wxDateTime date);
+    Value* AddValue(tm date);
 };
 
 #endif // DAILYWORKPARSER_H
