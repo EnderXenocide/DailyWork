@@ -454,10 +454,10 @@ void MainFrame::OnCalendarDblClick(wxCalendarEvent& event)
 {
     //chercher date dans tree
     wxDateTime wxdate = m_calendar->GetDate();
-    tm selDate;
-    selDate.tm_mday = wxdate.GetDay();
-    selDate.tm_mon = wxdate.GetMonth();
-    selDate.tm_year = wxdate.GetYear()-1900;
+    TDate selDate;
+    selDate.jour = wxdate.GetDay();
+    selDate.mois = wxdate.GetMonth()+1;
+    selDate.annee = wxdate.GetYear();
     wxGetApp().GetDWParser()->AddDateToTree(m_treeDates, selDate, true);
 }
 

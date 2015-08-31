@@ -106,13 +106,10 @@ int DailyWorkParser::LoadDatesTreeHierarchy(wxTreeCtrl* tree, wxTreeItemId rootI
     wxTreeItemId itemId;
     for(SizeType i = 0; i < dataArray.Size(); i++) {
         Value& c = dataArray[i];
-        wxDateTime date = GetDateFromItem(c);
-        int year = date.GetYear();
-        int month = date.GetMonth();
-        int day = date.GetDay();
-        itemId = AddItem(tree, tree->GetRootItem(), std::to_string(year));
-        itemId = AddItem(tree, itemId, std::to_string(month));
-        itemId = AddItem(tree, itemId, std::to_string(day));
+        TDate date = GetDateFromItem(c);
+        itemId = AddItem(tree, tree->GetRootItem(), std::to_string(date.annee));
+        itemId = AddItem(tree, itemId, std::to_string(date.mois));
+        itemId = AddItem(tree, itemId, std::to_string(date.jour));
         DWItemData* itemData = new DWItemData(&c);
         tree->SetItemData(itemId, itemData);
     }
@@ -158,7 +155,7 @@ int DailyWorkParser::Save()
     return 0;
 }
 
-std::tm DailyWorkParser::GetDateFromItem(Value& item)
+TDate DailyWorkParser::GetDateFromItem(Value& item)
 {
     return DWToDate(item[JSON_DATE].GetString());
 }
@@ -171,18 +168,18 @@ std::string DailyWorkParser::GetWorkFromItem(Value& item)
 /*
  * Ex : Transfome une date en 2015-12-31
  * */
-wxString DailyWorkParser::ToDWDate(tm date)
+wxString DailyWorkParser::ToDWDate(TDate date)
 {
-    return wxString::Format(JSON_DATE_FORMAT, date.tm_mday, date.tm_mon+1, date.tm_year+1900);
+    return wxString::Format(JSON_DATE_FORMAT, date.jour, date.mois, date.annee);
 }
 
 /*
  * Ex : Transfome une date 2015-12-31 en 31/12/2015
  * */
-wxString DailyWorkParser::ToTreeDate(tm date)
+wxString DailyWorkParser::ToTreeDate(TDate date)
 {
     //    std::sscanf(aDWDate.c_str(), JSON_DATE_FORMAT, &year, &month, &day);
-    return wxString::Format(TREE_DATE_FORMAT, date.tm_mday, date.tm_mon+1, date.tm_year+1900);
+    return wxString::Format(TREE_DATE_FORMAT, date.jour, date.mois, date.annee);
 }
 
 int DailyWorkParser::SetWorkFromItem(rapidjson::Value& item, std::string text)
@@ -192,15 +189,15 @@ int DailyWorkParser::SetWorkFromItem(rapidjson::Value& item, std::string text)
     return 0;
 }
 
-int DailyWorkParser::AddDateToTree(wxTreeCtrl* tree, tm date, bool selectItem)
+int DailyWorkParser::AddDateToTree(wxTreeCtrl* tree, TDate date, bool selectItem)
 {
     Value* value = AddValue(date);
 
     wxTreeItemId itemId;
     if(treeWithHierarchy) {
-        itemId = AddItem(tree, tree->GetRootItem(), wxString::Format("%4d", date.tm_year+1900));
-        itemId = AddItem(tree, itemId, wxString::Format("%2d", date.tm_mon+1));
-        itemId = AddItem(tree, itemId, wxString::Format("%2d", date.tm_mday));
+        itemId = AddItem(tree, tree->GetRootItem(), wxString::Format("%4d", date.annee));
+        itemId = AddItem(tree, itemId, wxString::Format("%2d", date.mois));
+        itemId = AddItem(tree, itemId, wxString::Format("%2d", date.jour));
     } else {
         itemId = AddItem(tree, tree->GetRootItem(), ToTreeDate(date));
     }
@@ -212,7 +209,7 @@ int DailyWorkParser::AddDateToTree(wxTreeCtrl* tree, tm date, bool selectItem)
 }
 
 /*
- * Cherche l'item avec text comme text ou ajout un nouveau dans l'ordre alphabéthique
+ * Cherche l'item avec text comme text ou ajout un nouveau dans l'ordre alphabéthique inverse
  */
 wxTreeItemId DailyWorkParser::AddItem(wxTreeCtrl* tree, wxTreeItemId parent, wxString text)
 {
@@ -222,7 +219,7 @@ wxTreeItemId DailyWorkParser::AddItem(wxTreeCtrl* tree, wxTreeItemId parent, wxS
         wxString itemText = tree->GetItemText(itemId);
         if(itemText == text)
             return itemId;                         // pas besoin d'ajouter l'item
-        else if(itemText > text) {                 // item voulu doit se trouver avant
+        else if(text < itemText) {                 // item voulu doit se trouver avant
             itemId = tree->GetPrevSibling(itemId); // on prend l'item precedent pour pouvoir inserer celui qu'on veux
             if(itemId.IsOk())
                 return tree->InsertItem(parent, itemId, text);
@@ -234,7 +231,7 @@ wxTreeItemId DailyWorkParser::AddItem(wxTreeCtrl* tree, wxTreeItemId parent, wxS
     return tree->AppendItem(parent, text); // item voulu pas trouver
 }
 
-Value* DailyWorkParser::AddValue(tm date)
+Value* DailyWorkParser::AddValue(TDate date)
 {
     wxString DWDate = ToDWDate(date);
     Document::AllocatorType& allocator = document.GetAllocator();
@@ -247,18 +244,20 @@ Value* DailyWorkParser::AddValue(tm date)
     return &value; //todo valid ?
 }
 
-tm  DailyWorkParser::DWToDate(std::string DWDate)
+TDate  DailyWorkParser::DWToDate(std::string DWDate)
 {
     int year, month, day;
-    int n = std::sscanf(DWDate.c_str(), JSON_DATE_FORMAT, &year, &month, &day);
+    TDate date;
+    int n = std::sscanf(DWDate.c_str(), JSON_DATE_FORMAT, &date.annee, &date.mois, &date.jour);
     if (n<3)  {
         LOG(ERROR) << "Can't convert " << DWDate << "to date";
         time_t now = time(0);
         // convert now to tm struct for UTC
         tm* gmtm = gmtime(&now);
-        return *gmtm;
+        date.annee = gmtm->tm_year+1900;
+        date.mois = gmtm->tm_mon+1;        
+        date.jour = gmtm->tm_mday;        
     }
-    tm timev;
-    timev.tm_year = year-1900; timev.tm_mon = month-1; timev.tm_mday = day; 
-    return timev; 
+   // timev.tm_year = year-1900; timev.tm_mon = month-1; timev.tm_mday = day; 
+    return date; 
 }
