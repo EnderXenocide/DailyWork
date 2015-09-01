@@ -76,14 +76,14 @@ int DailyWorkParser::LoadDatesTree(wxTreeCtrl* tree)
     return 0;
 }
 
-int DailyWorkParser::LoadDatesTreeSimple(wxTreeCtrl* tree, wxTreeItemId rootID, rapidjson::Value& dataArray)
+int DailyWorkParser::LoadDatesTreeSimple(wxTreeCtrl* tree, wxTreeItemId rootID, const rapidjson::Value& dataArray)
 {
     LOG(INFO) << "Loading Tree Simple... ";
     for(SizeType i = 0; i < dataArray.Size(); i++) {
-        Value& c = dataArray[i];
+        const Value& c = dataArray[i];
         wxString sDate = ToTreeDate(GetDateFromItem(c));
         wxTreeItemId itemID = tree->AppendItem(rootID, sDate);
-        DWItemData* itemData = new DWItemData(&c);
+        DWItemData* itemData = new DWItemData(c);
         tree->SetItemData(itemID, itemData);
     }
     //   for (Value::ConstValueIterator itr = dataArray.Begin(); itr != d.End(); ++itr)
@@ -98,7 +98,7 @@ int DailyWorkParser::LoadDatesTreeSimple(wxTreeCtrl* tree, wxTreeItemId rootID, 
     return 0;
 }
 
-int DailyWorkParser::LoadDatesTreeHierarchy(wxTreeCtrl* tree, wxTreeItemId rootID, Value& dataArray)
+int DailyWorkParser::LoadDatesTreeHierarchy(wxTreeCtrl* tree, wxTreeItemId rootID, const Value& dataArray)
 { // TODO fonction à faire
 
     // for(Value::ConstMemberIterator it = dataArray.MemberBegin(); it != dataArray.MembersEnd(); it++) {
@@ -107,24 +107,24 @@ int DailyWorkParser::LoadDatesTreeHierarchy(wxTreeCtrl* tree, wxTreeItemId rootI
     LOG(INFO) << "Loading Tree Hierarchy... ";
     wxTreeItemId itemId;
     for(SizeType i = 0; i < dataArray.Size(); i++) {
-        Value& c = dataArray[i];
-        TDate date = GetDateFromItem(c);
-        itemId = AddItem(tree, tree->GetRootItem(), std::to_string(date.annee));
-        itemId = AddItem(tree, itemId, std::to_string(date.mois));
-        itemId = AddItem(tree, itemId, std::to_string(date.jour));
-        DWItemData* itemData = new DWItemData(&c);
+        const Value& c = dataArray[i];
+        wxDateTime date = GetDateFromItem(c);
+        itemId = AddItem(tree, tree->GetRootItem(), wxString::Format("%4d", date.GetYear()));
+        itemId = AddItem(tree, itemId, wxString::Format("%02d", date.GetMonth()+1));
+        itemId = AddItem(tree, itemId, wxString::Format("%02d", date.GetDay()));
+        DWItemData* itemData = new DWItemData(c);
         tree->SetItemData(itemId, itemData);
     }
     return 0;
 }
 
-std::string DailyWorkParser::GetWorkFromTree(wxTreeCtrl* tree)
+std::string DailyWorkParser::GetWorkFromTree(const wxTreeCtrl* tree)
 {
     wxTreeItemId itemID = tree->GetSelection();
     if(itemID.IsOk()) {
-        DWItemData* itemData = (DWItemData*)tree->GetItemData(itemID);
+        DWItemData* itemData = (DWItemData*) tree->GetItemData(itemID);
         if(itemData != NULL) {
-            Value& pair = *itemData->GetValue();
+            const Value& pair = itemData->GetValue();
             return GetWorkFromItem(pair);
         } else
             LOG(DEBUG) << "Pas de donné associée à l'item";
@@ -136,7 +136,7 @@ std::string DailyWorkParser::GetWorkFromTree(wxTreeCtrl* tree)
 int DailyWorkParser::UpdateWork(DWItemData* itemData, std::string text)
 {
     if(itemData != NULL) {
-        Value& pair = *itemData->GetValue();
+        Value& pair = itemData->GetValue();
         SetWorkFromItem(pair, text);
     } else {
         LOG(ERROR) << "Mise à jour impossible";
@@ -157,12 +157,12 @@ int DailyWorkParser::Save()
     return 0;
 }
 
-TDate DailyWorkParser::GetDateFromItem(Value& item)
+wxDateTime DailyWorkParser::GetDateFromItem(const Value& item)
 {
     return DWToDate(item[JSON_DATE].GetString());
 }
 
-std::string DailyWorkParser::GetWorkFromItem(Value& item)
+std::string DailyWorkParser::GetWorkFromItem(const Value& item) 
 {
     return item[JSON_WORK].GetString();
 }
@@ -170,43 +170,45 @@ std::string DailyWorkParser::GetWorkFromItem(Value& item)
 /*
  * Ex : Transfome une date en 2015-12-31
  * */
-wxString DailyWorkParser::ToDWDate(TDate date)
+wxString DailyWorkParser::ToDWDate(const wxDateTime& date) const
 {
-    return wxString::Format(JSON_DATE_FORMAT, date.jour, date.mois, date.annee);
+    return wxString::Format(JSON_DATE_FORMAT, date.GetYear(), date.GetMonth()+1, date.GetDay());
 }
 
 /*
  * Ex : Transfome une date 2015-12-31 en 31/12/2015
  * */
-wxString DailyWorkParser::ToTreeDate(TDate date)
+wxString DailyWorkParser::ToTreeDate(const wxDateTime& date) const
 {
     //    std::sscanf(aDWDate.c_str(), JSON_DATE_FORMAT, &year, &month, &day);
-    return wxString::Format(TREE_DATE_FORMAT, date.jour, date.mois, date.annee);
+    return wxString::Format(TREE_DATE_FORMAT, date.GetDay(), date.GetMonth()+1, date.GetYear());
 }
 
 int DailyWorkParser::SetWorkFromItem(rapidjson::Value& item, std::string text)
 {
     assert(item.IsObject());
-    item["work"].SetString(text.data(), text.size(), document.GetAllocator());
+    item[JSON_WORK].SetString(text.data(), text.size(), document.GetAllocator());
     return 0;
 }
 
-int DailyWorkParser::AddDateToTree(wxTreeCtrl* tree, TDate date, bool selectItem)
+int DailyWorkParser::AddDateToTree(wxTreeCtrl* tree, wxDateTime& date, bool selectItem)
 {
-    Value* value = AddValue(date);
-
+    Value value;
+    AddValue(date, value);
+    SetWorkFromItem(value, "empty");
     wxTreeItemId itemId;
     if(treeWithHierarchy) {
-        itemId = AddItem(tree, tree->GetRootItem(), wxString::Format("%4d", date.annee));
-        itemId = AddItem(tree, itemId, wxString::Format("%02d", date.mois));
-        itemId = AddItem(tree, itemId, wxString::Format("%02d", date.jour));
+        itemId = AddItem(tree, tree->GetRootItem(), wxString::Format("%4d", date.GetYear()));
+        itemId = AddItem(tree, itemId, wxString::Format("%02d", date.GetMonth()+1));
+        itemId = AddItem(tree, itemId, wxString::Format("%02d", date.GetDay()));
     } else {
         itemId = AddItem(tree, tree->GetRootItem(), ToTreeDate(date));
     }
     DWItemData* data = new DWItemData(value);
     tree->SetItemData(itemId, data);
-    if(selectItem)
-        tree->SelectItem(itemId, false);
+    tree->Expand(itemId);
+//    if(selectItem)
+//        tree->SelectItem(itemId, true);
     return 0;
 }
 
@@ -234,32 +236,27 @@ wxTreeItemId DailyWorkParser::AddItem(wxTreeCtrl* tree, wxTreeItemId parent, wxS
     return tree->AppendItem(parent, text); // item voulu pas trouver
 }
 
-Value* DailyWorkParser::AddValue(TDate date)
+void DailyWorkParser::AddValue(wxDateTime& date, Value& value)
+//Value& DailyWorkParser::AddValue(wxDateTime& date)
 {
-    wxString DWDate = ToDWDate(date);
+    std::string DWDate = ToDWDate(date).ToStdString();
     Document::AllocatorType& allocator = document.GetAllocator();
-    Value value(kObjectType);
+    value.SetObject();
     Value valueString(kStringType);
     valueString.SetString(DWDate.c_str(), allocator);
-    value.AddMember("date", valueString, allocator);  //todo JSON_DATE ne marche pas
-    value.AddMember("work", "", allocator); //todo JSON_WORK ne marche pas
-    document[JSON_ARRAY].PushBack(value, allocator);
-    return &value; //todo valid ?
+    //item[JSON_WORK].SetString(text.data(), text.size(), document.GetAllocator());
+    value.AddMember(JSON_DATE, valueString, allocator); 
+    value.AddMember(JSON_WORK, "", allocator);   
+    document[JSON_ARRAY].PushBack(value, allocator); // return document[JSON_ARRAY]
+    //return value;//todo valid ?  
 }
 
-TDate  DailyWorkParser::DWToDate(std::string DWDate)
+wxDateTime  DailyWorkParser::DWToDate(const std::string DWDate)
 {
-    TDate date;
-    int n = std::sscanf(DWDate.c_str(), JSON_DATE_FORMAT, &date.annee, &date.mois, &date.jour);
-    if (n<3)  {
+    wxDateTime date;
+//	if (!date.ParseISODate(DWDate)) {
+	if (!date.ParseFormat(DWDate, JSON_DATE_FORMAT_EXT, wxDateTime::Today())) {
         LOG(ERROR) << "Can't convert " << DWDate << "to date";
-        time_t now = time(0);
-        // convert now to tm struct for UTC
-        tm* gmtm = gmtime(&now);
-        date.annee = gmtm->tm_year+1900;
-        date.mois = gmtm->tm_mon+1;        
-        date.jour = gmtm->tm_mday;        
     }
-   // timev.tm_year = year-1900; timev.tm_mon = month-1; timev.tm_mday = day; 
-    return date; 
+    return date;
 }

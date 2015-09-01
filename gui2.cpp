@@ -463,11 +463,7 @@ void MainFrame::OnCloseFrame(wxCloseEvent& event)
 void MainFrame::OnCalendarDblClick(wxCalendarEvent& event)
 {
     //chercher date dans tree
-    wxDateTime wxdate = m_calendar->GetDate();
-    TDate selDate;
-    selDate.jour = wxdate.GetDay();
-    selDate.mois = wxdate.GetMonth()+1;
-    selDate.annee = wxdate.GetYear();
+    wxDateTime selDate = m_calendar->GetDate();
     wxGetApp().GetDWParser()->AddDateToTree(m_treeDates, selDate, true);
 }
 
@@ -531,7 +527,6 @@ void MainFrame::EnableShowHirerarchicalTree(bool hiearchy)
 void MainFrame::OnShowHirerarchicalTree(wxCommandEvent& event)
 {
     bool c = m_menuBar->IsChecked(ID_HIERACHY);
-  //  m_menuBar->Check(ID_HIERACHY, !c);
     wxGetApp().GetDWParser()->SetHierarchicalTree(c); 
     wxGetApp().LoadDailyWorkInTree();  
 }
