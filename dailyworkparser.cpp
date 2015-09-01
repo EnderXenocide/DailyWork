@@ -243,11 +243,13 @@ void DailyWorkParser::AddValue(wxDateTime& date, Value& value)
     Document::AllocatorType& allocator = document.GetAllocator();
     value.SetObject();
     Value valueString(kStringType);
-    valueString.SetString(DWDate.c_str(), allocator);
-    //item[JSON_WORK].SetString(text.data(), text.size(), document.GetAllocator());
+    valueString.SetString(DWDate.data(), DWDate.size(), document.GetAllocator());
     value.AddMember(JSON_DATE, valueString, allocator); 
     value.AddMember(JSON_WORK, "", allocator);   
     document[JSON_ARRAY].PushBack(value, allocator); // return document[JSON_ARRAY]
+    
+    static const char* kTypeNames[] = { "Null", "False", "True", "Object", "Array", "String", "Number" };
+    LOG(INFO) << "Type of member is " << kTypeNames[value.GetType()];
     //return value;//todo valid ?  
 }
 
