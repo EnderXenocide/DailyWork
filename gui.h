@@ -51,6 +51,8 @@ class MainFrameBase : public wxFrame
 		virtual void OnCloseFrame( wxCloseEvent& event ) { event.Skip(); }
 		virtual void OnExitClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnCalendarDblClick( wxCalendarEvent& event ) { event.Skip(); }
+		virtual void OnCalendarKillFocus( wxFocusEvent& event ) { event.Skip(); }
+		virtual void OnCalendarSetFocus( wxFocusEvent& event ) { event.Skip(); }
 		virtual void OnTreeSelChanged( wxTreeEvent& event ) { event.Skip(); }
 		
 	

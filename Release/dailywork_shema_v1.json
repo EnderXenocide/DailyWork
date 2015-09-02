@@ -1,0 +1,31 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "dailywork"
+	"type": "object",
+	"properties": {
+		"dailywork": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"properties": {
+					"date": {
+						"description": "date au format YYYY-MM-DD",
+						"type": "string"
+					},
+					"work": {
+						"description": "note à la date",
+						"type": "string"
+					}
+				},
+				"required": ["date", "work"]
+			}
+			"minItems": 1,
+			"uniqueItems": true
+		}
+		"version": {
+			"type": "integer",
+			"minimum": 1
+		},
+	},
+	"required": ["dailywork", "version"]
+}

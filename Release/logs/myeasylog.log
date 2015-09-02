@@ -1,0 +1,9 @@
+2015-09-02 09:59:43,147 INFO  [default] Parse file
+2015-09-02 10:01:12,088 INFO  [default] Parse file
+2015-09-02 10:02:22,887 INFO  [default] Parse file
+2015-09-02 10:04:25,517 INFO  [default] Parse file
+2015-09-02 10:17:57,781 FATAL [default] CRASH HANDLED; Application has crashed due to [SIGSEGV] signal
+2015-09-02 10:17:57,781 WARN  [default] Aborting application. Reason: Fatal log at [I:/Workspace/CodeLiteC++/DailyWork/easylogging++.h:5583]
+2015-09-02 10:18:16,563 INFO  [default] Parse file
+2015-09-02 10:24:55,187 INFO  [default] Parse file
+2015-09-02 10:32:37,799 INFO  [default] Parse file

@@ -55,6 +55,8 @@ MainFrameBase::MainFrameBase( wxWindow* parent, wxWindowID id, const wxString& t
 	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( MainFrameBase::OnCloseFrame ) );
 	this->Connect( menuFileExit->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrameBase::OnExitClick ) );
 	m_calendar->Connect( wxEVT_CALENDAR_DOUBLECLICKED, wxCalendarEventHandler( MainFrameBase::OnCalendarDblClick ), NULL, this );
+	m_calendar->Connect( wxEVT_KILL_FOCUS, wxFocusEventHandler( MainFrameBase::OnCalendarKillFocus ), NULL, this );
+	m_calendar->Connect( wxEVT_SET_FOCUS, wxFocusEventHandler( MainFrameBase::OnCalendarSetFocus ), NULL, this );
 	m_treeDates->Connect( wxEVT_COMMAND_TREE_SEL_CHANGED, wxTreeEventHandler( MainFrameBase::OnTreeSelChanged ), NULL, this );
 }
 
@@ -64,6 +66,8 @@ MainFrameBase::~MainFrameBase()
 	this->Disconnect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( MainFrameBase::OnCloseFrame ) );
 	this->Disconnect( wxID_EXIT, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrameBase::OnExitClick ) );
 	m_calendar->Disconnect( wxEVT_CALENDAR_DOUBLECLICKED, wxCalendarEventHandler( MainFrameBase::OnCalendarDblClick ), NULL, this );
+	m_calendar->Disconnect( wxEVT_KILL_FOCUS, wxFocusEventHandler( MainFrameBase::OnCalendarKillFocus ), NULL, this );
+	m_calendar->Disconnect( wxEVT_SET_FOCUS, wxFocusEventHandler( MainFrameBase::OnCalendarSetFocus ), NULL, this );
 	m_treeDates->Disconnect( wxEVT_COMMAND_TREE_SEL_CHANGED, wxTreeEventHandler( MainFrameBase::OnTreeSelChanged ), NULL, this );
 	
 }

@@ -239,7 +239,7 @@
                                 <event name="OnEraseBackground"></event>
                                 <event name="OnKeyDown"></event>
                                 <event name="OnKeyUp"></event>
-                                <event name="OnKillFocus"></event>
+                                <event name="OnKillFocus">OnCalendarKillFocus</event>
                                 <event name="OnLeaveWindow"></event>
                                 <event name="OnLeftDClick"></event>
                                 <event name="OnLeftDown"></event>
@@ -254,7 +254,7 @@
                                 <event name="OnRightDClick"></event>
                                 <event name="OnRightDown"></event>
                                 <event name="OnRightUp"></event>
-                                <event name="OnSetFocus"></event>
+                                <event name="OnSetFocus">OnCalendarSetFocus</event>
                                 <event name="OnSize"></event>
                                 <event name="OnUpdateUI"></event>
                             </object>

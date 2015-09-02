@@ -12,9 +12,7 @@
 *.so
 *.dylib
 *.dll
-
-# Fortran module files
-*.mod
+*.d
 
 # Compiled Static libraries
 *.lai

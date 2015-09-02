@@ -421,6 +421,8 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
 //	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( MainFrame::OnCloseFrame ) );
 //	this->Connect( menuFileExit->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnExitClick ) );
     ConnectSelChanged();
+	m_calendar->Connect( wxEVT_KILL_FOCUS, wxFocusEventHandler( MainFrame::OnCalendarKillFocus ), NULL, this );
+	m_calendar->Connect( wxEVT_SET_FOCUS, wxFocusEventHandler( MainFrame::OnCalendarSetFocus ), NULL, this );
     m_calendar->Connect( wxEVT_CALENDAR_DOUBLECLICKED, wxCalendarEventHandler( MainFrame::OnCalendarDblClick ), NULL, this );
 }   
  
@@ -430,6 +432,8 @@ MainFrame::~MainFrame()
 //	this->Disconnect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( MainFrame::OnCloseFrame ) );
 //	this->Disconnect( wxID_EXIT, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnExitClick ) );
     DisconnectSelhanged();	
+	m_calendar->Disconnect( wxEVT_KILL_FOCUS, wxFocusEventHandler( MainFrame::OnCalendarKillFocus ), NULL, this );
+	m_calendar->Disconnect( wxEVT_SET_FOCUS, wxFocusEventHandler( MainFrame::OnCalendarSetFocus ), NULL, this );
  	m_calendar->Disconnect( wxEVT_CALENDAR_DOUBLECLICKED, wxCalendarEventHandler( MainFrame::OnCalendarDblClick ), NULL, this );    
 }
 
@@ -481,15 +485,25 @@ void MainFrame::OnCalendarDblClick(wxCalendarEvent& event)
     wxGetApp().GetDWParser()->AddDateToTree(m_treeDates, selDate, true);
 }
 
+void MainFrame::OnCalendarSetFocus( wxFocusEvent& event )
+{
+    OnStatusBarMessage("Double-cliquer sur une date pour l'ajouter à la liste");
+}
+
+void MainFrame::OnCalendarKillFocus( wxFocusEvent& event )
+{
+    OnStatusBarMessage("");
+}
 
 void MainFrame::OnCalendarSelChanged(wxCalendarEvent& event) 
 { 
-    //todo à remplacer
-    wxTreeItemId ItemID=m_treeDates->GetSelection();
-    if (ItemID.IsOk()) {
-        wxString msg = m_treeDates->GetItemText(ItemID);
-        OnStatusBarMessage(msg.ToStdString());        
-    }
+    //todo find date in tree
+
+//    wxTreeItemId ItemID=m_treeDates->GetSelection();
+//    if (ItemID.IsOk()) {
+//        wxString msg = m_treeDates->GetItemText(ItemID);
+//        OnStatusBarMessage(msg.ToStdString()); 
+//    }
 }  
 
 void MainFrame::OnTreeSelChanging( wxTreeEvent& event )

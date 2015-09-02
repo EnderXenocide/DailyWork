@@ -94,6 +94,8 @@ protected:
     void OnTreeSelChanged( wxTreeEvent& event );
     void OnCalendarSelChanged( wxCalendarEvent& event );
     void OnCalendarDblClick( wxCalendarEvent& event );
+    void OnCalendarSetFocus( wxFocusEvent& event );
+	void OnCalendarKillFocus( wxFocusEvent& event );
     
     void OnShowHirerarchicalTree(wxCommandEvent& event);
 

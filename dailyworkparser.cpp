@@ -45,6 +45,7 @@ int DailyWorkParser::Parse()
         m_cbMessageInfo(strErreur);
         return -1;
     }
+    version = document[JSON_VERSION].GetInt();
     return 0;
 
     // ECRITURE fwrite (buffer.GetString(), buffer.GetSize(), 1, wFile);
@@ -86,24 +87,11 @@ int DailyWorkParser::LoadDatesTreeSimple(wxTreeCtrl* tree, wxTreeItemId rootID, 
         DWItemData* itemData = new DWItemData(c);
         tree->SetItemData(itemID, itemData);
     }
-    //   for (Value::ConstValueIterator itr = dataArray.Begin(); itr != d.End(); ++itr)
-    //        printf("%d ", itr->GetInt());
-
-    //    for (int i=0;i<10;i++) {
-    //        wxTreeItemId id=Tree->AppendItem(rootID,wxString::Format(wxT("Element : %d"),i+1));
-    //        for(int j=0;j<2*i+2;j++)
-    //            Tree->AppendItem(id,wxString::Format(wxT("Element : %d:%d"),i+1,j+1));
-    //    }
-
     return 0;
 }
 
 int DailyWorkParser::LoadDatesTreeHierarchy(wxTreeCtrl* tree, wxTreeItemId rootID, const Value& dataArray)
-{ // TODO fonction à faire
-
-    // for(Value::ConstMemberIterator it = dataArray.MemberBegin(); it != dataArray.MembersEnd(); it++) {
-    // wxTreeItemId rootID = Tree->AddRoot(wxT("Un arbre"));
-    //    tree->Expand(rootID);
+{
     LOG(INFO) << "Loading Tree Hierarchy... ";
     wxTreeItemId itemId;
     for(SizeType i = 0; i < dataArray.Size(); i++) {
@@ -205,9 +193,9 @@ int DailyWorkParser::AddDateToTree(wxTreeCtrl* tree, wxDateTime& date, bool sele
     }
     DWItemData* data = new DWItemData(value);
     tree->SetItemData(itemId, data);
-    tree->Expand(itemId);
-//    if(selectItem)
-//        tree->SelectItem(itemId, true);
+    tree->ExpandAll(); //Expand(itemId);
+    if(selectItem)
+        tree->SelectItem(itemId, true);
     return 0;
 }
 
