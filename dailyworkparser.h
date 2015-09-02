@@ -42,6 +42,7 @@ public:
     wxString ToTreeDate(const wxDateTime& date) const;
     wxDateTime DWToDate(const std::string DWDate);
     int Save();
+    int SaveAs(wxString filename);
     DailyWorkParser& SetHierarchicalTree(bool hierarchy)
     {
         this->treeWithHierarchy = hierarchy;

@@ -136,8 +136,16 @@ int DailyWorkParser::UpdateWork(DWItemData* itemData, std::string text)
 
 int DailyWorkParser::Save()
 {
-    LOG(INFO) << "Enregistrement";
-    FILE* fp = fopen(JSON_FILE, "wb"); // non-Windows use "w"
+    return SaveAs(JSON_FILE);
+}
+
+int DailyWorkParser::SaveAs(wxString filename)
+{
+    wxString msg = "Enregistrement";
+    if (filename != JSON_FILE)
+        msg += " sous "+filename;
+    LOG(INFO) << msg;
+    FILE* fp = fopen(filename, "wb"); // non-Windows use "w"
     char writeBuffer[65536];
     FileWriteStream os(fp, writeBuffer, sizeof(writeBuffer));
     Writer<FileWriteStream> writer(os);
@@ -145,6 +153,7 @@ int DailyWorkParser::Save()
     fclose(fp);
     return 0;
 }
+
 
 wxDateTime DailyWorkParser::GetDateFromItem(const Value& item)
 {

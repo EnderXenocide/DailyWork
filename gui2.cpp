@@ -713,9 +713,8 @@ void MainFrame::OnSave(wxCommandEvent& event)
 }
 
 void MainFrame::OnSaveAs(wxCommandEvent& WXUNUSED(event))
-{
-    /*
-    wxString filter = wxRichTextBuffer::GetExtWildcard(false, true);
+{    
+    wxString filter = "*.json"; //wxRichTextBuffer::GetExtWildcard(false, true);
     wxString path;
     wxString filename;
 
@@ -732,16 +731,19 @@ void MainFrame::OnSaveAs(wxCommandEvent& WXUNUSED(event))
 
         if (!path.empty())
         {
-            wxBusyCursor busy;
-            wxStopWatch stopwatch;
-
-            m_editor->SaveFile(path);
-
-            long t = stopwatch.Time();
-            wxLogDebug(wxT("Saving took %ldms"), t);
-            wxMessageBox(wxString::Format(wxT("Saving took %ldms"), t));
+            UpdateDWWork(); // met à jour/ou pas le texte ecrit dans le richedit dans DWparser
+            wxGetApp().GetDWParser()->SaveAs(path);
+            std::string s = "Enregistrer sous <";
+            s += path.ToStdString() +">";
+            OnStatusBarMessage(s);
+             //wxBusyCursor busy;
+            //wxStopWatch stopwatch;
+           // m_editor->SaveFile(path);
+            //long t = stopwatch.Time();
+            //wxLogDebug(wxT("Saving took %ldms"), t);
+            //wxMessageBox(wxString::Format(wxT("Saving took %ldms"), t));
         }
-    }*/
+    }
 }
 
 void MainFrame::OnBold(wxCommandEvent& WXUNUSED(event))

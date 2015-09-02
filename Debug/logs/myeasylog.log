@@ -862,3 +862,38 @@
 2015-09-02 17:12:50,068 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::OnTreeSelChanged(wxTreeEvent&)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:528] Text to show in editor : 
 2015-09-02 17:13:16,382 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::OnTreeSelChanged(wxTreeEvent&)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:528] Text to show in editor : empty123
 2015-09-02 17:13:29,492 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::OnTreeSelChanged(wxTreeEvent&)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:528] Text to show in editor : rien à déclarer
+2015-09-02 17:27:56,803 DEBUG [default] [Trinquard@TRINQUARD-PC] [virtual bool MainApp::OnInit()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:30] START
+2015-09-02 17:27:58,053 INFO  [default] Parse file
+2015-09-02 17:27:58,053 INFO  [default] Loading Tree with json data...
+2015-09-02 17:27:58,053 INFO  [default] Loading Tree Hierarchy... 
+2015-09-02 17:27:58,069 INFO  [default] Tree Loaded
+2015-09-02 17:27:58,100 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::UpdateDWWork()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:471] wxTreeItemId is null
+2015-09-02 17:27:58,100 DEBUG [default] [Trinquard@TRINQUARD-PC] [std::__cxx11::string DailyWorkParser::GetWorkFromTree(const wxTreeCtrl*)] [I:/Workspace/CodeLiteC++/DailyWork/dailyworkparser.cpp:119] Pas de donné associée à l'item
+2015-09-02 17:27:58,100 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::OnTreeSelChanged(wxTreeEvent&)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:528] Text to show in editor : 
+2015-09-02 17:27:59,834 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::OnTreeSelChanged(wxTreeEvent&)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:528] Text to show in editor : empty123
+2015-09-02 17:28:07,007 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::OnTreeSelChanged(wxTreeEvent&)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:528] Text to show in editor : erz
+2015-09-02 17:54:27,861 DEBUG [default] [Trinquard@TRINQUARD-PC] [virtual bool MainApp::OnInit()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:30] START
+2015-09-02 17:54:28,767 INFO  [default] Parse file
+2015-09-02 17:54:28,767 INFO  [default] Loading Tree with json data...
+2015-09-02 17:54:28,767 INFO  [default] Loading Tree Hierarchy... 
+2015-09-02 17:54:28,767 INFO  [default] Tree Loaded
+2015-09-02 17:54:28,799 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::UpdateDWWork()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:471] wxTreeItemId is null
+2015-09-02 17:54:28,799 DEBUG [default] [Trinquard@TRINQUARD-PC] [std::__cxx11::string DailyWorkParser::GetWorkFromTree(const wxTreeCtrl*)] [I:/Workspace/CodeLiteC++/DailyWork/dailyworkparser.cpp:119] Pas de donné associée à l'item
+2015-09-02 17:54:28,799 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::OnTreeSelChanged(wxTreeEvent&)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:528] Text to show in editor : 
+2015-09-02 17:55:45,474 DEBUG [default] [Trinquard@TRINQUARD-PC] [virtual bool MainApp::OnInit()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:30] START
+2015-09-02 17:55:46,036 INFO  [default] Parse file
+2015-09-02 17:55:46,036 INFO  [default] Loading Tree with json data...
+2015-09-02 17:55:46,036 INFO  [default] Loading Tree Hierarchy... 
+2015-09-02 17:55:46,036 INFO  [default] Tree Loaded
+2015-09-02 17:55:46,052 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::UpdateDWWork()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:471] wxTreeItemId is null
+2015-09-02 17:55:46,052 DEBUG [default] [Trinquard@TRINQUARD-PC] [std::__cxx11::string DailyWorkParser::GetWorkFromTree(const wxTreeCtrl*)] [I:/Workspace/CodeLiteC++/DailyWork/dailyworkparser.cpp:119] Pas de donné associée à l'item
+2015-09-02 17:55:46,052 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::OnTreeSelChanged(wxTreeEvent&)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:528] Text to show in editor : 
+2015-09-02 17:59:42,624 DEBUG [default] [Trinquard@TRINQUARD-PC] [virtual bool MainApp::OnInit()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:30] START
+2015-09-02 17:59:43,202 INFO  [default] Parse file
+2015-09-02 17:59:43,202 INFO  [default] Loading Tree with json data...
+2015-09-02 17:59:43,202 INFO  [default] Loading Tree Hierarchy... 
+2015-09-02 17:59:43,202 INFO  [default] Tree Loaded
+2015-09-02 17:59:43,217 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::UpdateDWWork()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:471] wxTreeItemId is null
+2015-09-02 17:59:43,217 DEBUG [default] [Trinquard@TRINQUARD-PC] [std::__cxx11::string DailyWorkParser::GetWorkFromTree(const wxTreeCtrl*)] [I:/Workspace/CodeLiteC++/DailyWork/dailyworkparser.cpp:119] Pas de donné associée à l'item
+2015-09-02 17:59:43,217 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::OnTreeSelChanged(wxTreeEvent&)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:528] Text to show in editor : 
+2015-09-02 18:00:01,234 INFO  [default] Enregistrement sous I:\Workspace\CodeLiteC++\DailyWork\Debug\test.json
