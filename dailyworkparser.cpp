@@ -193,8 +193,7 @@ int DailyWorkParser::SetWorkFromItem(rapidjson::Value& item, std::string text)
 
 int DailyWorkParser::AddDateToTree(wxTreeCtrl* tree, wxDateTime& date, bool selectItem)
 {
-    Value value;
-    AddValue(date, value);
+    Value &value = AddValue(date);
     SetWorkFromItem(value, "empty");
     wxTreeItemId itemId;
     if(treeWithHierarchy) {
@@ -236,21 +235,22 @@ wxTreeItemId DailyWorkParser::AddItem(wxTreeCtrl* tree, wxTreeItemId parent, wxS
     return tree->AppendItem(parent, text); // item voulu pas trouver
 }
 
-void DailyWorkParser::AddValue(wxDateTime& date, Value& value)
+Value& DailyWorkParser::AddValue(wxDateTime& date)
 //Value& DailyWorkParser::AddValue(wxDateTime& date)
 {
     std::string DWDate = ToDWDate(date).ToStdString();
     Document::AllocatorType& allocator = document.GetAllocator();
-    value.SetObject();
+    Value value(kObjectType);
     Value valueString(kStringType);
     valueString.SetString(DWDate.data(), DWDate.size(), document.GetAllocator());
     value.AddMember(JSON_DATE, valueString, allocator); 
-    value.AddMember(JSON_WORK, "", allocator);   
-    document[JSON_ARRAY].PushBack(value, allocator); // return document[JSON_ARRAY]
+    value.AddMember(JSON_WORK, "", allocator);  
+    Value &array = document[JSON_ARRAY];
+    array.PushBack(value, allocator); 
+    return array[array.Size()-1];//todo valid ?  
     
-    static const char* kTypeNames[] = { "Null", "False", "True", "Object", "Array", "String", "Number" };
-    LOG(INFO) << "Type of member is " << kTypeNames[value.GetType()];
-    //return value;//todo valid ?  
+//    static const char* kTypeNames[] = { "Null", "False", "True", "Object", "Array", "String", "Number" };
+//    LOG(INFO) << "Type of member is " << kTypeNames[value.GetType()];
 }
 
 wxDateTime  DailyWorkParser::DWToDate(const std::string DWDate)

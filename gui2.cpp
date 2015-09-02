@@ -360,48 +360,62 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
 
     wxSystemOptions::SetOption(wxT("mac.toolbar.no-native"), 1);
 
- 	wxToolBar* toolBar = this->CreateToolBar( wxTB_HORIZONTAL, wxID_ANY ); 
-  //  wxToolBar* toolBar = new wxToolBar(this, wxID_ANY, wxDefaultPosition, wxDefaultSize,
+ 	m_mainToolBar = this->CreateToolBar( wxTB_HORIZONTAL, wxID_ANY ); 
+  //  wxToolBar* m_mainToolBar = new wxToolBar(this, wxID_ANY, wxDefaultPosition, wxDefaultSize,
   //                                    wxNO_BORDER|wxTB_FLAT|wxTB_NODIVIDER|wxTB_NOALIGN);
-  //  mainSizer->Add(toolBar, 0, wxEXPAND);
+  //  mainSizer->Add(m_mainToolBar, 0, wxEXPAND);
 
-    toolBar->AddTool(wxID_OPEN, wxEmptyString, wxBitmap(open_xpm), _("Open"));
-    toolBar->AddTool(wxID_SAVE, wxEmptyString, wxBitmap(save_xpm), _("Save"));
-    toolBar->AddSeparator();
-    toolBar->AddTool(wxID_CUT, wxEmptyString, wxBitmap(cut_xpm), _("Cut"));
-    toolBar->AddTool(wxID_COPY, wxEmptyString, wxBitmap(copy_xpm), _("Copy"));
-    toolBar->AddTool(wxID_PASTE, wxEmptyString, wxBitmap(paste_xpm), _("Paste"));
-    toolBar->AddSeparator();
-    toolBar->AddTool(wxID_UNDO, wxEmptyString, wxBitmap(undo_xpm), _("Undo"));
-    toolBar->AddTool(wxID_REDO, wxEmptyString, wxBitmap(redo_xpm), _("Redo"));
-    toolBar->AddSeparator();
-    toolBar->AddCheckTool(ID_FORMAT_BOLD, wxEmptyString, wxBitmap(bold_xpm), wxNullBitmap, _("Bold"));
-    toolBar->AddCheckTool(ID_FORMAT_ITALIC, wxEmptyString, wxBitmap(italic_xpm), wxNullBitmap, _("Italic"));
-    toolBar->AddCheckTool(ID_FORMAT_UNDERLINE, wxEmptyString, wxBitmap(underline_xpm), wxNullBitmap, _("Underline"));
-    toolBar->AddSeparator();
-    toolBar->AddCheckTool(ID_FORMAT_ALIGN_LEFT, wxEmptyString, wxBitmap(alignleft_xpm), wxNullBitmap, _("Align Left"));
-    toolBar->AddCheckTool(ID_FORMAT_ALIGN_CENTRE, wxEmptyString, wxBitmap(centre_xpm), wxNullBitmap, _("Centre"));
-    toolBar->AddCheckTool(ID_FORMAT_ALIGN_RIGHT, wxEmptyString, wxBitmap(alignright_xpm), wxNullBitmap, _("Align Right"));
-    toolBar->AddSeparator();
-    toolBar->AddTool(ID_FORMAT_INDENT_LESS, wxEmptyString, wxBitmap(indentless_xpm), _("Indent Less"));
-    toolBar->AddTool(ID_FORMAT_INDENT_MORE, wxEmptyString, wxBitmap(indentmore_xpm), _("Indent More"));
-    toolBar->AddSeparator();
-    toolBar->AddTool(ID_FORMAT_FONT, wxEmptyString, wxBitmap(font_xpm), _("Font"));
-    toolBar->AddSeparator();
+    m_mainToolBar->AddTool(wxID_OPEN, wxEmptyString, wxBitmap(open_xpm), _("Open"));
+    m_mainToolBar->AddTool(wxID_SAVE, wxEmptyString, wxBitmap(save_xpm), _("Save"));
+    m_mainToolBar->AddSeparator();
+    m_mainToolBar->AddTool(wxID_CUT, wxEmptyString, wxBitmap(cut_xpm), _("Cut"));
+    m_mainToolBar->AddTool(wxID_COPY, wxEmptyString, wxBitmap(copy_xpm), _("Copy"));
+    m_mainToolBar->AddTool(wxID_PASTE, wxEmptyString, wxBitmap(paste_xpm), _("Paste"));
+    m_mainToolBar->AddSeparator();
+    m_mainToolBar->AddTool(wxID_UNDO, wxEmptyString, wxBitmap(undo_xpm), _("Undo"));
+    m_mainToolBar->AddTool(wxID_REDO, wxEmptyString, wxBitmap(redo_xpm), _("Redo"));
+    m_mainToolBar->AddSeparator();
+    m_mainToolBar->AddCheckTool(ID_FORMAT_BOLD, wxEmptyString, wxBitmap(bold_xpm), wxNullBitmap, _("Bold"));
+    m_mainToolBar->AddCheckTool(ID_FORMAT_ITALIC, wxEmptyString, wxBitmap(italic_xpm), wxNullBitmap, _("Italic"));
+    m_mainToolBar->AddCheckTool(ID_FORMAT_UNDERLINE, wxEmptyString, wxBitmap(underline_xpm), wxNullBitmap, _("Underline"));
+    m_mainToolBar->AddSeparator();
+    m_mainToolBar->AddCheckTool(ID_FORMAT_ALIGN_LEFT, wxEmptyString, wxBitmap(alignleft_xpm), wxNullBitmap, _("Align Left"));
+    m_mainToolBar->AddCheckTool(ID_FORMAT_ALIGN_CENTRE, wxEmptyString, wxBitmap(centre_xpm), wxNullBitmap, _("Centre"));
+    m_mainToolBar->AddCheckTool(ID_FORMAT_ALIGN_RIGHT, wxEmptyString, wxBitmap(alignright_xpm), wxNullBitmap, _("Align Right"));
+    m_mainToolBar->AddSeparator();
+    m_mainToolBar->AddTool(ID_FORMAT_INDENT_LESS, wxEmptyString, wxBitmap(indentless_xpm), _("Indent Less"));
+    m_mainToolBar->AddTool(ID_FORMAT_INDENT_MORE, wxEmptyString, wxBitmap(indentmore_xpm), _("Indent More"));
+    m_mainToolBar->AddSeparator();
+    m_mainToolBar->AddTool(ID_FORMAT_FONT, wxEmptyString, wxBitmap(font_xpm), _("Font"));
+    m_mainToolBar->AddSeparator();
 
-    wxRichTextStyleComboCtrl* combo = new wxRichTextStyleComboCtrl(toolBar, ID_RICHTEXT_STYLE_COMBO, wxDefaultPosition, wxSize(160, -1), wxCB_READONLY);
-    toolBar->AddControl(combo);
+    wxRichTextStyleComboCtrl* combo = new wxRichTextStyleComboCtrl(m_mainToolBar, ID_RICHTEXT_STYLE_COMBO, wxDefaultPosition, wxSize(160, -1), wxCB_READONLY);
+    m_mainToolBar->AddControl(combo);
     
     combo->SetStyleSheet(wxGetApp().GetStyleSheet());
     combo->SetRichTextCtrl(m_editor);
     combo->UpdateStyles();
     
-    toolBar->Realize();
-    m_mainToolBar = toolBar;
+    m_mainToolBar->Realize();
 
 	this->Centre( wxBOTH );
 
  //   WriteInitialText();
+ 
+    // désactive les options de mise en forme du text parceque pas de lecture de fichier rtf...
+    m_menuBar->EnableTop(2, false);
+    m_menuBar->EnableTop(3, false);
+    m_menuBar->EnableTop(4, false);
+    m_menuBar->EnableTop(5, false);
+    m_mainToolBar->EnableTool(ID_FORMAT_BOLD, false);
+    m_mainToolBar->EnableTool(ID_FORMAT_ITALIC, false);
+    m_mainToolBar->EnableTool(ID_FORMAT_UNDERLINE, false);
+    m_mainToolBar->EnableTool(ID_FORMAT_ALIGN_LEFT, false);
+    m_mainToolBar->EnableTool(ID_FORMAT_ALIGN_CENTRE, false);
+    m_mainToolBar->EnableTool(ID_FORMAT_ALIGN_RIGHT, false);
+    m_mainToolBar->EnableTool(ID_FORMAT_INDENT_LESS, false);
+    m_mainToolBar->EnableTool(ID_FORMAT_INDENT_MORE, false);
+    m_mainToolBar->EnableTool(ID_FORMAT_FONT, false);
  
  //	// Connect Events
 //	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( MainFrame::OnCloseFrame ) );

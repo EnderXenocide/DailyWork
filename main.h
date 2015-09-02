@@ -64,6 +64,7 @@ private:
 #if wxUSE_PRINTING_ARCHITECTURE
     wxRichTextPrinting*     m_printing;
 #endif      
+    void InitRichText(); 
 };
 
 // declare global static function wxGetApp()

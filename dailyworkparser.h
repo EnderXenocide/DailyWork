@@ -60,7 +60,7 @@ private:
     int LoadDatesTreeHierarchy(wxTreeCtrl* tree, wxTreeItemId rootID, const Value& dataArray);
     int LoadDatesTreeSimple(wxTreeCtrl* tree, wxTreeItemId rootID, const Value& dataArray);
     wxTreeItemId AddItem(wxTreeCtrl* tree, wxTreeItemId parent, wxString text);
-    void AddValue(wxDateTime& date, Value& value);
+    Value& AddValue(wxDateTime& date);
 };
 
 #endif // DAILYWORKPARSER_H

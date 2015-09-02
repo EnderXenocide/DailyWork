@@ -34,62 +34,8 @@ bool MainApp::OnInit()
     if ( !wxApp::OnInit() )
         return false;
 
-#if wxUSE_HELP
-    wxHelpProvider::Set(new wxSimpleHelpProvider);
-#endif
-
-    m_styleSheet = new wxRichTextStyleSheet;
-#if wxUSE_PRINTING_ARCHITECTURE
-    m_printing = new wxRichTextPrinting(wxT("Test Document"));
-
-    m_printing->SetFooterText(wxT("@TITLE@"), wxRICHTEXT_PAGE_ALL, wxRICHTEXT_PAGE_CENTRE);
-    m_printing->SetFooterText(wxT("Page @PAGENUM@"), wxRICHTEXT_PAGE_ALL, wxRICHTEXT_PAGE_RIGHT);
-#endif
-
-    CreateStyles();
-
-    MyRichTextCtrl::SetEnhancedDrawingHandler();
-
-    // Add extra handlers (plain text is automatically added)
-    wxRichTextBuffer::AddHandler(new wxRichTextXMLHandler);
-    wxRichTextBuffer::AddHandler(new wxRichTextHTMLHandler);
-
-    // Add field types
-
-    wxRichTextBuffer::AddFieldType(new wxRichTextFieldTypePropertiesTest(wxT("rectangle"), wxT("RECTANGLE"), wxRichTextFieldTypeStandard::wxRICHTEXT_FIELD_STYLE_RECTANGLE));
-
-    wxRichTextFieldTypeStandard* s1 = new wxRichTextFieldTypeStandard(wxT("begin-section"), wxT("SECTION"), wxRichTextFieldTypeStandard::wxRICHTEXT_FIELD_STYLE_START_TAG);
-    s1->SetBackgroundColour(*wxBLUE);
-
-    wxRichTextFieldTypeStandard* s2 = new wxRichTextFieldTypeStandard(wxT("end-section"), wxT("SECTION"), wxRichTextFieldTypeStandard::wxRICHTEXT_FIELD_STYLE_END_TAG);
-    s2->SetBackgroundColour(*wxBLUE);
-
-    wxRichTextFieldTypeStandard* s3 = new wxRichTextFieldTypeStandard(wxT("bitmap"), wxBitmap(paste_xpm), wxRichTextFieldTypeStandard::wxRICHTEXT_FIELD_STYLE_NO_BORDER);
-
-    wxRichTextBuffer::AddFieldType(s1);
-    wxRichTextBuffer::AddFieldType(s2);
-    wxRichTextBuffer::AddFieldType(s3);
-
-    wxRichTextFieldTypeCompositeTest* s4 = new wxRichTextFieldTypeCompositeTest(wxT("composite"), wxT("This is a field value"));
-    wxRichTextBuffer::AddFieldType(s4);
-
-    // Add image handlers
-#if wxUSE_LIBPNG
-    wxImage::AddHandler( new wxPNGHandler );
-#endif
-
-#if wxUSE_LIBJPEG
-    wxImage::AddHandler( new wxJPEGHandler );
-#endif
-
-#if wxUSE_GIF
-    wxImage::AddHandler( new wxGIFHandler );
-#endif
-
-#if wxUSE_FILESYSTEM
-    wxFileSystem::AddHandler( new wxMemoryFSHandler );
-#endif
-
+    InitRichText();
+    
     // create the main application window
     wxSize size = wxGetDisplaySize();
     size.Scale(0.75, 0.75);
@@ -123,6 +69,66 @@ int MainApp::OnExit()
     delete m_styleSheet;
 
     return 0;
+}
+
+void MainApp::InitRichText()
+{
+
+#if wxUSE_HELP
+    wxHelpProvider::Set(new wxSimpleHelpProvider);
+#endif
+
+    m_styleSheet = new wxRichTextStyleSheet;
+#if wxUSE_PRINTING_ARCHITECTURE
+    m_printing = new wxRichTextPrinting(wxT("Test Document"));
+
+    m_printing->SetFooterText(wxT("@TITLE@"), wxRICHTEXT_PAGE_ALL, wxRICHTEXT_PAGE_CENTRE);
+    m_printing->SetFooterText(wxT("Page @PAGENUM@"), wxRICHTEXT_PAGE_ALL, wxRICHTEXT_PAGE_RIGHT);
+#endif
+
+    CreateStyles();
+//
+//    MyRichTextCtrl::SetEnhancedDrawingHandler();
+//
+//    // Add extra handlers (plain text is automatically added)
+//    wxRichTextBuffer::AddHandler(new wxRichTextXMLHandler);
+//    wxRichTextBuffer::AddHandler(new wxRichTextHTMLHandler);
+//
+//    // Add field types
+//
+//    wxRichTextBuffer::AddFieldType(new wxRichTextFieldTypePropertiesTest(wxT("rectangle"), wxT("RECTANGLE"), wxRichTextFieldTypeStandard::wxRICHTEXT_FIELD_STYLE_RECTANGLE));
+//
+//    wxRichTextFieldTypeStandard* s1 = new wxRichTextFieldTypeStandard(wxT("begin-section"), wxT("SECTION"), wxRichTextFieldTypeStandard::wxRICHTEXT_FIELD_STYLE_START_TAG);
+//    s1->SetBackgroundColour(*wxBLUE);
+//
+//    wxRichTextFieldTypeStandard* s2 = new wxRichTextFieldTypeStandard(wxT("end-section"), wxT("SECTION"), wxRichTextFieldTypeStandard::wxRICHTEXT_FIELD_STYLE_END_TAG);
+//    s2->SetBackgroundColour(*wxBLUE);
+//
+//    wxRichTextFieldTypeStandard* s3 = new wxRichTextFieldTypeStandard(wxT("bitmap"), wxBitmap(paste_xpm), wxRichTextFieldTypeStandard::wxRICHTEXT_FIELD_STYLE_NO_BORDER);
+//
+//    wxRichTextBuffer::AddFieldType(s1);
+//    wxRichTextBuffer::AddFieldType(s2);
+//    wxRichTextBuffer::AddFieldType(s3);
+//
+//    wxRichTextFieldTypeCompositeTest* s4 = new wxRichTextFieldTypeCompositeTest(wxT("composite"), wxT("This is a field value"));
+//    wxRichTextBuffer::AddFieldType(s4);
+//
+//    // Add image handlers
+//#if wxUSE_LIBPNG
+//    wxImage::AddHandler( new wxPNGHandler );
+//#endif
+//
+//#if wxUSE_LIBJPEG
+//    wxImage::AddHandler( new wxJPEGHandler );
+//#endif
+//
+//#if wxUSE_GIF
+//    wxImage::AddHandler( new wxGIFHandler );
+//#endif
+//
+//#if wxUSE_FILESYSTEM
+//    wxFileSystem::AddHandler( new wxMemoryFSHandler );
+//#endif
 }
 
 void MainApp::CreateStyles()
@@ -289,3 +295,4 @@ void MainApp::LoadDailyWorkInTree()
 {
     dwparser.LoadDatesTree(frame->m_treeDates); 
 }
+

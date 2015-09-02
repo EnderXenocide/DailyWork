@@ -696,3 +696,29 @@
 2015-09-01 18:06:44,449 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::OnTreeSelChanged(wxTreeEvent&)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:489] Text to show in editor : 
 2015-09-01 18:06:59,341 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::OnTreeSelChanged(wxTreeEvent&)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:489] Text to show in editor : erz
 2015-09-01 18:07:35,983 INFO  [default] Type of member is Null
+2015-09-02 09:34:37,899 DEBUG [default] [Trinquard@TRINQUARD-PC] [virtual bool MainApp::OnInit()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:30] START
+2015-09-02 09:34:38,509 INFO  [default] Parse file
+2015-09-02 09:34:38,509 INFO  [default] Loading Tree with json data...
+2015-09-02 09:34:38,509 INFO  [default] Loading Tree Hierarchy... 
+2015-09-02 09:34:38,524 INFO  [default] Tree Loaded
+2015-09-02 09:34:38,540 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::UpdateDWWork()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:453] wxTreeItemId is null
+2015-09-02 09:34:38,540 DEBUG [default] [Trinquard@TRINQUARD-PC] [std::__cxx11::string DailyWorkParser::GetWorkFromTree(const wxTreeCtrl*)] [I:/Workspace/CodeLiteC++/DailyWork/dailyworkparser.cpp:130] Pas de donné associée à l'item
+2015-09-02 09:34:38,540 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::OnTreeSelChanged(wxTreeEvent&)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:489] Text to show in editor : 
+2015-09-02 09:35:53,730 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::OnTreeSelChanged(wxTreeEvent&)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:489] Text to show in editor : erz
+2015-09-02 09:35:55,230 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::OnTreeSelChanged(wxTreeEvent&)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:489] Text to show in editor : rien à déclarer
+2015-09-02 09:35:56,105 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::OnTreeSelChanged(wxTreeEvent&)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:489] Text to show in editor : empty
+2015-09-02 09:36:11,403 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::UpdateDWWork()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:446] Edit modified : empty
+2015-09-02 09:36:11,403 INFO  [default] Enregistrement
+2015-09-02 09:46:39,553 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::UpdateDWWork()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:446] Edit modified : empty
+2015-09-02 09:46:39,553 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::OnTreeSelChanged(wxTreeEvent&)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:489] Text to show in editor : erz
+2015-09-02 09:46:51,382 INFO  [default] Ouverture du fichier json 
+2015-09-02 09:46:51,382 INFO  [default] Parse file
+2015-09-02 09:46:51,382 INFO  [default] Loading Tree with json data...
+2015-09-02 09:46:51,382 INFO  [default] Loading Tree Hierarchy... 
+2015-09-02 09:46:51,397 INFO  [default] Tree Loaded
+2015-09-02 09:46:57,882 DEBUG [default] [Trinquard@TRINQUARD-PC] [std::__cxx11::string DailyWorkParser::GetWorkFromTree(const wxTreeCtrl*)] [I:/Workspace/CodeLiteC++/DailyWork/dailyworkparser.cpp:130] Pas de donné associée à l'item
+2015-09-02 09:46:57,882 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::OnTreeSelChanged(wxTreeEvent&)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:489] Text to show in editor : 
+2015-09-02 09:46:59,851 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::OnTreeSelChanged(wxTreeEvent&)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:489] Text to show in editor : empty
+2015-09-02 09:47:00,898 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::OnTreeSelChanged(wxTreeEvent&)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:489] Text to show in editor : erz
+2015-09-02 09:47:01,851 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::OnTreeSelChanged(wxTreeEvent&)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:489] Text to show in editor : empty
+2015-09-02 09:47:08,367 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::OnTreeSelChanged(wxTreeEvent&)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:489] Text to show in editor : erz
