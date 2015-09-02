@@ -88,7 +88,9 @@ public:
     void EnableShowHirerarchicalTree(bool hiearchy);
     
 protected:  
-    // Virtual event handlers, overide them in your derived class
+    wxTreeItemId FindDateInTree(wxDateTime date);
+    wxTreeItemId FindTextInTree(wxTreeItemId parent, wxString text);
+
     void OnCloseFrame( wxCloseEvent& event );
     void OnTreeSelChanging( wxTreeEvent& event );
     void OnTreeSelChanged( wxTreeEvent& event );
@@ -192,7 +194,7 @@ protected:
 
     // Write text
     void WriteInitialText();
-
+   
 private:
     // any class wishing to process wxWidgets events must use this macro
     wxDECLARE_EVENT_TABLE();

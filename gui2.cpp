@@ -418,9 +418,9 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     m_mainToolBar->EnableTool(ID_FORMAT_FONT, false);
  
  //	// Connect Events
-//	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( MainFrame::OnCloseFrame ) );
 //	this->Connect( menuFileExit->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnExitClick ) );
     ConnectSelChanged();
+	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( MainFrame::OnCloseFrame ) );
 	m_calendar->Connect( wxEVT_KILL_FOCUS, wxFocusEventHandler( MainFrame::OnCalendarKillFocus ), NULL, this );
 	m_calendar->Connect( wxEVT_SET_FOCUS, wxFocusEventHandler( MainFrame::OnCalendarSetFocus ), NULL, this );
     m_calendar->Connect( wxEVT_CALENDAR_DOUBLECLICKED, wxCalendarEventHandler( MainFrame::OnCalendarDblClick ), NULL, this );
@@ -429,9 +429,9 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
 MainFrame::~MainFrame()
 {
 	// Disconnect Events
-//	this->Disconnect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( MainFrame::OnCloseFrame ) );
 //	this->Disconnect( wxID_EXIT, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnExitClick ) );
     DisconnectSelhanged();	
+	this->Disconnect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( MainFrame::OnCloseFrame ) );
 	m_calendar->Disconnect( wxEVT_KILL_FOCUS, wxFocusEventHandler( MainFrame::OnCalendarKillFocus ), NULL, this );
 	m_calendar->Disconnect( wxEVT_SET_FOCUS, wxFocusEventHandler( MainFrame::OnCalendarSetFocus ), NULL, this );
  	m_calendar->Disconnect( wxEVT_CALENDAR_DOUBLECLICKED, wxCalendarEventHandler( MainFrame::OnCalendarDblClick ), NULL, this );    
@@ -475,7 +475,18 @@ void MainFrame::UpdateDWWork()
     
 void MainFrame::OnCloseFrame(wxCloseEvent& event)
 {
-	Destroy();
+    UpdateDWWork();
+    bool exit = true;
+    if (wxGetApp().GetDWParser()->IsModified()) {
+        wxMessageDialog dial(this, wxT("Le document a été modifié, voulez-vous enregistrer ?"), "Attention", wxYES_NO|wxCANCEL|wxCENTER_FRAME);
+        int retour = dial.ShowModal();
+        if (retour==wxID_YES)
+            wxGetApp().GetDWParser()->Save();
+        else if (retour==wxID_CANCEL)
+            exit = false;///todo ne pas fermer
+    }  
+    if (exit)
+        Destroy();
 }
 
 void MainFrame::OnCalendarDblClick(wxCalendarEvent& event)
@@ -498,12 +509,12 @@ void MainFrame::OnCalendarKillFocus( wxFocusEvent& event )
 void MainFrame::OnCalendarSelChanged(wxCalendarEvent& event) 
 { 
     //todo find date in tree
-
-//    wxTreeItemId ItemID=m_treeDates->GetSelection();
-//    if (ItemID.IsOk()) {
+    wxTreeItemId itemId = FindDateInTree(m_calendar->GetDate());
+    if (itemId.IsOk()) {
+        m_treeDates->SelectItem(itemId, true);
 //        wxString msg = m_treeDates->GetItemText(ItemID);
 //        OnStatusBarMessage(msg.ToStdString()); 
-//    }
+    }
 }  
 
 void MainFrame::OnTreeSelChanging( wxTreeEvent& event )
@@ -547,363 +558,61 @@ void MainFrame::OnStatusBarMessage(std::string msg)
     m_statusBar->SetStatusText(wxString::FromUTF8(msg.c_str()));
 }
 
-void MainFrame::EnableShowHirerarchicalTree(bool hiearchy)
-{
-     m_menuBar->Enable(ID_HIERACHY, hiearchy);
-}
-
 void MainFrame::OnShowHirerarchicalTree(wxCommandEvent& event)
 {
     bool c = m_menuBar->IsChecked(ID_HIERACHY);
     wxGetApp().GetDWParser()->SetHierarchicalTree(c); 
     wxGetApp().LoadDailyWorkInTree();  
 }
-
 // END EVENTS
 
-// Write text
-void MainFrame::WriteInitialText()
+wxTreeItemId MainFrame::FindTextInTree(wxTreeItemId parent, wxString text)
 {
-    MyRichTextCtrl& r = *m_editor;
-
-    r.SetDefaultStyle(wxRichTextAttr());
-
-    r.Freeze();
-
-    r.BeginSuppressUndo();
-
-    r.BeginParagraphSpacing(0, 20);
-
-    r.BeginAlignment(wxTEXT_ALIGNMENT_CENTRE);
-    r.BeginBold();
-
-    r.BeginFontSize(14);
-
-    wxString lineBreak = (wxChar) 29;
-
-    r.WriteText(wxString(wxT("Welcome to wxRichTextCtrl, a wxWidgets control")) + lineBreak + wxT("for editing and presenting styled text and images\n"));
-    r.EndFontSize();
-
-    r.BeginItalic();
-    r.WriteText(wxT("by Julian Smart"));
-    r.EndItalic();
-
-    r.EndBold();
-    r.Newline();
-
-    r.WriteImage(wxBitmap(zebra_xpm));
-
-    r.Newline();
-    r.Newline();
-
-    r.EndAlignment();
-
-#if 0
-    r.BeginAlignment(wxTEXT_ALIGNMENT_CENTRE);
-    r.WriteText(wxString(wxT("This is a simple test for a floating left image test. The zebra image should be placed at the left side of the current buffer and all the text should flow around it at the right side. This is a simple test for a floating left image test. The zebra image should be placed at the left side of the current buffer and all the text should flow around it at the right side. This is a simple test for a floating left image test. The zebra image should be placed at the left side of the current buffer and all the text should flow around it at the right side.")));
-    r.Newline();
-    r.EndAlignment();
-#endif
-
-    r.BeginAlignment(wxTEXT_ALIGNMENT_LEFT);
-    wxRichTextAttr imageAttr;
-    imageAttr.GetTextBoxAttr().SetFloatMode(wxTEXT_BOX_ATTR_FLOAT_LEFT);
-    r.WriteText(wxString(wxT("This is a simple test for a floating left image test. The zebra image should be placed at the left side of the current buffer and all the text should flow around it at the right side. This is a simple test for a floating left image test. The zebra image should be placed at the left side of the current buffer and all the text should flow around it at the right side. This is a simple test for a floating left image test. The zebra image should be placed at the left side of the current buffer and all the text should flow around it at the right side.")));
-    r.WriteImage(wxBitmap(zebra_xpm), wxBITMAP_TYPE_PNG, imageAttr);
-
-    imageAttr.GetTextBoxAttr().GetTop().SetValue(200);
-    imageAttr.GetTextBoxAttr().GetTop().SetUnits(wxTEXT_ATTR_UNITS_PIXELS);
-    imageAttr.GetTextBoxAttr().SetFloatMode(wxTEXT_BOX_ATTR_FLOAT_RIGHT);
-    r.WriteImage(wxBitmap(zebra_xpm), wxBITMAP_TYPE_PNG, imageAttr);
-    r.WriteText(wxString(wxT("This is a simple test for a floating right image test. The zebra image should be placed at the right side of the current buffer and all the text should flow around it at the left side. This is a simple test for a floating left image test. The zebra image should be placed at the right side of the current buffer and all the text should flow around it at the left side. This is a simple test for a floating left image test. The zebra image should be placed at the right side of the current buffer and all the text should flow around it at the left side.")));
-    r.EndAlignment();
-    r.Newline();
-
-    r.WriteText(wxT("What can you do with this thing? "));
-
-    r.WriteImage(wxBitmap(smiley_xpm));
-    r.WriteText(wxT(" Well, you can change text "));
-
-    r.BeginTextColour(*wxRED);
-    r.WriteText(wxT("colour, like this red bit."));
-    r.EndTextColour();
-
-    wxRichTextAttr backgroundColourAttr;
-    backgroundColourAttr.SetBackgroundColour(*wxGREEN);
-    backgroundColourAttr.SetTextColour(*wxBLUE);
-    r.BeginStyle(backgroundColourAttr);
-    r.WriteText(wxT(" And this blue on green bit."));
-    r.EndStyle();
-
-    r.WriteText(wxT(" Naturally you can make things "));
-    r.BeginBold();
-    r.WriteText(wxT("bold "));
-    r.EndBold();
-    r.BeginItalic();
-    r.WriteText(wxT("or italic "));
-    r.EndItalic();
-    r.BeginUnderline();
-    r.WriteText(wxT("or underlined."));
-    r.EndUnderline();
-
-    r.BeginFontSize(14);
-    r.WriteText(wxT(" Different font sizes on the same line is allowed, too."));
-    r.EndFontSize();
-
-    r.WriteText(wxT(" Next we'll show an indented paragraph."));
-
-    r.Newline();
-
-    r.BeginLeftIndent(60);
-    r.WriteText(wxT("It was in January, the most down-trodden month of an Edinburgh winter. An attractive woman came into the cafe, which is nothing remarkable."));
-    r.Newline();
-
-    r.EndLeftIndent();
-
-    r.WriteText(wxT("Next, we'll show a first-line indent, achieved using BeginLeftIndent(100, -40)."));
-
-    r.Newline();
-
-    r.BeginLeftIndent(100, -40);
-
-    r.WriteText(wxT("It was in January, the most down-trodden month of an Edinburgh winter. An attractive woman came into the cafe, which is nothing remarkable."));
-    r.Newline();
-
-    r.EndLeftIndent();
-
-    r.WriteText(wxT("Numbered bullets are possible, again using subindents:"));
-    r.Newline();
-
-    r.BeginNumberedBullet(1, 100, 60);
-    r.WriteText(wxT("This is my first item. Note that wxRichTextCtrl can apply numbering and bullets automatically based on list styles, but this list is formatted explicitly by setting indents."));
-    r.Newline();
-    r.EndNumberedBullet();
-
-    r.BeginNumberedBullet(2, 100, 60);
-    r.WriteText(wxT("This is my second item."));
-    r.Newline();
-    r.EndNumberedBullet();
-
-    r.WriteText(wxT("The following paragraph is right-indented:"));
-    r.Newline();
-
-    r.BeginRightIndent(200);
-
-    r.WriteText(wxT("It was in January, the most down-trodden month of an Edinburgh winter. An attractive woman came into the cafe, which is nothing remarkable."));
-    r.Newline();
-
-    r.EndRightIndent();
-
-    r.WriteText(wxT("The following paragraph is right-aligned with 1.5 line spacing:"));
-    r.Newline();
-
-    r.BeginAlignment(wxTEXT_ALIGNMENT_RIGHT);
-    r.BeginLineSpacing(wxTEXT_ATTR_LINE_SPACING_HALF);
-    r.WriteText(wxT("It was in January, the most down-trodden month of an Edinburgh winter. An attractive woman came into the cafe, which is nothing remarkable."));
-    r.Newline();
-    r.EndLineSpacing();
-    r.EndAlignment();
-
-    wxArrayInt tabs;
-    tabs.Add(400);
-    tabs.Add(600);
-    tabs.Add(800);
-    tabs.Add(1000);
-    wxRichTextAttr attr;
-    attr.SetFlags(wxTEXT_ATTR_TABS);
-    attr.SetTabs(tabs);
-    r.SetDefaultStyle(attr);
-
-    r.WriteText(wxT("This line contains tabs:\tFirst tab\tSecond tab\tThird tab"));
-    r.Newline();
-
-    r.WriteText(wxT("Other notable features of wxRichTextCtrl include:"));
-    r.Newline();
-
-    r.BeginSymbolBullet(wxT('*'), 100, 60);
-    r.WriteText(wxT("Compatibility with wxTextCtrl API"));
-    r.Newline();
-    r.EndSymbolBullet();
-
-    r.BeginSymbolBullet(wxT('*'), 100, 60);
-    r.WriteText(wxT("Easy stack-based BeginXXX()...EndXXX() style setting in addition to SetStyle()"));
-    r.Newline();
-    r.EndSymbolBullet();
-
-    r.BeginSymbolBullet(wxT('*'), 100, 60);
-    r.WriteText(wxT("XML loading and saving"));
-    r.Newline();
-    r.EndSymbolBullet();
-
-    r.BeginSymbolBullet(wxT('*'), 100, 60);
-    r.WriteText(wxT("Undo/Redo, with batching option and Undo suppressing"));
-    r.Newline();
-    r.EndSymbolBullet();
-
-    r.BeginSymbolBullet(wxT('*'), 100, 60);
-    r.WriteText(wxT("Clipboard copy and paste"));
-    r.Newline();
-    r.EndSymbolBullet();
-
-    r.BeginSymbolBullet(wxT('*'), 100, 60);
-    r.WriteText(wxT("wxRichTextStyleSheet with named character and paragraph styles, and control for applying named styles"));
-    r.Newline();
-    r.EndSymbolBullet();
-
-    r.BeginSymbolBullet(wxT('*'), 100, 60);
-    r.WriteText(wxT("A design that can easily be extended to other content types, ultimately with text boxes, tables, controls, and so on"));
-    r.Newline();
-    r.EndSymbolBullet();
-
-    // Make a style suitable for showing a URL
-    wxRichTextAttr urlStyle;
-    urlStyle.SetTextColour(*wxBLUE);
-    urlStyle.SetFontUnderlined(true);
-
-    r.WriteText(wxT("wxRichTextCtrl can also display URLs, such as this one: "));
-    r.BeginStyle(urlStyle);
-    r.BeginURL(wxT("http://www.wxwidgets.org"));
-    r.WriteText(wxT("The wxWidgets Web Site"));
-    r.EndURL();
-    r.EndStyle();
-    r.WriteText(wxT(". Click on the URL to generate an event."));
-
-    r.Newline();
-
-    r.WriteText(wxT("Note: this sample content was generated programmatically from within the MainFrame constructor in the demo. The images were loaded from inline XPMs. Enjoy wxRichTextCtrl!\n"));
-
-    r.EndParagraphSpacing();
-
-#if 1
-    {
-        // Add a text box
-
-        r.Newline();
-
-        wxRichTextAttr attr;
-        attr.GetTextBoxAttr().GetMargins().GetLeft().SetValue(20, wxTEXT_ATTR_UNITS_PIXELS);
-        attr.GetTextBoxAttr().GetMargins().GetTop().SetValue(20, wxTEXT_ATTR_UNITS_PIXELS);
-        attr.GetTextBoxAttr().GetMargins().GetRight().SetValue(20, wxTEXT_ATTR_UNITS_PIXELS);
-        attr.GetTextBoxAttr().GetMargins().GetBottom().SetValue(20, wxTEXT_ATTR_UNITS_PIXELS);
-
-        attr.GetTextBoxAttr().GetBorder().SetColour(*wxBLACK);
-        attr.GetTextBoxAttr().GetBorder().SetWidth(1, wxTEXT_ATTR_UNITS_PIXELS);
-        attr.GetTextBoxAttr().GetBorder().SetStyle(wxTEXT_BOX_ATTR_BORDER_SOLID);
-
-        wxRichTextBox* textBox = r.WriteTextBox(attr);
-        r.SetFocusObject(textBox);
-
-        r.WriteText(wxT("This is a text box. Just testing! Once more unto the breach, dear friends, once more..."));
-
-        r.SetFocusObject(NULL); // Set the focus back to the main buffer
-        r.SetInsertionPointEnd();
-    }
-#endif
-
-#if 1
-    {
-        // Add a table
-
-        r.Newline();
-
-        wxRichTextAttr attr;
-        attr.GetTextBoxAttr().GetMargins().GetLeft().SetValue(5, wxTEXT_ATTR_UNITS_PIXELS);
-        attr.GetTextBoxAttr().GetMargins().GetTop().SetValue(5, wxTEXT_ATTR_UNITS_PIXELS);
-        attr.GetTextBoxAttr().GetMargins().GetRight().SetValue(5, wxTEXT_ATTR_UNITS_PIXELS);
-        attr.GetTextBoxAttr().GetMargins().GetBottom().SetValue(5, wxTEXT_ATTR_UNITS_PIXELS);
-        attr.GetTextBoxAttr().GetPadding() = attr.GetTextBoxAttr().GetMargins();
-
-        attr.GetTextBoxAttr().GetBorder().SetColour(*wxBLACK);
-        attr.GetTextBoxAttr().GetBorder().SetWidth(1, wxTEXT_ATTR_UNITS_PIXELS);
-        attr.GetTextBoxAttr().GetBorder().SetStyle(wxTEXT_BOX_ATTR_BORDER_SOLID);
-
-        wxRichTextAttr cellAttr = attr;
-        cellAttr.GetTextBoxAttr().GetWidth().SetValue(200, wxTEXT_ATTR_UNITS_PIXELS);
-        cellAttr.GetTextBoxAttr().GetHeight().SetValue(150, wxTEXT_ATTR_UNITS_PIXELS);
-
-        wxRichTextTable* table = r.WriteTable(6, 4, attr, cellAttr);
-
-        int i, j;
-        for (j = 0; j < table->GetRowCount(); j++)
-        {
-            for (i = 0; i < table->GetColumnCount(); i++)
-            {
-                wxString msg = wxString::Format(wxT("This is cell %d, %d"), (j+1), (i+1));
-                r.SetFocusObject(table->GetCell(j, i));
-                r.WriteText(msg);
-            }
+    wxTreeItemIdValue cookie;
+    wxTreeItemId itemId = m_treeDates->GetFirstChild(parent, cookie);
+    while(itemId.IsOk()) {
+        wxString itemText = m_treeDates->GetItemText(itemId);
+        if(itemText == text) {
+            return itemId;
         }
-        
-        // Demonstrate colspan and rowspan
-        wxRichTextCell* cell = table->GetCell(1, 0);
-        cell->SetColSpan(2);
-        r.SetFocusObject(cell);
-        cell->Clear();
-        r.WriteText("This cell spans 2 columns");
-        
-        cell = table->GetCell(1, 3);
-        cell->SetRowSpan(2);
-        r.SetFocusObject(cell);
-        cell->Clear();
-        r.WriteText("This cell spans 2 rows");
-
-        cell = table->GetCell(2, 1);
-        cell->SetColSpan(2);
-        cell->SetRowSpan(3);
-        r.SetFocusObject(cell);
-        cell->Clear();
-        r.WriteText("This cell spans 2 columns and 3 rows");
-
-        r.SetFocusObject(NULL); // Set the focus back to the main buffer
-        r.SetInsertionPointEnd();
+        itemId = m_treeDates->GetNextChild(parent, cookie);
     }
-#endif
-
-    r.Newline(); r.Newline();
-
-    wxRichTextProperties properties;
-    r.WriteText(wxT("This is a rectangle field: "));
-    r.WriteField(wxT("rectangle"), properties);
-    r.WriteText(wxT(" and a begin section field: "));
-    r.WriteField(wxT("begin-section"), properties);
-    r.WriteText(wxT("This is text between the two tags."));
-    r.WriteField(wxT("end-section"), properties);
-    r.WriteText(wxT(" Now a bitmap. "));
-    r.WriteField(wxT("bitmap"), properties);
-    r.WriteText(wxT(" Before we go, here's a composite field: ***"));
-    wxRichTextField* field = r.WriteField(wxT("composite"), properties);
-    field->UpdateField(& r.GetBuffer()); // Creates the composite value (sort of a text box)
-    r.WriteText(wxT("*** End of composite field."));
-
-    r.Newline();
-    r.EndSuppressUndo();
-
-    // Add some locked content first - needs Undo to be enabled
-    {
-        r.BeginLock();
-        r.WriteText(wxString(wxT("This is a locked object.")));
-        r.EndLock();
-
-        r.WriteText(wxString(wxT(" This is unlocked text. ")));
-
-        r.BeginLock();
-        r.WriteText(wxString(wxT("More locked content.")));
-        r.EndLock();
-        r.Newline();
-
-        // Flush the Undo buffer
-        r.GetCommandProcessor()->ClearCommands();
-    }
-
-    r.Thaw();
+    return itemId; // ! IsOk
 }
 
+wxTreeItemId MainFrame::FindDateInTree(wxDateTime date)
+{
+    wxTreeItemId itemId = m_treeDates->GetRootItem();
+    
+    if (wxGetApp().GetDWParser()->IsHierarchicalTree()) {
+        wxString annee = wxString::Format("%4d", date.GetYear());
+        itemId = FindTextInTree(itemId, annee);
+        if (itemId.IsOk()) {
+            wxString mois = wxString::Format("%02d", date.GetMonth()+1);
+            itemId = FindTextInTree(itemId, mois);
+            if (itemId.IsOk()) {
+                wxString jour = wxString::Format("%02d", date.GetDay());
+                itemId = FindTextInTree(itemId, jour);
+            }
+        }
+    }        
+    else {   
+        wxString dateToFind = wxGetApp().GetDWParser()->ToTreeDate(date);
+        itemId = FindTextInTree(itemId, dateToFind);
+    }
+    return itemId;    
+}
+
+void MainFrame::EnableShowHirerarchicalTree(bool hiearchy)
+{
+     m_menuBar->Enable(ID_HIERACHY, hiearchy);
+}
 // event handlers
 
 void MainFrame::OnQuit(wxCommandEvent& WXUNUSED(event))
 {
     // true is to force the frame to close
-    Close(true);
+    Close();
 }
 
 void MainFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
@@ -1748,3 +1457,339 @@ void MainFrame::OnSetDimensionScale(wxCommandEvent& WXUNUSED(event))
     }
 }
 
+// Write text
+void MainFrame::WriteInitialText()
+{
+    MyRichTextCtrl& r = *m_editor;
+
+    r.SetDefaultStyle(wxRichTextAttr());
+
+    r.Freeze();
+
+    r.BeginSuppressUndo();
+
+    r.BeginParagraphSpacing(0, 20);
+
+    r.BeginAlignment(wxTEXT_ALIGNMENT_CENTRE);
+    r.BeginBold();
+
+    r.BeginFontSize(14);
+
+    wxString lineBreak = (wxChar) 29;
+
+    r.WriteText(wxString(wxT("Welcome to wxRichTextCtrl, a wxWidgets control")) + lineBreak + wxT("for editing and presenting styled text and images\n"));
+    r.EndFontSize();
+
+    r.BeginItalic();
+    r.WriteText(wxT("by Julian Smart"));
+    r.EndItalic();
+
+    r.EndBold();
+    r.Newline();
+
+    r.WriteImage(wxBitmap(zebra_xpm));
+
+    r.Newline();
+    r.Newline();
+
+    r.EndAlignment();
+
+#if 0
+    r.BeginAlignment(wxTEXT_ALIGNMENT_CENTRE);
+    r.WriteText(wxString(wxT("This is a simple test for a floating left image test. The zebra image should be placed at the left side of the current buffer and all the text should flow around it at the right side. This is a simple test for a floating left image test. The zebra image should be placed at the left side of the current buffer and all the text should flow around it at the right side. This is a simple test for a floating left image test. The zebra image should be placed at the left side of the current buffer and all the text should flow around it at the right side.")));
+    r.Newline();
+    r.EndAlignment();
+#endif
+
+    r.BeginAlignment(wxTEXT_ALIGNMENT_LEFT);
+    wxRichTextAttr imageAttr;
+    imageAttr.GetTextBoxAttr().SetFloatMode(wxTEXT_BOX_ATTR_FLOAT_LEFT);
+    r.WriteText(wxString(wxT("This is a simple test for a floating left image test. The zebra image should be placed at the left side of the current buffer and all the text should flow around it at the right side. This is a simple test for a floating left image test. The zebra image should be placed at the left side of the current buffer and all the text should flow around it at the right side. This is a simple test for a floating left image test. The zebra image should be placed at the left side of the current buffer and all the text should flow around it at the right side.")));
+    r.WriteImage(wxBitmap(zebra_xpm), wxBITMAP_TYPE_PNG, imageAttr);
+
+    imageAttr.GetTextBoxAttr().GetTop().SetValue(200);
+    imageAttr.GetTextBoxAttr().GetTop().SetUnits(wxTEXT_ATTR_UNITS_PIXELS);
+    imageAttr.GetTextBoxAttr().SetFloatMode(wxTEXT_BOX_ATTR_FLOAT_RIGHT);
+    r.WriteImage(wxBitmap(zebra_xpm), wxBITMAP_TYPE_PNG, imageAttr);
+    r.WriteText(wxString(wxT("This is a simple test for a floating right image test. The zebra image should be placed at the right side of the current buffer and all the text should flow around it at the left side. This is a simple test for a floating left image test. The zebra image should be placed at the right side of the current buffer and all the text should flow around it at the left side. This is a simple test for a floating left image test. The zebra image should be placed at the right side of the current buffer and all the text should flow around it at the left side.")));
+    r.EndAlignment();
+    r.Newline();
+
+    r.WriteText(wxT("What can you do with this thing? "));
+
+    r.WriteImage(wxBitmap(smiley_xpm));
+    r.WriteText(wxT(" Well, you can change text "));
+
+    r.BeginTextColour(*wxRED);
+    r.WriteText(wxT("colour, like this red bit."));
+    r.EndTextColour();
+
+    wxRichTextAttr backgroundColourAttr;
+    backgroundColourAttr.SetBackgroundColour(*wxGREEN);
+    backgroundColourAttr.SetTextColour(*wxBLUE);
+    r.BeginStyle(backgroundColourAttr);
+    r.WriteText(wxT(" And this blue on green bit."));
+    r.EndStyle();
+
+    r.WriteText(wxT(" Naturally you can make things "));
+    r.BeginBold();
+    r.WriteText(wxT("bold "));
+    r.EndBold();
+    r.BeginItalic();
+    r.WriteText(wxT("or italic "));
+    r.EndItalic();
+    r.BeginUnderline();
+    r.WriteText(wxT("or underlined."));
+    r.EndUnderline();
+
+    r.BeginFontSize(14);
+    r.WriteText(wxT(" Different font sizes on the same line is allowed, too."));
+    r.EndFontSize();
+
+    r.WriteText(wxT(" Next we'll show an indented paragraph."));
+
+    r.Newline();
+
+    r.BeginLeftIndent(60);
+    r.WriteText(wxT("It was in January, the most down-trodden month of an Edinburgh winter. An attractive woman came into the cafe, which is nothing remarkable."));
+    r.Newline();
+
+    r.EndLeftIndent();
+
+    r.WriteText(wxT("Next, we'll show a first-line indent, achieved using BeginLeftIndent(100, -40)."));
+
+    r.Newline();
+
+    r.BeginLeftIndent(100, -40);
+
+    r.WriteText(wxT("It was in January, the most down-trodden month of an Edinburgh winter. An attractive woman came into the cafe, which is nothing remarkable."));
+    r.Newline();
+
+    r.EndLeftIndent();
+
+    r.WriteText(wxT("Numbered bullets are possible, again using subindents:"));
+    r.Newline();
+
+    r.BeginNumberedBullet(1, 100, 60);
+    r.WriteText(wxT("This is my first item. Note that wxRichTextCtrl can apply numbering and bullets automatically based on list styles, but this list is formatted explicitly by setting indents."));
+    r.Newline();
+    r.EndNumberedBullet();
+
+    r.BeginNumberedBullet(2, 100, 60);
+    r.WriteText(wxT("This is my second item."));
+    r.Newline();
+    r.EndNumberedBullet();
+
+    r.WriteText(wxT("The following paragraph is right-indented:"));
+    r.Newline();
+
+    r.BeginRightIndent(200);
+
+    r.WriteText(wxT("It was in January, the most down-trodden month of an Edinburgh winter. An attractive woman came into the cafe, which is nothing remarkable."));
+    r.Newline();
+
+    r.EndRightIndent();
+
+    r.WriteText(wxT("The following paragraph is right-aligned with 1.5 line spacing:"));
+    r.Newline();
+
+    r.BeginAlignment(wxTEXT_ALIGNMENT_RIGHT);
+    r.BeginLineSpacing(wxTEXT_ATTR_LINE_SPACING_HALF);
+    r.WriteText(wxT("It was in January, the most down-trodden month of an Edinburgh winter. An attractive woman came into the cafe, which is nothing remarkable."));
+    r.Newline();
+    r.EndLineSpacing();
+    r.EndAlignment();
+
+    wxArrayInt tabs;
+    tabs.Add(400);
+    tabs.Add(600);
+    tabs.Add(800);
+    tabs.Add(1000);
+    wxRichTextAttr attr;
+    attr.SetFlags(wxTEXT_ATTR_TABS);
+    attr.SetTabs(tabs);
+    r.SetDefaultStyle(attr);
+
+    r.WriteText(wxT("This line contains tabs:\tFirst tab\tSecond tab\tThird tab"));
+    r.Newline();
+
+    r.WriteText(wxT("Other notable features of wxRichTextCtrl include:"));
+    r.Newline();
+
+    r.BeginSymbolBullet(wxT('*'), 100, 60);
+    r.WriteText(wxT("Compatibility with wxTextCtrl API"));
+    r.Newline();
+    r.EndSymbolBullet();
+
+    r.BeginSymbolBullet(wxT('*'), 100, 60);
+    r.WriteText(wxT("Easy stack-based BeginXXX()...EndXXX() style setting in addition to SetStyle()"));
+    r.Newline();
+    r.EndSymbolBullet();
+
+    r.BeginSymbolBullet(wxT('*'), 100, 60);
+    r.WriteText(wxT("XML loading and saving"));
+    r.Newline();
+    r.EndSymbolBullet();
+
+    r.BeginSymbolBullet(wxT('*'), 100, 60);
+    r.WriteText(wxT("Undo/Redo, with batching option and Undo suppressing"));
+    r.Newline();
+    r.EndSymbolBullet();
+
+    r.BeginSymbolBullet(wxT('*'), 100, 60);
+    r.WriteText(wxT("Clipboard copy and paste"));
+    r.Newline();
+    r.EndSymbolBullet();
+
+    r.BeginSymbolBullet(wxT('*'), 100, 60);
+    r.WriteText(wxT("wxRichTextStyleSheet with named character and paragraph styles, and control for applying named styles"));
+    r.Newline();
+    r.EndSymbolBullet();
+
+    r.BeginSymbolBullet(wxT('*'), 100, 60);
+    r.WriteText(wxT("A design that can easily be extended to other content types, ultimately with text boxes, tables, controls, and so on"));
+    r.Newline();
+    r.EndSymbolBullet();
+
+    // Make a style suitable for showing a URL
+    wxRichTextAttr urlStyle;
+    urlStyle.SetTextColour(*wxBLUE);
+    urlStyle.SetFontUnderlined(true);
+
+    r.WriteText(wxT("wxRichTextCtrl can also display URLs, such as this one: "));
+    r.BeginStyle(urlStyle);
+    r.BeginURL(wxT("http://www.wxwidgets.org"));
+    r.WriteText(wxT("The wxWidgets Web Site"));
+    r.EndURL();
+    r.EndStyle();
+    r.WriteText(wxT(". Click on the URL to generate an event."));
+
+    r.Newline();
+
+    r.WriteText(wxT("Note: this sample content was generated programmatically from within the MainFrame constructor in the demo. The images were loaded from inline XPMs. Enjoy wxRichTextCtrl!\n"));
+
+    r.EndParagraphSpacing();
+
+#if 1
+    {
+        // Add a text box
+
+        r.Newline();
+
+        wxRichTextAttr attr;
+        attr.GetTextBoxAttr().GetMargins().GetLeft().SetValue(20, wxTEXT_ATTR_UNITS_PIXELS);
+        attr.GetTextBoxAttr().GetMargins().GetTop().SetValue(20, wxTEXT_ATTR_UNITS_PIXELS);
+        attr.GetTextBoxAttr().GetMargins().GetRight().SetValue(20, wxTEXT_ATTR_UNITS_PIXELS);
+        attr.GetTextBoxAttr().GetMargins().GetBottom().SetValue(20, wxTEXT_ATTR_UNITS_PIXELS);
+
+        attr.GetTextBoxAttr().GetBorder().SetColour(*wxBLACK);
+        attr.GetTextBoxAttr().GetBorder().SetWidth(1, wxTEXT_ATTR_UNITS_PIXELS);
+        attr.GetTextBoxAttr().GetBorder().SetStyle(wxTEXT_BOX_ATTR_BORDER_SOLID);
+
+        wxRichTextBox* textBox = r.WriteTextBox(attr);
+        r.SetFocusObject(textBox);
+
+        r.WriteText(wxT("This is a text box. Just testing! Once more unto the breach, dear friends, once more..."));
+
+        r.SetFocusObject(NULL); // Set the focus back to the main buffer
+        r.SetInsertionPointEnd();
+    }
+#endif
+
+#if 1
+    {
+        // Add a table
+
+        r.Newline();
+
+        wxRichTextAttr attr;
+        attr.GetTextBoxAttr().GetMargins().GetLeft().SetValue(5, wxTEXT_ATTR_UNITS_PIXELS);
+        attr.GetTextBoxAttr().GetMargins().GetTop().SetValue(5, wxTEXT_ATTR_UNITS_PIXELS);
+        attr.GetTextBoxAttr().GetMargins().GetRight().SetValue(5, wxTEXT_ATTR_UNITS_PIXELS);
+        attr.GetTextBoxAttr().GetMargins().GetBottom().SetValue(5, wxTEXT_ATTR_UNITS_PIXELS);
+        attr.GetTextBoxAttr().GetPadding() = attr.GetTextBoxAttr().GetMargins();
+
+        attr.GetTextBoxAttr().GetBorder().SetColour(*wxBLACK);
+        attr.GetTextBoxAttr().GetBorder().SetWidth(1, wxTEXT_ATTR_UNITS_PIXELS);
+        attr.GetTextBoxAttr().GetBorder().SetStyle(wxTEXT_BOX_ATTR_BORDER_SOLID);
+
+        wxRichTextAttr cellAttr = attr;
+        cellAttr.GetTextBoxAttr().GetWidth().SetValue(200, wxTEXT_ATTR_UNITS_PIXELS);
+        cellAttr.GetTextBoxAttr().GetHeight().SetValue(150, wxTEXT_ATTR_UNITS_PIXELS);
+
+        wxRichTextTable* table = r.WriteTable(6, 4, attr, cellAttr);
+
+        int i, j;
+        for (j = 0; j < table->GetRowCount(); j++)
+        {
+            for (i = 0; i < table->GetColumnCount(); i++)
+            {
+                wxString msg = wxString::Format(wxT("This is cell %d, %d"), (j+1), (i+1));
+                r.SetFocusObject(table->GetCell(j, i));
+                r.WriteText(msg);
+            }
+        }
+        
+        // Demonstrate colspan and rowspan
+        wxRichTextCell* cell = table->GetCell(1, 0);
+        cell->SetColSpan(2);
+        r.SetFocusObject(cell);
+        cell->Clear();
+        r.WriteText("This cell spans 2 columns");
+        
+        cell = table->GetCell(1, 3);
+        cell->SetRowSpan(2);
+        r.SetFocusObject(cell);
+        cell->Clear();
+        r.WriteText("This cell spans 2 rows");
+
+        cell = table->GetCell(2, 1);
+        cell->SetColSpan(2);
+        cell->SetRowSpan(3);
+        r.SetFocusObject(cell);
+        cell->Clear();
+        r.WriteText("This cell spans 2 columns and 3 rows");
+
+        r.SetFocusObject(NULL); // Set the focus back to the main buffer
+        r.SetInsertionPointEnd();
+    }
+#endif
+
+    r.Newline(); r.Newline();
+
+    wxRichTextProperties properties;
+    r.WriteText(wxT("This is a rectangle field: "));
+    r.WriteField(wxT("rectangle"), properties);
+    r.WriteText(wxT(" and a begin section field: "));
+    r.WriteField(wxT("begin-section"), properties);
+    r.WriteText(wxT("This is text between the two tags."));
+    r.WriteField(wxT("end-section"), properties);
+    r.WriteText(wxT(" Now a bitmap. "));
+    r.WriteField(wxT("bitmap"), properties);
+    r.WriteText(wxT(" Before we go, here's a composite field: ***"));
+    wxRichTextField* field = r.WriteField(wxT("composite"), properties);
+    field->UpdateField(& r.GetBuffer()); // Creates the composite value (sort of a text box)
+    r.WriteText(wxT("*** End of composite field."));
+
+    r.Newline();
+    r.EndSuppressUndo();
+
+    // Add some locked content first - needs Undo to be enabled
+    {
+        r.BeginLock();
+        r.WriteText(wxString(wxT("This is a locked object.")));
+        r.EndLock();
+
+        r.WriteText(wxString(wxT(" This is unlocked text. ")));
+
+        r.BeginLock();
+        r.WriteText(wxString(wxT("More locked content.")));
+        r.EndLock();
+        r.Newline();
+
+        // Flush the Undo buffer
+        r.GetCommandProcessor()->ClearCommands();
+    }
+
+    r.Thaw();
+}

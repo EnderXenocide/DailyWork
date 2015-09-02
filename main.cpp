@@ -63,6 +63,8 @@ bool MainApp::OnInit()
 
 int MainApp::OnExit()
 {
+      
+        
 #if wxUSE_PRINTING_ARCHITECTURE
     delete m_printing;
 #endif

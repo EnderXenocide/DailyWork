@@ -42,22 +42,18 @@
 class MainApp : public wxApp
 {
 public:
+     MainFrame* frame; 
+
     virtual bool OnInit();
     virtual int OnExit();
-
     void CreateStyles();
     void InitDailyWorkParser();
     void LoadDailyWorkInTree();
-    DailyWorkParser* GetDWParser() const { return (DailyWorkParser*) &dwparser; }    
-
-    wxRichTextStyleSheet* GetStyleSheet() const { return m_styleSheet; }
- 
+    DailyWorkParser* GetDWParser() const { return (DailyWorkParser*) &dwparser; } 
+    wxRichTextStyleSheet* GetStyleSheet() const { return m_styleSheet; } 
 #if wxUSE_PRINTING_ARCHITECTURE
     wxRichTextPrinting* GetPrinting() const { return m_printing; }
 #endif   
-
-     MainFrame* frame; 
-
 private:
     wxRichTextStyleSheet*   m_styleSheet;
     DailyWorkParser dwparser; 

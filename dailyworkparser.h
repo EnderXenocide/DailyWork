@@ -42,9 +42,23 @@ public:
     wxString ToTreeDate(const wxDateTime& date) const;
     wxDateTime DWToDate(const std::string DWDate);
     int Save();
-    DailyWorkParser& SetHierarchicalTree(bool hierarchy) {this->treeWithHierarchy = hierarchy; return *this;  }
-    bool IsHierarchicalTree() const { return treeWithHierarchy; }
-    int GetVersion() const { return version; }
+    DailyWorkParser& SetHierarchicalTree(bool hierarchy)
+    {
+        this->treeWithHierarchy = hierarchy;
+        return *this;
+    }
+    bool IsHierarchicalTree() const
+    {
+        return treeWithHierarchy;
+    }
+    int GetVersion() const 
+    {
+        return version;
+    }
+    bool IsModified() const
+    {
+        return modified;
+    }
 private:
     //    static constexpr const char* JSON_FILE = "dailywork.json";
     //    static constexpr const char* JSON_DATE_FORMAT_EXT = "%Y-%m-%d"; //strptime()-like format string
@@ -63,6 +77,7 @@ private:
     wxTreeItemId AddItem(wxTreeCtrl* tree, wxTreeItemId parent, wxString text);
     Value& AddValue(wxDateTime& date);
     int version;
+    bool modified; // set if document was modified
 };
 
 #endif // DAILYWORKPARSER_H

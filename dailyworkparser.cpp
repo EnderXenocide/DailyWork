@@ -8,6 +8,7 @@
 
 DailyWorkParser::DailyWorkParser()
 {
+    modified = false;
 }
 
 DailyWorkParser::~DailyWorkParser()
@@ -176,13 +177,14 @@ int DailyWorkParser::SetWorkFromItem(rapidjson::Value& item, std::string text)
 {
     assert(item.IsObject());
     item[JSON_WORK].SetString(text.data(), text.size(), document.GetAllocator());
+    modified = true;
     return 0;
 }
 
 int DailyWorkParser::AddDateToTree(wxTreeCtrl* tree, wxDateTime& date, bool selectItem)
 {
     Value &value = AddValue(date);
-    SetWorkFromItem(value, "empty");
+    //SetWorkFromItem(value, "empty");
     wxTreeItemId itemId;
     if(treeWithHierarchy) {
         itemId = AddItem(tree, tree->GetRootItem(), wxString::Format("%4d", date.GetYear()));
@@ -235,6 +237,7 @@ Value& DailyWorkParser::AddValue(wxDateTime& date)
     value.AddMember(JSON_WORK, "", allocator);  
     Value &array = document[JSON_ARRAY];
     array.PushBack(value, allocator); 
+    modified = true;
     return array[array.Size()-1];//todo valid ?  
     
 //    static const char* kTypeNames[] = { "Null", "False", "True", "Object", "Array", "String", "Number" };
