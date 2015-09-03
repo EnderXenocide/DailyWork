@@ -49,18 +49,28 @@ public:
     void CreateStyles();
     void InitDailyWorkParser();
     void LoadDailyWorkInTree();
+    MainApp& SetHierarchicalTree( bool hierarchy){this->hierarchicalTree = hierarchy; return *this; }
+    bool IsHierarchicalTree() const{ return hierarchicalTree; }
     DailyWorkParser* GetDWParser() const { return (DailyWorkParser*) &dwparser; } 
     wxRichTextStyleSheet* GetStyleSheet() const { return m_styleSheet; } 
 #if wxUSE_PRINTING_ARCHITECTURE
     wxRichTextPrinting* GetPrinting() const { return m_printing; }
 #endif   
+    int AddDateToTree(wxDateTime& date, bool selectItem = false); // todo wxTreeCtrl& tree instead
+    wxTreeItemId AddItem(wxTreeItemId parent, wxString text);
+    wxTreeItemId FindDateInTree(wxDateTime date);
+    wxTreeItemId FindTextInTree(wxTreeItemId parent, wxString text);
+    std::string GetWorkFromTreeSelection();
 private:
+    bool hierarchicalTree;
     wxRichTextStyleSheet*   m_styleSheet;
     DailyWorkParser dwparser; 
 #if wxUSE_PRINTING_ARCHITECTURE
     wxRichTextPrinting*     m_printing;
 #endif      
     void InitRichText(); 
+    int LoadDailyWorkInTreeHierarchy(wxTreeItemId rootID, const Value& dataArray);
+    int LoadDailyWorkInTreeSimple(wxTreeItemId rootID, const Value& dataArray);   
 };
 
 // declare global static function wxGetApp()

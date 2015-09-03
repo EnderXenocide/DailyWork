@@ -52,60 +52,6 @@ int DailyWorkParser::Parse()
     // ECRITURE fwrite (buffer.GetString(), buffer.GetSize(), 1, wFile);
 }
 
-int DailyWorkParser::LoadDatesTree(wxTreeCtrl* tree)
-{
-    LOG(INFO) << "Loading Tree with json data...";
-    tree->DeleteAllItems();
-    tree->SetWindowStyle(wxTR_HIDE_ROOT);
-    wxTreeItemId rootID = tree->AddRoot(wxT("Dates"));
-    Value& dataArray = document[JSON_ARRAY];
-    assert(dataArray.IsArray());
-
-    int retour;
-    if(treeWithHierarchy)
-        retour = LoadDatesTreeHierarchy(tree, rootID, dataArray);
-    else
-        retour = LoadDatesTreeSimple(tree, rootID, dataArray);
-    if(!retour) {
-        m_cbMessageInfo("Dates chargées");
-        tree->ExpandAll();
-    }
-    else {
-        m_cbMessageInfo("Erreur de chargement des dates");
-        LOG(ERROR) << "Erreur de chargement des dates";
-    }
-    LOG(INFO) << "Tree Loaded";
-    return 0;
-}
-
-int DailyWorkParser::LoadDatesTreeSimple(wxTreeCtrl* tree, wxTreeItemId rootID, const rapidjson::Value& dataArray)
-{
-    LOG(INFO) << "Loading Tree Simple... ";
-    for(SizeType i = 0; i < dataArray.Size(); i++) {
-        const Value& c = dataArray[i];
-        wxString sDate = ToTreeDate(GetDateFromItem(c));
-        wxTreeItemId itemID = tree->AppendItem(rootID, sDate);
-        DWItemData* itemData = new DWItemData(c);
-        tree->SetItemData(itemID, itemData);
-    }
-    return 0;
-}
-
-int DailyWorkParser::LoadDatesTreeHierarchy(wxTreeCtrl* tree, wxTreeItemId rootID, const Value& dataArray)
-{
-    LOG(INFO) << "Loading Tree Hierarchy... ";
-    wxTreeItemId itemId;
-    for(SizeType i = 0; i < dataArray.Size(); i++) {
-        const Value& c = dataArray[i];
-        wxDateTime date = GetDateFromItem(c);
-        itemId = AddItem(tree, tree->GetRootItem(), wxString::Format("%4d", date.GetYear()));
-        itemId = AddItem(tree, itemId, wxString::Format("%02d", date.GetMonth()+1));
-        itemId = AddItem(tree, itemId, wxString::Format("%02d", date.GetDay()));
-        DWItemData* itemData = new DWItemData(c);
-        tree->SetItemData(itemId, itemData);
-    }
-    return 0;
-}
 
 std::string DailyWorkParser::GetWorkFromTree(const wxTreeCtrl* tree)
 {
@@ -190,48 +136,11 @@ int DailyWorkParser::SetWorkFromItem(rapidjson::Value& item, std::string text)
     return 0;
 }
 
-int DailyWorkParser::AddDateToTree(wxTreeCtrl* tree, wxDateTime& date, bool selectItem)
+DWItemData* DailyWorkParser::AddDate(wxDateTime& date)
 {
     Value &value = AddValue(date);
     //SetWorkFromItem(value, "empty");
-    wxTreeItemId itemId;
-    if(treeWithHierarchy) {
-        itemId = AddItem(tree, tree->GetRootItem(), wxString::Format("%4d", date.GetYear()));
-        itemId = AddItem(tree, itemId, wxString::Format("%02d", date.GetMonth()+1));
-        itemId = AddItem(tree, itemId, wxString::Format("%02d", date.GetDay()));
-    } else {
-        itemId = AddItem(tree, tree->GetRootItem(), ToTreeDate(date));
-    }
-    DWItemData* data = new DWItemData(value);
-    tree->SetItemData(itemId, data);
-    tree->ExpandAll(); //Expand(itemId);
-    if(selectItem)
-        tree->SelectItem(itemId, true);
-    return 0;
-}
-
-/*
- * Cherche l'item avec text comme text ou ajout un nouveau dans l'ordre alphabéthique inverse
- */
-wxTreeItemId DailyWorkParser::AddItem(wxTreeCtrl* tree, wxTreeItemId parent, wxString text)
-{
-    wxTreeItemIdValue cookie;
-    wxTreeItemId itemId = tree->GetFirstChild(parent, cookie);
-    while(itemId.IsOk()) {
-        wxString itemText = tree->GetItemText(itemId);
-        if(itemText == text)
-            return itemId;                         // pas besoin d'ajouter l'item
-        else if(text > itemText) {                 // item voulu doit se trouver après
-            itemId = tree->GetPrevSibling(itemId); // on prend l'item precedent pour pouvoir inserer celui qu'on veux
-            if(itemId.IsOk())
-                return tree->InsertItem(parent, itemId, text);
-            else                                          // pas d'item avant
-                return tree->InsertItem(parent, 0, text); // insert item en premier
-        }
-        //tree->GetNextSibling(itemId);
-        itemId  = tree->GetNextChild(parent, cookie);
-    }
-    return tree->AppendItem(parent, text); // item voulu pas trouver
+    return new DWItemData(value);
 }
 
 Value& DailyWorkParser::AddValue(wxDateTime& date)
@@ -261,4 +170,12 @@ wxDateTime  DailyWorkParser::DWToDate(const std::string DWDate)
         LOG(ERROR) << "Can't convert " << DWDate << "to date";
     }
     return date;
+}
+Value& DailyWorkParser::GetArray()
+{
+    //todo decommenter code ?
+    //Value& value = document[JSON_ARRAY]; 
+    //assert(value.IsArray());
+    return document[JSON_ARRAY]; //value
+
 }

@@ -28,8 +28,6 @@ bool MainApp::OnInit()
 {
     START_EASYLOGGINGPP(wxGetApp().argc, wxGetApp().argv);
     LOG(DEBUG ) << "START";
-//	SetTopWindow( new MainFrame( NULL ) );
-//	GetTopWindow()->Show();
 	
     if ( !wxApp::OnInit() )
         return false;
@@ -45,7 +43,7 @@ bool MainApp::OnInit()
     m_printing->SetParentWindow(frame);
 #endif
 
-    dwparser.SetHierarchicalTree(true); // avant creation de la frame pour le menu ShowHierarchicalTree
+    SetHierarchicalTree(true); // avant creation de la frame pour le menu ShowHierarchicalTree
 
     MainFrame* sameframe  = frame;    
     
@@ -53,8 +51,9 @@ bool MainApp::OnInit()
     InitDailyWorkParser();
     // and show it (the frames, unlike simple controls, are not shown when
     // created initially)
+    SetTopWindow(frame);
     frame->Show(true);
-
+    
     // success: wxApp::OnRun() will be called which will enter the main message
     // loop and the application will run. If we returned false here, the
     // application would exit immediately.
@@ -295,6 +294,141 @@ void MainApp::InitDailyWorkParser()
 
 void MainApp::LoadDailyWorkInTree()
 {
-    dwparser.LoadDatesTree(frame->m_treeDates); 
+    LOG(INFO) << "Loading Tree with json data...";
+    wxTreeCtrl* tree = frame->m_treeDates;
+    tree->DeleteAllItems();
+    tree->SetWindowStyle(wxTR_HIDE_ROOT);
+    wxTreeItemId rootID = tree->AddRoot(wxT("Dates"));
+    Value& dataArray = dwparser.GetArray();
+ 
+    int retour;
+    if (hierarchicalTree)
+        retour = LoadDailyWorkInTreeHierarchy(rootID, dataArray);
+    else
+        retour = LoadDailyWorkInTreeSimple(rootID, dataArray);
+    if(!retour) {
+        frame->OnStatusBarMessage("Dates chargées");
+        tree->ExpandAll();
+    }
+    else {
+        frame->OnStatusBarMessage("Erreur de chargement des dates");
+        LOG(ERROR) << "Erreur de chargement des dates";
+    }
+    LOG(INFO) << "Tree Loaded";
+}
+
+int MainApp::LoadDailyWorkInTreeHierarchy(wxTreeItemId rootID, const Value& dataArray)
+{
+    LOG(INFO) << "Loading Tree Hierarchy... ";
+    wxTreeCtrl* tree = frame->m_treeDates;
+    wxTreeItemId itemId;
+    for(SizeType i = 0; i < dataArray.Size(); i++) {
+        const Value& c = dataArray[i];
+        wxDateTime date = dwparser.GetDateFromItem(c);
+        itemId = AddItem(rootID, wxString::Format("%4d", date.GetYear()));
+        itemId = AddItem(itemId, wxString::Format("%02d", date.GetMonth()+1));
+        itemId = AddItem(itemId, wxString::Format("%02d", date.GetDay()));
+        DWItemData* itemData = new DWItemData(c);
+        tree->SetItemData(itemId, itemData);
+    }
+    return 0;    
+}
+
+int MainApp::LoadDailyWorkInTreeSimple(wxTreeItemId rootID, const Value& dataArray)
+{
+    LOG(INFO) << "Loading Tree Simple... ";
+    wxTreeCtrl* tree = frame->m_treeDates;
+    for(SizeType i = 0; i < dataArray.Size(); i++) {
+        const Value& c = dataArray[i];
+        wxString sDate = dwparser.ToTreeDate(dwparser.GetDateFromItem(c));
+        wxTreeItemId itemID = tree->AppendItem(rootID, sDate);
+        DWItemData* itemData = new DWItemData(c);
+        tree->SetItemData(itemID, itemData);
+    }
+    return 0;
+}
+
+wxTreeItemId MainApp::FindTextInTree(wxTreeItemId parent, wxString text)
+{
+    wxTreeCtrl* tree = frame->m_treeDates;
+
+    wxTreeItemIdValue cookie;
+    wxTreeItemId itemId = tree->GetFirstChild(parent, cookie);
+    while(itemId.IsOk()) {
+        wxString itemText = tree->GetItemText(itemId);
+        if(itemText == text) {
+            return itemId;
+        }
+        itemId = tree->GetNextChild(parent, cookie);
+    }
+    return itemId; // ! IsOk
+}
+
+wxTreeItemId MainApp::FindDateInTree(wxDateTime date)
+{
+    wxTreeItemId itemId = frame->m_treeDates->GetRootItem();
+    
+    if (IsHierarchicalTree()) {
+        wxString annee = wxString::Format("%4d", date.GetYear());
+        itemId = FindTextInTree(itemId, annee);
+        if (itemId.IsOk()) {
+            wxString mois = wxString::Format("%02d", date.GetMonth()+1);
+            itemId = FindTextInTree(itemId, mois);
+            if (itemId.IsOk()) {
+                wxString jour = wxString::Format("%02d", date.GetDay());
+                itemId = FindTextInTree(itemId, jour);
+            }
+        }
+    }        
+    else {   
+        wxString dateToFind = dwparser.ToTreeDate(date);
+        itemId = FindTextInTree(itemId, dateToFind);
+    }
+    return itemId;    
+}
+
+
+int MainApp::AddDateToTree(wxDateTime& date, bool selectItem)
+{
+    wxTreeCtrl* tree = frame->m_treeDates;
+
+    wxTreeItemId itemId;
+    if(hierarchicalTree) {
+        itemId = AddItem(tree->GetRootItem(), wxString::Format("%4d", date.GetYear()));
+        itemId = AddItem(itemId, wxString::Format("%02d", date.GetMonth()+1));
+        itemId = AddItem(itemId, wxString::Format("%02d", date.GetDay()));
+    } else {
+        itemId = AddItem(tree->GetRootItem(), dwparser.ToTreeDate(date));
+    }
+    DWItemData* data =  dwparser.AddDate(date);
+    tree->SetItemData(itemId, data);
+    tree->ExpandAll(); //Expand(itemId);
+    if(selectItem)
+        tree->SelectItem(itemId, true);
+    return 0;
+}
+
+/*
+ * Cherche l'item avec text comme text ou ajout un nouveau dans l'ordre alphabéthique inverse
+ */
+wxTreeItemId MainApp::AddItem(wxTreeItemId parent, wxString text)
+{
+    wxTreeCtrl* tree = frame->m_treeDates;
+    wxTreeItemIdValue cookie;
+    wxTreeItemId itemId = tree->GetFirstChild(parent, cookie);
+    while(itemId.IsOk()) {
+        wxString itemText = tree->GetItemText(itemId);
+        if(itemText == text)
+            return itemId;                         // pas besoin d'ajouter l'item
+        else if(text > itemText) {                 // item voulu doit se trouver après
+            itemId = tree->GetPrevSibling(itemId); // on prend l'item precedent pour pouvoir inserer celui qu'on veux
+            if(itemId.IsOk())
+                return tree->InsertItem(parent, itemId, text);
+            else                                          // pas d'item avant
+                return tree->InsertItem(parent, 0, text); // insert item en premier
+        }
+        itemId  = tree->GetNextChild(parent, cookie);
+    }
+    return tree->AppendItem(parent, text); // item voulu pas trouver
 }
 

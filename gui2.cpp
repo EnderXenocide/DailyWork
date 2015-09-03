@@ -87,22 +87,7 @@ enum
 // handlers) which process them. It can be also done at run-time, but for the
 // simple menu events like this the static method is much simpler.
 wxBEGIN_EVENT_TABLE(MainFrame, wxFrame)
-    EVT_MENU(ID_Quit,  MainFrame::OnQuit)
-    EVT_MENU(ID_About, MainFrame::OnAbout)
-
-    EVT_MENU(wxID_OPEN,  MainFrame::OnOpen)
-    EVT_MENU(wxID_SAVE,  MainFrame::OnSave)
-    EVT_MENU(wxID_SAVEAS,  MainFrame::OnSaveAs)
-    
-    EVT_MENU(ID_HIERACHY,  MainFrame::OnShowHirerarchicalTree) 
-
-    EVT_MENU(ID_FORMAT_BOLD,  MainFrame::OnBold)
-    EVT_MENU(ID_FORMAT_ITALIC,  MainFrame::OnItalic)
-    EVT_MENU(ID_FORMAT_UNDERLINE,  MainFrame::OnUnderline)
-
-    EVT_MENU(ID_FORMAT_STRIKETHROUGH,  MainFrame::OnStrikethrough)
-    EVT_MENU(ID_FORMAT_SUPERSCRIPT,  MainFrame::OnSuperscript)
-    EVT_MENU(ID_FORMAT_SUBSCRIPT,  MainFrame::OnSubscript)
+    //EVT_MENU(ID_Quit,  MainFrame::OnQuit)
 
     EVT_UPDATE_UI(ID_FORMAT_BOLD,  MainFrame::OnUpdateBold)
     EVT_UPDATE_UI(ID_FORMAT_ITALIC,  MainFrame::OnUpdateItalic)
@@ -208,7 +193,7 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     
     fileMenu->AppendSeparator();
     fileMenu->AppendCheckItem(ID_HIERACHY, wxT("&Hierarchical Tree"), wxT("Toggle Simple/Hierarchical Tree"));
-    fileMenu->Check(ID_HIERACHY, wxGetApp().GetDWParser()->IsHierarchicalTree());    
+    fileMenu->Check(ID_HIERACHY, wxGetApp().IsHierarchicalTree());    
     fileMenu->Enable(ID_HIERACHY, false);
     
 //    fileMenu->AppendSeparator();
@@ -417,28 +402,54 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     m_mainToolBar->EnableTool(ID_FORMAT_INDENT_MORE, false);
     m_mainToolBar->EnableTool(ID_FORMAT_FONT, false);
  
- //	// Connect Events
-//	this->Connect( menuFileExit->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnExitClick ) );
-    ConnectSelChanged();
-	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( MainFrame::OnCloseFrame ) );
-	m_calendar->Connect( wxEVT_KILL_FOCUS, wxFocusEventHandler( MainFrame::OnCalendarKillFocus ), NULL, this );
-	m_calendar->Connect( wxEVT_SET_FOCUS, wxFocusEventHandler( MainFrame::OnCalendarSetFocus ), NULL, this );
-    m_calendar->Connect( wxEVT_CALENDAR_DOUBLECLICKED, wxCalendarEventHandler( MainFrame::OnCalendarDblClick ), NULL, this );
+    ConnectEvents();
 }   
  
 MainFrame::~MainFrame()
 {
-	// Disconnect Events
-//	this->Disconnect( wxID_EXIT, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnExitClick ) );
-    DisconnectSelhanged();	
-	this->Disconnect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( MainFrame::OnCloseFrame ) );
+    DisconnectEvents();	
+}
+
+
+void MainFrame::ConnectEvents()
+{
+    //	this->Connect( menuFileExit->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnExitClick ) );
+    ConnectEventsSelChanged();
+	m_calendar->Connect( wxEVT_KILL_FOCUS, wxFocusEventHandler( MainFrame::OnCalendarKillFocus ), NULL, this );
+	m_calendar->Connect( wxEVT_SET_FOCUS, wxFocusEventHandler( MainFrame::OnCalendarSetFocus ), NULL, this );
+    m_calendar->Connect( wxEVT_CALENDAR_DOUBLECLICKED, wxCalendarEventHandler( MainFrame::OnCalendarDblClick ), NULL, this );
+	Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( MainFrame::OnCloseFrame ) );
+
+    Connect(ID_Quit, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnQuit));
+    Connect(ID_About, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnAbout));
+
+    Connect(wxID_OPEN, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnOpen));
+    Connect(wxID_SAVE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSave));
+    Connect(wxID_SAVEAS, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSaveAs));
+    
+    Connect(ID_HIERACHY, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnShowHirerarchicalTree));
+
+    Connect(ID_FORMAT_BOLD, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnBold));
+    Connect(ID_FORMAT_ITALIC, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnItalic));
+    Connect(ID_FORMAT_UNDERLINE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnUnderline));
+
+    Connect(ID_FORMAT_STRIKETHROUGH, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnStrikethrough));
+    Connect(ID_FORMAT_SUPERSCRIPT, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSuperscript));
+    Connect(ID_FORMAT_SUBSCRIPT, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSubscript));
+}
+
+void MainFrame::DisconnectEvents()
+{
+    //	this->Disconnect( wxID_EXIT, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnExitClick ) );
+    DisconnectEventsSelhanged();	
 	m_calendar->Disconnect( wxEVT_KILL_FOCUS, wxFocusEventHandler( MainFrame::OnCalendarKillFocus ), NULL, this );
 	m_calendar->Disconnect( wxEVT_SET_FOCUS, wxFocusEventHandler( MainFrame::OnCalendarSetFocus ), NULL, this );
  	m_calendar->Disconnect( wxEVT_CALENDAR_DOUBLECLICKED, wxCalendarEventHandler( MainFrame::OnCalendarDblClick ), NULL, this );    
+	Disconnect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( MainFrame::OnCloseFrame ) );
+    Disconnect(ID_Quit, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnQuit));
 }
-
    
-void MainFrame::ConnectSelChanged() {
+void MainFrame::ConnectEventsSelChanged() {
  // conection fait aprés chargement 
 //todo prevenir wxEVT_TREE_SEL_CHANGING au demarage connection fait aprés chargement  dwparser 
 	m_treeDates->Connect( wxEVT_TREE_SEL_CHANGED, wxTreeEventHandler( MainFrame::OnTreeSelChanged ), NULL, this );
@@ -446,7 +457,7 @@ void MainFrame::ConnectSelChanged() {
 	m_calendar->Connect( wxEVT_CALENDAR_SEL_CHANGED, wxCalendarEventHandler( MainFrame::OnCalendarSelChanged ), NULL, this );
 }
 
-void MainFrame::DisconnectSelhanged() {
+void MainFrame::DisconnectEventsSelhanged() {
     m_treeDates->Disconnect( wxEVT_COMMAND_TREE_SEL_CHANGED, wxTreeEventHandler( MainFrame::OnTreeSelChanged ), NULL, this );
 	m_treeDates->Disconnect( wxEVT_TREE_SEL_CHANGING, wxTreeEventHandler( MainFrame::OnTreeSelChanging ), NULL, this );
 	m_calendar->Disconnect( wxEVT_CALENDAR_SEL_CHANGED, wxCalendarEventHandler( MainFrame::OnCalendarSelChanged ), NULL, this );  
@@ -493,7 +504,7 @@ void MainFrame::OnCalendarDblClick(wxCalendarEvent& event)
 {
     //chercher date dans tree
     wxDateTime selDate = m_calendar->GetDate();
-    wxGetApp().GetDWParser()->AddDateToTree(m_treeDates, selDate, true);
+    wxGetApp().AddDateToTree(selDate, true);
 }
 
 void MainFrame::OnCalendarSetFocus( wxFocusEvent& event )
@@ -509,7 +520,7 @@ void MainFrame::OnCalendarKillFocus( wxFocusEvent& event )
 void MainFrame::OnCalendarSelChanged(wxCalendarEvent& event) 
 { 
     //todo find date in tree
-    wxTreeItemId itemId = FindDateInTree(m_calendar->GetDate());
+    wxTreeItemId itemId = wxGetApp().FindDateInTree(m_calendar->GetDate());
     if (itemId.IsOk()) {
         m_treeDates->SelectItem(itemId, true);
 //        wxString msg = m_treeDates->GetItemText(ItemID);
@@ -561,61 +572,25 @@ void MainFrame::OnStatusBarMessage(std::string msg)
 void MainFrame::OnShowHirerarchicalTree(wxCommandEvent& event)
 {
     bool c = m_menuBar->IsChecked(ID_HIERACHY);
-    wxGetApp().GetDWParser()->SetHierarchicalTree(c); 
+    wxGetApp().SetHierarchicalTree(c); 
     wxGetApp().LoadDailyWorkInTree();  
 }
 // END EVENTS
-
-wxTreeItemId MainFrame::FindTextInTree(wxTreeItemId parent, wxString text)
-{
-    wxTreeItemIdValue cookie;
-    wxTreeItemId itemId = m_treeDates->GetFirstChild(parent, cookie);
-    while(itemId.IsOk()) {
-        wxString itemText = m_treeDates->GetItemText(itemId);
-        if(itemText == text) {
-            return itemId;
-        }
-        itemId = m_treeDates->GetNextChild(parent, cookie);
-    }
-    return itemId; // ! IsOk
-}
-
-wxTreeItemId MainFrame::FindDateInTree(wxDateTime date)
-{
-    wxTreeItemId itemId = m_treeDates->GetRootItem();
-    
-    if (wxGetApp().GetDWParser()->IsHierarchicalTree()) {
-        wxString annee = wxString::Format("%4d", date.GetYear());
-        itemId = FindTextInTree(itemId, annee);
-        if (itemId.IsOk()) {
-            wxString mois = wxString::Format("%02d", date.GetMonth()+1);
-            itemId = FindTextInTree(itemId, mois);
-            if (itemId.IsOk()) {
-                wxString jour = wxString::Format("%02d", date.GetDay());
-                itemId = FindTextInTree(itemId, jour);
-            }
-        }
-    }        
-    else {   
-        wxString dateToFind = wxGetApp().GetDWParser()->ToTreeDate(date);
-        itemId = FindTextInTree(itemId, dateToFind);
-    }
-    return itemId;    
-}
 
 void MainFrame::EnableShowHirerarchicalTree(bool hiearchy)
 {
      m_menuBar->Enable(ID_HIERACHY, hiearchy);
 }
 // event handlers
-
-void MainFrame::OnQuit(wxCommandEvent& WXUNUSED(event))
+ 
+//void MainFrame::OnQuit(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnQuit(wxCommandEvent& event)
 {
     // true is to force the frame to close
     Close();
 }
 
-void MainFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnAbout(wxCommandEvent& event)
 {
     wxString msg;
     msg.Printf( wxT("This is a demo for wxRichTextCtrl, a control for editing styled text.\n(c) Julian Smart, 2005"));
@@ -661,7 +636,7 @@ bool MainFrame::ProcessEvent(wxEvent& event)
     return wxFrame::ProcessEvent(event);
 }
 
-void MainFrame::OnOpen(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnOpen(wxCommandEvent&event)
 {
     LOG(INFO) << "Ouverture du fichier json " ;
     wxGetApp().InitDailyWorkParser();
@@ -712,7 +687,7 @@ void MainFrame::OnSave(wxCommandEvent& event)
      */
 }
 
-void MainFrame::OnSaveAs(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnSaveAs(wxCommandEvent& event)
 {    
     wxString filter = "*.json"; //wxRichTextBuffer::GetExtWildcard(false, true);
     wxString path;
@@ -746,32 +721,32 @@ void MainFrame::OnSaveAs(wxCommandEvent& WXUNUSED(event))
     }
 }
 
-void MainFrame::OnBold(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnBold(wxCommandEvent& event)
 {
     m_editor->ApplyBoldToSelection();
 }
 
-void MainFrame::OnItalic(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnItalic(wxCommandEvent& event)
 {
     m_editor->ApplyItalicToSelection();
 }
 
-void MainFrame::OnUnderline(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnUnderline(wxCommandEvent& event)
 {
     m_editor->ApplyUnderlineToSelection();
 }
 
-void MainFrame::OnStrikethrough(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnStrikethrough(wxCommandEvent& event)
 {
     m_editor->ApplyTextEffectToSelection(wxTEXT_ATTR_EFFECT_STRIKETHROUGH);
 }
 
-void MainFrame::OnSuperscript(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnSuperscript(wxCommandEvent& event)
 {
     m_editor->ApplyTextEffectToSelection(wxTEXT_ATTR_EFFECT_SUPERSCRIPT);
 }
 
-void MainFrame::OnSubscript(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnSubscript(wxCommandEvent& event)
 {
     m_editor->ApplyTextEffectToSelection(wxTEXT_ATTR_EFFECT_SUBSCRIPT);
 }
@@ -807,17 +782,17 @@ void MainFrame::OnUpdateSubscript(wxUpdateUIEvent& event)
     event.Check(m_editor->DoesSelectionHaveTextEffectFlag(wxTEXT_ATTR_EFFECT_SUBSCRIPT));
 }
 
-void MainFrame::OnAlignLeft(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnAlignLeft(wxCommandEvent& event)
 {
     m_editor->ApplyAlignmentToSelection(wxTEXT_ALIGNMENT_LEFT);
 }
 
-void MainFrame::OnAlignCentre(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnAlignCentre(wxCommandEvent& event)
 {
     m_editor->ApplyAlignmentToSelection(wxTEXT_ALIGNMENT_CENTRE);
 }
 
-void MainFrame::OnAlignRight(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnAlignRight(wxCommandEvent& event)
 {
     m_editor->ApplyAlignmentToSelection(wxTEXT_ALIGNMENT_RIGHT);
 }
@@ -837,7 +812,7 @@ void MainFrame::OnUpdateAlignRight(wxUpdateUIEvent& event)
     event.Check(m_editor->IsSelectionAligned(wxTEXT_ALIGNMENT_RIGHT));
 }
 
-void MainFrame::OnFont(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnFont(wxCommandEvent& event)
 {
     wxRichTextRange range;
     if (m_editor->HasSelection())
@@ -857,7 +832,7 @@ void MainFrame::OnFont(wxCommandEvent& WXUNUSED(event))
     }
 }
 
-void MainFrame::OnImage(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnImage(wxCommandEvent& event)
 {
     wxRichTextRange range;
     wxASSERT(m_editor->HasSelection());
@@ -877,7 +852,7 @@ void MainFrame::OnImage(wxCommandEvent& WXUNUSED(event))
     }
 }
 
-void MainFrame::OnParagraph(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnParagraph(wxCommandEvent& event)
 {
     wxRichTextRange range;
     if (m_editor->HasSelection())
@@ -896,7 +871,7 @@ void MainFrame::OnParagraph(wxCommandEvent& WXUNUSED(event))
     }
 }
 
-void MainFrame::OnFormat(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnFormat(wxCommandEvent& event)
 {
     wxRichTextRange range;
     if (m_editor->HasSelection())
@@ -939,7 +914,7 @@ void MainFrame::OnUpdateImage(wxUpdateUIEvent& event)
     event.Enable(false);
 }
 
-void MainFrame::OnIndentMore(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnIndentMore(wxCommandEvent& event)
 {
     wxRichTextAttr attr;
     attr.SetFlags(wxTEXT_ATTR_LEFT_INDENT);
@@ -957,7 +932,7 @@ void MainFrame::OnIndentMore(wxCommandEvent& WXUNUSED(event))
     }
 }
 
-void MainFrame::OnIndentLess(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnIndentLess(wxCommandEvent& event)
 {
     wxRichTextAttr attr;
     attr.SetFlags(wxTEXT_ATTR_LEFT_INDENT);
@@ -977,7 +952,7 @@ void MainFrame::OnIndentLess(wxCommandEvent& WXUNUSED(event))
     }
 }
 
-void MainFrame::OnLineSpacingHalf(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnLineSpacingHalf(wxCommandEvent& event)
 {
     wxRichTextAttr attr;
     attr.SetFlags(wxTEXT_ATTR_LINE_SPACING);
@@ -995,7 +970,7 @@ void MainFrame::OnLineSpacingHalf(wxCommandEvent& WXUNUSED(event))
     }
 }
 
-void MainFrame::OnLineSpacingDouble(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnLineSpacingDouble(wxCommandEvent& event)
 {
     wxRichTextAttr attr;
     attr.SetFlags(wxTEXT_ATTR_LINE_SPACING);
@@ -1013,7 +988,7 @@ void MainFrame::OnLineSpacingDouble(wxCommandEvent& WXUNUSED(event))
     }
 }
 
-void MainFrame::OnLineSpacingSingle(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnLineSpacingSingle(wxCommandEvent& event)
 {
     wxRichTextAttr attr;
     attr.SetFlags(wxTEXT_ATTR_LINE_SPACING);
@@ -1031,7 +1006,7 @@ void MainFrame::OnLineSpacingSingle(wxCommandEvent& WXUNUSED(event))
     }
 }
 
-void MainFrame::OnParagraphSpacingMore(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnParagraphSpacingMore(wxCommandEvent& event)
 {
     wxRichTextAttr attr;
     attr.SetFlags(wxTEXT_ATTR_PARA_SPACING_AFTER);
@@ -1049,7 +1024,7 @@ void MainFrame::OnParagraphSpacingMore(wxCommandEvent& WXUNUSED(event))
     }
 }
 
-void MainFrame::OnParagraphSpacingLess(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnParagraphSpacingLess(wxCommandEvent& event)
 {
     wxRichTextAttr attr;
     attr.SetFlags(wxTEXT_ATTR_PARA_SPACING_AFTER);
@@ -1070,13 +1045,13 @@ void MainFrame::OnParagraphSpacingLess(wxCommandEvent& WXUNUSED(event))
     }
 }
 
-//void MainFrame::OnReload(wxCommandEvent& WXUNUSED(event))
+//void MainFrame::OnReload(wxCommandEvent& event)
 //{
 //    m_editor->Clear();
 //    WriteInitialText();
 //}
 
-void MainFrame::OnViewHTML(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnViewHTML(wxCommandEvent& event)
 {
     wxDialog dialog(this, wxID_ANY, _("HTML"), wxDefaultPosition, wxSize(500, 400), wxDEFAULT_DIALOG_STYLE);
 
@@ -1122,7 +1097,7 @@ void MainFrame::OnViewHTML(wxCommandEvent& WXUNUSED(event))
 // Demonstrates how you can change the style sheets and have the changes
 // reflected in the control content without wiping out character formatting.
 
-void MainFrame::OnSwitchStyleSheets(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnSwitchStyleSheets(wxCommandEvent& event)
 {
     static wxRichTextStyleSheet* gs_AlternateStyleSheet = NULL;
 
@@ -1173,7 +1148,7 @@ void MainFrame::OnSwitchStyleSheets(wxCommandEvent& WXUNUSED(event))
     styleCombo->UpdateStyles();
 }
 
-void MainFrame::OnManageStyles(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnManageStyles(wxCommandEvent& event)
 {
     wxRichTextStyleSheet* sheet = m_editor->GetStyleSheet();
 
@@ -1183,7 +1158,7 @@ void MainFrame::OnManageStyles(wxCommandEvent& WXUNUSED(event))
     dlg.ShowModal();
 }
 
-void MainFrame::OnInsertSymbol(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnInsertSymbol(wxCommandEvent& event)
 {
     wxRichTextAttr attr;
     attr.SetFlags(wxTEXT_ATTR_FONT);
@@ -1218,7 +1193,7 @@ void MainFrame::OnInsertSymbol(wxCommandEvent& WXUNUSED(event))
     }
 }
 
-void MainFrame::OnNumberList(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnNumberList(wxCommandEvent& event)
 {
     if (m_editor->HasSelection())
     {
@@ -1227,7 +1202,7 @@ void MainFrame::OnNumberList(wxCommandEvent& WXUNUSED(event))
     }
 }
 
-void MainFrame::OnBulletsAndNumbering(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnBulletsAndNumbering(wxCommandEvent& event)
 {
     wxRichTextStyleSheet* sheet = m_editor->GetStyleSheet();
 
@@ -1241,7 +1216,7 @@ void MainFrame::OnBulletsAndNumbering(wxCommandEvent& WXUNUSED(event))
     }
 }
 
-void MainFrame::OnItemizeList(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnItemizeList(wxCommandEvent& event)
 {
     if (m_editor->HasSelection())
     {
@@ -1250,7 +1225,7 @@ void MainFrame::OnItemizeList(wxCommandEvent& WXUNUSED(event))
     }
 }
 
-void MainFrame::OnRenumberList(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnRenumberList(wxCommandEvent& event)
 {
     if (m_editor->HasSelection())
     {
@@ -1259,7 +1234,7 @@ void MainFrame::OnRenumberList(wxCommandEvent& WXUNUSED(event))
     }
 }
 
-void MainFrame::OnPromoteList(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnPromoteList(wxCommandEvent& event)
 {
     if (m_editor->HasSelection())
     {
@@ -1268,7 +1243,7 @@ void MainFrame::OnPromoteList(wxCommandEvent& WXUNUSED(event))
     }
 }
 
-void MainFrame::OnDemoteList(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnDemoteList(wxCommandEvent& event)
 {
     if (m_editor->HasSelection())
     {
@@ -1277,7 +1252,7 @@ void MainFrame::OnDemoteList(wxCommandEvent& WXUNUSED(event))
     }
 }
 
-void MainFrame::OnClearList(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnClearList(wxCommandEvent& event)
 {
     if (m_editor->HasSelection())
     {
@@ -1286,7 +1261,7 @@ void MainFrame::OnClearList(wxCommandEvent& WXUNUSED(event))
     }
 }
 
-void MainFrame::OnTableAddColumn(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnTableAddColumn(wxCommandEvent& event)
 {
     wxRichTextTable* table = wxDynamicCast(m_editor->FindTable(), wxRichTextTable);
     if (table)
@@ -1296,7 +1271,7 @@ void MainFrame::OnTableAddColumn(wxCommandEvent& WXUNUSED(event))
     }
 }
 
-void MainFrame::OnTableAddRow(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnTableAddRow(wxCommandEvent& event)
 {
     wxRichTextTable* table = wxDynamicCast(m_editor->FindTable(), wxRichTextTable);
     if (table)
@@ -1306,7 +1281,7 @@ void MainFrame::OnTableAddRow(wxCommandEvent& WXUNUSED(event))
     }
 }
 
-void MainFrame::OnTableDeleteColumn(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnTableDeleteColumn(wxCommandEvent& event)
 {
     wxRichTextTable* table = wxDynamicCast(m_editor->FindTable(), wxRichTextTable);
     if (table)
@@ -1321,7 +1296,7 @@ void MainFrame::OnTableDeleteColumn(wxCommandEvent& WXUNUSED(event))
     }
 }
 
-void MainFrame::OnTableDeleteRow(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnTableDeleteRow(wxCommandEvent& event)
 {
     wxRichTextTable* table = wxDynamicCast(m_editor->FindTable(), wxRichTextTable);
     if (table)
@@ -1360,7 +1335,7 @@ void MainFrame::OnTableHasCellsUpdateUI(wxUpdateUIEvent& event)
     event.Enable(enable);
 }
 
-void MainFrame::OnInsertURL(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnInsertURL(wxCommandEvent& event)
 {
     wxString url = wxGetTextFromUser(_("URL:"), _("Insert URL"));
     if (!url.IsEmpty())
@@ -1378,7 +1353,7 @@ void MainFrame::OnInsertURL(wxCommandEvent& WXUNUSED(event))
     }
 }
 
-void MainFrame::OnInsertImage(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnInsertImage(wxCommandEvent& event)
 {
     wxFileDialog dialog(this, _("Choose an image"), "", "", "BMP and GIF files (*.bmp;*.gif)|*.bmp;*.gif|PNG files (*.png)|*.png|JPEG files (*.jpg;*.jpeg)|*.jpg;*.jpeg");
     if (dialog.ShowModal() == wxID_OK)
@@ -1403,18 +1378,18 @@ void MainFrame::OnStyleSheetReplacing(wxRichTextEvent& event)
 }
 
 #if wxUSE_PRINTING_ARCHITECTURE
-void MainFrame::OnPrint(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnPrint(wxCommandEvent& event)
 {
     wxGetApp().GetPrinting()->PrintBuffer(m_editor->GetBuffer());
 }
 
-void MainFrame::OnPreview(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnPreview(wxCommandEvent& event)
 {
     wxGetApp().GetPrinting()->PreviewBuffer(m_editor->GetBuffer());
 }
 #endif
 
-void MainFrame::OnPageSetup(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnPageSetup(wxCommandEvent& event)
 {
     wxDialog dialog(this, wxID_ANY, wxT("Testing"), wxPoint(10, 10), wxSize(400, 300), wxDEFAULT_DIALOG_STYLE);
 
@@ -1435,7 +1410,7 @@ void MainFrame::OnPageSetup(wxCommandEvent& WXUNUSED(event))
 //    wxGetApp().GetPrinting()->PageSetup();
 }
 
-void MainFrame::OnSetFontScale(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnSetFontScale(wxCommandEvent& event)
 {
     wxString value = wxString::Format(wxT("%g"), m_editor->GetFontScale());
     wxString text = wxGetTextFromUser(wxT("Enter a text scale factor:"), wxT("Text Scale Factor"), value, wxGetTopLevelParent(this));
@@ -1447,7 +1422,7 @@ void MainFrame::OnSetFontScale(wxCommandEvent& WXUNUSED(event))
     }
 }
 
-void MainFrame::OnSetDimensionScale(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnSetDimensionScale(wxCommandEvent& event)
 {
     wxString value = wxString::Format(wxT("%g"), m_editor->GetDimensionScale());
     wxString text = wxGetTextFromUser(wxT("Enter a dimension scale factor:"), wxT("Dimension Scale Factor"), value, wxGetTopLevelParent(this));

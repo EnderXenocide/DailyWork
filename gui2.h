@@ -83,14 +83,13 @@ public:
     ~MainFrame();
  
     void OnStatusBarMessage(std::string msg);
-    void ConnectSelChanged();
-    void DisconnectSelhanged();
+    void ConnectEvents();
+    void ConnectEventsSelChanged();
+    void DisconnectEvents();
+    void DisconnectEventsSelhanged();
     void EnableShowHirerarchicalTree(bool hiearchy);
     
 protected:  
-    wxTreeItemId FindDateInTree(wxDateTime date);
-    wxTreeItemId FindTextInTree(wxTreeItemId parent, wxString text);
-
     void OnCloseFrame( wxCloseEvent& event );
     void OnTreeSelChanging( wxTreeEvent& event );
     void OnTreeSelChanged( wxTreeEvent& event );

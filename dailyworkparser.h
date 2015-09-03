@@ -31,8 +31,7 @@ public:
     ~DailyWorkParser();
     void ConnectCallback(CallbackMessageInfo cb);
     int Parse();
-    int AddDateToTree(wxTreeCtrl* tree, wxDateTime& date, bool selectItem = false); // todo wxTreeCtrl& tree instead
-    int LoadDatesTree(wxTreeCtrl* tree);
+    DWItemData* AddDate(wxDateTime& date); // todo wxTreeCtrl& tree instead
     int UpdateWork(DWItemData* itemData, std::string text);
     std::string GetWorkFromTree(const wxTreeCtrl* tree);
     wxDateTime GetDateFromItem(const Value& item);
@@ -43,23 +42,11 @@ public:
     wxDateTime DWToDate(const std::string DWDate);
     int Save();
     int SaveAs(wxString filename);
-    DailyWorkParser& SetHierarchicalTree(bool hierarchy)
-    {
-        this->treeWithHierarchy = hierarchy;
-        return *this;
-    }
-    bool IsHierarchicalTree() const
-    {
-        return treeWithHierarchy;
-    }
-    int GetVersion() const 
-    {
-        return version;
-    }
-    bool IsModified() const
-    {
-        return modified;
-    }
+    int GetVersion() const { return version; }
+    bool IsModified() const { return modified; }
+    Value& GetArray();
+    //todo delete date 
+    
 private:
     //    static constexpr const char* JSON_FILE = "dailywork.json";
     //    static constexpr const char* JSON_DATE_FORMAT_EXT = "%Y-%m-%d"; //strptime()-like format string
@@ -72,10 +59,6 @@ private:
     // The callback provided by the client via ConnectCallback().
     CallbackMessageInfo m_cbMessageInfo;
     Document document;
-    bool treeWithHierarchy;
-    int LoadDatesTreeHierarchy(wxTreeCtrl* tree, wxTreeItemId rootID, const Value& dataArray);
-    int LoadDatesTreeSimple(wxTreeCtrl* tree, wxTreeItemId rootID, const Value& dataArray);
-    wxTreeItemId AddItem(wxTreeCtrl* tree, wxTreeItemId parent, wxString text);
     Value& AddValue(wxDateTime& date);
     int version;
     bool modified; // set if document was modified

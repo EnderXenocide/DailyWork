@@ -897,3 +897,26 @@
 2015-09-02 17:59:43,217 DEBUG [default] [Trinquard@TRINQUARD-PC] [std::__cxx11::string DailyWorkParser::GetWorkFromTree(const wxTreeCtrl*)] [I:/Workspace/CodeLiteC++/DailyWork/dailyworkparser.cpp:119] Pas de donné associée à l'item
 2015-09-02 17:59:43,217 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::OnTreeSelChanged(wxTreeEvent&)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:528] Text to show in editor : 
 2015-09-02 18:00:01,234 INFO  [default] Enregistrement sous I:\Workspace\CodeLiteC++\DailyWork\Debug\test.json
+2015-09-03 11:08:07,708 DEBUG [default] [Trinquard@TRINQUARD-PC] [virtual bool MainApp::OnInit()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:30] START
+2015-09-03 11:08:08,899 INFO  [default] Parse file
+2015-09-03 11:08:08,906 INFO  [default] Loading Tree with json data...
+2015-09-03 11:08:08,906 INFO  [default] Loading Tree Hierarchy... 
+2015-09-03 11:08:08,921 INFO  [default] Tree Loaded
+2015-09-03 11:08:08,963 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::UpdateDWWork()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:471] wxTreeItemId is null
+2015-09-03 11:08:08,963 DEBUG [default] [Trinquard@TRINQUARD-PC] [std::__cxx11::string DailyWorkParser::GetWorkFromTree(const wxTreeCtrl*)] [I:/Workspace/CodeLiteC++/DailyWork/dailyworkparser.cpp:65] Pas de donné associée à l'item
+2015-09-03 11:08:08,963 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::OnTreeSelChanged(wxTreeEvent&)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:528] Text to show in editor : 
+2015-09-03 11:09:15,003 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::OnTreeSelChanged(wxTreeEvent&)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:528] Text to show in editor : empty123
+2015-09-03 11:09:15,610 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::OnTreeSelChanged(wxTreeEvent&)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:528] Text to show in editor : erz
+2015-09-03 11:09:21,428 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::OnTreeSelChanged(wxTreeEvent&)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:528] Text to show in editor : rien à déclarer
+2015-09-03 11:09:23,027 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::OnTreeSelChanged(wxTreeEvent&)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:528] Text to show in editor : empty123
+2015-09-03 11:09:28,051 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::OnTreeSelChanged(wxTreeEvent&)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:528] Text to show in editor : {\rtf1\ansi\ansicpg1252\deff0\deflang1036
+\viewkind4\uc1\pard\f0\fs16 en debuggage:
+\par ctrl + click souris : liste les objets
+\par ctrl + F3 : pile d'appel (des fonctions)
+\par \f1
+\par \f0 GExpert:\f1
+\par \f0 ctrl+alt+;  comment
+\par \pard ctrl+alt+, uncomment\f2
+\par }
+2015-09-03 11:09:29,459 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::OnTreeSelChanged(wxTreeEvent&)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:528] Text to show in editor : rien à déclarer
+2015-09-03 11:09:29,994 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::OnTreeSelChanged(wxTreeEvent&)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:528] Text to show in editor : nothing É
