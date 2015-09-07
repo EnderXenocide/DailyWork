@@ -35,13 +35,13 @@ public:
     int DeleteItem(const Value& item);
     DWItemData* AddDate(wxDateTime& date); 
     int UpdateWork(DWItemData* itemData, std::string text);
-    wxDateTime GetDateFromItem(const Value& item);
+    wxDateTime GetDateFromItem(int itemIndex);
     std::string GetWorkFromItem(const Value& item); //todo mettre en private
     std::string GetWorkFromDWItem(DWItemData* itemData);
     wxString ToDWDate(const wxDateTime& date) const;
     wxString ToTreeDate(const wxDateTime& date) const;
     wxDateTime DWToDate(const std::string DWDate);
-    Value& GetArray();
+    SizeType Count(); 
     //todo delete date 
 
     int selectItemFromDWItem(DWItemData* itemData);   
@@ -56,6 +56,7 @@ public:
     int SaveAs(wxString filename);
     int Save();
     bool IsSelectedOk();
+    DWItemData* NewDWItemData(int itemIndex);
 private:
     int SetWorkFromItem(Value& item, std::string text);
     //    static constexpr const char* JSON_FILE = "dailywork.json";

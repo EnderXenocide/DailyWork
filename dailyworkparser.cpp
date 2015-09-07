@@ -90,9 +90,13 @@ int DailyWorkParser::SaveAs(wxString filename)
 }
 
 
-wxDateTime DailyWorkParser::GetDateFromItem(const Value& item)
+wxDateTime DailyWorkParser::GetDateFromItem(int itemIndex)
 {
-    return DWToDate(item[JSON_DATE].GetString());
+    const Value& item = document[JSON_ARRAY][itemIndex]; 
+    if (item.IsObject())
+        return DWToDate(item[JSON_DATE].GetString());
+    else
+        return NULL;
 }
 
 std::string DailyWorkParser::GetWorkFromDWItem(DWItemData* itemData)
@@ -152,14 +156,8 @@ wxDateTime  DailyWorkParser::DWToDate(const std::string DWDate)
     }
     return date;
 }
-Value& DailyWorkParser::GetArray()
-{
-    //todo decommenter code ?
-    //Value& value = document[JSON_ARRAY]; 
-    //assert(value.IsArray());
-    return document[JSON_ARRAY]; //value
 
-}
+
 Value& DailyWorkParser::GetItemFromDWItem(DWItemData* itemData)
 {
     if(itemData != NULL) {
@@ -172,13 +170,21 @@ Value& DailyWorkParser::GetItemFromDWItem(DWItemData* itemData)
 
 int DailyWorkParser::DeleteItem(const Value& item)
 {
-    //todo finir
+   // LOG(INFO) << "Supprime la Date " << DWDate;
+   //todo finir
     return 0;
 }
 
 int DailyWorkParser::DeleteItemFromDWItem(DWItemData* itemData)
 {
-    return DeleteItem(GetItemFromDWItem(itemData));
+    if(itemData != NULL) {
+        DeleteItem(itemData->GetValue());
+        return 0;
+    } 
+    else {
+        LOG(DEBUG) << "Pas de donné associée à l'item";
+        return -1;
+    }
 }
 
 Value& DailyWorkParser::AddItem(wxDateTime& date, std::string work)
@@ -247,10 +253,19 @@ int DailyWorkParser::selectItemFromDWItem(DWItemData* itemData)
         selected = NULL;
         LOG(DEBUG) << "Pas de donné associée à l'item";
         return 1;
-    }       
+    }   
+}  
+ 
+SizeType DailyWorkParser::Count()
+{
+    return document[JSON_ARRAY].Size();
 }
 
 bool DailyWorkParser::IsSelectedOk()
 {
     return (selected != NULL) && (selected.IsObject());
+}
+DWItemData* DailyWorkParser::NewDWItemData(int itemIndex)
+{
+    return new DWItemData(document[JSON_ARRAY][itemIndex]);
 }

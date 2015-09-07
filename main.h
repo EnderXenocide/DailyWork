@@ -62,6 +62,7 @@ public:
     wxTreeItemId FindTextInTree(wxTreeItemId parent, wxString text);
     std::string GetWorkFromTreeSelection();
     void DeleteDateSelected();
+    void DeleteItemData(wxTreeItemId itemId);
 private:
     bool hierarchicalTree;
     wxRichTextStyleSheet*   m_styleSheet;
@@ -70,8 +71,8 @@ private:
     wxRichTextPrinting*     m_printing;
 #endif      
     void InitRichText(); 
-    int LoadDailyWorkInTreeHierarchy(wxTreeItemId rootID, const Value& dataArray);
-    int LoadDailyWorkInTreeSimple(wxTreeItemId rootID, const Value& dataArray);   
+    int LoadDailyWorkInTreeHierarchy(wxTreeItemId rootId);
+    int LoadDailyWorkInTreeSimple(wxTreeItemId rootId);   
 };
 
 // declare global static function wxGetApp()
