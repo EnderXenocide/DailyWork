@@ -322,14 +322,16 @@ int MainApp::LoadDailyWorkInTreeHierarchy(wxTreeItemId rootID, const Value& data
     LOG(INFO) << "Loading Tree Hierarchy... ";
     wxTreeCtrl* tree = frame->m_treeDates;
     wxTreeItemId itemId;
-    for(SizeType i = 0; i < dataArray.Size(); i++) {
-        const Value& c = dataArray[i];
-        wxDateTime date = dwparser.GetDateFromItem(c);
-        itemId = AddItem(rootID, wxString::Format("%4d", date.GetYear()));
-        itemId = AddItem(itemId, wxString::Format("%02d", date.GetMonth()+1));
-        itemId = AddItem(itemId, wxString::Format("%02d", date.GetDay()));
-        DWItemData* itemData = new DWItemData(c);
-        tree->SetItemData(itemId, itemData);
+    for(SizeType i = 0; i < dataArray.Size(); i++) { //todo faire des appels de dwparser
+        const Value& c = dataArray[i]; //todo ne pas utiliser de Value ici...
+        if (c.IsObject()) {
+            wxDateTime date = dwparser.GetDateFromItem(c);
+            itemId = AddItem(rootID, wxString::Format("%4d", date.GetYear()));
+            itemId = AddItem(itemId, wxString::Format("%02d", date.GetMonth()+1));
+            itemId = AddItem(itemId, wxString::Format("%02d", date.GetDay()));
+            DWItemData* itemData = new DWItemData(c);
+            tree->SetItemData(itemId, itemData);
+        }
     }
     return 0;    
 }
@@ -432,3 +434,25 @@ wxTreeItemId MainApp::AddItem(wxTreeItemId parent, wxString text)
     return tree->AppendItem(parent, text); // item voulu pas trouver
 }
 
+void MainApp::DeleteDateSelected()
+{
+    wxTreeCtrl* tree = frame->m_treeDates;
+    wxTreeItemId itemId = tree->GetSelection();
+    if (itemId.IsOk()) {
+        DWItemData* itemData = (DWItemData*) tree->GetItemData(itemId); 
+        dwparser.DeleteItemFromDWItem(itemData);
+        tree->Delete(itemId);
+    }       
+}
+
+std::string MainApp::GetWorkFromTreeSelection()
+{
+   wxTreeCtrl* tree = frame->m_treeDates;
+   wxTreeItemId itemId = tree->GetSelection();
+    if(itemId.IsOk()) {
+        DWItemData* itemData = (DWItemData*) tree->GetItemData(itemId);
+        return dwparser.GetWorkFromDWItem(itemData);
+    } else
+        LOG(DEBUG) << "Aucun élément selectionné";
+    return "";   
+}

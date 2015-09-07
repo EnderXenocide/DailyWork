@@ -25,7 +25,8 @@ int DailyWorkParser::Parse()
     //    const char* json = "{\"dailywork\":[ {\"date\":\"2015-07-24\",\"work\":\"rien\"},"
     //                               "{\"date\":\"2015-07-23\",\"work\":\"nothing\"},"
     //                               "{\"date\":\"2015-07-22\",\"work\":\"niet\"} ] }";
-    //    if (document.Parse(json).HasParseError()) {
+    modified = false;
+
     LOG(INFO) << "Parse file";
     std::ifstream ifs(JSON_FILE);
     if(!ifs) {
@@ -46,33 +47,19 @@ int DailyWorkParser::Parse()
         m_cbMessageInfo(strErreur);
         return -1;
     }
+    assert(document[JSON_ARRAY].IsArray());
+    assert(document[JSON_VERSION].IsInt());
     version = document[JSON_VERSION].GetInt();
     return 0;
 
     // ECRITURE fwrite (buffer.GetString(), buffer.GetSize(), 1, wFile);
 }
 
-
-std::string DailyWorkParser::GetWorkFromTree(const wxTreeCtrl* tree)
-{
-    wxTreeItemId itemID = tree->GetSelection();
-    if(itemID.IsOk()) {
-        DWItemData* itemData = (DWItemData*) tree->GetItemData(itemID);
-        if(itemData != NULL) {
-            const Value& pair = itemData->GetValue();
-            return GetWorkFromItem(pair);
-        } else
-            LOG(DEBUG) << "Pas de donné associée à l'item";
-    } else
-        LOG(DEBUG) << "Aucun élément selectionné";
-    return "";
-}
-
 int DailyWorkParser::UpdateWork(DWItemData* itemData, std::string text)
 {
     if(itemData != NULL) {
-        Value& pair = itemData->GetValue();
-        SetWorkFromItem(pair, text);
+        Value& item = itemData->GetValue();
+        SetWorkFromItem(item, text);
     } else {
         LOG(ERROR) << "Mise à jour impossible";
         return -1;
@@ -97,6 +84,8 @@ int DailyWorkParser::SaveAs(wxString filename)
     Writer<FileWriteStream> writer(os);
     document.Accept(writer);
     fclose(fp);
+
+    modified = false;
     return 0;
 }
 
@@ -104,6 +93,17 @@ int DailyWorkParser::SaveAs(wxString filename)
 wxDateTime DailyWorkParser::GetDateFromItem(const Value& item)
 {
     return DWToDate(item[JSON_DATE].GetString());
+}
+
+std::string DailyWorkParser::GetWorkFromDWItem(DWItemData* itemData)
+{
+    if(itemData != NULL) {
+        const Value& item = itemData->GetValue();
+        return GetWorkFromItem(item);
+    } 
+    else
+        LOG(DEBUG) << "Pas de donné associée à l'item";
+    return "";    
 }
 
 std::string DailyWorkParser::GetWorkFromItem(const Value& item) 
@@ -128,7 +128,7 @@ wxString DailyWorkParser::ToTreeDate(const wxDateTime& date) const
     return wxString::Format(TREE_DATE_FORMAT, date.GetDay(), date.GetMonth()+1, date.GetYear());
 }
 
-int DailyWorkParser::SetWorkFromItem(rapidjson::Value& item, std::string text)
+int DailyWorkParser::SetWorkFromItem(Value& item, std::string text)
 {
     assert(item.IsObject());
     item[JSON_WORK].SetString(text.data(), text.size(), document.GetAllocator());
@@ -178,4 +178,24 @@ Value& DailyWorkParser::GetArray()
     //assert(value.IsArray());
     return document[JSON_ARRAY]; //value
 
+}
+Value& DailyWorkParser::GetItemFromDWItem(DWItemData* itemData)
+{
+    if(itemData != NULL) {
+       return itemData->GetValue();
+    } 
+    else
+        LOG(DEBUG) << "Pas de donné associée à l'item";
+    return new Value(kNullType) ;       
+}
+
+int DailyWorkParser::DeleteItem(const Value& item)
+{
+    //todo finir
+    return 0;
+}
+
+int DailyWorkParser::DeleteItemFromDWItem(DWItemData* itemData)
+{
+    return DeleteItem(GetItemFromDWItem(itemData));
 }

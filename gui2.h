@@ -45,6 +45,9 @@
 // #include "bitmaps/idea.xpm"
 #include "bitmaps/zebra.xpm"
 
+#include "bitmaps/reload.xpm"
+#include "bitmaps/delete.xpm"
+
 #include "bitmaps/open.xpm"
 #include "bitmaps/save.xpm"
 #include "bitmaps/copy.xpm"
@@ -79,7 +82,7 @@ public:
     MyRichTextCtrl* m_editor;
     
     MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_FRAME_STYLE);
-    MainFrame( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 699,413 ), long style = wxCLOSE_BOX|wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+   // MainFrame( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 699,413 ), long style = wxCLOSE_BOX|wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
     ~MainFrame();
  
     void OnStatusBarMessage(std::string msg);
@@ -100,6 +103,7 @@ protected:
     
     void OnShowHirerarchicalTree(wxCommandEvent& event);
 
+	void OnDeleteDate( wxCommandEvent& event );
     // event handlers (these functions should _not_ be virtual)
     void OnQuit(wxCommandEvent& event);
     void OnAbout(wxCommandEvent& event);
@@ -191,12 +195,10 @@ protected:
     // Forward command events to the current rich text control, if any
     bool ProcessEvent(wxEvent& event);
 
-    // Write text
-    void WriteInitialText();
    
 private:
-    // any class wishing to process wxWidgets events must use this macro
-    wxDECLARE_EVENT_TABLE();
+    // Write text
+    void WriteInitialText(); // ce n'est pas utile 
     void UpdateDWWork();
 };
 

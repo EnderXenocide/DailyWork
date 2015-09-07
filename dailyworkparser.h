@@ -31,11 +31,13 @@ public:
     ~DailyWorkParser();
     void ConnectCallback(CallbackMessageInfo cb);
     int Parse();
+    int DeleteItemFromDWItem(DWItemData* itemData);
+    int DeleteItem(const Value& item);
     DWItemData* AddDate(wxDateTime& date); // todo wxTreeCtrl& tree instead
     int UpdateWork(DWItemData* itemData, std::string text);
-    std::string GetWorkFromTree(const wxTreeCtrl* tree);
     wxDateTime GetDateFromItem(const Value& item);
-    std::string GetWorkFromItem(const Value& item);
+    std::string GetWorkFromItem(const Value& item); //todo mettre en private
+    std::string GetWorkFromDWItem(DWItemData* itemData);
     int SetWorkFromItem(Value& item, std::string text);
     wxString ToDWDate(const wxDateTime& date) const;
     wxString ToTreeDate(const wxDateTime& date) const;
@@ -60,6 +62,7 @@ private:
     CallbackMessageInfo m_cbMessageInfo;
     Document document;
     Value& AddValue(wxDateTime& date);
+    Value& GetItemFromDWItem(DWItemData* itemData); //todo mettre en private
     int version;
     bool modified; // set if document was modified
 };

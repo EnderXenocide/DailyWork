@@ -61,6 +61,7 @@ public:
     wxTreeItemId FindDateInTree(wxDateTime date);
     wxTreeItemId FindTextInTree(wxTreeItemId parent, wxString text);
     std::string GetWorkFromTreeSelection();
+    void DeleteDateSelected();
 private:
     bool hierarchicalTree;
     wxRichTextStyleSheet*   m_styleSheet;

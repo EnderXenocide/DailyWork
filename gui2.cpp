@@ -28,7 +28,8 @@ enum
     ID_FORMAT_PARAGRAPH,
     ID_FORMAT_CONTENT,
 
-    //ID_RELOAD,
+    ID_RELOAD,
+    ID_DELETE_DATE,
 
     ID_INSERT_SYMBOL,
     ID_INSERT_URL,
@@ -79,93 +80,6 @@ enum
     ID_HIERACHY,
 };
 
-// ----------------------------------------------------------------------------
-// event tables and other macros for wxWidgets
-// ----------------------------------------------------------------------------
-
-// the event tables connect the wxWidgets events with the functions (event
-// handlers) which process them. It can be also done at run-time, but for the
-// simple menu events like this the static method is much simpler.
-wxBEGIN_EVENT_TABLE(MainFrame, wxFrame)
-    //EVT_MENU(ID_Quit,  MainFrame::OnQuit)
-
-    EVT_UPDATE_UI(ID_FORMAT_BOLD,  MainFrame::OnUpdateBold)
-    EVT_UPDATE_UI(ID_FORMAT_ITALIC,  MainFrame::OnUpdateItalic)
-    EVT_UPDATE_UI(ID_FORMAT_UNDERLINE,  MainFrame::OnUpdateUnderline)
-
-    EVT_UPDATE_UI(ID_FORMAT_STRIKETHROUGH,  MainFrame::OnUpdateStrikethrough)
-    EVT_UPDATE_UI(ID_FORMAT_SUPERSCRIPT,  MainFrame::OnUpdateSuperscript)
-    EVT_UPDATE_UI(ID_FORMAT_SUBSCRIPT,  MainFrame::OnUpdateSubscript)
-
-    EVT_MENU(ID_FORMAT_ALIGN_LEFT,  MainFrame::OnAlignLeft)
-    EVT_MENU(ID_FORMAT_ALIGN_CENTRE,  MainFrame::OnAlignCentre)
-    EVT_MENU(ID_FORMAT_ALIGN_RIGHT,  MainFrame::OnAlignRight)
-
-    EVT_UPDATE_UI(ID_FORMAT_ALIGN_LEFT,  MainFrame::OnUpdateAlignLeft)
-    EVT_UPDATE_UI(ID_FORMAT_ALIGN_CENTRE,  MainFrame::OnUpdateAlignCentre)
-    EVT_UPDATE_UI(ID_FORMAT_ALIGN_RIGHT,  MainFrame::OnUpdateAlignRight)
-
-    EVT_MENU(ID_FORMAT_FONT,  MainFrame::OnFont)
-    EVT_MENU(ID_FORMAT_IMAGE, MainFrame::OnImage)
-    EVT_MENU(ID_FORMAT_PARAGRAPH,  MainFrame::OnParagraph)
-    EVT_MENU(ID_FORMAT_CONTENT,  MainFrame::OnFormat)
-    EVT_UPDATE_UI(ID_FORMAT_CONTENT,  MainFrame::OnUpdateFormat)
-    EVT_UPDATE_UI(ID_FORMAT_FONT,  MainFrame::OnUpdateFormat)
-    EVT_UPDATE_UI(ID_FORMAT_IMAGE, MainFrame::OnUpdateImage)
-    EVT_UPDATE_UI(ID_FORMAT_PARAGRAPH,  MainFrame::OnUpdateFormat)
-    EVT_MENU(ID_FORMAT_INDENT_MORE,  MainFrame::OnIndentMore)
-    EVT_MENU(ID_FORMAT_INDENT_LESS,  MainFrame::OnIndentLess)
-
-    EVT_MENU(ID_FORMAT_LINE_SPACING_HALF,  MainFrame::OnLineSpacingHalf)
-    EVT_MENU(ID_FORMAT_LINE_SPACING_SINGLE,  MainFrame::OnLineSpacingSingle)
-    EVT_MENU(ID_FORMAT_LINE_SPACING_DOUBLE,  MainFrame::OnLineSpacingDouble)
-
-    EVT_MENU(ID_FORMAT_PARAGRAPH_SPACING_MORE,  MainFrame::OnParagraphSpacingMore)
-    EVT_MENU(ID_FORMAT_PARAGRAPH_SPACING_LESS,  MainFrame::OnParagraphSpacingLess)
-
-    //EVT_MENU(ID_RELOAD,  MainFrame::OnReload)
-
-    EVT_MENU(ID_INSERT_SYMBOL,  MainFrame::OnInsertSymbol)
-    EVT_MENU(ID_INSERT_URL,  MainFrame::OnInsertURL)
-    EVT_MENU(ID_INSERT_IMAGE, MainFrame::OnInsertImage)
-
-    EVT_MENU(ID_FORMAT_NUMBER_LIST, MainFrame::OnNumberList)
-    EVT_MENU(ID_FORMAT_BULLETS_AND_NUMBERING, MainFrame::OnBulletsAndNumbering)
-    EVT_MENU(ID_FORMAT_ITEMIZE_LIST, MainFrame::OnItemizeList)
-    EVT_MENU(ID_FORMAT_RENUMBER_LIST, MainFrame::OnRenumberList)
-    EVT_MENU(ID_FORMAT_PROMOTE_LIST, MainFrame::OnPromoteList)
-    EVT_MENU(ID_FORMAT_DEMOTE_LIST, MainFrame::OnDemoteList)
-    EVT_MENU(ID_FORMAT_CLEAR_LIST, MainFrame::OnClearList)
-
-    EVT_MENU(ID_TABLE_ADD_COLUMN, MainFrame::OnTableAddColumn)
-    EVT_MENU(ID_TABLE_ADD_ROW, MainFrame::OnTableAddRow)
-    EVT_MENU(ID_TABLE_DELETE_COLUMN, MainFrame::OnTableDeleteColumn)
-    EVT_MENU(ID_TABLE_DELETE_ROW, MainFrame::OnTableDeleteRow)
-    EVT_UPDATE_UI_RANGE(ID_TABLE_ADD_COLUMN, ID_TABLE_ADD_ROW, MainFrame::OnTableFocusedUpdateUI)
-    EVT_UPDATE_UI_RANGE(ID_TABLE_DELETE_COLUMN, ID_TABLE_DELETE_ROW, MainFrame::OnTableHasCellsUpdateUI)
-
-    EVT_MENU(ID_VIEW_HTML, MainFrame::OnViewHTML)
-    EVT_MENU(ID_SWITCH_STYLE_SHEETS, MainFrame::OnSwitchStyleSheets)
-    EVT_MENU(ID_MANAGE_STYLES, MainFrame::OnManageStyles)
-
-#if wxUSE_PRINTING_ARCHITECTURE
-    EVT_MENU(ID_PRINT, MainFrame::OnPrint)
-    EVT_MENU(ID_PREVIEW, MainFrame::OnPreview)
-#endif
-    EVT_MENU(ID_PAGE_SETUP, MainFrame::OnPageSetup)
-
-    EVT_TEXT_URL(wxID_ANY, MainFrame::OnURL)
-    EVT_RICHTEXT_STYLESHEET_REPLACING(wxID_ANY, MainFrame::OnStyleSheetReplacing)
-
-    EVT_MENU(ID_SET_FONT_SCALE, MainFrame::OnSetFontScale)
-    EVT_MENU(ID_SET_DIMENSION_SCALE, MainFrame::OnSetDimensionScale)
-    
-//    EVT_TREE_SEL_CHANGED(ID_TREE_SEL_CHANGED, MainFrame::OnTreeSelChanged)
-//    EVT_CALENDAR_SEL_CHANGED(ID_CALENDAR_SEL_CHANGED, MainFrame::OnCalendarSelChanged)
-
-wxEND_EVENT_TABLE()
-
-
 // BEGIN EVENTS
 
 // frame constructor
@@ -188,6 +102,7 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     helpMenu->Append(ID_About, wxT("&About\tF1"), wxT("Show about dialog"));
 
     fileMenu->Append(wxID_OPEN, wxT("&Open\tCtrl+O"), wxT("Open a file"));
+    fileMenu->Enable(wxID_OPEN, false);
     fileMenu->Append(wxID_SAVE, wxT("&Save\tCtrl+S"), wxT("Save a file"));
     fileMenu->Append(wxID_SAVEAS, wxT("&Save As...\tF12"), wxT("Save to a new file"));
     
@@ -196,8 +111,8 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     fileMenu->Check(ID_HIERACHY, wxGetApp().IsHierarchicalTree());    
     fileMenu->Enable(ID_HIERACHY, false);
     
-//    fileMenu->AppendSeparator();
-//    fileMenu->Append(ID_RELOAD, wxT("&Reload Text\tF2"), wxT("Reload the initial text"));
+    fileMenu->AppendSeparator();
+    fileMenu->Append(ID_RELOAD, wxT("&Reload\tF2"), wxT("Reload the file/tree"));
     fileMenu->AppendSeparator();
     fileMenu->Append(ID_PAGE_SETUP, wxT("Page Set&up..."), wxT("Page setup"));
 #if wxUSE_PRINTING_ARCHITECTURE
@@ -210,6 +125,8 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     fileMenu->Append(ID_Quit, wxT("E&xit\tAlt+X"), wxT("Quit this program"));
 
     wxMenu* editMenu = new wxMenu;
+    editMenu->Append(ID_DELETE_DATE, _("&Delete date\tCtrl+D"));
+    editMenu->AppendSeparator();
     editMenu->Append(wxID_UNDO, _("&Undo\tCtrl+Z"));
     editMenu->Append(wxID_REDO, _("&Redo\tCtrl+Y"));
     editMenu->AppendSeparator();
@@ -350,8 +267,12 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
   //                                    wxNO_BORDER|wxTB_FLAT|wxTB_NODIVIDER|wxTB_NOALIGN);
   //  mainSizer->Add(m_mainToolBar, 0, wxEXPAND);
 
-    m_mainToolBar->AddTool(wxID_OPEN, wxEmptyString, wxBitmap(open_xpm), _("Open"));
+//    m_mainToolBar->AddTool(wxID_OPEN, wxEmptyString, wxBitmap(open_xpm), _("Open"));
+    m_mainToolBar->AddTool(ID_RELOAD, wxEmptyString, wxBitmap(reload_xpm), _("Reload"));
+    
     m_mainToolBar->AddTool(wxID_SAVE, wxEmptyString, wxBitmap(save_xpm), _("Save"));
+    m_mainToolBar->AddSeparator();
+    m_mainToolBar->AddTool(ID_DELETE_DATE, wxEmptyString, wxBitmap(delete_xpm), _("Delete date"));
     m_mainToolBar->AddSeparator();
     m_mainToolBar->AddTool(wxID_CUT, wxEmptyString, wxBitmap(cut_xpm), _("Cut"));
     m_mainToolBar->AddTool(wxID_COPY, wxEmptyString, wxBitmap(copy_xpm), _("Copy"));
@@ -385,7 +306,7 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
 
 	this->Centre( wxBOTH );
 
- //   WriteInitialText();
+    //WriteInitialText();
  
     // désactive les options de mise en forme du text parceque pas de lecture de fichier rtf...
     m_menuBar->EnableTop(2, false);
@@ -413,7 +334,6 @@ MainFrame::~MainFrame()
 
 void MainFrame::ConnectEvents()
 {
-    //	this->Connect( menuFileExit->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnExitClick ) );
     ConnectEventsSelChanged();
 	m_calendar->Connect( wxEVT_KILL_FOCUS, wxFocusEventHandler( MainFrame::OnCalendarKillFocus ), NULL, this );
 	m_calendar->Connect( wxEVT_SET_FOCUS, wxFocusEventHandler( MainFrame::OnCalendarSetFocus ), NULL, this );
@@ -436,6 +356,80 @@ void MainFrame::ConnectEvents()
     Connect(ID_FORMAT_STRIKETHROUGH, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnStrikethrough));
     Connect(ID_FORMAT_SUPERSCRIPT, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSuperscript));
     Connect(ID_FORMAT_SUBSCRIPT, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSubscript));
+
+    Connect(ID_FORMAT_ITALIC, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateItalic));
+    Connect(ID_FORMAT_UNDERLINE, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateUnderline));
+
+    Connect(ID_FORMAT_STRIKETHROUGH, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateStrikethrough));
+    Connect(ID_FORMAT_SUPERSCRIPT, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateSuperscript));
+    Connect(ID_FORMAT_SUBSCRIPT, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateSubscript));
+
+    Connect(ID_FORMAT_ALIGN_LEFT, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnAlignLeft));
+    Connect(ID_FORMAT_ALIGN_CENTRE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnAlignCentre));
+    Connect(ID_FORMAT_ALIGN_RIGHT, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnAlignRight));
+
+    Connect(ID_FORMAT_ALIGN_LEFT, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateAlignLeft));
+    Connect(ID_FORMAT_ALIGN_CENTRE, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateAlignCentre));
+    Connect(ID_FORMAT_ALIGN_RIGHT, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateAlignRight));
+
+    Connect(ID_FORMAT_FONT, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnFont));
+    Connect(ID_FORMAT_IMAGE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnImage));
+    Connect(ID_FORMAT_PARAGRAPH, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnParagraph));
+    Connect(ID_FORMAT_CONTENT, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnFormat));
+    Connect(ID_FORMAT_CONTENT, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateFormat));
+    Connect(ID_FORMAT_FONT, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateFormat));
+    Connect(ID_FORMAT_IMAGE, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateImage));
+    Connect(ID_FORMAT_PARAGRAPH, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateFormat));
+
+    Connect(ID_FORMAT_INDENT_MORE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnIndentMore));
+    Connect(ID_FORMAT_INDENT_LESS, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnIndentLess));
+
+    Connect(ID_FORMAT_LINE_SPACING_HALF, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnLineSpacingHalf));
+    Connect(ID_FORMAT_LINE_SPACING_SINGLE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnLineSpacingSingle));
+    Connect(ID_FORMAT_LINE_SPACING_DOUBLE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnLineSpacingDouble));
+
+    Connect(ID_FORMAT_PARAGRAPH_SPACING_MORE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnParagraphSpacingMore));
+    Connect(ID_FORMAT_PARAGRAPH_SPACING_LESS, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnParagraphSpacingLess));
+
+    Connect(ID_RELOAD, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnReload));
+    Connect(ID_DELETE_DATE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnDeleteDate));
+
+    Connect(ID_INSERT_SYMBOL, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnInsertSymbol));
+    Connect(ID_INSERT_URL, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnInsertURL));
+    Connect(ID_INSERT_IMAGE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnInsertImage));
+
+    Connect(ID_FORMAT_NUMBER_LIST, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnNumberList));
+    Connect(ID_FORMAT_BULLETS_AND_NUMBERING, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnBulletsAndNumbering));
+    Connect(ID_FORMAT_ITEMIZE_LIST, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnItemizeList));
+    Connect(ID_FORMAT_RENUMBER_LIST, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnRenumberList));
+    Connect(ID_FORMAT_PROMOTE_LIST, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnPromoteList));
+    Connect(ID_FORMAT_DEMOTE_LIST, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnDemoteList));
+    Connect(ID_FORMAT_CLEAR_LIST, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnClearList));
+    Connect(ID_TABLE_ADD_COLUMN, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnTableAddColumn));
+    Connect(ID_TABLE_ADD_ROW, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnTableAddRow));
+    Connect(ID_TABLE_DELETE_COLUMN, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnTableDeleteColumn));
+    Connect(ID_TABLE_DELETE_ROW, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnTableDeleteRow));
+
+   Connect(ID_TABLE_ADD_COLUMN, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnTableFocusedUpdateUI));
+   Connect(ID_TABLE_ADD_ROW, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnTableFocusedUpdateUI));
+   Connect(ID_TABLE_DELETE_COLUMN, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnTableHasCellsUpdateUI));
+   Connect(ID_TABLE_DELETE_ROW, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnTableHasCellsUpdateUI));
+
+    Connect(ID_VIEW_HTML, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnViewHTML));
+    Connect(ID_SWITCH_STYLE_SHEETS, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSwitchStyleSheets));
+    Connect(ID_MANAGE_STYLES, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnManageStyles));
+
+#if wxUSE_PRINTING_ARCHITECTURE
+    Connect(ID_PRINT, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnPrint));
+    Connect(ID_PREVIEW, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnPreview));
+#endif
+    Connect(ID_PAGE_SETUP, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnPageSetup));
+
+   Connect(wxID_ANY, wxEVT_TEXT_URL,  wxTextUrlEventHandler(MainFrame::OnURL));
+   Connect(wxID_ANY, wxEVT_RICHTEXT_STYLESHEET_REPLACING,  wxRichTextEventHandler(MainFrame::OnStyleSheetReplacing));
+
+    Connect(ID_SET_FONT_SCALE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSetFontScale));
+    Connect(ID_SET_DIMENSION_SCALE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSetDimensionScale));
 }
 
 void MainFrame::DisconnectEvents()
@@ -447,6 +441,94 @@ void MainFrame::DisconnectEvents()
  	m_calendar->Disconnect( wxEVT_CALENDAR_DOUBLECLICKED, wxCalendarEventHandler( MainFrame::OnCalendarDblClick ), NULL, this );    
 	Disconnect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( MainFrame::OnCloseFrame ) );
     Disconnect(ID_Quit, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnQuit));
+    Disconnect(ID_About, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnAbout));
+
+    Disconnect(wxID_OPEN, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnOpen));
+    Disconnect(wxID_SAVE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSave));
+    Disconnect(wxID_SAVEAS, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSaveAs));
+    
+    Disconnect(ID_HIERACHY, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnShowHirerarchicalTree));
+
+    Disconnect(ID_FORMAT_BOLD, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnBold));
+    Disconnect(ID_FORMAT_ITALIC, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnItalic));
+    Disconnect(ID_FORMAT_UNDERLINE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnUnderline));
+
+    Disconnect(ID_FORMAT_STRIKETHROUGH, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnStrikethrough));
+    Disconnect(ID_FORMAT_SUPERSCRIPT, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSuperscript));
+    Disconnect(ID_FORMAT_SUBSCRIPT, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSubscript));
+
+    Disconnect(ID_FORMAT_ITALIC, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateItalic));
+    Disconnect(ID_FORMAT_UNDERLINE, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateUnderline));
+
+    Disconnect(ID_FORMAT_STRIKETHROUGH, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateStrikethrough));
+    Disconnect(ID_FORMAT_SUPERSCRIPT, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateSuperscript));
+    Disconnect(ID_FORMAT_SUBSCRIPT, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateSubscript));
+
+    Disconnect(ID_FORMAT_ALIGN_LEFT, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnAlignLeft));
+    Disconnect(ID_FORMAT_ALIGN_CENTRE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnAlignCentre));
+    Disconnect(ID_FORMAT_ALIGN_RIGHT, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnAlignRight));
+
+    Disconnect(ID_FORMAT_ALIGN_LEFT, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateAlignLeft));
+    Disconnect(ID_FORMAT_ALIGN_CENTRE, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateAlignCentre));
+    Disconnect(ID_FORMAT_ALIGN_RIGHT, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateAlignRight));
+
+    Disconnect(ID_FORMAT_FONT, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnFont));
+    Disconnect(ID_FORMAT_IMAGE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnImage));
+    Disconnect(ID_FORMAT_PARAGRAPH, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnParagraph));
+    Disconnect(ID_FORMAT_CONTENT, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnFormat));
+    Disconnect(ID_FORMAT_CONTENT, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateFormat));
+    Disconnect(ID_FORMAT_FONT, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateFormat));
+    Disconnect(ID_FORMAT_IMAGE, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateImage));
+    Disconnect(ID_FORMAT_PARAGRAPH, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateFormat));
+
+    Disconnect(ID_FORMAT_INDENT_MORE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnIndentMore));
+    Disconnect(ID_FORMAT_INDENT_LESS, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnIndentLess));
+
+    Disconnect(ID_FORMAT_LINE_SPACING_HALF, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnLineSpacingHalf));
+    Disconnect(ID_FORMAT_LINE_SPACING_SINGLE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnLineSpacingSingle));
+    Disconnect(ID_FORMAT_LINE_SPACING_DOUBLE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnLineSpacingDouble));
+
+    Disconnect(ID_FORMAT_PARAGRAPH_SPACING_MORE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnParagraphSpacingMore));
+    Disconnect(ID_FORMAT_PARAGRAPH_SPACING_LESS, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnParagraphSpacingLess));
+
+    Disconnect(ID_RELOAD, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnReload));
+
+    Disconnect(ID_INSERT_SYMBOL, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnInsertSymbol));
+    Disconnect(ID_INSERT_URL, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnInsertURL));
+    Disconnect(ID_INSERT_IMAGE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnInsertImage));
+
+    Disconnect(ID_FORMAT_NUMBER_LIST, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnNumberList));
+    Disconnect(ID_FORMAT_BULLETS_AND_NUMBERING, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnBulletsAndNumbering));
+    Disconnect(ID_FORMAT_ITEMIZE_LIST, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnItemizeList));
+    Disconnect(ID_FORMAT_RENUMBER_LIST, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnRenumberList));
+    Disconnect(ID_FORMAT_PROMOTE_LIST, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnPromoteList));
+    Disconnect(ID_FORMAT_DEMOTE_LIST, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnDemoteList));
+    Disconnect(ID_FORMAT_CLEAR_LIST, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnClearList));
+    Disconnect(ID_TABLE_ADD_COLUMN, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnTableAddColumn));
+    Disconnect(ID_TABLE_ADD_ROW, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnTableAddRow));
+    Disconnect(ID_TABLE_DELETE_COLUMN, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnTableDeleteColumn));
+    Disconnect(ID_TABLE_DELETE_ROW, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnTableDeleteRow));
+
+   Disconnect(ID_TABLE_ADD_COLUMN, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnTableFocusedUpdateUI));
+   Disconnect(ID_TABLE_ADD_ROW, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnTableFocusedUpdateUI));
+   Disconnect(ID_TABLE_DELETE_COLUMN, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnTableHasCellsUpdateUI));
+   Disconnect(ID_TABLE_DELETE_ROW, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnTableHasCellsUpdateUI));
+
+    Disconnect(ID_VIEW_HTML, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnViewHTML));
+    Disconnect(ID_SWITCH_STYLE_SHEETS, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSwitchStyleSheets));
+    Disconnect(ID_MANAGE_STYLES, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnManageStyles));
+
+#if wxUSE_PRINTING_ARCHITECTURE
+    Disconnect(ID_PRINT, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnPrint));
+    Disconnect(ID_PREVIEW, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnPreview));
+#endif
+    Disconnect(ID_PAGE_SETUP, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnPageSetup));
+
+   Disconnect(wxID_ANY, wxEVT_TEXT_URL,  wxTextUrlEventHandler(MainFrame::OnURL));
+   Disconnect(wxID_ANY, wxEVT_RICHTEXT_STYLESHEET_REPLACING,  wxRichTextEventHandler(MainFrame::OnStyleSheetReplacing));
+
+    Disconnect(ID_SET_FONT_SCALE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSetFontScale));
+    Disconnect(ID_SET_DIMENSION_SCALE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSetDimensionScale));
 }
    
 void MainFrame::ConnectEventsSelChanged() {
@@ -535,7 +617,7 @@ void MainFrame::OnTreeSelChanging( wxTreeEvent& event )
 
 void MainFrame::OnTreeSelChanged( wxTreeEvent& event )
 {
-    wxString texte = wxGetApp().GetDWParser()->GetWorkFromTree(m_treeDates);
+    wxString texte = wxGetApp().GetWorkFromTreeSelection();
     LOG(DEBUG ) << "Text to show in editor : " << texte;   
     wxStringInputStream final(texte);
     wxRichTextBuffer & rtb = m_editor->GetBuffer();
@@ -583,6 +665,17 @@ void MainFrame::EnableShowHirerarchicalTree(bool hiearchy)
 }
 // event handlers
  
+void MainFrame::OnReload(wxCommandEvent& event)
+{
+    LOG(INFO) << "Ouverture du fichier json " ;
+    wxGetApp().InitDailyWorkParser();
+}
+
+void MainFrame::OnDeleteDate(wxCommandEvent& event)
+{
+    wxGetApp().DeleteDateSelected();
+}
+
 //void MainFrame::OnQuit(wxCommandEvent& WXUNUSED(event))
 void MainFrame::OnQuit(wxCommandEvent& event)
 {
@@ -593,8 +686,8 @@ void MainFrame::OnQuit(wxCommandEvent& event)
 void MainFrame::OnAbout(wxCommandEvent& event)
 {
     wxString msg;
-    msg.Printf( wxT("This is a demo for wxRichTextCtrl, a control for editing styled text.\n(c) Julian Smart, 2005"));
-    wxMessageBox(msg, wxT("About wxRichTextCtrl Sample"), wxOK | wxICON_INFORMATION, this);
+    msg.Printf( wxT("This is daily notepad.\n(c) Laurent Silvestre\nThanks to Julian Smart and his wxRichTextCtrl demo, 2005"));
+    wxMessageBox(msg, wxT("About Dailywork"), wxOK | wxICON_INFORMATION, this);
 }
 
 // Forward command events to the current rich text control, if any
@@ -638,9 +731,6 @@ bool MainFrame::ProcessEvent(wxEvent& event)
 
 void MainFrame::OnOpen(wxCommandEvent&event)
 {
-    LOG(INFO) << "Ouverture du fichier json " ;
-    wxGetApp().InitDailyWorkParser();
-    /*
     wxString path;
     wxString filename;
     wxArrayInt fileTypes;
@@ -669,7 +759,7 @@ void MainFrame::OnOpen(wxCommandEvent&event)
                            : wxRICHTEXT_TYPE_TEXT;
             m_editor->LoadFile(path, fileType);
         }
-    }*/
+    }
 }
 
 void MainFrame::OnSave(wxCommandEvent& event)
@@ -1045,11 +1135,7 @@ void MainFrame::OnParagraphSpacingLess(wxCommandEvent& event)
     }
 }
 
-//void MainFrame::OnReload(wxCommandEvent& event)
-//{
-//    m_editor->Clear();
-//    WriteInitialText();
-//}
+
 
 void MainFrame::OnViewHTML(wxCommandEvent& event)
 {
