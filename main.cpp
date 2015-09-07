@@ -298,30 +298,46 @@ void MainApp::LoadDailyWorkInTree()
     wxTreeCtrl* tree = frame->m_treeDates;
     tree->DeleteAllItems();
     tree->SetWindowStyle(wxTR_HIDE_ROOT);
-    wxTreeItemId rootID = tree->AddRoot(wxT("Dates"));
+    wxTreeItemId rootId = tree->AddRoot(wxT("Dates"));
  
-//     int (*Load)(wxTreeItemId rootID); // pointeur de fonction
-//    if (hierarchicalTree)
-//        Load = LoadDailyWorkInTreeHierarchy;
-//    else
-//        Load = LoadDailyWorkInTreeSimple;
-//    if(!(*Load)(rootID)) {
- 
- 
-    int retour;
-    if (hierarchicalTree)
-        retour = LoadDailyWorkInTreeHierarchy(rootID);
-    else
-        retour = LoadDailyWorkInTreeSimple(rootID);
-    if(!retour) {
-        frame->OnStatusBarMessage("Dates chargées");
-        tree->ExpandAll();
+    wxTreeItemId (MainApp::*LoadBranch)(wxTreeItemId rootId, wxDateTime date); // pointeur de fonction
+    if (hierarchicalTree) {
+        LoadBranch = &LoadBranchHierarchy;
+        LOG(INFO) << "Loading Tree Hierarchy... ";
     }
     else {
-        frame->OnStatusBarMessage("Erreur de chargement des dates");
-        LOG(ERROR) << "Erreur de chargement des dates";
+        LoadBranch = &LoadBranchSimple;
+            LOG(INFO) << "Loading Tree Simple... ";
     }
+    wxTreeItemId itemId;
+    for(SizeType i = 0; i < dwparser.Count(); i++) { //todo faire des appels de dwparser
+        wxDateTime date = dwparser.GetDateFromItem(i);
+        if (date != NULL) {
+            itemId = (this->*LoadBranch)(rootId, date);
+            tree->SetItemData(itemId, dwparser.NewDWItemData(i));           
+        }
+        else {
+            std::string sdate = date.Format().ToStdString();
+            frame->OnStatusBarMessage("Erreur de chargement de la date <"+sdate +">");
+            LOG(ERROR) << "Erreur de chargement de la date <" << sdate << ">";
+        }
+    }
+    frame->OnStatusBarMessage("Dates chargées");
+    tree->ExpandAll();
     LOG(INFO) << "Tree Loaded";
+}
+
+wxTreeItemId MainApp::LoadBranchHierarchy(wxTreeItemId rootId, wxDateTime date)
+{
+    wxTreeItemId itemId = AddItem(rootId, wxString::Format("%4d", date.GetYear()));
+    itemId = AddItem(itemId, wxString::Format("%02d", date.GetMonth()+1));
+    return AddItem(itemId, wxString::Format("%02d", date.GetDay()));       
+}
+
+wxTreeItemId MainApp::LoadBranchSimple(wxTreeItemId rootId, wxDateTime date)
+{
+    wxString sDate = dwparser.ToTreeDate(date);
+    return frame->m_treeDates->AppendItem(rootId, sDate);   
 }
 
 int MainApp::LoadDailyWorkInTreeHierarchy(wxTreeItemId rootId)
