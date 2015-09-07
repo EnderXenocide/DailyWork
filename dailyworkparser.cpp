@@ -138,28 +138,9 @@ int DailyWorkParser::SetWorkFromItem(Value& item, std::string text)
 
 DWItemData* DailyWorkParser::AddDate(wxDateTime& date)
 {
-    Value &value = AddValue(date);
+    Value &value = AddItem(date, "");
     //SetWorkFromItem(value, "empty");
     return new DWItemData(value);
-}
-
-Value& DailyWorkParser::AddValue(wxDateTime& date)
-//Value& DailyWorkParser::AddValue(wxDateTime& date)
-{
-    std::string DWDate = ToDWDate(date).ToStdString();
-    Document::AllocatorType& allocator = document.GetAllocator();
-    Value value(kObjectType);
-    Value valueString(kStringType);
-    valueString.SetString(DWDate.data(), DWDate.size(), document.GetAllocator());
-    value.AddMember(JSON_DATE, valueString, allocator); 
-    value.AddMember(JSON_WORK, "", allocator);  
-    Value &array = document[JSON_ARRAY];
-    array.PushBack(value, allocator); 
-    modified = true;
-    return array[array.Size()-1];//todo valid ?  
-    
-//    static const char* kTypeNames[] = { "Null", "False", "True", "Object", "Array", "String", "Number" };
-//    LOG(INFO) << "Type of member is " << kTypeNames[value.GetType()];
 }
 
 wxDateTime  DailyWorkParser::DWToDate(const std::string DWDate)
@@ -186,7 +167,7 @@ Value& DailyWorkParser::GetItemFromDWItem(DWItemData* itemData)
     } 
     else
         LOG(DEBUG) << "Pas de donné associée à l'item";
-    return new Value(kNullType) ;       
+//    return new Value(kNullType) ;       
 }
 
 int DailyWorkParser::DeleteItem(const Value& item)
@@ -198,4 +179,78 @@ int DailyWorkParser::DeleteItem(const Value& item)
 int DailyWorkParser::DeleteItemFromDWItem(DWItemData* itemData)
 {
     return DeleteItem(GetItemFromDWItem(itemData));
+}
+
+Value& DailyWorkParser::AddItem(wxDateTime& date, std::string work)
+{  
+    std::string DWDate = ToDWDate(date).ToStdString();
+    LOG(INFO) << "Ajoute Date " << DWDate;
+    Document::AllocatorType& allocator = document.GetAllocator();
+    Value value(kObjectType);
+    Value valueStringDate(kStringType);
+    valueStringDate.SetString(DWDate.data(), DWDate.size(), document.GetAllocator());
+    value.AddMember(JSON_DATE, valueStringDate, allocator); 
+    Value valueString(kStringType);
+    valueString.SetString(work.data(), work.size(), document.GetAllocator());
+    value.AddMember(JSON_WORK, valueString, allocator);  
+    Value &array = document[JSON_ARRAY];
+    array.PushBack(value, allocator); 
+    modified = true;
+    return array[array.Size()-1];//todo valid ?      
+    
+//    static const char* kTypeNames[] = { "Null", "False", "True", "Object", "Array", "String", "Number" };
+//    LOG(INFO) << "Type of member is " << kTypeNames[value.GetType()];    
+}
+
+wxDateTime DailyWorkParser::getSelectedDate()
+{
+    assert(IsSelectedOk());
+    return  DWToDate(selected[JSON_DATE].GetString()); 
+}
+
+std::string DailyWorkParser::getSelectedWork()
+{
+    assert(IsSelectedOk());
+    return selected[JSON_WORK].GetString();
+}
+
+int DailyWorkParser::setSelectedDate(const wxDateTime& date)
+{
+    if (IsSelectedOk())  {
+        std::string text = ToDWDate(date).ToStdString();
+        selected[JSON_DATE].SetString(text.data(), text.size(), document.GetAllocator());
+        modified = true;
+        return 0;
+        }
+    else
+        return -1;
+}
+
+int DailyWorkParser::setSelectedWork(std::string work)
+{
+    if (IsSelectedOk())  {
+        selected[JSON_WORK].SetString(work.data(), work.size(), document.GetAllocator());
+        modified = true;
+        return 0;        
+    }
+    else
+        return -1;
+}
+
+int DailyWorkParser::selectItemFromDWItem(DWItemData* itemData)
+{
+    if (itemData != NULL) {
+        selected = itemData->GetValue();
+        return 0;
+    }
+    else {
+        selected = NULL;
+        LOG(DEBUG) << "Pas de donné associée à l'item";
+        return 1;
+    }       
+}
+
+bool DailyWorkParser::IsSelectedOk()
+{
+    return (selected != NULL) && (selected.IsObject());
 }

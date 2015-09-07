@@ -33,23 +33,31 @@ public:
     int Parse();
     int DeleteItemFromDWItem(DWItemData* itemData);
     int DeleteItem(const Value& item);
-    DWItemData* AddDate(wxDateTime& date); // todo wxTreeCtrl& tree instead
+    DWItemData* AddDate(wxDateTime& date); 
     int UpdateWork(DWItemData* itemData, std::string text);
     wxDateTime GetDateFromItem(const Value& item);
     std::string GetWorkFromItem(const Value& item); //todo mettre en private
     std::string GetWorkFromDWItem(DWItemData* itemData);
-    int SetWorkFromItem(Value& item, std::string text);
     wxString ToDWDate(const wxDateTime& date) const;
     wxString ToTreeDate(const wxDateTime& date) const;
     wxDateTime DWToDate(const std::string DWDate);
-    int Save();
-    int SaveAs(wxString filename);
-    int GetVersion() const { return version; }
-    bool IsModified() const { return modified; }
     Value& GetArray();
     //todo delete date 
+
+    int selectItemFromDWItem(DWItemData* itemData);   
     
+    std::string getSelectedWork();
+    int setSelectedWork(std::string work);
+    wxDateTime getSelectedDate();
+    int setSelectedDate(const wxDateTime& date);
+    Value& AddItem(wxDateTime& date, std::string work);
+    int GetVersion() const { return version; }
+    bool IsModified() const { return modified; }
+    int SaveAs(wxString filename);
+    int Save();
+    bool IsSelectedOk();
 private:
+    int SetWorkFromItem(Value& item, std::string text);
     //    static constexpr const char* JSON_FILE = "dailywork.json";
     //    static constexpr const char* JSON_DATE_FORMAT_EXT = "%Y-%m-%d"; //strptime()-like format string
     //    static constexpr const char* JSON_DATE_FORMAT = "%4d-%02d-%02d";
@@ -65,6 +73,7 @@ private:
     Value& GetItemFromDWItem(DWItemData* itemData); //todo mettre en private
     int version;
     bool modified; // set if document was modified
+    Value selected;
 };
 
 #endif // DAILYWORKPARSER_H

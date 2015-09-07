@@ -439,9 +439,24 @@ void MainApp::DeleteDateSelected()
     wxTreeCtrl* tree = frame->m_treeDates;
     wxTreeItemId itemId = tree->GetSelection();
     if (itemId.IsOk()) {
-        DWItemData* itemData = (DWItemData*) tree->GetItemData(itemId); 
-        dwparser.DeleteItemFromDWItem(itemData);
-        tree->Delete(itemId);
+        wxString textSelection = tree->GetItemText(itemId);
+        wxString msg;
+        if (! IsHierarchicalTree()) 
+            msg = wxT("la date ");
+        else if (textSelection.length()==4) //année
+            msg = wxT("l'année ");
+        else if (tree->ItemHasChildren(itemId))  // mois
+            msg = wxT("le mois ");
+        else 
+            msg = wxT("le jour ");
+ 
+        wxMessageDialog dial(frame, wxT("Supprimer ")  + msg + textSelection + " ?", wxT("Attention"), wxYES_NO|wxCENTER_FRAME);
+        int retour = dial.ShowModal();
+        if (retour==wxID_YES) { //on supprime            
+//            DWItemData* itemData = (DWItemData*) tree->GetItemData(itemId); 
+//            dwparser.DeleteItemFromDWItem(itemData);
+            tree->Delete(itemId);
+        }
     }       
 }
 
@@ -452,7 +467,8 @@ std::string MainApp::GetWorkFromTreeSelection()
     if(itemId.IsOk()) {
         DWItemData* itemData = (DWItemData*) tree->GetItemData(itemId);
         return dwparser.GetWorkFromDWItem(itemData);
-    } else
+    } 
+    else
         LOG(DEBUG) << "Aucun élément selectionné";
     return "";   
 }
