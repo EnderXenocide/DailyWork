@@ -469,14 +469,13 @@ bool MainApp::DeleteItemData(wxTreeItemId itemId)
         }
         DWItemData* itemData = (DWItemData*) tree->GetItemData(itemId); 
         if (itemData != NULL) {
-            return dwparser.DeleteItem(itemData->GetValue())==0;
+            dwparser.DeleteItem(itemData->GetValue());
         }
         else {
             LOG(DEBUG) << "Pas de donné associée à l'item";
-            return FALSE;
         }
     } 
-    return TRUE;    
+    return TRUE;    //todo revoir retour
 } 
   
 std::string MainApp::GetWorkFromTreeSelection()

@@ -1,39 +1,192 @@
-2015-09-08 16:19:19,123 DEBUG [default] [Trinquard@TRINQUARD-PC] [virtual bool MainApp::OnInit()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:30] START
-2015-09-08 16:19:19,713 INFO  [default] Parse file
-2015-09-08 16:19:19,713 INFO  [default] Loading Tree with json data...
-2015-09-08 16:19:19,714 INFO  [default] Loading Tree Hierarchy... 
-2015-09-08 16:19:19,718 INFO  [default] Tree Loaded
-2015-09-08 16:19:19,738 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetWorkFromTreeSelection(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:511] wxTreeItemId is not ok
-2015-09-08 16:19:39,530 DEBUG [default] [Trinquard@TRINQUARD-PC] [std::__cxx11::string MainApp::GetWorkFromTreeSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:490] Elément selectionné vide
-2015-09-08 16:20:04,346 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : 
-2015-09-08 16:20:20,466 DEBUG [default] [Trinquard@TRINQUARD-PC] [std::__cxx11::string MainApp::GetWorkFromTreeSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:490] Elément selectionné vide
-2015-09-08 16:20:20,466 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : 
-2015-09-08 16:21:51,524 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : empty123
-2015-09-08 16:24:11,585 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : erzer
-2015-09-08 16:30:23,196 DEBUG [default] [Trinquard@TRINQUARD-PC] [virtual bool MainApp::OnInit()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:30] START
-2015-09-08 16:30:23,770 INFO  [default] Parse file
-2015-09-08 16:30:23,771 INFO  [default] Loading Tree with json data...
-2015-09-08 16:30:23,771 INFO  [default] Loading Tree Hierarchy... 
-2015-09-08 16:30:23,776 INFO  [default] Tree Loaded
-2015-09-08 16:30:23,796 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetWorkFromTreeSelection(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:511] wxTreeItemId is not ok
-2015-09-08 16:30:23,954 DEBUG [default] [Trinquard@TRINQUARD-PC] [std::__cxx11::string MainApp::GetWorkFromTreeSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:490] Elément selectionné vide
-2015-09-08 16:30:23,954 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : 
-2015-09-08 16:30:29,438 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : empty123
-2015-09-08 16:30:34,366 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : erzer
-2015-09-08 16:30:38,056 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : rien à déclarer
-2015-09-08 16:30:58,375 DEBUG [default] [Trinquard@TRINQUARD-PC] [virtual bool MainApp::OnInit()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:30] START
-2015-09-08 16:30:58,894 INFO  [default] Parse file
-2015-09-08 16:30:58,895 INFO  [default] Loading Tree with json data...
-2015-09-08 16:30:58,895 INFO  [default] Loading Tree Hierarchy... 
-2015-09-08 16:30:58,900 INFO  [default] Tree Loaded
-2015-09-08 16:30:58,919 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetWorkFromTreeSelection(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:511] wxTreeItemId is not ok
-2015-09-08 16:30:58,919 DEBUG [default] [Trinquard@TRINQUARD-PC] [std::__cxx11::string MainApp::GetWorkFromTreeSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:490] Elément selectionné vide
-2015-09-08 16:30:58,919 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : 
-2015-09-08 16:31:00,108 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : empty123
-2015-09-08 16:31:00,756 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : erzer
-2015-09-08 16:31:14,709 DEBUG [default] [Trinquard@TRINQUARD-PC] [virtual bool MainApp::OnInit()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:30] START
-2015-09-08 16:31:15,299 INFO  [default] Parse file
-2015-09-08 16:31:15,300 INFO  [default] Loading Tree with json data...
-2015-09-08 16:31:15,300 INFO  [default] Loading Tree Hierarchy... 
-2015-09-08 16:31:15,305 INFO  [default] Tree Loaded
-2015-09-08 16:31:15,324 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetWorkFromTreeSelection(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:511] wxTreeItemId is not ok
+2015-09-08 17:20:44,022 DEBUG [default] [Trinquard@TRINQUARD-PC] [virtual bool MainApp::OnInit()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:30] START
+2015-09-08 17:20:45,266 INFO  [default] Parse file
+2015-09-08 17:20:59,774 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetWorkFromTreeSelection(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:510] wxTreeItemId is not ok
+2015-09-08 17:21:32,697 DEBUG [default] [Trinquard@TRINQUARD-PC] [virtual bool MainApp::OnInit()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:30] START
+2015-09-08 17:21:33,336 INFO  [default] Parse file
+2015-09-08 17:21:33,338 INFO  [default] Loading Tree with json data...
+2015-09-08 17:21:33,338 INFO  [default] Loading Tree Hierarchy... 
+2015-09-08 17:21:33,345 INFO  [default] Tree Loaded
+2015-09-08 17:21:33,368 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetWorkFromTreeSelection(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:510] wxTreeItemId is not ok
+2015-09-08 17:21:33,368 DEBUG [default] [Trinquard@TRINQUARD-PC] [std::__cxx11::string MainApp::GetWorkFromTreeSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:489] Elément selectionné vide
+2015-09-08 17:21:33,368 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : 
+2015-09-08 17:21:43,086 INFO  [default] Supprime la date 2015-09-03
+2015-09-08 17:21:43,087 INFO  [default] Supprime la date 2015-09-01
+2015-09-08 17:21:43,087 DEBUG [default] [Trinquard@TRINQUARD-PC] [bool MainApp::DeleteItemData(wxTreeItemId)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:475] Pas de donné associée à l'item
+2015-09-08 17:21:43,087 INFO  [default] Supprime la date 2015-07-24
+2015-09-08 17:21:43,087 INFO  [default] Supprime la date 2015-07-23
+2015-09-08 17:21:43,087 INFO  [default] Supprime la date 2015-07-22
+2015-09-08 17:21:43,087 DEBUG [default] [Trinquard@TRINQUARD-PC] [bool MainApp::DeleteItemData(wxTreeItemId)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:475] Pas de donné associée à l'item
+2015-09-08 17:21:43,087 DEBUG [default] [Trinquard@TRINQUARD-PC] [bool MainApp::DeleteItemData(wxTreeItemId)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:475] Pas de donné associée à l'item
+2015-09-08 17:21:43,100 DEBUG [default] [Trinquard@TRINQUARD-PC] [std::__cxx11::string MainApp::GetWorkFromTreeSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:492] Aucun élément selectionné
+2015-09-08 17:21:43,100 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : 
+2015-09-08 17:21:45,503 INFO  [default] Ajoute Date 2015-09-01
+2015-09-08 17:21:45,510 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : 
+2015-09-08 17:21:47,429 INFO  [default] Ajoute Date 2015-09-24
+2015-09-08 17:21:47,432 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : 
+2015-09-08 17:21:51,715 DEBUG [default] [Trinquard@TRINQUARD-PC] [std::__cxx11::string MainApp::GetWorkFromTreeSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:489] Elément selectionné vide
+2015-09-08 17:21:51,715 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : 
+2015-09-08 17:21:53,191 INFO  [default] Supprime la date 2015-09-24
+2015-09-08 17:21:53,191 INFO  [default] Supprime la date 2015-09-01
+2015-09-08 17:21:53,191 DEBUG [default] [Trinquard@TRINQUARD-PC] [bool MainApp::DeleteItemData(wxTreeItemId)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:475] Pas de donné associée à l'item
+2015-09-08 17:21:53,191 DEBUG [default] [Trinquard@TRINQUARD-PC] [bool MainApp::DeleteItemData(wxTreeItemId)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:475] Pas de donné associée à l'item
+2015-09-08 17:21:53,208 DEBUG [default] [Trinquard@TRINQUARD-PC] [std::__cxx11::string MainApp::GetWorkFromTreeSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:492] Aucun élément selectionné
+2015-09-08 17:21:53,208 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : 
+2015-09-08 17:22:01,181 INFO  [default] Ajoute Date 2015-09-01
+2015-09-08 17:22:01,188 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : 
+2015-09-08 17:23:20,135 INFO  [default] Ajoute Date 2015-09-02
+2015-09-08 17:23:20,137 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetWorkFromTreeSelection(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:503] Edit modified : Calc : Exposants M&O
+Prog : Dailywork
+Room Arranger
+DataFic
+Etiquettes Europe Z.
+
+2015-09-08 17:23:20,137 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : 
+2015-09-08 17:23:21,260 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : Calc : Exposants M&O
+Prog : Dailywork
+Room Arranger
+DataFic
+Etiquettes Europe Z.
+
+2015-09-08 17:23:21,780 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : 
+2015-09-08 17:23:25,747 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : Calc : Exposants M&O
+Prog : Dailywork
+Room Arranger
+DataFic
+Etiquettes Europe Z.
+
+2015-09-08 17:23:27,988 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : 
+2015-09-08 17:24:49,484 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetWorkFromTreeSelection(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:503] Edit modified : Etiquettes Europe Z. coef 2.5 -> 3
+	Mobliberica + catalogue
+	Ascot + nouveaux tarif, impression sur A3(brochure)
+2015-09-08 17:24:49,485 INFO  [default] Enregistrement
+2015-09-08 17:24:50,291 INFO  [default] Ouverture du fichier json 
+2015-09-08 17:24:50,292 INFO  [default] Parse file
+2015-09-08 17:24:50,293 INFO  [default] Loading Tree with json data...
+2015-09-08 17:24:50,302 INFO  [default] Loading Tree Hierarchy... 
+2015-09-08 17:24:50,312 INFO  [default] Tree Loaded
+2015-09-08 17:24:51,116 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetWorkFromTreeSelection(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:510] wxTreeItemId is not ok
+2015-09-08 17:24:51,117 DEBUG [default] [Trinquard@TRINQUARD-PC] [std::__cxx11::string MainApp::GetWorkFromTreeSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:489] Elément selectionné vide
+2015-09-08 17:24:51,118 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : 
+2015-09-08 17:24:51,756 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : Etiquettes Europe Z. coef 2.5 -> 3
+	Mobliberica + catalogue
+	Ascot + nouveaux tarif, impression sur A3(brochure)
+2015-09-08 17:24:52,188 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : Calc : Exposants M&O
+Prog : Dailywork
+Room Arranger
+DataFic
+Etiquettes Europe Z.
+
+2015-09-08 17:24:52,893 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : Etiquettes Europe Z. coef 2.5 -> 3
+	Mobliberica + catalogue
+	Ascot + nouveaux tarif, impression sur A3(brochure)
+2015-09-08 17:25:01,595 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : Calc : Exposants M&O
+Prog : Dailywork
+Room Arranger
+DataFic
+Etiquettes Europe Z.
+
+2015-09-08 17:25:02,275 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : Etiquettes Europe Z. coef 2.5 -> 3
+	Mobliberica + catalogue
+	Ascot + nouveaux tarif, impression sur A3(brochure)
+2015-09-08 17:25:03,491 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : Calc : Exposants M&O
+Prog : Dailywork
+Room Arranger
+DataFic
+Etiquettes Europe Z.
+
+2015-09-08 17:25:04,132 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : Etiquettes Europe Z. coef 2.5 -> 3
+	Mobliberica + catalogue
+	Ascot + nouveaux tarif, impression sur A3(brochure)
+2015-09-08 17:25:24,108 INFO  [default] Ouverture du fichier json 
+2015-09-08 17:25:24,108 INFO  [default] Parse file
+2015-09-08 17:25:24,108 INFO  [default] Loading Tree with json data...
+2015-09-08 17:25:24,114 INFO  [default] Loading Tree Hierarchy... 
+2015-09-08 17:25:24,121 INFO  [default] Tree Loaded
+2015-09-08 17:25:25,236 DEBUG [default] [Trinquard@TRINQUARD-PC] [std::__cxx11::string MainApp::GetWorkFromTreeSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:489] Elément selectionné vide
+2015-09-08 17:25:25,236 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : 
+2015-09-08 17:25:26,140 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : Etiquettes Europe Z. coef 2.5 -> 3
+	Mobliberica + catalogue
+	Ascot + nouveaux tarif, impression sur A3(brochure)
+2015-09-08 17:25:27,524 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : Calc : Exposants M&O
+Prog : Dailywork
+Room Arranger
+DataFic
+Etiquettes Europe Z.
+
+2015-09-08 17:25:28,860 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : Etiquettes Europe Z. coef 2.5 -> 3
+	Mobliberica + catalogue
+	Ascot + nouveaux tarif, impression sur A3(brochure)
+2015-09-08 17:25:30,708 DEBUG [default] [Trinquard@TRINQUARD-PC] [std::__cxx11::string MainApp::GetWorkFromTreeSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:489] Elément selectionné vide
+2015-09-08 17:25:30,708 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : 
+2015-09-08 17:25:31,307 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : Calc : Exposants M&O
+Prog : Dailywork
+Room Arranger
+DataFic
+Etiquettes Europe Z.
+
+2015-09-08 17:25:32,844 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : Etiquettes Europe Z. coef 2.5 -> 3
+	Mobliberica + catalogue
+	Ascot + nouveaux tarif, impression sur A3(brochure)
+2015-09-08 17:25:59,131 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : Calc : Exposants M&O
+Prog : Dailywork
+Room Arranger
+DataFic
+Etiquettes Europe Z.
+
+2015-09-08 17:26:00,868 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : Etiquettes Europe Z. coef 2.5 -> 3
+	Mobliberica + catalogue
+	Ascot + nouveaux tarif, impression sur A3(brochure)
+2015-09-08 17:26:02,539 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : Calc : Exposants M&O
+Prog : Dailywork
+Room Arranger
+DataFic
+Etiquettes Europe Z.
+
+2015-09-08 17:26:04,555 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : Etiquettes Europe Z. coef 2.5 -> 3
+	Mobliberica + catalogue
+	Ascot + nouveaux tarif, impression sur A3(brochure)
+2015-09-08 17:26:05,324 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : Calc : Exposants M&O
+Prog : Dailywork
+Room Arranger
+DataFic
+Etiquettes Europe Z.
+
+2015-09-08 17:26:06,260 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : Etiquettes Europe Z. coef 2.5 -> 3
+	Mobliberica + catalogue
+	Ascot + nouveaux tarif, impression sur A3(brochure)
+2015-09-08 17:26:08,075 INFO  [default] Ouverture du fichier json 
+2015-09-08 17:26:08,075 INFO  [default] Parse file
+2015-09-08 17:26:08,076 INFO  [default] Loading Tree with json data...
+2015-09-08 17:26:08,082 INFO  [default] Loading Tree Hierarchy... 
+2015-09-08 17:26:08,090 INFO  [default] Tree Loaded
+2015-09-08 17:26:09,284 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : Calc : Exposants M&O
+Prog : Dailywork
+Room Arranger
+DataFic
+Etiquettes Europe Z.
+
+2015-09-08 17:26:10,387 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : Etiquettes Europe Z. coef 2.5 -> 3
+	Mobliberica + catalogue
+	Ascot + nouveaux tarif, impression sur A3(brochure)
+2015-09-08 17:26:11,748 DEBUG [default] [Trinquard@TRINQUARD-PC] [std::__cxx11::string MainApp::GetWorkFromTreeSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:489] Elément selectionné vide
+2015-09-08 17:26:11,748 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : 
+2015-09-08 17:26:12,180 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : Etiquettes Europe Z. coef 2.5 -> 3
+	Mobliberica + catalogue
+	Ascot + nouveaux tarif, impression sur A3(brochure)
+2015-09-08 17:26:13,443 DEBUG [default] [Trinquard@TRINQUARD-PC] [std::__cxx11::string MainApp::GetWorkFromTreeSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:489] Elément selectionné vide
+2015-09-08 17:26:13,443 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : 
+2015-09-08 17:26:13,972 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : Calc : Exposants M&O
+Prog : Dailywork
+Room Arranger
+DataFic
+Etiquettes Europe Z.
+
+2015-09-08 17:26:17,276 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : Etiquettes Europe Z. coef 2.5 -> 3
+	Mobliberica + catalogue
+	Ascot + nouveaux tarif, impression sur A3(brochure)
+2015-09-08 17:26:18,348 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : Calc : Exposants M&O
+Prog : Dailywork
+Room Arranger
+DataFic
+Etiquettes Europe Z.
+

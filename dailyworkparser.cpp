@@ -58,13 +58,17 @@ int DailyWorkParser::Parse()
 int DailyWorkParser::UpdateWork(const wxDateTime& date, std::string text)
 {
     if(date.IsValid()) {
-        Value item;
-        if (FindItem(date, item)) {
-            SetWorkFromItem(item, text);
-            return 0;
+        std::string sdate = ToDWDate(date).ToStdString();
+        Value &array = document[JSON_ARRAY];
+        for (SizeType i = 0; i < array.Size(); i++) {
+            if (array[i][JSON_DATE].GetString()==sdate) {
+                SetWorkFromItem(array[i], text); 
+                return 0;
+            }
         }
-    } 
-    LOG(ERROR) << "Mise à jour impossible";
+        LOG(DEBUG) << "Date non trouvée :" << sdate;
+    }
+    LOG(DEBUG) << "Mise à jour impossible";
     return -1;
 }
 
@@ -105,12 +109,18 @@ wxDateTime DailyWorkParser::GetDateFromItem(int itemIndex)
 
 std::string DailyWorkParser::GetWorkFromDate(const wxDateTime& date)
 {
-    Value item;
-    if ( date.IsValid() && FindItem(date, item) ) {
-            return GetWorkFromItem(item);
+    if ( date.IsValid() ) {
+        std::string sdate = ToDWDate(date).ToStdString();
+        Value &array = document[JSON_ARRAY];
+        for (SizeType i = 0; i < array.Size(); i++) {
+            if (array[i][JSON_DATE].GetString()==sdate) {
+                return GetWorkFromItem(array[i]);
+            }
+        }
+        LOG(DEBUG) << "Date non trouvée :" << sdate;
     } 
     else {
-        LOG(DEBUG) << "Date non valide ou non trouvée";        
+        LOG(DEBUG) << "Date non valide";        
     }
     return "";    
 }

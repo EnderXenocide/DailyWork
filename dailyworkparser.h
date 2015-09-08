@@ -57,7 +57,7 @@ public:
 private:
     int SetWorkFromItem(Value& item, std::string text);
     std::string GetWorkFromItem(const Value& item); 
-    bool FindItem(const wxDateTime& date, Value& item);
+    //bool FindItem(const wxDateTime& date, Value& item); //todo fonction ne marche pas, bouge les objets
     //Value& FindItem(const wxDateTime& date);
 
     // The callback provided by the client via ConnectCallback().
