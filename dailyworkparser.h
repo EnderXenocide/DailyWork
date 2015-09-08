@@ -32,11 +32,9 @@ public:
     void ConnectCallback(CallbackMessageInfo cb);
     int Parse();
     int DeleteItemFromDWItem(DWItemData* itemData);
-    int DeleteItem(const Value& item);
     DWItemData* AddDate(wxDateTime& date); 
     int UpdateWork(DWItemData* itemData, std::string text);
     wxDateTime GetDateFromItem(int itemIndex);
-    std::string GetWorkFromItem(const Value& item); //todo mettre en private
     std::string GetWorkFromDWItem(DWItemData* itemData);
     wxString ToDWDate(const wxDateTime& date) const;
     wxString ToTreeDate(const wxDateTime& date) const;
@@ -50,7 +48,6 @@ public:
     int setSelectedWork(std::string work);
     wxDateTime getSelectedDate();
     int setSelectedDate(const wxDateTime& date);
-    Value& AddItem(wxDateTime& date, std::string work);
     int GetVersion() const { return version; }
     bool IsModified() const { return modified; }
     int SaveAs(wxString filename);
@@ -59,21 +56,15 @@ public:
     DWItemData* NewDWItemData(int itemIndex);
 private:
     int SetWorkFromItem(Value& item, std::string text);
-    //    static constexpr const char* JSON_FILE = "dailywork.json";
-    //    static constexpr const char* JSON_DATE_FORMAT_EXT = "%Y-%m-%d"; //strptime()-like format string
-    //    static constexpr const char* JSON_DATE_FORMAT = "%4d-%02d-%02d";
-    //    static constexpr const char* TREE_DATE_FORMAT = "%02d/%02d/%4d";
-    //    static constexpr const char* JSON_WORK = "work";
-    //    static constexpr const char* JSON_DATE = "date";
-    //    static constexpr const char* JSON_ARRAY = "dailywork";
+    std::string GetWorkFromItem(const Value& item); 
+    int DeleteItem(const Value& item);
+    Value& AddItem(wxDateTime& date, std::string work);
 
     // The callback provided by the client via ConnectCallback().
     CallbackMessageInfo m_cbMessageInfo;
     Document document;
-    Value& AddValue(wxDateTime& date);
-    Value& GetItemFromDWItem(DWItemData* itemData); //todo mettre en private
     int version;
-    bool modified; // set if document was modified
+    bool modified; // set if document was modified or not
     Value selected;
 };
 

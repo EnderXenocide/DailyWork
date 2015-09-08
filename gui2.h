@@ -91,6 +91,7 @@ public:
     void DisconnectEvents();
     void DisconnectEventsSelhanged();
     void EnableShowHirerarchicalTree(bool hiearchy);
+    void ShowTreeItemSelectedText();
     
 protected:  
     void OnCloseFrame( wxCloseEvent& event );

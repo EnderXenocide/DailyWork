@@ -565,7 +565,36 @@ void MainFrame::UpdateDWWork()
         }
     }    
 }
+void MainFrame::ShowTreeItemSelectedText()
+{
+    wxString texte = wxGetApp().GetWorkFromTreeSelection();
+    LOG(DEBUG ) << "Text to show in editor : " << texte;   
+    wxStringInputStream final(texte);
+    wxRichTextBuffer & rtb = m_editor->GetBuffer();
+    m_editor->BeginSuppressUndo();
+    rtb.ResetAndClearCommands();
+    rtb.Clear();
+    m_editor->WriteText(wxString::FromUTF8(texte.c_str()));
+    m_editor->EndSuppressUndo();
+    m_editor->DiscardEdits();
+    //LOG(INFO) << texte ;
     
+//    bool retour = rtb.LoadFile(final); // == 0
+//    //rtb.AddParagraph(wxT("Testeeds"));
+//    rtb.UpdateRanges();
+//    
+////    bool retour = rtb.LoadFile(final, wxRICHTEXT_TYPE_RTF); 
+////    rtb.UpdateRanges();
+////    rtb.Invalidate(wxRICHTEXT_ALL);
+////    m_editor->EndSuppressUndo();
+////    m_editor->LayoutContent();
+//// //   m_editor->Invalidate();
+//    m_editor->Refresh(false); 
+    //OnStatusBarMessage(texte.ToStdString());
+}
+ 
+
+   
 void MainFrame::OnCloseFrame(wxCloseEvent& event)
 {
     UpdateDWWork();
@@ -617,31 +646,7 @@ void MainFrame::OnTreeSelChanging( wxTreeEvent& event )
 
 void MainFrame::OnTreeSelChanged( wxTreeEvent& event )
 {
-    wxString texte = wxGetApp().GetWorkFromTreeSelection();
-    LOG(DEBUG ) << "Text to show in editor : " << texte;   
-    wxStringInputStream final(texte);
-    wxRichTextBuffer & rtb = m_editor->GetBuffer();
-    m_editor->BeginSuppressUndo();
-    rtb.ResetAndClearCommands();
-    rtb.Clear();
-    m_editor->WriteText(wxString::FromUTF8(texte.c_str()));
-    m_editor->EndSuppressUndo();
-    m_editor->DiscardEdits();
-    //LOG(INFO) << texte ;
-    
-//    bool retour = rtb.LoadFile(final); // == 0
-//    //rtb.AddParagraph(wxT("Testeeds"));
-//    rtb.UpdateRanges();
-//    
-////    bool retour = rtb.LoadFile(final, wxRICHTEXT_TYPE_RTF); 
-////    rtb.UpdateRanges();
-////    rtb.Invalidate(wxRICHTEXT_ALL);
-////    m_editor->EndSuppressUndo();
-////    m_editor->LayoutContent();
-//// //   m_editor->Invalidate();
-//    m_editor->Refresh(false); 
-    //OnStatusBarMessage(texte.ToStdString());
-   
+    ShowTreeItemSelectedText();   
 }
 
 void MainFrame::OnStatusBarMessage(std::string msg)

@@ -95,8 +95,10 @@ wxDateTime DailyWorkParser::GetDateFromItem(int itemIndex)
     const Value& item = document[JSON_ARRAY][itemIndex]; 
     if (item.IsObject())
         return DWToDate(item[JSON_DATE].GetString());
-    else
-        return NULL;
+    else {
+        wxDateTime date((time_t)-1);
+        return date;        
+    }
 }
 
 std::string DailyWorkParser::GetWorkFromDWItem(DWItemData* itemData)
@@ -157,29 +159,26 @@ wxDateTime  DailyWorkParser::DWToDate(const std::string DWDate)
     return date;
 }
 
-
-Value& DailyWorkParser::GetItemFromDWItem(DWItemData* itemData)
-{
-    if(itemData != NULL) {
-       return itemData->GetValue();
-    } 
-    else
-        LOG(DEBUG) << "Pas de donné associée à l'item";
-//    return new Value(kNullType) ;       
-}
-
 int DailyWorkParser::DeleteItem(const Value& item)
 {
-   // LOG(INFO) << "Supprime la Date " << DWDate;
-   //todo finir
-    return 0;
+    if (item.IsObject()) {
+        Value & array = document[JSON_ARRAY];
+        for (Value::ConstValueIterator itr = array.Begin(); itr != array.End(); itr++) {
+            if (itr->FindMember(JSON_DATE)->value.GetString()==item[JSON_DATE].GetString()) {
+                array.Erase(itr);
+                LOG(INFO) << "Supprime la Date " << item[JSON_DATE].GetString();
+                modified = true;               
+                return 0;   
+            }        
+        }   
+    }
+    return 1; //non supprimé
 }
 
 int DailyWorkParser::DeleteItemFromDWItem(DWItemData* itemData)
 {
-    if(itemData != NULL) {
-        DeleteItem(itemData->GetValue());
-        return 0;
+    if(itemData != NULL) {        
+        return DeleteItem(itemData->GetValue());
     } 
     else {
         LOG(DEBUG) << "Pas de donné associée à l'item";

@@ -312,7 +312,7 @@ void MainApp::LoadDailyWorkInTree()
     wxTreeItemId itemId;
     for(SizeType i = 0; i < dwparser.Count(); i++) { //todo faire des appels de dwparser
         wxDateTime date = dwparser.GetDateFromItem(i);
-        if (date != NULL) {
+        if (date.IsValid()) {
             itemId = (this->*LoadBranch)(rootId, date);
             tree->SetItemData(itemId, dwparser.NewDWItemData(i));           
         }
@@ -338,38 +338,6 @@ wxTreeItemId MainApp::LoadBranchSimple(wxTreeItemId rootId, wxDateTime date)
 {
     wxString sDate = dwparser.ToTreeDate(date);
     return frame->m_treeDates->AppendItem(rootId, sDate);   
-}
-
-int MainApp::LoadDailyWorkInTreeHierarchy(wxTreeItemId rootId)
-{
-    LOG(INFO) << "Loading Tree Hierarchy... ";
-    wxTreeCtrl* tree = frame->m_treeDates;
-    wxTreeItemId itemId;
-    for(SizeType i = 0; i < dwparser.Count(); i++) { //todo faire des appels de dwparser
-        wxDateTime date = dwparser.GetDateFromItem(i);
-        if (date != NULL) {
-            itemId = AddItem(rootId, wxString::Format("%4d", date.GetYear()));
-            itemId = AddItem(itemId, wxString::Format("%02d", date.GetMonth()+1));
-            itemId = AddItem(itemId, wxString::Format("%02d", date.GetDay()));
-            tree->SetItemData(itemId, dwparser.NewDWItemData(i));            
-        }
-    }
-    return 0;    
-}
-
-int MainApp::LoadDailyWorkInTreeSimple(wxTreeItemId rootId)
-{
-    LOG(INFO) << "Loading Tree Simple... ";
-    wxTreeCtrl* tree = frame->m_treeDates;
-    for(SizeType i = 0; i < dwparser.Count(); i++) {
-        wxDateTime date = dwparser.GetDateFromItem(i);
-        if (date != NULL) {
-            wxString sDate = dwparser.ToTreeDate(date);
-            wxTreeItemId itemId = tree->AppendItem(rootId, sDate);
-            tree->SetItemData(itemId, dwparser.NewDWItemData(i));            
-        }
-    }
-    return 0;
 }
 
 wxTreeItemId MainApp::FindTextInTree(wxTreeItemId parent, wxString text)
@@ -473,24 +441,35 @@ void MainApp::DeleteDateSelected()
             msg = wxT("le jour ");
  
         wxMessageDialog dial(frame, wxT("Supprimer ")  + msg + textSelection + " ?", wxT("Attention"), wxYES_NO|wxCENTER_FRAME);
-        int retour = dial.ShowModal();
-        if (retour==wxID_YES) { //on supprime            
-//            DWItemData* itemData = (DWItemData*) tree->GetItemData(itemId); 
-//            dwparser.DeleteItemFromDWItem(itemData);
-            DeleteItemData(itemId);
-            tree->Delete(itemId); 
+        if (dial.ShowModal()==wxID_YES) { //on supprime            
+            if (DeleteItemData(itemId)) {
+                tree->Delete(itemId); 
+                frame->ShowTreeItemSelectedText();            
+            }
         }
     }       
 }
 
-void MainApp::DeleteItemData(wxTreeItemId itemId) 
-{
-    //todo à finir
-    wxTreeCtrl* tree = frame->m_treeDates;
-//    if (tree->ItemHasChildren(itemId)) 
-//            wxTreeitemD
-//            itemId = tree->GetFirstChild(itemId, cookie)
-//    while           
+// on ne supprime que les données parceque la suppression de l'itemId se fait recursivement
+bool MainApp::DeleteItemData(wxTreeItemId itemId) 
+{    
+    if (itemId.IsOk()) {
+        wxTreeCtrl* tree = frame->m_treeDates;
+        if (tree->ItemHasChildren(itemId)) {
+            wxTreeItemId childId;
+            wxTreeItemIdValue cookie;
+            childId = tree->GetFirstChild(itemId, cookie);
+            while (childId.IsOk()) {
+                DeleteItemData(childId);
+                childId = tree->GetNextChild(itemId, cookie);    
+            }            
+        }
+        DWItemData* itemData = (DWItemData*) tree->GetItemData(itemId); 
+        if (itemData != NULL) {
+            dwparser.DeleteItemFromDWItem(itemData)==0;
+        }   
+    } 
+return TRUE;    
 } 
   
 std::string MainApp::GetWorkFromTreeSelection()
