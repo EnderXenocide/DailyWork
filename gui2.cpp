@@ -295,12 +295,22 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     m_mainToolBar->AddTool(ID_FORMAT_FONT, wxEmptyString, wxBitmap(font_xpm), _("Font"));
     m_mainToolBar->AddSeparator();
 
-    wxRichTextStyleComboCtrl* combo = new wxRichTextStyleComboCtrl(m_mainToolBar, ID_RICHTEXT_STYLE_COMBO, wxDefaultPosition, wxSize(160, -1), wxCB_READONLY);
-    m_mainToolBar->AddControl(combo);
+    wxRichTextStyleComboCtrl* comboStyle = new wxRichTextStyleComboCtrl(m_mainToolBar, ID_RICHTEXT_STYLE_COMBO, wxDefaultPosition, wxSize(160, -1), wxCB_READONLY);
+    m_mainToolBar->AddControl(comboStyle);
     
-    combo->SetStyleSheet(wxGetApp().GetStyleSheet());
-    combo->SetRichTextCtrl(m_editor);
-    combo->UpdateStyles();
+    comboStyle->SetStyleSheet(wxGetApp().GetStyleSheet());
+    comboStyle->SetRichTextCtrl(m_editor);
+    comboStyle->UpdateStyles();
+
+//    wxComboCtrl* comboHelp = new wxComboCtrl(m_mainToolBar, wxID_ANY, wxEmptyString);
+//    wxListViewComboPopup * popupCtrl = new wxListViewComboPopup();
+//    // It is important to call SetPopupControl() as soon as possible
+//    comboCtrl->SetPopupControl(popupCtrl);
+//    // Populate using wxListView methods
+//    popupCtrl->InsertItem(popupCtrl->GetItemCount(), "First Item");
+//    popupCtrl->InsertItem(popupCtrl->GetItemCount(), "Second Item");
+//    popupCtrl->InsertItem(popupCtrl->GetItemCount(), "Third Item");
+//    m_mainToolBar->AddControl(comboHelp);
     
     m_mainToolBar->Realize();
 
@@ -322,7 +332,9 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     m_mainToolBar->EnableTool(ID_FORMAT_INDENT_LESS, false);
     m_mainToolBar->EnableTool(ID_FORMAT_INDENT_MORE, false);
     m_mainToolBar->EnableTool(ID_FORMAT_FONT, false);
- 
+    m_mainToolBar->EnableTool(ID_FORMAT_FONT, false); 
+    comboStyle->Enable(false);
+    
     ConnectEvents();
 }   
  
@@ -561,7 +573,7 @@ void MainFrame::ShowTreeItemSelectedText()
     wxRichTextBuffer & rtb = m_editor->GetBuffer();
     m_editor->BeginSuppressUndo();
     rtb.ResetAndClearCommands();
-    rtb.Clear();
+    m_editor->Clear();
     m_editor->WriteText(wxString::FromUTF8(texte.c_str()));
     m_editor->EndSuppressUndo();
     m_editor->DiscardEdits();

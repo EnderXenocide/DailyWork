@@ -475,7 +475,7 @@ bool MainApp::DeleteItemData(wxTreeItemId itemId)
             LOG(DEBUG) << "Pas de donné associée à l'item";
         }
     } 
-    return TRUE;    //todo revoir retour
+    return true;    //todo revoir retour
 } 
   
 std::string MainApp::GetWorkFromTreeSelection()

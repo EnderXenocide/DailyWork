@@ -238,19 +238,6 @@ int DailyWorkParser::setSelectedWork(std::string work)
         return -1;
 }
 
-//int DailyWorkParser::selectItemFromDate(DWItemData* itemData)
-//{
-//    if (itemData != NULL) {
-//        selected = itemData->GetValue();
-//        return 0;
-//    }
-//    else {
-//        selected = NULL;
-//        LOG(DEBUG) << "Pas de donné associée à l'item";
-//        return 1;
-//    }   
-//}  
- 
 SizeType DailyWorkParser::Count()
 {
     return document[JSON_ARRAY].Size();
@@ -261,16 +248,16 @@ bool DailyWorkParser::IsSelectedOk()
     return (selected != NULL) && (selected.IsObject());
 }
 
-bool DailyWorkParser::FindItem(const wxDateTime& date, Value& item)
-{
-    std::string sdate = ToDWDate(date).ToStdString();
-    Value &array = document[JSON_ARRAY];
-    for (SizeType i = 0; i < array.Size(); i++) {
-        if (array[i][JSON_DATE].GetString()==sdate) {
-            item = array[i]; 
-            return TRUE;  
-        }  
-    }
-    LOG(DEBUG) << "Date non trouvée :" << sdate;
-    return FALSE;
-}
+//bool DailyWorkParser::FindItem(const wxDateTime& date, Value& item)
+//{
+//    std::string sdate = ToDWDate(date).ToStdString();
+//    Value &array = document[JSON_ARRAY];
+//    for (SizeType i = 0; i < array.Size(); i++) {
+//        if (array[i][JSON_DATE].GetString()==sdate) {
+//            item = array[i]; 
+//            return TRUE;  
+//        }  
+//    }
+//    LOG(DEBUG) << "Date non trouvée :" << sdate;
+//    return false;
+//}

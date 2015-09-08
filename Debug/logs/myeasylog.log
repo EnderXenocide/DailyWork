@@ -190,3 +190,177 @@ Room Arranger
 DataFic
 Etiquettes Europe Z.
 
+2015-09-08 17:30:31,310 DEBUG [default] [Trinquard@TRINQUARD-PC] [virtual bool MainApp::OnInit()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:30] START
+2015-09-08 17:30:33,837 INFO  [default] Parse file
+2015-09-08 17:30:33,838 INFO  [default] Loading Tree with json data...
+2015-09-08 17:30:33,838 INFO  [default] Loading Tree Hierarchy... 
+2015-09-08 17:30:33,847 INFO  [default] Tree Loaded
+2015-09-08 17:30:33,869 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetWorkFromTreeSelection(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:510] wxTreeItemId is not ok
+2015-09-08 17:30:33,869 DEBUG [default] [Trinquard@TRINQUARD-PC] [std::__cxx11::string MainApp::GetWorkFromTreeSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:489] Elément selectionné vide
+2015-09-08 17:30:33,869 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : 
+2015-09-08 17:30:35,363 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : Etiquettes Europe Z. coef 2.5 -> 3
+	Mobliberica + catalogue
+	Ascot + nouveaux tarif, impression sur A3(brochure)
+2015-09-08 17:30:36,004 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : Calc : Exposants M&O
+Prog : Dailywork
+Room Arranger
+DataFic
+Etiquettes Europe Z.
+
+2015-09-08 17:30:36,756 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : Etiquettes Europe Z. coef 2.5 -> 3
+	Mobliberica + catalogue
+	Ascot + nouveaux tarif, impression sur A3(brochure)
+2015-09-08 17:30:37,387 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : Calc : Exposants M&O
+Prog : Dailywork
+Room Arranger
+DataFic
+Etiquettes Europe Z.
+
+2015-09-08 17:30:38,020 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : Etiquettes Europe Z. coef 2.5 -> 3
+	Mobliberica + catalogue
+	Ascot + nouveaux tarif, impression sur A3(brochure)
+2015-09-08 17:30:38,827 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : Calc : Exposants M&O
+Prog : Dailywork
+Room Arranger
+DataFic
+Etiquettes Europe Z.
+
+2015-09-08 17:30:40,076 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : Etiquettes Europe Z. coef 2.5 -> 3
+	Mobliberica + catalogue
+	Ascot + nouveaux tarif, impression sur A3(brochure)
+2015-09-08 17:31:15,414 INFO  [default] Ajoute Date 2015-09-03
+2015-09-08 17:31:15,416 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetWorkFromTreeSelection(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:503] Edit modified : Etiquettes Europe Z. coef 2.5 -> 3
+	Mobliberica + catalogue
+	Ascot + nouveaux tarif, impression sur A3(brochure)
+Mail To Ascot : demande de TTC, produits supprimés
+Dailywork
+2015-09-08 17:31:15,417 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : 
+2015-09-08 17:31:16,965 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : Etiquettes Europe Z. coef 2.5 -> 3
+	Mobliberica + catalogue
+	Ascot + nouveaux tarif, impression sur A3(brochure)
+Mail To Ascot : demande de TTC, produits supprimés
+Dailywork
+2015-09-08 17:31:19,292 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : 
+2015-09-08 17:32:02,741 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetWorkFromTreeSelection(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:503] Edit modified : Dailywork
+Datafic Bilan Historique /Tampon
+Delphi FicFac : bug clôture
+
+
+2015-09-08 17:32:02,741 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : Etiquettes Europe Z. coef 2.5 -> 3
+	Mobliberica + catalogue
+	Ascot + nouveaux tarif, impression sur A3(brochure)
+Mail To Ascot : demande de TTC, produits supprimés
+Dailywork
+2015-09-08 17:32:03,484 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : Dailywork
+Datafic Bilan Historique /Tampon
+Delphi FicFac : bug clôture
+
+
+2015-09-08 17:32:17,595 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetWorkFromTreeSelection(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:503] Edit modified : Dailywork
+Datafic Bilan Historique /Tampon
+Delphi FicFac : bug clôture
+Feuile de débit S470
+
+2015-09-08 17:32:17,596 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : Etiquettes Europe Z. coef 2.5 -> 3
+	Mobliberica + catalogue
+	Ascot + nouveaux tarif, impression sur A3(brochure)
+Mail To Ascot : demande de TTC, produits supprimés
+Dailywork
+2015-09-08 17:32:18,756 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : Calc : Exposants M&O
+Prog : Dailywork
+Room Arranger
+DataFic
+Etiquettes Europe Z.
+
+2015-09-08 17:32:21,756 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : Dailywork
+Datafic Bilan Historique /Tampon
+Delphi FicFac : bug clôture
+Feuile de débit S470
+
+2015-09-08 17:32:29,060 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetWorkFromTreeSelection(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:503] Edit modified : Dailywork
+Datafic Bilan Historique /Tampon
+Delphi FicFac : bug clôture
+Feuile de débit S470
+Room Arranger
+2015-09-08 17:32:29,060 INFO  [default] Enregistrement
+2015-09-08 17:32:31,380 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetWorkFromTreeSelection(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:503] Edit modified : Dailywork
+Datafic Bilan Historique /Tampon
+Delphi FicFac : bug clôture
+Feuile de débit S470
+Room Arranger
+2015-09-08 17:32:31,380 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : Etiquettes Europe Z. coef 2.5 -> 3
+	Mobliberica + catalogue
+	Ascot + nouveaux tarif, impression sur A3(brochure)
+Mail To Ascot : demande de TTC, produits supprimés
+Dailywork
+2015-09-08 17:32:31,875 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : Calc : Exposants M&O
+Prog : Dailywork
+Room Arranger
+DataFic
+Etiquettes Europe Z.
+
+2015-09-08 17:32:32,771 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : Dailywork
+Datafic Bilan Historique /Tampon
+Delphi FicFac : bug clôture
+Feuile de débit S470
+Room Arranger
+2015-09-08 17:33:00,596 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetWorkFromTreeSelection(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:503] Edit modified : Dailywork
+Datafic Bilan Historique /Tampon
+Delphi FicFac : bug clôture
+Feuile de débit S470
+Room Arranger
+2015-09-08 17:33:00,596 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : Etiquettes Europe Z. coef 2.5 -> 3
+	Mobliberica + catalogue
+	Ascot + nouveaux tarif, impression sur A3(brochure)
+Mail To Ascot : demande de TTC, produits supprimés
+Dailywork
+2015-09-08 17:33:01,020 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : Dailywork
+Datafic Bilan Historique /Tampon
+Delphi FicFac : bug clôture
+Feuile de débit S470
+Room Arranger
+2015-09-08 17:33:05,669 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetWorkFromTreeSelection(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:503] Edit modified : Dailywork
+Datafic Bilan Historique /Tampon
+Delphi FicFac : bug clôture
+Feuile de débit S470
+Room Arranger
+2015-09-08 17:33:05,669 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : Etiquettes Europe Z. coef 2.5 -> 3
+	Mobliberica + catalogue
+	Ascot + nouveaux tarif, impression sur A3(brochure)
+Mail To Ascot : demande de TTC, produits supprimés
+Dailywork
+2015-09-08 17:33:06,075 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:559] Text to show in editor : Dailywork
+Datafic Bilan Historique /Tampon
+Delphi FicFac : bug clôture
+Feuile de débit S470
+Room Arranger
+2015-09-08 17:33:12,894 INFO  [default] Enregistrement
+2015-09-08 17:41:33,307 DEBUG [default] [Trinquard@TRINQUARD-PC] [virtual bool MainApp::OnInit()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:30] START
+2015-09-08 17:42:32,259 INFO  [default] Parse file
+2015-09-08 17:42:32,263 INFO  [default] Loading Tree with json data...
+2015-09-08 17:42:32,264 INFO  [default] Loading Tree Hierarchy... 
+2015-09-08 17:42:32,267 INFO  [default] Tree Loaded
+2015-09-08 17:42:32,271 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetWorkFromTreeSelection(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:510] wxTreeItemId is not ok
+2015-09-08 17:42:32,271 DEBUG [default] [Trinquard@TRINQUARD-PC] [std::__cxx11::string MainApp::GetWorkFromTreeSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:489] Elément selectionné vide
+2015-09-08 17:42:32,272 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:564] Text to show in editor : 
+2015-09-08 17:45:39,797 DEBUG [default] [Trinquard@TRINQUARD-PC] [virtual bool MainApp::OnInit()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:30] START
+2015-09-08 17:45:42,151 INFO  [default] Parse file
+2015-09-08 17:45:42,151 INFO  [default] Loading Tree with json data...
+2015-09-08 17:45:42,151 INFO  [default] Loading Tree Hierarchy... 
+2015-09-08 17:45:42,155 INFO  [default] Tree Loaded
+2015-09-08 17:45:42,159 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetWorkFromTreeSelection(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:510] wxTreeItemId is not ok
+2015-09-08 17:45:42,159 DEBUG [default] [Trinquard@TRINQUARD-PC] [std::__cxx11::string MainApp::GetWorkFromTreeSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:489] Elément selectionné vide
+2015-09-08 17:45:42,159 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:564] Text to show in editor : 
+2015-09-08 17:45:51,060 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:564] Text to show in editor : Dailywork
+Datafic Bilan Historique /Tampon
+Delphi FicFac : bug clôture
+Feuile de débit S470
+Room Arranger
+2015-09-08 17:46:38,658 DEBUG [default] [Trinquard@TRINQUARD-PC] [virtual bool MainApp::OnInit()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:30] START
+2015-09-08 17:46:39,248 INFO  [default] Parse file
+2015-09-08 17:46:39,249 INFO  [default] Loading Tree with json data...
+2015-09-08 17:46:39,249 INFO  [default] Loading Tree Hierarchy... 
+2015-09-08 17:46:39,253 INFO  [default] Tree Loaded
+2015-09-08 17:46:39,276 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetWorkFromTreeSelection(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:510] wxTreeItemId is not ok
+2015-09-08 17:46:39,276 DEBUG [default] [Trinquard@TRINQUARD-PC] [std::__cxx11::string MainApp::GetWorkFromTreeSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:489] Elément selectionné vide
+2015-09-08 17:46:39,276 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:564] Text to show in editor : 
