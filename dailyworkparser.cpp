@@ -55,16 +55,17 @@ int DailyWorkParser::Parse()
     // ECRITURE fwrite (buffer.GetString(), buffer.GetSize(), 1, wFile);
 }
 
-int DailyWorkParser::UpdateWork(DWItemData* itemData, std::string text)
+int DailyWorkParser::UpdateWork(const wxDateTime& date, std::string text)
 {
-    if(itemData != NULL) {
-        Value& item = itemData->GetValue();
-        SetWorkFromItem(item, text);
-    } else {
-        LOG(ERROR) << "Mise à jour impossible";
-        return -1;
-    }
-    return 0;
+    if(date.IsValid()) {
+        Value item;
+        if (FindItem(date, item)) {
+            SetWorkFromItem(item, text);
+            return 0;
+        }
+    } 
+    LOG(ERROR) << "Mise à jour impossible";
+    return -1;
 }
 
 int DailyWorkParser::Save()
@@ -93,22 +94,24 @@ int DailyWorkParser::SaveAs(wxString filename)
 wxDateTime DailyWorkParser::GetDateFromItem(int itemIndex)
 {
     const Value& item = document[JSON_ARRAY][itemIndex]; 
-    if (item.IsObject())
-        return DWToDate(item[JSON_DATE].GetString());
+    if (item.IsObject()) {
+        return DWToDate(item[JSON_DATE].GetString());        
+    }
     else {
         wxDateTime date((time_t)-1);
         return date;        
     }
 }
 
-std::string DailyWorkParser::GetWorkFromDWItem(DWItemData* itemData)
+std::string DailyWorkParser::GetWorkFromDate(const wxDateTime& date)
 {
-    if(itemData != NULL) {
-        const Value& item = itemData->GetValue();
-        return GetWorkFromItem(item);
+    Value item;
+    if ( date.IsValid() && FindItem(date, item) ) {
+            return GetWorkFromItem(item);
     } 
-    else
-        LOG(DEBUG) << "Pas de donné associée à l'item";
+    else {
+        LOG(DEBUG) << "Date non valide ou non trouvée";        
+    }
     return "";    
 }
 
@@ -142,14 +145,7 @@ int DailyWorkParser::SetWorkFromItem(Value& item, std::string text)
     return 0;
 }
 
-DWItemData* DailyWorkParser::AddDate(wxDateTime& date)
-{
-    Value &value = AddItem(date, "");
-    //SetWorkFromItem(value, "empty");
-    return new DWItemData(value);
-}
-
-wxDateTime  DailyWorkParser::DWToDate(const std::string DWDate)
+wxDateTime DailyWorkParser::DWToDate(const std::string DWDate)
 {
     wxDateTime date;
 //	if (!date.ParseISODate(DWDate)) {
@@ -159,14 +155,15 @@ wxDateTime  DailyWorkParser::DWToDate(const std::string DWDate)
     return date;
 }
 
-int DailyWorkParser::DeleteItem(const Value& item)
+int DailyWorkParser::DeleteItem(wxDateTime date)
 {
-    if (item.IsObject()) {
+    if (date.IsValid()) {
+        std::string sdate = ToDWDate(date).ToStdString();
         Value & array = document[JSON_ARRAY];
         for (Value::ConstValueIterator itr = array.Begin(); itr != array.End(); itr++) {
-            if (itr->FindMember(JSON_DATE)->value.GetString()==item[JSON_DATE].GetString()) {
+            if (itr->FindMember(JSON_DATE)->value.GetString()==sdate) {
                 array.Erase(itr);
-                LOG(INFO) << "Supprime la Date " << item[JSON_DATE].GetString();
+                LOG(INFO) << "Supprime la date " << sdate;
                 modified = true;               
                 return 0;   
             }        
@@ -175,18 +172,7 @@ int DailyWorkParser::DeleteItem(const Value& item)
     return 1; //non supprimé
 }
 
-int DailyWorkParser::DeleteItemFromDWItem(DWItemData* itemData)
-{
-    if(itemData != NULL) {        
-        return DeleteItem(itemData->GetValue());
-    } 
-    else {
-        LOG(DEBUG) << "Pas de donné associée à l'item";
-        return -1;
-    }
-}
-
-Value& DailyWorkParser::AddItem(wxDateTime& date, std::string work)
+void DailyWorkParser::AddItem(wxDateTime& date, std::string work)
 {  
     std::string DWDate = ToDWDate(date).ToStdString();
     LOG(INFO) << "Ajoute Date " << DWDate;
@@ -201,7 +187,7 @@ Value& DailyWorkParser::AddItem(wxDateTime& date, std::string work)
     Value &array = document[JSON_ARRAY];
     array.PushBack(value, allocator); 
     modified = true;
-    return array[array.Size()-1];//todo valid ?      
+    //return array[array.Size()-1];//todo valid ?      
     
 //    static const char* kTypeNames[] = { "Null", "False", "True", "Object", "Array", "String", "Number" };
 //    LOG(INFO) << "Type of member is " << kTypeNames[value.GetType()];    
@@ -242,18 +228,18 @@ int DailyWorkParser::setSelectedWork(std::string work)
         return -1;
 }
 
-int DailyWorkParser::selectItemFromDWItem(DWItemData* itemData)
-{
-    if (itemData != NULL) {
-        selected = itemData->GetValue();
-        return 0;
-    }
-    else {
-        selected = NULL;
-        LOG(DEBUG) << "Pas de donné associée à l'item";
-        return 1;
-    }   
-}  
+//int DailyWorkParser::selectItemFromDate(DWItemData* itemData)
+//{
+//    if (itemData != NULL) {
+//        selected = itemData->GetValue();
+//        return 0;
+//    }
+//    else {
+//        selected = NULL;
+//        LOG(DEBUG) << "Pas de donné associée à l'item";
+//        return 1;
+//    }   
+//}  
  
 SizeType DailyWorkParser::Count()
 {
@@ -264,7 +250,17 @@ bool DailyWorkParser::IsSelectedOk()
 {
     return (selected != NULL) && (selected.IsObject());
 }
-DWItemData* DailyWorkParser::NewDWItemData(int itemIndex)
+
+bool DailyWorkParser::FindItem(const wxDateTime& date, Value& item)
 {
-    return new DWItemData(document[JSON_ARRAY][itemIndex]);
+    std::string sdate = ToDWDate(date).ToStdString();
+    Value &array = document[JSON_ARRAY];
+    for (SizeType i = 0; i < array.Size(); i++) {
+        if (array[i][JSON_DATE].GetString()==sdate) {
+            item = array[i]; 
+            return TRUE;  
+        }  
+    }
+    LOG(DEBUG) << "Date non trouvée :" << sdate;
+    return FALSE;
 }

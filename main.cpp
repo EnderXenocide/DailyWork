@@ -310,11 +310,13 @@ void MainApp::LoadDailyWorkInTree()
             LOG(INFO) << "Loading Tree Simple... ";
     }
     wxTreeItemId itemId;
+    DWItemData *itemData;
     for(SizeType i = 0; i < dwparser.Count(); i++) { //todo faire des appels de dwparser
         wxDateTime date = dwparser.GetDateFromItem(i);
         if (date.IsValid()) {
             itemId = (this->*LoadBranch)(rootId, date);
-            tree->SetItemData(itemId, dwparser.NewDWItemData(i));           
+            itemData = new DWItemData(date);
+            tree->SetItemData(itemId, itemData);           
         }
         else {
             std::string sdate = date.Format().ToStdString();
@@ -392,7 +394,8 @@ int MainApp::AddDateToTree(wxDateTime& date, bool selectItem)
     } else {
         itemId = AddItem(tree->GetRootItem(), dwparser.ToTreeDate(date));
     }
-    DWItemData* data =  dwparser.AddDate(date);
+    dwparser.AddItem(date);
+    DWItemData* data =  new DWItemData(date);
     tree->SetItemData(itemId, data);
     tree->ExpandAll(); //Expand(itemId);
     if(selectItem)
@@ -466,10 +469,14 @@ bool MainApp::DeleteItemData(wxTreeItemId itemId)
         }
         DWItemData* itemData = (DWItemData*) tree->GetItemData(itemId); 
         if (itemData != NULL) {
-            dwparser.DeleteItemFromDWItem(itemData)==0;
-        }   
+            return dwparser.DeleteItem(itemData->GetValue())==0;
+        }
+        else {
+            LOG(DEBUG) << "Pas de donné associée à l'item";
+            return FALSE;
+        }
     } 
-return TRUE;    
+    return TRUE;    
 } 
   
 std::string MainApp::GetWorkFromTreeSelection()
@@ -478,9 +485,29 @@ std::string MainApp::GetWorkFromTreeSelection()
    wxTreeItemId itemId = tree->GetSelection();
     if(itemId.IsOk()) {
         DWItemData* itemData = (DWItemData*) tree->GetItemData(itemId);
-        return dwparser.GetWorkFromDWItem(itemData);
+        if (itemData != NULL)
+            return dwparser.GetWorkFromDate(itemData->GetValue());
+        LOG(DEBUG) << "Elément selectionné vide";    
     } 
     else
         LOG(DEBUG) << "Aucun élément selectionné";
     return "";   
+}
+
+void MainApp::SetWorkFromTreeSelection(wxString text)
+{        
+    wxTreeCtrl* tree = frame->m_treeDates;
+    wxTreeItemId itemId = tree->GetSelection();
+    if (itemId.IsOk()) {
+        DWItemData* itemData=(DWItemData*) tree->GetItemData(itemId);
+        if (itemData != NULL) {
+            LOG(DEBUG ) << "Edit modified : " << text.ToUTF8();
+            dwparser.UpdateWork(itemData->GetValue(), text.ToUTF8().data()); 
+            return ;
+        }
+        LOG(DEBUG) << "No DWItemData for the wxTreeItemId selected";
+    }
+    else {
+        LOG(DEBUG ) << "wxTreeItemId is not ok";
+    }
 }

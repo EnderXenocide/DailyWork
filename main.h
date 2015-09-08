@@ -51,7 +51,6 @@ public:
     void LoadDailyWorkInTree();
     MainApp& SetHierarchicalTree( bool hierarchy){this->hierarchicalTree = hierarchy; return *this; }
     bool IsHierarchicalTree() const{ return hierarchicalTree; }
-    DailyWorkParser* GetDWParser() const { return (DailyWorkParser*) &dwparser; } 
     wxRichTextStyleSheet* GetStyleSheet() const { return m_styleSheet; } 
 #if wxUSE_PRINTING_ARCHITECTURE
     wxRichTextPrinting* GetPrinting() const { return m_printing; }
@@ -60,9 +59,13 @@ public:
     wxTreeItemId AddItem(wxTreeItemId parent, wxString text);
     wxTreeItemId FindDateInTree(wxDateTime date);
     wxTreeItemId FindTextInTree(wxTreeItemId parent, wxString text);
+    void SetWorkFromTreeSelection(wxString text);
     std::string GetWorkFromTreeSelection();
     void DeleteDateSelected();
     bool DeleteItemData(wxTreeItemId itemId);
+    bool IsModified() const { return dwparser.IsModified(); }
+    int Save() { return dwparser.Save(); } ;
+    int SaveAs(wxString filename) { return dwparser.SaveAs(filename); };
 private:
     bool hierarchicalTree;
     wxRichTextStyleSheet*   m_styleSheet;

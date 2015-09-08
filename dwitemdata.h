@@ -7,11 +7,11 @@
 class DWItemData : public wxTreeItemData
 {
 public:
-    DWItemData (rapidjson::Value const & value) : wxTreeItemData() {m_value = (rapidjson::Value*) &value; };
+    DWItemData (const wxDateTime& date) : wxTreeItemData() {m_value = date;};
     ~DWItemData() {};
-    rapidjson::Value& GetValue() const { return *m_value; };   
+    wxDateTime GetValue() const { return m_value; };   
 private:
-    rapidjson::Value* m_value; // pair date/texte
+    wxDateTime m_value; 
 };
 
 #endif // DWITEMDATA_H

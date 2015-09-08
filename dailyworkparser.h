@@ -31,18 +31,17 @@ public:
     ~DailyWorkParser();
     void ConnectCallback(CallbackMessageInfo cb);
     int Parse();
-    int DeleteItemFromDWItem(DWItemData* itemData);
-    DWItemData* AddDate(wxDateTime& date); 
-    int UpdateWork(DWItemData* itemData, std::string text);
+    //DWItemData* AddDate(wxDateTime& date); 
+    int UpdateWork(const wxDateTime& date, std::string text);
     wxDateTime GetDateFromItem(int itemIndex);
-    std::string GetWorkFromDWItem(DWItemData* itemData);
+    std::string GetWorkFromDate(const wxDateTime& date);
     wxString ToDWDate(const wxDateTime& date) const;
     wxString ToTreeDate(const wxDateTime& date) const;
     wxDateTime DWToDate(const std::string DWDate);
     SizeType Count(); 
     //todo delete date 
 
-    int selectItemFromDWItem(DWItemData* itemData);   
+   // int selectItemFromDate(const wxDateTime& date);   
     
     std::string getSelectedWork();
     int setSelectedWork(std::string work);
@@ -53,12 +52,13 @@ public:
     int SaveAs(wxString filename);
     int Save();
     bool IsSelectedOk();
-    DWItemData* NewDWItemData(int itemIndex);
+    void AddItem(wxDateTime& date, std::string work="");
+    int DeleteItem(wxDateTime date);
 private:
     int SetWorkFromItem(Value& item, std::string text);
     std::string GetWorkFromItem(const Value& item); 
-    int DeleteItem(const Value& item);
-    Value& AddItem(wxDateTime& date, std::string work);
+    bool FindItem(const wxDateTime& date, Value& item);
+    //Value& FindItem(const wxDateTime& date);
 
     // The callback provided by the client via ConnectCallback().
     CallbackMessageInfo m_cbMessageInfo;

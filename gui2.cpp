@@ -550,19 +550,7 @@ void MainFrame::UpdateDWWork()
     //todo garder function ici ? car same style que DailyWorkParser::GetWorkFromTree
     wxRichTextBuffer & rtb = m_editor->GetBuffer();
     if (rtb.IsModified() ) {
-        wxTreeItemId itemID=m_treeDates->GetSelection();
-        if (itemID.IsOk()) {
-            DWItemData* itemData=(DWItemData*) m_treeDates->GetItemData(itemID);
-            if (itemData != NULL) {
-                LOG(DEBUG ) << "Edit modified : " << rtb.GetText().ToUTF8();
-                wxGetApp().GetDWParser()->UpdateWork(itemData, rtb.GetText().ToUTF8().data()); 
-                return ;
-            }
-            LOG(ERROR) << "No DWItemData for the wxTreeItemId selected";
-        }
-        else {
-            LOG(DEBUG ) << "wxTreeItemId is null";
-        }
+         wxGetApp().SetWorkFromTreeSelection(rtb.GetText());
     }    
 }
 void MainFrame::ShowTreeItemSelectedText()
@@ -592,18 +580,16 @@ void MainFrame::ShowTreeItemSelectedText()
 //    m_editor->Refresh(false); 
     //OnStatusBarMessage(texte.ToStdString());
 }
- 
-
-   
+    
 void MainFrame::OnCloseFrame(wxCloseEvent& event)
 {
     UpdateDWWork();
     bool exit = true;
-    if (wxGetApp().GetDWParser()->IsModified()) {
+    if (wxGetApp().IsModified()) {
         wxMessageDialog dial(this, wxT("Le document a été modifié, voulez-vous enregistrer ?"), "Attention", wxYES_NO|wxCANCEL|wxCENTER_FRAME);
         int retour = dial.ShowModal();
         if (retour==wxID_YES)
-            wxGetApp().GetDWParser()->Save();
+            wxGetApp().Save();
         else if (retour==wxID_CANCEL)
             exit = false;///todo ne pas fermer
     }  
@@ -770,8 +756,9 @@ void MainFrame::OnOpen(wxCommandEvent&event)
 void MainFrame::OnSave(wxCommandEvent& event)
 {
     UpdateDWWork(); // met à jour/ou pas le texte ecrit dans le richedit dans DWparser
-    wxGetApp().GetDWParser()->Save();
+    wxGetApp().Save();
     OnStatusBarMessage("Enregister");
+    
      /*
     if (m_editor->GetFilename().empty())
     {
@@ -802,7 +789,7 @@ void MainFrame::OnSaveAs(wxCommandEvent& event)
         if (!path.empty())
         {
             UpdateDWWork(); // met à jour/ou pas le texte ecrit dans le richedit dans DWparser
-            wxGetApp().GetDWParser()->SaveAs(path);
+            wxGetApp().SaveAs(path);
             std::string s = "Enregistrer sous <";
             s += path.ToStdString() +">";
             OnStatusBarMessage(s);
