@@ -4,28 +4,20 @@
 class wxListViewComboPopup : public wxListView, public wxComboPopup
 {
 public:
-    ~wxListViewComboPopup() 
-    {
-        Disconnect(wxEVT_LEFT_UP, wxMouseEventHandler( wxListViewComboPopup::OnMouseClick ), NULL, this );
-        Disconnect(wxEVT_MOTION, wxMouseEventHandler(wxListViewComboPopup::OnMouseMove), NULL, this);
-    };
-
    // Initialize member variables
     virtual void Init()
     {
         m_value = -1;
-        Connect(wxEVT_LEFT_UP, wxMouseEventHandler( wxListViewComboPopup::OnMouseClick ), NULL, this );
-        Connect(wxEVT_MOTION, wxMouseEventHandler(wxListViewComboPopup::OnMouseMove), NULL, this);
-//        BEGIN_EVENT_TABLE(wxListViewComboPopup, wxListView)
-//    EVT_MOTION(wxListViewComboPopup::OnMouseMove)
-//    EVT_LEFT_UP(wxListViewComboPopup::OnMouseClick)
-//END_EVENT_TABLE()
+        m_itemHere = -1; // hot item in list
     }
 
     // Create popup control
     virtual bool Create(wxWindow* parent)
     {
-        return wxListView::Create(parent,1,wxPoint(0,0),wxDefaultSize);
+        return wxListView::Create(parent,1,
+                                  wxPoint(0,0),wxDefaultSize,
+                                  wxLC_LIST|wxLC_SINGLE_SEL|
+                                  wxLC_SORT_ASCENDING|wxSIMPLE_BORDER);
     }
 
     // Return pointer to the created control
@@ -50,22 +42,30 @@ public:
     // Do mouse hot-tracking (which is typical in list popups)
     void OnMouseMove(wxMouseEvent& event)
     {
-        // TODO: Move selection to cursor
+        // Move selection to cursor if it is inside the popup
+//        int resFlags;
+//        int itemHere = HitTest(event.GetPosition(),resFlags);
+//        if ( itemHere >= 0 ) {
+//            wxListView::Select(itemHere,true);
+//            m_itemHere = itemHere;
+//        }
+//        event.Skip();
     }
 
     // On mouse left up, set the value and close the popup
     void OnMouseClick(wxMouseEvent& event)
     {
-        m_value = wxListView::GetFirstSelected();
-
+        m_value =  wxListView::GetFirstSelected(); //m_itemHere; //
         // TODO: Send event as well
-
         Dismiss();
     }
 
 protected:
-
+    int             m_itemHere; // hot item in popup
     int             m_value; // current item index
 };
 
-
+//        BEGIN_EVENT_TABLE(wxListViewComboPopup, wxListView)
+//    EVT_MOTION(wxListViewComboPopup::OnMouseMove)
+//    EVT_LEFT_UP(wxListViewComboPopup::OnMouseClick)
+//END_EVENT_TABLE()

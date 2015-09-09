@@ -295,15 +295,9 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     m_mainToolBar->AddTool(ID_FORMAT_FONT, wxEmptyString, wxBitmap(font_xpm), _("Font"));
     m_mainToolBar->AddSeparator();
 
-    wxRichTextStyleComboCtrl* comboStyle = new wxRichTextStyleComboCtrl(m_mainToolBar, ID_RICHTEXT_STYLE_COMBO, wxDefaultPosition, wxSize(140, -1), wxCB_READONLY);
-    m_mainToolBar->AddControl(comboStyle);
-    
-    comboStyle->SetStyleSheet(wxGetApp().GetStyleSheet());
-    comboStyle->SetRichTextCtrl(m_editor);
-    comboStyle->UpdateStyles();
-
     wxComboCtrl* comboHelp = new wxComboCtrl(m_mainToolBar, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(160, -1));
-    wxListViewComboPopup * popupHelpCtrl = new wxListViewComboPopup();
+    popupHelpCtrl = new wxListViewComboPopup();
+    
     // It is important to call SetPopupControl() as soon as possible
     comboHelp->SetPopupControl(popupHelpCtrl);
     // Populate using wxListView methods
@@ -333,7 +327,6 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     m_mainToolBar->EnableTool(ID_FORMAT_INDENT_MORE, false);
     m_mainToolBar->EnableTool(ID_FORMAT_FONT, false);
     m_mainToolBar->EnableTool(ID_FORMAT_FONT, false); 
-    comboStyle->Enable(false);
     
     ConnectEvents();
 }   
@@ -442,6 +435,9 @@ void MainFrame::ConnectEvents()
 
     Connect(ID_SET_FONT_SCALE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSetFontScale));
     Connect(ID_SET_DIMENSION_SCALE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSetDimensionScale));
+
+    popupHelpCtrl->Connect(wxEVT_LEFT_UP, wxMouseEventHandler( wxListViewComboPopup::OnMouseClick ), NULL, popupHelpCtrl );
+    popupHelpCtrl->Connect(wxEVT_MOTION, wxMouseEventHandler(wxListViewComboPopup::OnMouseMove), NULL, popupHelpCtrl);    
  }
 
 void MainFrame::DisconnectEvents()
@@ -521,10 +517,10 @@ void MainFrame::DisconnectEvents()
     Disconnect(ID_TABLE_DELETE_COLUMN, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnTableDeleteColumn));
     Disconnect(ID_TABLE_DELETE_ROW, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnTableDeleteRow));
 
-   Disconnect(ID_TABLE_ADD_COLUMN, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnTableFocusedUpdateUI));
-   Disconnect(ID_TABLE_ADD_ROW, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnTableFocusedUpdateUI));
-   Disconnect(ID_TABLE_DELETE_COLUMN, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnTableHasCellsUpdateUI));
-   Disconnect(ID_TABLE_DELETE_ROW, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnTableHasCellsUpdateUI));
+    Disconnect(ID_TABLE_ADD_COLUMN, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnTableFocusedUpdateUI));
+    Disconnect(ID_TABLE_ADD_ROW, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnTableFocusedUpdateUI));
+    Disconnect(ID_TABLE_DELETE_COLUMN, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnTableHasCellsUpdateUI));
+    Disconnect(ID_TABLE_DELETE_ROW, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnTableHasCellsUpdateUI));
 
     Disconnect(ID_VIEW_HTML, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnViewHTML));
     Disconnect(ID_SWITCH_STYLE_SHEETS, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSwitchStyleSheets));
@@ -541,6 +537,9 @@ void MainFrame::DisconnectEvents()
 
     Disconnect(ID_SET_FONT_SCALE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSetFontScale));
     Disconnect(ID_SET_DIMENSION_SCALE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSetDimensionScale));
+    
+    popupHelpCtrl->Disconnect(wxEVT_LEFT_DOWN, wxMouseEventHandler( wxListViewComboPopup::OnMouseClick ), NULL, popupHelpCtrl );
+    popupHelpCtrl->Disconnect(wxEVT_MOTION, wxMouseEventHandler(wxListViewComboPopup::OnMouseMove), NULL, popupHelpCtrl);    
 }
    
 void MainFrame::ConnectEventsSelChanged() {

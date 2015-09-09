@@ -88,7 +88,7 @@ void MainApp::InitRichText()
 
     m_styleSheet = new wxRichTextStyleSheet;
 
-//    CreateStyles();
+    CreateStyles();
     
 //
 //    MyRichTextCtrl::SetEnhancedDrawingHandler();
