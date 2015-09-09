@@ -689,7 +689,7 @@ void MainFrame::OnQuit(wxCommandEvent& event)
 void MainFrame::OnAbout(wxCommandEvent& event)
 {
     wxString msg;
-    msg.Printf( wxT("This is daily notepad.\n(c) Laurent Silvestre\nThanks to Julian Smart and his wxRichTextCtrl demo, 2005"));
+    msg.Printf( wxT("This is a daily notepad.\n(c) Laurent Silvestre\nThanks to Julian Smart and his wxRichTextCtrl demo (currently unused), 2005"));
     wxMessageBox(msg, wxT("About Dailywork"), wxOK | wxICON_INFORMATION, this);
 }
 
@@ -769,7 +769,6 @@ void MainFrame::OnSave(wxCommandEvent& event)
 {
     UpdateDWWork(); // met à jour/ou pas le texte ecrit dans le richedit dans DWparser
     wxGetApp().Save();
-    OnStatusBarMessage("Enregister");
     
      /*
     if (m_editor->GetFilename().empty())

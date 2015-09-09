@@ -33,6 +33,8 @@ bool MainApp::OnInit()
         return false;
 
     InitRichText();
+
+    SetHierarchicalTree(true); // avant creation de la frame pour le menu ShowHierarchicalTree
     
     // create the main application window
     wxSize size = wxGetDisplaySize();
@@ -43,7 +45,6 @@ bool MainApp::OnInit()
     m_printing->SetParentWindow(frame);
 #endif
 
-    SetHierarchicalTree(true); // avant creation de la frame pour le menu ShowHierarchicalTree
 
     MainFrame* sameframe  = frame;    
     
@@ -339,7 +340,7 @@ wxTreeItemId MainApp::LoadBranchHierarchy(wxTreeItemId rootId, wxDateTime date)
 wxTreeItemId MainApp::LoadBranchSimple(wxTreeItemId rootId, wxDateTime date)
 {
     wxString sDate = dwparser.ToTreeDate(date);
-    return frame->m_treeDates->AppendItem(rootId, sDate);   
+    return AddItem(rootId, sDate);   
 }
 
 wxTreeItemId MainApp::FindTextInTree(wxTreeItemId parent, wxString text)
@@ -453,7 +454,7 @@ void MainApp::DeleteDateSelected()
     }       
 }
 
-// on ne supprime que les données parceque la suppression de l'itemId se fait recursivement
+// on ne supprime que les données parce que la suppression de l'itemId se fait recursivement
 bool MainApp::DeleteItemData(wxTreeItemId itemId) 
 {    
     if (itemId.IsOk()) {
@@ -509,4 +510,16 @@ void MainApp::SetWorkFromTreeSelection(wxString text)
     else {
         LOG(DEBUG ) << "wxTreeItemId is not ok";
     }
+}
+
+int MainApp::Save()
+{
+    frame->OnStatusBarMessage("Enregister le "+wxDateTime::Now().Format().ToStdString());
+    return dwparser.Save();     
+}
+
+int MainApp::SaveAs(wxString filename)
+{
+    frame->OnStatusBarMessage("Enregister sous... le"+wxDateTime::Now().Format().ToStdString());
+    return dwparser.SaveAs(filename);
 }

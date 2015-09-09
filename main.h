@@ -64,8 +64,8 @@ public:
     void DeleteDateSelected();
     bool DeleteItemData(wxTreeItemId itemId);
     bool IsModified() const { return dwparser.IsModified(); }
-    int Save() { return dwparser.Save(); } ;
-    int SaveAs(wxString filename) { return dwparser.SaveAs(filename); };
+    int Save() ;
+    int SaveAs(wxString filename) ;
 private:
     bool hierarchicalTree;
     wxRichTextStyleSheet*   m_styleSheet;

@@ -364,3 +364,11 @@ Room Arranger
 2015-09-08 17:46:39,276 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetWorkFromTreeSelection(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:510] wxTreeItemId is not ok
 2015-09-08 17:46:39,276 DEBUG [default] [Trinquard@TRINQUARD-PC] [std::__cxx11::string MainApp::GetWorkFromTreeSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:489] Elément selectionné vide
 2015-09-08 17:46:39,276 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:564] Text to show in editor : 
+2015-09-09 11:06:38,661 DEBUG [default] [Trinquard@TRINQUARD-PC] [virtual bool MainApp::OnInit()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:30] START
+2015-09-09 11:06:39,693 INFO  [default] Parse file
+2015-09-09 11:06:39,693 INFO  [default] Loading Tree with json data...
+2015-09-09 11:06:39,693 INFO  [default] Loading Tree Hierarchy... 
+2015-09-09 11:06:39,693 INFO  [default] Tree Loaded
+2015-09-09 11:06:39,724 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetWorkFromTreeSelection(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:511] wxTreeItemId is not ok
+2015-09-09 11:06:39,724 DEBUG [default] [Trinquard@TRINQUARD-PC] [std::__cxx11::string MainApp::GetWorkFromTreeSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:490] Elément selectionné vide
+2015-09-09 11:06:39,724 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:571] Text to show in editor : 

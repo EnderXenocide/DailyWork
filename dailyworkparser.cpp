@@ -74,6 +74,7 @@ int DailyWorkParser::UpdateWork(const wxDateTime& date, std::string text)
 
 int DailyWorkParser::Save()
 {
+    
     return SaveAs(JSON_FILE);
 }
 
