@@ -74,8 +74,6 @@ private:
     wxRichTextPrinting*     m_printing;
 #endif      
     void InitRichText(); 
-    int LoadDailyWorkInTreeHierarchy(wxTreeItemId rootId);
-    int LoadDailyWorkInTreeSimple(wxTreeItemId rootId);   
     wxTreeItemId LoadBranchHierarchy(wxTreeItemId rootId, wxDateTime date);
     wxTreeItemId LoadBranchSimple(wxTreeItemId rootId, wxDateTime date);
 };

@@ -75,12 +75,10 @@ int MainApp::OnExit()
 
 void MainApp::InitRichText()
 {
-
 #if wxUSE_HELP
     wxHelpProvider::Set(new wxSimpleHelpProvider);
 #endif
-
-    m_styleSheet = new wxRichTextStyleSheet;
+    
 #if wxUSE_PRINTING_ARCHITECTURE
     m_printing = new wxRichTextPrinting(wxT("Test Document"));
 
@@ -88,7 +86,10 @@ void MainApp::InitRichText()
     m_printing->SetFooterText(wxT("Page @PAGENUM@"), wxRICHTEXT_PAGE_ALL, wxRICHTEXT_PAGE_RIGHT);
 #endif
 
-    CreateStyles();
+    m_styleSheet = new wxRichTextStyleSheet;
+
+//    CreateStyles();
+    
 //
 //    MyRichTextCtrl::SetEnhancedDrawingHandler();
 //

@@ -295,22 +295,22 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     m_mainToolBar->AddTool(ID_FORMAT_FONT, wxEmptyString, wxBitmap(font_xpm), _("Font"));
     m_mainToolBar->AddSeparator();
 
-    wxRichTextStyleComboCtrl* comboStyle = new wxRichTextStyleComboCtrl(m_mainToolBar, ID_RICHTEXT_STYLE_COMBO, wxDefaultPosition, wxSize(160, -1), wxCB_READONLY);
+    wxRichTextStyleComboCtrl* comboStyle = new wxRichTextStyleComboCtrl(m_mainToolBar, ID_RICHTEXT_STYLE_COMBO, wxDefaultPosition, wxSize(140, -1), wxCB_READONLY);
     m_mainToolBar->AddControl(comboStyle);
     
     comboStyle->SetStyleSheet(wxGetApp().GetStyleSheet());
     comboStyle->SetRichTextCtrl(m_editor);
     comboStyle->UpdateStyles();
 
-//    wxComboCtrl* comboHelp = new wxComboCtrl(m_mainToolBar, wxID_ANY, wxEmptyString);
-//    wxListViewComboPopup * popupCtrl = new wxListViewComboPopup();
-//    // It is important to call SetPopupControl() as soon as possible
-//    comboCtrl->SetPopupControl(popupCtrl);
-//    // Populate using wxListView methods
-//    popupCtrl->InsertItem(popupCtrl->GetItemCount(), "First Item");
-//    popupCtrl->InsertItem(popupCtrl->GetItemCount(), "Second Item");
-//    popupCtrl->InsertItem(popupCtrl->GetItemCount(), "Third Item");
-//    m_mainToolBar->AddControl(comboHelp);
+    wxComboCtrl* comboHelp = new wxComboCtrl(m_mainToolBar, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(160, -1));
+    wxListViewComboPopup * popupHelpCtrl = new wxListViewComboPopup();
+    // It is important to call SetPopupControl() as soon as possible
+    comboHelp->SetPopupControl(popupHelpCtrl);
+    // Populate using wxListView methods
+    popupHelpCtrl->InsertItem(popupHelpCtrl->GetItemCount(), "First Item");
+    popupHelpCtrl->InsertItem(popupHelpCtrl->GetItemCount(), "Second Item");
+    popupHelpCtrl->InsertItem(popupHelpCtrl->GetItemCount(), "Third Item");
+    m_mainToolBar->AddControl(comboHelp);
     
     m_mainToolBar->Realize();
 
@@ -442,7 +442,7 @@ void MainFrame::ConnectEvents()
 
     Connect(ID_SET_FONT_SCALE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSetFontScale));
     Connect(ID_SET_DIMENSION_SCALE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSetDimensionScale));
-}
+ }
 
 void MainFrame::DisconnectEvents()
 {
@@ -544,7 +544,7 @@ void MainFrame::DisconnectEvents()
 }
    
 void MainFrame::ConnectEventsSelChanged() {
- // conection fait aprés chargement 
+ // conection fait après chargement 
 //todo prevenir wxEVT_TREE_SEL_CHANGING au demarage connection fait aprés chargement  dwparser 
 	m_treeDates->Connect( wxEVT_TREE_SEL_CHANGED, wxTreeEventHandler( MainFrame::OnTreeSelChanged ), NULL, this );
 	m_treeDates->Connect( wxEVT_TREE_SEL_CHANGING, wxTreeEventHandler( MainFrame::OnTreeSelChanging ), NULL, this );    

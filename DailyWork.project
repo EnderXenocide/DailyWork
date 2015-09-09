@@ -52,6 +52,7 @@
     <File Name="dailyworkparser.h"/>
     <File Name="gui2.h"/>
     <File Name="myrichtext.h"/>
+    <File Name="wxlistviewcombopopup.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="resources">
     <File Name="gui.fbp"/>

@@ -21,7 +21,7 @@
 #include <wx/richtext/richtextctrl.h>
 #include <wx/statusbr.h>
 #include <wx/frame.h>
-#include <wx/app.h> 
+#include <wx/app.h>
 
 #include "wx/richtext/richtextctrl.h"
 #include "wx/richtext/richtextstyles.h"
@@ -35,6 +35,7 @@
 
 #include "myrichtext.h"
 #include "easylogging++.h"
+#include "wxlistviewcombopopup.h"
 
 
 #ifndef wxHAS_IMAGES_IN_RESOURCES
@@ -78,6 +79,7 @@ public:
     wxToolBar* m_richTextToolBar;
     wxStatusBar* m_statusBar;
     wxToolBar* m_mainToolBar;
+    wxListViewComboPopup * popupHelpCtrl;
  
     MyRichTextCtrl* m_editor;
     
