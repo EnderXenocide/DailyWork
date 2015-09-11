@@ -286,12 +286,8 @@ void MainApp::CreateStyles()
 
 void MainApp::InitDailyWorkParser()
 {
-    if (dwparser.Parse()) 
-        frame->EnableShowHirerarchicalTree(false);
-    else    {
-        frame->EnableShowHirerarchicalTree(true);
-        LoadDailyWorkInTree();       
-    }
+   dwparser.Parse();
+   LoadDailyWorkInTree();  // même si parse renvoie -1,  on charge quand même l'arbre   
 }
 
 void MainApp::LoadDailyWorkInTree()
@@ -301,7 +297,6 @@ void MainApp::LoadDailyWorkInTree()
     tree->DeleteAllItems();
     tree->SetWindowStyle(wxTR_HIDE_ROOT);
     wxTreeItemId rootId = tree->AddRoot(wxT("Dates"));
- 
     wxTreeItemId (MainApp::*LoadBranch)(wxTreeItemId rootId, wxDateTime date); // pointeur de fonction
     if (hierarchicalTree) {
         LoadBranch = &LoadBranchHierarchy;
@@ -313,7 +308,7 @@ void MainApp::LoadDailyWorkInTree()
     }
     wxTreeItemId itemId;
     DWItemData *itemData;
-    for(SizeType i = 0; i < dwparser.Count(); i++) { //todo faire des appels de dwparser
+    for(SizeType i = 0; i < dwparser.CountItems(); i++) { //todo faire des appels de dwparser
         wxDateTime date = dwparser.GetDateFromItem(i);
         if (date.IsValid()) {
             itemId = (this->*LoadBranch)(rootId, date);
@@ -346,8 +341,10 @@ wxTreeItemId MainApp::LoadBranchSimple(wxTreeItemId rootId, wxDateTime date)
 
 wxTreeItemId MainApp::FindTextInTree(wxTreeItemId parent, wxString text)
 {
+    if (!parent.IsOk())
+        return parent;
+        
     wxTreeCtrl* tree = frame->m_treeDates;
-
     wxTreeItemIdValue cookie;
     wxTreeItemId itemId = tree->GetFirstChild(parent, cookie);
     while(itemId.IsOk()) {
@@ -523,4 +520,15 @@ int MainApp::SaveAs(wxString filename)
 {
     frame->OnStatusBarMessage("Enregister sous... le"+wxDateTime::Now().Format().ToStdString());
     return dwparser.SaveAs(filename);
+}
+void MainApp::LoadHelpInComboBox()
+{
+    frame->m_comboBoxFavorite->Clear();
+    for(SizeType i = 0; i < dwparser.CountHelpItems(); i++) { //todo faire des appels de dwparser
+        wxString text = dwparser.GetHelpItem(i);
+        if ( ! text.IsEmpty()) {
+            frame->m_comboBoxFavorite->Append(text);
+            //frame->m_comboBoxFavorite->SetString(1,"1");
+        }
+    }  
 }

@@ -18,6 +18,8 @@
 #define JSON_WORK "work"
 #define JSON_DATE "date"
 #define JSON_VERSION "version"
+#define JSON_HELP_ARRAY "help"
+
 
 using namespace rapidjson;
 
@@ -31,6 +33,7 @@ public:
     ~DailyWorkParser();
     void ConnectCallback(CallbackMessageInfo cb);
     int Parse();
+    void New();
     //DWItemData* AddDate(wxDateTime& date); 
     int UpdateWork(const wxDateTime& date, std::string text);
     wxDateTime GetDateFromItem(int itemIndex);
@@ -38,7 +41,9 @@ public:
     wxString ToDWDate(const wxDateTime& date) const;
     wxString ToTreeDate(const wxDateTime& date) const;
     wxDateTime DWToDate(const std::string DWDate);
-    SizeType Count(); 
+    SizeType CountItems(); 
+    SizeType CountHelpItems(); 
+    wxString GetHelpItem(int itemIndex);
     //todo delete date 
 
    // int selectItemFromDate(const wxDateTime& date);   
@@ -57,6 +62,7 @@ public:
 private:
     int SetWorkFromItem(Value& item, std::string text);
     std::string GetWorkFromItem(const Value& item); 
+    void TestAndUpdate();
     //bool FindItem(const wxDateTime& date, Value& item); //todo fonction ne marche pas, bouge les objets
     //Value& FindItem(const wxDateTime& date);
 

@@ -43,19 +43,19 @@ public:
     void OnMouseMove(wxMouseEvent& event)
     {
         // Move selection to cursor if it is inside the popup
-//        int resFlags;
-//        int itemHere = HitTest(event.GetPosition(),resFlags);
-//        if ( itemHere >= 0 ) {
-//            wxListView::Select(itemHere,true);
-//            m_itemHere = itemHere;
-//        }
-//        event.Skip();
+        int resFlags;
+        int itemHere = HitTest(event.GetPosition(),resFlags);
+        if ( itemHere >= 0 ) {
+            wxListView::Select(itemHere,true);
+            m_itemHere = itemHere;
+        }
+        event.Skip();
     }
 
     // On mouse left up, set the value and close the popup
     void OnMouseClick(wxMouseEvent& event)
     {
-        m_value =  wxListView::GetFirstSelected(); //m_itemHere; //
+        m_value =  m_itemHere; //wxListView::GetFirstSelected(); //
         // TODO: Send event as well
         Dismiss();
     }

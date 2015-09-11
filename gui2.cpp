@@ -78,6 +78,12 @@ enum
     ID_RICHTEXT_STYLE_COMBO, 
     
     ID_HIERACHY,
+    
+    ID_HELPLIST,
+    
+    ID_FAVORITE_DELETE, 
+    ID_FAVORITE_EDIT, 
+    ID_FAVORITE_ADD,
 };
 
 // BEGIN EVENTS
@@ -295,16 +301,13 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     m_mainToolBar->AddTool(ID_FORMAT_FONT, wxEmptyString, wxBitmap(font_xpm), _("Font"));
     m_mainToolBar->AddSeparator();
 
-    wxComboCtrl* comboHelp = new wxComboCtrl(m_mainToolBar, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(160, -1));
-    popupHelpCtrl = new wxListViewComboPopup();
-    
-    // It is important to call SetPopupControl() as soon as possible
-    comboHelp->SetPopupControl(popupHelpCtrl);
-    // Populate using wxListView methods
-    popupHelpCtrl->InsertItem(popupHelpCtrl->GetItemCount(), "First Item");
-    popupHelpCtrl->InsertItem(popupHelpCtrl->GetItemCount(), "Second Item");
-    popupHelpCtrl->InsertItem(popupHelpCtrl->GetItemCount(), "Third Item");
-    m_mainToolBar->AddControl(comboHelp);
+    m_comboBoxFavorite = new wxComboBox(m_mainToolBar, ID_HELPLIST, wxEmptyString);
+    m_mainToolBar->AddControl(m_comboBoxFavorite);
+
+    m_mainToolBar->AddTool(ID_FAVORITE_ADD, wxEmptyString, wxBitmap(bookadd_xpm), _("Add to favorite"));
+    m_mainToolBar->AddTool(ID_FAVORITE_DELETE, wxEmptyString, wxBitmap(bookdelete_xpm), _("Delete favorite"));
+    m_mainToolBar->AddTool(ID_FAVORITE_EDIT, wxEmptyString, wxBitmap(bookedit_xpm), _("Manage"));
+
     
     m_mainToolBar->Realize();
 
@@ -327,6 +330,7 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     m_mainToolBar->EnableTool(ID_FORMAT_INDENT_MORE, false);
     m_mainToolBar->EnableTool(ID_FORMAT_FONT, false);
     m_mainToolBar->EnableTool(ID_FORMAT_FONT, false); 
+    m_mainToolBar->EnableTool(ID_FAVORITE_EDIT, false); 
     
     ConnectEvents();
 }   
@@ -436,8 +440,15 @@ void MainFrame::ConnectEvents()
     Connect(ID_SET_FONT_SCALE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSetFontScale));
     Connect(ID_SET_DIMENSION_SCALE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSetDimensionScale));
 
-    popupHelpCtrl->Connect(wxEVT_LEFT_UP, wxMouseEventHandler( wxListViewComboPopup::OnMouseClick ), NULL, popupHelpCtrl );
-    popupHelpCtrl->Connect(wxEVT_MOTION, wxMouseEventHandler(wxListViewComboPopup::OnMouseMove), NULL, popupHelpCtrl);    
+    Connect(wxID_ANY, wxEVT_TEXT, wxTextEventHandler(MainFrame::OnComboBoxFavoriteUpdate));
+    Connect(wxID_ANY, wxEVT_TEXT_ENTER, wxTextEventHandler(MainFrame::OnComboBoxFavoriteUpdate));
+    Connect(wxID_ANY, wxEVT_COMBOBOX, wxCommandEventHandler(MainFrame::OnComboBoxFavoriteUpdate));
+
+    Connect(ID_FAVORITE_ADD, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnAddFavorite));
+    Connect(ID_FAVORITE_DELETE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnDeleteFavorite));
+    Connect(ID_FAVORITE_EDIT, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnEditFavorite));
+    Connect(ID_FAVORITE_ADD, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateAddFavorite));
+    Connect(ID_FAVORITE_DELETE, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateDeleteFavorite));
  }
 
 void MainFrame::DisconnectEvents()
@@ -538,8 +549,15 @@ void MainFrame::DisconnectEvents()
     Disconnect(ID_SET_FONT_SCALE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSetFontScale));
     Disconnect(ID_SET_DIMENSION_SCALE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSetDimensionScale));
     
-    popupHelpCtrl->Disconnect(wxEVT_LEFT_DOWN, wxMouseEventHandler( wxListViewComboPopup::OnMouseClick ), NULL, popupHelpCtrl );
-    popupHelpCtrl->Disconnect(wxEVT_MOTION, wxMouseEventHandler(wxListViewComboPopup::OnMouseMove), NULL, popupHelpCtrl);    
+    Disconnect(wxID_ANY, wxEVT_TEXT, wxTextEventHandler(MainFrame::OnComboBoxFavoriteUpdate));
+    Disconnect(wxID_ANY, wxEVT_TEXT_ENTER, wxTextEventHandler(MainFrame::OnComboBoxFavoriteUpdate));
+    Disconnect(wxID_ANY, wxEVT_COMBOBOX, wxCommandEventHandler(MainFrame::OnComboBoxFavoriteUpdate));
+
+    Disconnect(ID_FAVORITE_ADD, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnAddFavorite));
+    Disconnect(ID_FAVORITE_DELETE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnDeleteFavorite));
+    Disconnect(ID_FAVORITE_EDIT, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnEditFavorite));
+    Disconnect(ID_FAVORITE_ADD, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateAddFavorite));
+    Disconnect(ID_FAVORITE_DELETE, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateDeleteFavorite));
 }
    
 void MainFrame::ConnectEventsSelChanged() {
@@ -591,6 +609,13 @@ void MainFrame::ShowTreeItemSelectedText()
 //    m_editor->Refresh(false); 
     //OnStatusBarMessage(texte.ToStdString());
 }
+
+void MainFrame::EnableShowHirerarchicalTree(bool hiearchy)
+{
+     m_menuBar->Enable(ID_HIERACHY, hiearchy);
+}
+
+// BEGIN  MY EVENTS
     
 void MainFrame::OnCloseFrame(wxCloseEvent& event)
 {
@@ -659,13 +684,52 @@ void MainFrame::OnShowHirerarchicalTree(wxCommandEvent& event)
     wxGetApp().SetHierarchicalTree(c); 
     wxGetApp().LoadDailyWorkInTree();  
 }
-// END EVENTS
 
-void MainFrame::EnableShowHirerarchicalTree(bool hiearchy)
+void MainFrame::OnComboBoxFavoriteUpdate(wxCommandEvent& event)
 {
-     m_menuBar->Enable(ID_HIERACHY, hiearchy);
+        // Don't show messages for the log output window (it'll crash)
+    if ( !event.GetEventObject()->IsKindOf(CLASSINFO(wxComboCtrl)) )
+        return;
+
+    if ( event.GetEventType() == wxEVT_COMBOBOX )
+    {
+        wxLogDebug(wxT("EVT_COMBOBOX(id=%i,selection=%i)"),event.GetId(),event.GetSelection());
+    }
+    else if ( event.GetEventType() == wxEVT_TEXT )
+    {
+        wxLogDebug(wxT("EVT_TEXT(id=%i,string=\"%s\")"),event.GetId(),event.GetString().c_str());
+    }
+    else if ( event.GetEventType() == wxEVT_TEXT_ENTER )
+    {
+        wxLogDebug("EVT_TEXT_ENTER(id=%i,string=\"%s\")",
+                   event.GetId(), event.GetString().c_str());
+    }
 }
-// event handlers
+
+void MainFrame::OnAddFavorite(wxCommandEvent& event)
+{
+    
+}
+
+void MainFrame::OnDeleteFavorite(wxCommandEvent& event)
+{
+    
+}
+
+void MainFrame::OnEditFavorite(wxCommandEvent& event)
+{
+    
+}
+    
+void MainFrame::OnUpdateAddFavorite(wxUpdateUIEvent& event)
+{
+    event.Check(m_editor->CanCopy()); //todo voir s'il n'y a pas une fonction plus appropriée
+}
+
+void MainFrame::OnUpdateDeleteFavorite(wxUpdateUIEvent& event)
+{
+    event.Check(m_comboBoxFavorite->GetSelection() != wxNOT_FOUND); // (m_comboBoxFavorite->GetCount()==0) &&
+}
  
 void MainFrame::OnReload(wxCommandEvent& event)
 {
@@ -691,6 +755,50 @@ void MainFrame::OnAbout(wxCommandEvent& event)
     msg.Printf( wxT("This is a daily notepad.\n(c) Laurent Silvestre\nThanks to Julian Smart and his wxRichTextCtrl demo (currently unused), 2005"));
     wxMessageBox(msg, wxT("About Dailywork"), wxOK | wxICON_INFORMATION, this);
 }
+
+void MainFrame::OnSave(wxCommandEvent& event)
+{
+    UpdateDWWork(); // met à jour/ou pas le texte ecrit dans le richedit dans DWparser
+    wxGetApp().Save();
+}
+
+void MainFrame::OnSaveAs(wxCommandEvent& event)
+{    
+    wxString filter = "*.json"; //wxRichTextBuffer::GetExtWildcard(false, true);
+    wxString path;
+    wxString filename;
+
+    wxFileDialog dialog(this,
+        _("Choose a filename"),
+        path,
+        filename,
+        filter,
+        wxFD_SAVE);
+
+    if (dialog.ShowModal() == wxID_OK)
+    {
+        wxString path = dialog.GetPath();
+
+        if (!path.empty())
+        {
+            UpdateDWWork(); // met à jour/ou pas le texte ecrit dans le richedit dans DWparser
+            wxGetApp().SaveAs(path);
+            std::string s = "Enregistrer sous <";
+            s += path.ToStdString() +">";
+            OnStatusBarMessage(s);
+             //wxBusyCursor busy;
+            //wxStopWatch stopwatch;
+           // m_editor->SaveFile(path);
+            //long t = stopwatch.Time();
+            //wxLogDebug(wxT("Saving took %ldms"), t);
+            //wxMessageBox(wxString::Format(wxT("Saving took %ldms"), t));
+        }
+    }
+}
+
+// END MY EVENTS
+
+// event handlers
 
 // Forward command events to the current rich text control, if any
 bool MainFrame::ProcessEvent(wxEvent& event)
@@ -760,55 +868,6 @@ void MainFrame::OnOpen(wxCommandEvent&event)
                            ? fileTypes[filterIndex]
                            : wxRICHTEXT_TYPE_TEXT;
             m_editor->LoadFile(path, fileType);
-        }
-    }
-}
-
-void MainFrame::OnSave(wxCommandEvent& event)
-{
-    UpdateDWWork(); // met à jour/ou pas le texte ecrit dans le richedit dans DWparser
-    wxGetApp().Save();
-    
-     /*
-    if (m_editor->GetFilename().empty())
-    {
-        OnSaveAs(event);
-        return;
-    }
-    m_editor->SaveFile();
-     */
-}
-
-void MainFrame::OnSaveAs(wxCommandEvent& event)
-{    
-    wxString filter = "*.json"; //wxRichTextBuffer::GetExtWildcard(false, true);
-    wxString path;
-    wxString filename;
-
-    wxFileDialog dialog(this,
-        _("Choose a filename"),
-        path,
-        filename,
-        filter,
-        wxFD_SAVE);
-
-    if (dialog.ShowModal() == wxID_OK)
-    {
-        wxString path = dialog.GetPath();
-
-        if (!path.empty())
-        {
-            UpdateDWWork(); // met à jour/ou pas le texte ecrit dans le richedit dans DWparser
-            wxGetApp().SaveAs(path);
-            std::string s = "Enregistrer sous <";
-            s += path.ToStdString() +">";
-            OnStatusBarMessage(s);
-             //wxBusyCursor busy;
-            //wxStopWatch stopwatch;
-           // m_editor->SaveFile(path);
-            //long t = stopwatch.Time();
-            //wxLogDebug(wxT("Saving took %ldms"), t);
-            //wxMessageBox(wxString::Format(wxT("Saving took %ldms"), t));
         }
     }
 }

@@ -48,6 +48,7 @@ public:
     virtual int OnExit();
     void CreateStyles();
     void InitDailyWorkParser();
+    void LoadHelpInComboBox();
     void LoadDailyWorkInTree();
     MainApp& SetHierarchicalTree( bool hierarchy){this->hierarchicalTree = hierarchy; return *this; }
     bool IsHierarchicalTree() const{ return hierarchicalTree; }

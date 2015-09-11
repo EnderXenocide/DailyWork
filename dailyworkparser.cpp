@@ -39,20 +39,18 @@ int DailyWorkParser::Parse()
     //    m_cbMessageInfo(ss.str());
     //    return -1;
 
+    int retour = 0;
     if(document.Parse<0>(ss.str().c_str()).HasParseError()) {
         ParseErrorCode parseErrorCode = document.GetParseError();
         std::string strErreur = wxString::Format("Erreur de lecture du fichier (offset %u): %s\n",
                                                  (unsigned)document.GetErrorOffset(),
                                                  GetParseError_En(parseErrorCode)).ToStdString();
         m_cbMessageInfo(strErreur);
-        return -1;
+        retour = -1;
     }
-    assert(document[JSON_ARRAY].IsArray());
-    assert(document[JSON_VERSION].IsInt());
-    version = document[JSON_VERSION].GetInt();
-    return 0;
+    TestAndUpdate();
 
-    // ECRITURE fwrite (buffer.GetString(), buffer.GetSize(), 1, wFile);
+    return retour;
 }
 
 int DailyWorkParser::UpdateWork(const wxDateTime& date, std::string text)
@@ -239,14 +237,71 @@ int DailyWorkParser::setSelectedWork(std::string work)
         return -1;
 }
 
-SizeType DailyWorkParser::Count()
+SizeType DailyWorkParser::CountItems()
 {
     return document[JSON_ARRAY].Size();
+}
+
+SizeType DailyWorkParser::CountHelpItems()
+{
+    return document[JSON_HELP_ARRAY].Size();
 }
 
 bool DailyWorkParser::IsSelectedOk()
 {
     return (selected != NULL) && (selected.IsObject());
+}
+
+wxString DailyWorkParser::GetHelpItem(int itemIndex)
+{
+    const Value& item = document[JSON_HELP_ARRAY][itemIndex]; 
+    if (item.IsString()) {
+        return item.GetString();        
+    }
+    else {
+        return "";        
+    }
+}
+
+void DailyWorkParser::New()
+{
+    document.SetObject();
+    Document::AllocatorType& allocator = document.GetAllocator();
+    Value items(kArrayType);
+    document.AddMember(JSON_ARRAY, items, allocator);
+    document.AddMember(JSON_HELP_ARRAY, items, allocator);
+    Value version(1);
+    document.AddMember(JSON_VERSION, version, allocator);
+    modified = true;
+}
+
+void DailyWorkParser::TestAndUpdate()
+{
+    Document::AllocatorType& allocator = document.GetAllocator();
+    if (document.IsNull())
+        document.SetObject();
+        
+    if (!document.HasMember(JSON_ARRAY))
+    {
+        Value items(kArrayType);
+        document.AddMember(JSON_ARRAY, items, allocator);  
+        modified = true; 
+    }  
+    
+    if (!document.HasMember(JSON_VERSION))
+    {
+        Value items(2);
+        document.AddMember(JSON_VERSION, items, allocator);  
+        modified = true; 
+    }  
+    
+    version = document[JSON_VERSION].GetInt();
+    if (version>1) 
+        if (!document.HasMember(JSON_HELP_ARRAY)) {
+            Value items(kArrayType);
+            document.AddMember(JSON_HELP_ARRAY, items, allocator);  
+            modified = true;          
+    }                
 }
 
 //bool DailyWorkParser::FindItem(const wxDateTime& date, Value& item)

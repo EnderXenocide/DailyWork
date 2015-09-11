@@ -35,8 +35,6 @@
 
 #include "myrichtext.h"
 #include "easylogging++.h"
-#include "wxlistviewcombopopup.h"
-
 
 #ifndef wxHAS_IMAGES_IN_RESOURCES
     #include "../sample.xpm"
@@ -67,6 +65,10 @@
 #include "bitmaps/indentless.xpm"
 #include "bitmaps/indentmore.xpm"
 
+#include "bitmaps/bookadd.xpm"
+#include "bitmaps/bookdelete.xpm"
+#include "bitmaps/bookedit.xpm"
+
 ///////////////////////////////////////////////////////////////////////////
 /// Class MainFrame
 ///////////////////////////////////////////////////////////////////////////////
@@ -79,7 +81,7 @@ public:
     wxToolBar* m_richTextToolBar;
     wxStatusBar* m_statusBar;
     wxToolBar* m_mainToolBar;
-    wxListViewComboPopup * popupHelpCtrl;
+    wxComboBox* m_comboBoxFavorite;
  
     MyRichTextCtrl* m_editor;
     
@@ -96,6 +98,7 @@ public:
     void ShowTreeItemSelectedText();
     
 protected:  
+    // event handlers (these functions should _not_ be virtual)
     void OnCloseFrame( wxCloseEvent& event );
     void OnTreeSelChanging( wxTreeEvent& event );
     void OnTreeSelChanged( wxTreeEvent& event );
@@ -107,9 +110,15 @@ protected:
     void OnShowHirerarchicalTree(wxCommandEvent& event);
 
 	void OnDeleteDate( wxCommandEvent& event );
-    // event handlers (these functions should _not_ be virtual)
     void OnQuit(wxCommandEvent& event);
     void OnAbout(wxCommandEvent& event);
+
+    void OnComboBoxFavoriteUpdate( wxCommandEvent& event );
+    void OnAddFavorite(wxCommandEvent& event);
+    void OnDeleteFavorite(wxCommandEvent& event);
+    void OnEditFavorite(wxCommandEvent& event);
+    void OnUpdateAddFavorite(wxUpdateUIEvent& event);
+    void OnUpdateDeleteFavorite(wxUpdateUIEvent& event);
 
     void OnOpen(wxCommandEvent& event);
     void OnSave(wxCommandEvent& event);
