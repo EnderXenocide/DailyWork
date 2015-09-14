@@ -3,7 +3,7 @@
 	"title": "dailywork"
 	"type": "object",
 	"properties": {
-		"items": {
+		"dailyworks": {
 			"type": "array",
 			"items": {
 				"type": "object",
@@ -19,18 +19,19 @@
 				},
 				"required": ["date", "work"]
 			}
-			"minItems": 1,
+			"minItems": 0,
 			"uniqueItems": true
 		}
 		"version": {
 			"type": "integer",
 			"minimum": 1
 		},
-		"items": {
+		"favorites": {
 			"type": "array",
 			"items": {
 				"type": "string",
 			}
 		},
-	"required": ["dailywork", "version"]
+	},
+	"required": ["dailyworks", "version"]
 }

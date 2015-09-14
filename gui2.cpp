@@ -84,6 +84,7 @@ enum
     ID_FAVORITE_DELETE, 
     ID_FAVORITE_EDIT, 
     ID_FAVORITE_ADD,
+    ID_FAVORITE_GO,
 };
 
 // BEGIN EVENTS
@@ -119,6 +120,7 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     
     fileMenu->AppendSeparator();
     fileMenu->Append(ID_RELOAD, wxT("&Reload\tF2"), wxT("Reload the file/tree"));
+   // fileMenu->SetBitmap....
     fileMenu->AppendSeparator();
     fileMenu->Append(ID_PAGE_SETUP, wxT("Page Set&up..."), wxT("Page setup"));
 #if wxUSE_PRINTING_ARCHITECTURE
@@ -305,9 +307,9 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     m_mainToolBar->AddControl(m_comboBoxFavorite);
 
     m_mainToolBar->AddTool(ID_FAVORITE_ADD, wxEmptyString, wxBitmap(bookadd_xpm), _("Add to favorite"));
+    m_mainToolBar->AddTool(ID_FAVORITE_GO, wxEmptyString, wxBitmap(bookgo_xpm), _("Insert favorite"));
     m_mainToolBar->AddTool(ID_FAVORITE_DELETE, wxEmptyString, wxBitmap(bookdelete_xpm), _("Delete favorite"));
     m_mainToolBar->AddTool(ID_FAVORITE_EDIT, wxEmptyString, wxBitmap(bookedit_xpm), _("Manage"));
-
     
     m_mainToolBar->Realize();
 
@@ -316,7 +318,7 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     //WriteInitialText();
  
     // désactive les options de mise en forme du text parceque pas de lecture de fichier rtf...
-    m_menuBar->EnableTop(2, false);
+    //m_menuBar->EnableTop(2, false);
     m_menuBar->EnableTop(3, false);
     m_menuBar->EnableTop(4, false);
     m_menuBar->EnableTop(5, false);
@@ -447,13 +449,14 @@ void MainFrame::ConnectEvents()
     Connect(ID_FAVORITE_ADD, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnAddFavorite));
     Connect(ID_FAVORITE_DELETE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnDeleteFavorite));
     Connect(ID_FAVORITE_EDIT, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnEditFavorite));
+    Connect(ID_FAVORITE_GO, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnGoFavorite));
     Connect(ID_FAVORITE_ADD, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateAddFavorite));
     Connect(ID_FAVORITE_DELETE, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateDeleteFavorite));
+    Connect(ID_FAVORITE_GO, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateGoFavorite));
  }
 
 void MainFrame::DisconnectEvents()
 {
-    //	this->Disconnect( wxID_EXIT, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnExitClick ) );
     DisconnectEventsSelhanged();	
 	m_calendar->Disconnect( wxEVT_KILL_FOCUS, wxFocusEventHandler( MainFrame::OnCalendarKillFocus ), NULL, this );
 	m_calendar->Disconnect( wxEVT_SET_FOCUS, wxFocusEventHandler( MainFrame::OnCalendarSetFocus ), NULL, this );
@@ -556,8 +559,10 @@ void MainFrame::DisconnectEvents()
     Disconnect(ID_FAVORITE_ADD, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnAddFavorite));
     Disconnect(ID_FAVORITE_DELETE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnDeleteFavorite));
     Disconnect(ID_FAVORITE_EDIT, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnEditFavorite));
+    Disconnect(ID_FAVORITE_GO, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnGoFavorite));
     Disconnect(ID_FAVORITE_ADD, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateAddFavorite));
     Disconnect(ID_FAVORITE_DELETE, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateDeleteFavorite));
+    Disconnect(ID_FAVORITE_GO, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateGoFavorite));
 }
    
 void MainFrame::ConnectEventsSelChanged() {
@@ -708,28 +713,44 @@ void MainFrame::OnComboBoxFavoriteUpdate(wxCommandEvent& event)
 
 void MainFrame::OnAddFavorite(wxCommandEvent& event)
 {
-    
+        //m_editor->Copy();
+//       wxRichTextSelection rtselection = m_editor->GetSelection(); 
+//       m_editor->Copy();
+//       wxString  selection = rtselection.GetContainer()->GetText();
+       wxString  selection = m_editor->GetStringSelection(); 
+       wxGetApp().AddToFavorites(selection);  
 }
 
 void MainFrame::OnDeleteFavorite(wxCommandEvent& event)
 {
-    
+       wxGetApp().DeleteSelectedFavorite();     
 }
 
 void MainFrame::OnEditFavorite(wxCommandEvent& event)
 {
     
+}    
+
+void MainFrame::OnGoFavorite(wxCommandEvent& event)
+{
+    m_editor->WriteText(m_comboBoxFavorite->GetStringSelection());
 }
     
 void MainFrame::OnUpdateAddFavorite(wxUpdateUIEvent& event)
 {
-    event.Check(m_editor->CanCopy()); //todo voir s'il n'y a pas une fonction plus appropriée
+    event.Enable(m_editor->CanCopy()); //todo voir s'il n'y a pas une fonction plus appropriée
 }
 
 void MainFrame::OnUpdateDeleteFavorite(wxUpdateUIEvent& event)
 {
-    event.Check(m_comboBoxFavorite->GetSelection() != wxNOT_FOUND); // (m_comboBoxFavorite->GetCount()==0) &&
+    event.Enable(m_comboBoxFavorite->GetSelection() != wxNOT_FOUND); // (m_comboBoxFavorite->GetCount()==0) &&
 }
+
+void MainFrame::OnUpdateGoFavorite(wxUpdateUIEvent& event)
+{
+    event.Enable(m_comboBoxFavorite->GetStringSelection() != ""); // (m_comboBoxFavorite->GetCount()==0) &&
+}
+    
  
 void MainFrame::OnReload(wxCommandEvent& event)
 {

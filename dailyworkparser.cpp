@@ -57,7 +57,7 @@ int DailyWorkParser::UpdateWork(const wxDateTime& date, std::string text)
 {
     if(date.IsValid()) {
         std::string sdate = ToDWDate(date).ToStdString();
-        Value &array = document[JSON_ARRAY];
+        Value &array = document[JSON_ITEMS];
         for (SizeType i = 0; i < array.Size(); i++) {
             if (array[i][JSON_DATE].GetString()==sdate) {
                 SetWorkFromItem(array[i], text); 
@@ -96,7 +96,7 @@ int DailyWorkParser::SaveAs(wxString filename)
 
 wxDateTime DailyWorkParser::GetDateFromItem(int itemIndex)
 {
-    const Value& item = document[JSON_ARRAY][itemIndex]; 
+    const Value& item = document[JSON_ITEMS][itemIndex]; 
     if (item.IsObject()) {
         return DWToDate(item[JSON_DATE].GetString());        
     }
@@ -110,7 +110,7 @@ std::string DailyWorkParser::GetWorkFromDate(const wxDateTime& date)
 {
     if ( date.IsValid() ) {
         std::string sdate = ToDWDate(date).ToStdString();
-        Value &array = document[JSON_ARRAY];
+        Value &array = document[JSON_ITEMS];
         for (SizeType i = 0; i < array.Size(); i++) {
             if (array[i][JSON_DATE].GetString()==sdate) {
                 return GetWorkFromItem(array[i]);
@@ -168,7 +168,7 @@ int DailyWorkParser::DeleteItem(wxDateTime date)
 {
     if (date.IsValid()) {
         std::string sdate = ToDWDate(date).ToStdString();
-        Value & array = document[JSON_ARRAY];
+        Value & array = document[JSON_ITEMS];
         for (Value::ConstValueIterator itr = array.Begin(); itr != array.End(); itr++) {
             if (itr->FindMember(JSON_DATE)->value.GetString()==sdate) {
                 array.Erase(itr);
@@ -193,7 +193,7 @@ void DailyWorkParser::AddItem(wxDateTime& date, std::string work)
     Value valueString(kStringType);
     valueString.SetString(work.data(), work.size(), document.GetAllocator());
     value.AddMember(JSON_WORK, valueString, allocator);  
-    Value &array = document[JSON_ARRAY];
+    Value &array = document[JSON_ITEMS];
     array.PushBack(value, allocator); 
     modified = true;
     //return array[array.Size()-1];//todo valid ?      
@@ -239,12 +239,12 @@ int DailyWorkParser::setSelectedWork(std::string work)
 
 SizeType DailyWorkParser::CountItems()
 {
-    return document[JSON_ARRAY].Size();
+    return document[JSON_ITEMS].Size();
 }
 
-SizeType DailyWorkParser::CountHelpItems()
+SizeType DailyWorkParser::CountFavorites()
 {
-    return document[JSON_HELP_ARRAY].Size();
+    return document[JSON_FAVORITES].Size();
 }
 
 bool DailyWorkParser::IsSelectedOk()
@@ -252,9 +252,9 @@ bool DailyWorkParser::IsSelectedOk()
     return (selected != NULL) && (selected.IsObject());
 }
 
-wxString DailyWorkParser::GetHelpItem(int itemIndex)
+wxString DailyWorkParser::GetFavorite(int itemIndex)
 {
-    const Value& item = document[JSON_HELP_ARRAY][itemIndex]; 
+    const Value& item = document[JSON_FAVORITES][itemIndex]; 
     if (item.IsString()) {
         return item.GetString();        
     }
@@ -268,8 +268,8 @@ void DailyWorkParser::New()
     document.SetObject();
     Document::AllocatorType& allocator = document.GetAllocator();
     Value items(kArrayType);
-    document.AddMember(JSON_ARRAY, items, allocator);
-    document.AddMember(JSON_HELP_ARRAY, items, allocator);
+    document.AddMember(JSON_ITEMS, items, allocator);
+    document.AddMember(JSON_FAVORITES, items, allocator);
     Value version(1);
     document.AddMember(JSON_VERSION, version, allocator);
     modified = true;
@@ -281,10 +281,10 @@ void DailyWorkParser::TestAndUpdate()
     if (document.IsNull())
         document.SetObject();
         
-    if (!document.HasMember(JSON_ARRAY))
+    if (!document.HasMember(JSON_ITEMS))
     {
         Value items(kArrayType);
-        document.AddMember(JSON_ARRAY, items, allocator);  
+        document.AddMember(JSON_ITEMS, items, allocator);  
         modified = true; 
     }  
     
@@ -297,17 +297,43 @@ void DailyWorkParser::TestAndUpdate()
     
     version = document[JSON_VERSION].GetInt();
     if (version>1) 
-        if (!document.HasMember(JSON_HELP_ARRAY)) {
+        if (!document.HasMember(JSON_FAVORITES)) {
             Value items(kArrayType);
-            document.AddMember(JSON_HELP_ARRAY, items, allocator);  
+            document.AddMember(JSON_FAVORITES, items, allocator);  
             modified = true;          
     }                
+}
+
+int DailyWorkParser::AddToFavorites(wxString text)
+{
+    LOG(INFO) << "Ajoute le favoris <" << text <<">";
+    Document::AllocatorType& allocator = document.GetAllocator();
+    Value valueString(kStringType);
+    valueString.SetString(text.data(), text.size(), document.GetAllocator());
+    Value &array = document[JSON_FAVORITES];
+    array.PushBack(valueString, allocator); 
+    modified = true;
+}
+
+int DailyWorkParser::DeleteFavorite(wxString text)
+{
+    Value &array = document[JSON_FAVORITES];
+    for (Value::ConstValueIterator itr = array.Begin(); itr != array.End(); itr++) {
+        if (itr->GetString()==text) {
+            array.Erase(itr);
+            LOG(INFO) << "Supprime le favoris <" << text <<">";
+            modified = true;               
+            return 0;   
+        }        
+    } 
+    LOG(DEBUG) << "Favoris <" << text <<"> non trouvé";
+    return  -1; 
 }
 
 //bool DailyWorkParser::FindItem(const wxDateTime& date, Value& item)
 //{
 //    std::string sdate = ToDWDate(date).ToStdString();
-//    Value &array = document[JSON_ARRAY];
+//    Value &array = document[JSON_ITEMS];
 //    for (SizeType i = 0; i < array.Size(); i++) {
 //        if (array[i][JSON_DATE].GetString()==sdate) {
 //            item = array[i]; 

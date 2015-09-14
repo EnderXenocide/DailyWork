@@ -288,6 +288,7 @@ void MainApp::InitDailyWorkParser()
 {
    dwparser.Parse();
    LoadDailyWorkInTree();  // même si parse renvoie -1,  on charge quand même l'arbre   
+   LoadFavoritesInComboBox();
 }
 
 void MainApp::LoadDailyWorkInTree()
@@ -521,14 +522,34 @@ int MainApp::SaveAs(wxString filename)
     frame->OnStatusBarMessage("Enregister sous... le"+wxDateTime::Now().Format().ToStdString());
     return dwparser.SaveAs(filename);
 }
-void MainApp::LoadHelpInComboBox()
+
+void MainApp::LoadFavoritesInComboBox()
 {
     frame->m_comboBoxFavorite->Clear();
-    for(SizeType i = 0; i < dwparser.CountHelpItems(); i++) { //todo faire des appels de dwparser
-        wxString text = dwparser.GetHelpItem(i);
+    for(SizeType i = 0; i < dwparser.CountFavorites(); i++) { //todo faire des appels de dwparser
+        wxString text = dwparser.GetFavorite(i);
         if ( ! text.IsEmpty()) {
             frame->m_comboBoxFavorite->Append(text);
             //frame->m_comboBoxFavorite->SetString(1,"1");
         }
     }  
 }
+
+int MainApp::AddToFavorites(wxString text)
+{
+   dwparser.AddToFavorites(text);
+   frame->m_comboBoxFavorite->Append(text);
+}
+
+int MainApp::DeleteSelectedFavorite()
+{
+   int index = frame->m_comboBoxFavorite->GetSelection();
+   if (index != wxNOT_FOUND) {
+        wxString selection = frame->m_comboBoxFavorite->GetString(index);
+        dwparser.DeleteFavorite(selection);  
+        frame->m_comboBoxFavorite->Delete(index);
+        return 0;
+   }
+   return 1;
+}
+

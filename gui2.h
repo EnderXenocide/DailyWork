@@ -68,6 +68,7 @@
 #include "bitmaps/bookadd.xpm"
 #include "bitmaps/bookdelete.xpm"
 #include "bitmaps/bookedit.xpm"
+#include "bitmaps/bookgo.xpm"
 
 ///////////////////////////////////////////////////////////////////////////
 /// Class MainFrame
@@ -115,9 +116,11 @@ protected:
 
     void OnComboBoxFavoriteUpdate( wxCommandEvent& event );
     void OnAddFavorite(wxCommandEvent& event);
+    void OnGoFavorite(wxCommandEvent& event);
     void OnDeleteFavorite(wxCommandEvent& event);
     void OnEditFavorite(wxCommandEvent& event);
     void OnUpdateAddFavorite(wxUpdateUIEvent& event);
+    void OnUpdateGoFavorite(wxUpdateUIEvent& event);
     void OnUpdateDeleteFavorite(wxUpdateUIEvent& event);
 
     void OnOpen(wxCommandEvent& event);

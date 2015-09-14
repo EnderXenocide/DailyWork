@@ -14,11 +14,11 @@
 #define JSON_DATE_FORMAT_EXT "%Y-%m-%d" // strptime()-like format string
 #define JSON_DATE_FORMAT "%4d-%02d-%02d"
 #define TREE_DATE_FORMAT "%02d/%02d/%4d"
-#define JSON_ARRAY "dailywork"
+#define JSON_ITEMS "dailyworks"
 #define JSON_WORK "work"
 #define JSON_DATE "date"
 #define JSON_VERSION "version"
-#define JSON_HELP_ARRAY "help"
+#define JSON_FAVORITES "favorites"
 
 
 using namespace rapidjson;
@@ -42,8 +42,8 @@ public:
     wxString ToTreeDate(const wxDateTime& date) const;
     wxDateTime DWToDate(const std::string DWDate);
     SizeType CountItems(); 
-    SizeType CountHelpItems(); 
-    wxString GetHelpItem(int itemIndex);
+    SizeType CountFavorites(); 
+    wxString GetFavorite(int itemIndex);
     //todo delete date 
 
    // int selectItemFromDate(const wxDateTime& date);   
@@ -59,6 +59,8 @@ public:
     bool IsSelectedOk();
     void AddItem(wxDateTime& date, std::string work="");
     int DeleteItem(wxDateTime date);
+    int AddToFavorites(wxString text);
+    int DeleteFavorite(wxString text);
 private:
     int SetWorkFromItem(Value& item, std::string text);
     std::string GetWorkFromItem(const Value& item); 

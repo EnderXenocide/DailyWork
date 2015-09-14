@@ -48,7 +48,7 @@ public:
     virtual int OnExit();
     void CreateStyles();
     void InitDailyWorkParser();
-    void LoadHelpInComboBox();
+    void LoadFavoritesInComboBox();
     void LoadDailyWorkInTree();
     MainApp& SetHierarchicalTree( bool hierarchy){this->hierarchicalTree = hierarchy; return *this; }
     bool IsHierarchicalTree() const{ return hierarchicalTree; }
@@ -67,6 +67,8 @@ public:
     bool IsModified() const { return dwparser.IsModified(); }
     int Save() ;
     int SaveAs(wxString filename) ;
+    int AddToFavorites(wxString text);
+    int DeleteSelectedFavorite();
 private:
     bool hierarchicalTree;
     wxRichTextStyleSheet*   m_styleSheet;
