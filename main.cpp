@@ -32,6 +32,7 @@ bool MainApp::OnInit()
     if ( !wxApp::OnInit() )
         return false;
 
+    InitLanguageSupport();
     InitRichText();
 
     SetHierarchicalTree(true); // avant creation de la frame pour le menu ShowHierarchicalTree
@@ -539,6 +540,7 @@ int MainApp::AddToFavorites(wxString text)
 {
    dwparser.AddToFavorites(text);
    frame->m_comboBoxFavorite->Append(text);
+   return 0;
 }
 
 int MainApp::DeleteSelectedFavorite()
@@ -551,5 +553,47 @@ int MainApp::DeleteSelectedFavorite()
         return 0;
    }
    return 1;
+}
+
+void MainApp::InitLanguageSupport()
+{ 
+    language =  wxLANGUAGE_FRENCH; //wxLANGUAGE_DEFAULT;
+ 
+    //todo fake functions, use proper implementation
+    /*if( userWantsAnotherLanguageThanDefault() )
+        language = getUsersFavoriteLanguage();*/
+ 
+    // load language if possible, fall back to english otherwise
+    if(wxLocale::IsAvailable(language))
+    {
+        locale = new wxLocale( language);
+ 
+        #ifdef __WXGTK__
+        // add locale search paths
+        locale->AddCatalogLookupPathPrefix(wxT("/usr"));
+        locale->AddCatalogLookupPathPrefix(wxT("/usr/local"));
+        wxStandardPaths* paths = (wxStandardPaths*) &wxStandardPaths::Get();
+        wxString prefix = paths->GetInstallPrefix();
+        locale->AddCatalogLookupPathPrefix( prefix );
+        #endif
+ 
+        if (locale->AddCatalog(wxT("dailywork")))
+           LOG(ERROR) << "catalog not found"; 
+ 
+        if(! locale->IsOk() )
+        {
+            LOG(ERROR) << "selected language is wrong";
+            delete locale;
+            locale = new wxLocale( wxLANGUAGE_ENGLISH );
+            language = wxLANGUAGE_ENGLISH;
+        }
+    }
+    else
+    {
+        LOG(INFO) << "The selected language is not supported by your system."
+                  << "Try installing support for this language.";
+        locale = new wxLocale( wxLANGUAGE_ENGLISH );
+        language = wxLANGUAGE_ENGLISH;
+    } 
 }
 

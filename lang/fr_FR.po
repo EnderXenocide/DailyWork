@@ -1,15 +1,15 @@
-# SOME DESCRIPTIVE TITLE.
+# DAILYWORK TRANSLATION.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Laurent Silvestre <silvestre.laurent@gmail.com>, 2015.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-15 11:33+0200\n"
-"PO-Revision-Date: 2015-09-15 11:37+0200\n"
-"Last-Translator: \n"
+"POT-Creation-Date: 2015-09-15 11:53+0200\n"
+"PO-Revision-Date: 2015-09-15 15:11+0200\n"
+"Last-Translator: Laurent Silvestre <silvestre.laurent@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
@@ -180,15 +180,15 @@ msgstr "Gras"
 
 #: gui2.cpp:1395
 msgid "Bullet List 1"
-msgstr ""
+msgstr "Puces"
 
 #: gui2.cpp:187
 msgid "Bullets and &Numbering..."
-msgstr ""
+msgstr "Puc&es et Numérotation..."
 
 #: gui2.cpp:1382
 msgid "Bullets and Numbering"
-msgstr ""
+msgstr "Puces et Numérotation"
 
 #: gui2.cpp:301
 msgid "Centre"
@@ -332,7 +332,7 @@ msgstr ""
 
 #: gui2.cpp:189
 msgid "Number List"
-msgstr ""
+msgstr "Numérotation"
 
 #: gui2.cpp:1372
 msgid "Numbered List 1"
@@ -475,7 +475,8 @@ msgid ""
 msgstr ""
 "C'est un bloc-note journalier.\n"
 "(c) Laurent Silvestre\n"
-"Merci à Julian Smart et sa demo du wxRichTextCtrl (partiellement utilisé), 2005"
+"Merci à Julian Smart et sa demo du wxRichTextCtrl (partiellement utilisé), "
+"2005"
 
 #: gui2.cpp:121
 msgid "Toggle Simple/Hierarchical Tree"

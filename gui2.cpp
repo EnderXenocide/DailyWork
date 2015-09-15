@@ -323,9 +323,9 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
  
     // désactive les options de mise en forme du text parceque pas de lecture de fichier rtf...
     //m_menuBar->EnableTop(2, false);
-    m_menuBar->EnableTop(3, false);
-    m_menuBar->EnableTop(4, false);
-    m_menuBar->EnableTop(5, false);
+//    m_menuBar->EnableTop(3, false);
+//    m_menuBar->EnableTop(4, false);
+//    m_menuBar->EnableTop(5, false);
     m_mainToolBar->EnableTool(ID_FORMAT_BOLD, false);
     m_mainToolBar->EnableTool(ID_FORMAT_ITALIC, false);
     m_mainToolBar->EnableTool(ID_FORMAT_UNDERLINE, false);
@@ -357,7 +357,7 @@ void MainFrame::ConnectEvents()
 
     Connect(ID_Quit, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnQuit));
     Connect(ID_About, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnAbout));
-    Connect(ID_STAY_ON_TOP, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnStayOnTop());
+    Connect(ID_STAY_ON_TOP, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnStayOnTop));
 
     Connect(wxID_OPEN, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnOpen));
     Connect(wxID_SAVE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSave));
@@ -470,7 +470,7 @@ void MainFrame::DisconnectEvents()
 
     Disconnect(ID_Quit, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnQuit));
     Disconnect(ID_About, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnAbout));
-    Connect(ID_STAY_ON_TOP, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnStayOnTop());
+    Connect(ID_STAY_ON_TOP, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnStayOnTop));
 
     Disconnect(wxID_OPEN, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnOpen));
     Disconnect(wxID_SAVE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSave));

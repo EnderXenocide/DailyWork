@@ -71,11 +71,16 @@ public:
     int DeleteSelectedFavorite();
 private:
     bool hierarchicalTree;
+    wxLocale* locale;
+    long language;
     wxRichTextStyleSheet*   m_styleSheet;
     DailyWorkParser dwparser; 
+    void InitLanguageSupport();
+    
 #if wxUSE_PRINTING_ARCHITECTURE
     wxRichTextPrinting*     m_printing;
 #endif      
+
     void InitRichText(); 
     wxTreeItemId LoadBranchHierarchy(wxTreeItemId rootId, wxDateTime date);
     wxTreeItemId LoadBranchSimple(wxTreeItemId rootId, wxDateTime date);
