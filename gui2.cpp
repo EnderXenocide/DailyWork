@@ -85,6 +85,8 @@ enum
     ID_FAVORITE_EDIT, 
     ID_FAVORITE_ADD,
     ID_FAVORITE_GO,
+    
+    ID_STAY_ON_TOP,
 };
 
 // BEGIN EVENTS
@@ -106,44 +108,46 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
 
     // the "About" item should be in the help menu
     wxMenu *helpMenu = new wxMenu;
-    helpMenu->Append(ID_About, wxT("&About\tF1"), wxT("Show about dialog"));
+    helpMenu->Append(ID_About, _("&About\tF1"), _("Show about dialog")); 
+    fileMenu->AppendSeparator();
+    helpMenu->AppendCheckItem(ID_STAY_ON_TOP, _("&Stay on top\tF11"), _("Stay on top")); 
 
-    fileMenu->Append(wxID_OPEN, wxT("&Open\tCtrl+O"), wxT("Open a file"));
+    fileMenu->Append(wxID_OPEN, _("&Open\tCtrl+O"), _("Open a file")); 
     fileMenu->Enable(wxID_OPEN, false);
-    fileMenu->Append(wxID_SAVE, wxT("&Save\tCtrl+S"), wxT("Save a file"));
-    fileMenu->Append(wxID_SAVEAS, wxT("&Save As...\tF12"), wxT("Save to a new file"));
+    fileMenu->Append(wxID_SAVE, _("&Save\tCtrl+S"), _("Save the work")); 
+    fileMenu->Append(wxID_SAVEAS, _("Save As...\tF12"), _("Save to a new file")); //
     
     fileMenu->AppendSeparator();
-    fileMenu->AppendCheckItem(ID_HIERACHY, wxT("&Hierarchical Tree"), wxT("Toggle Simple/Hierarchical Tree"));
+    fileMenu->AppendCheckItem(ID_HIERACHY, _("&Hierarchical Tree"), _("Toggle Simple/Hierarchical Tree"));
     fileMenu->Check(ID_HIERACHY, wxGetApp().IsHierarchicalTree());    
     fileMenu->Enable(ID_HIERACHY, false);
     
     fileMenu->AppendSeparator();
-    fileMenu->Append(ID_RELOAD, wxT("&Reload\tF2"), wxT("Reload the file/tree"));
+    fileMenu->Append(ID_RELOAD, _("&Reload\tF2"), _("Reload the file/tree"));
    // fileMenu->SetBitmap....
     fileMenu->AppendSeparator();
-    fileMenu->Append(ID_PAGE_SETUP, wxT("Page Set&up..."), wxT("Page setup"));
+    fileMenu->Append(ID_PAGE_SETUP, _("Page Set&up..."), _("Page setup"));
 #if wxUSE_PRINTING_ARCHITECTURE
-    fileMenu->Append(ID_PRINT, wxT("&Print...\tCtrl+P"), wxT("Print"));
-    fileMenu->Append(ID_PREVIEW, wxT("Print Pre&view"), wxT("Print preview"));
+    fileMenu->Append(ID_PRINT, _("&Print...\tCtrl+P"), _("Print")); 
+    fileMenu->Append(ID_PREVIEW, _("Print Pre&view"), _("Print preview")); 
 #endif
     fileMenu->AppendSeparator();
-    fileMenu->Append(ID_VIEW_HTML, wxT("&View as HTML"), wxT("View HTML"));
+    fileMenu->Append(ID_VIEW_HTML, _("View as HT&ML"), _("View HTML")); 
     fileMenu->AppendSeparator();
-    fileMenu->Append(ID_Quit, wxT("E&xit\tAlt+X"), wxT("Quit this program"));
+    fileMenu->Append(ID_Quit, _("E&xit\tAlt+X"), _("Quit this program")); 
 
     wxMenu* editMenu = new wxMenu;
-    editMenu->Append(ID_DELETE_DATE, _("&Delete date\tCtrl+D"));
+    editMenu->Append(ID_DELETE_DATE, _("&Delete date\tCtrl+D")); 
     editMenu->AppendSeparator();
-    editMenu->Append(wxID_UNDO, _("&Undo\tCtrl+Z"));
-    editMenu->Append(wxID_REDO, _("&Redo\tCtrl+Y"));
+    editMenu->Append(wxID_UNDO, _("&Undo\tCtrl+Z")); 
+    editMenu->Append(wxID_REDO, _("&Redo\tCtrl+Y")); 
     editMenu->AppendSeparator();
-    editMenu->Append(wxID_CUT, _("Cu&t\tCtrl+X"));
-    editMenu->Append(wxID_COPY, _("&Copy\tCtrl+C"));
-    editMenu->Append(wxID_PASTE, _("&Paste\tCtrl+V"));
+    editMenu->Append(wxID_CUT, _("Cu&t\tCtrl+X")); 
+    editMenu->Append(wxID_COPY, _("&Copy\tCtrl+C")); 
+    editMenu->Append(wxID_PASTE, _("&Paste\tCtrl+V")); 
 
     editMenu->AppendSeparator();
-    editMenu->Append(wxID_SELECTALL, _("Select A&ll\tCtrl+A"));
+    editMenu->Append(wxID_SELECTALL, _("Select A&ll\tCtrl+A")); 
     editMenu->AppendSeparator();
     editMenu->Append(ID_SET_FONT_SCALE, _("Set &Text Scale..."));
     editMenu->Append(ID_SET_DIMENSION_SCALE, _("Set &Dimension Scale..."));
@@ -161,8 +165,8 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     formatMenu->AppendCheckItem(ID_FORMAT_ALIGN_RIGHT, _("&Right Align"));
     formatMenu->AppendCheckItem(ID_FORMAT_ALIGN_CENTRE, _("&Centre"));
     formatMenu->AppendSeparator();
-    formatMenu->Append(ID_FORMAT_INDENT_MORE, _("Indent &More"));
-    formatMenu->Append(ID_FORMAT_INDENT_LESS, _("Indent &Less"));
+    formatMenu->Append(ID_FORMAT_INDENT_MORE, _("Indent &More")); 
+    formatMenu->Append(ID_FORMAT_INDENT_LESS, _("Indent &Less")); 
     formatMenu->AppendSeparator();
     formatMenu->Append(ID_FORMAT_PARAGRAPH_SPACING_MORE, _("Increase Paragraph &Spacing"));
     formatMenu->Append(ID_FORMAT_PARAGRAPH_SPACING_LESS, _("Decrease &Paragraph Spacing"));
@@ -171,7 +175,7 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     formatMenu->Append(ID_FORMAT_LINE_SPACING_HALF, _("1.5 Line Spacing"));
     formatMenu->Append(ID_FORMAT_LINE_SPACING_DOUBLE, _("Double Line Spacing"));
     formatMenu->AppendSeparator();
-    formatMenu->Append(ID_FORMAT_FONT, _("&Font..."));
+    formatMenu->Append(ID_FORMAT_FONT, _("&Font...")); 
     formatMenu->Append(ID_FORMAT_IMAGE, _("Image Property"));
     formatMenu->Append(ID_FORMAT_PARAGRAPH, _("&Paragraph..."));
     formatMenu->Append(ID_FORMAT_CONTENT, _("Font and Pa&ragraph...\tShift+Ctrl+F"));
@@ -190,10 +194,10 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     listsMenu->Append(ID_FORMAT_CLEAR_LIST, _("Clear List Formatting"));
 
     wxMenu* tableMenu = new wxMenu;
-    tableMenu->Append(ID_TABLE_ADD_COLUMN, _("&Add Column"));
-    tableMenu->Append(ID_TABLE_ADD_ROW, _("Add &Row"));
-    tableMenu->Append(ID_TABLE_DELETE_COLUMN, _("Delete &Column"));
-    tableMenu->Append(ID_TABLE_DELETE_ROW, _("&Delete Row"));
+    tableMenu->Append(ID_TABLE_ADD_COLUMN, _("&Add Column")); 
+    tableMenu->Append(ID_TABLE_ADD_ROW, _("Add &Row")); 
+    tableMenu->Append(ID_TABLE_DELETE_COLUMN, _("Delete &Column")); 
+    tableMenu->Append(ID_TABLE_DELETE_ROW, _("&Delete Row")); 
 
     wxMenu* insertMenu = new wxMenu;
     insertMenu->Append(ID_INSERT_SYMBOL, _("&Symbol...\tCtrl+I"));
@@ -202,13 +206,13 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
 
     // now append the freshly created menu to the menu bar...
     m_menuBar = new wxMenuBar();
-    m_menuBar->Append(fileMenu, wxT("&File"));
-    m_menuBar->Append(editMenu, wxT("&Edit"));
-    m_menuBar->Append(formatMenu, wxT("F&ormat"));
-    m_menuBar->Append(listsMenu, wxT("&Lists"));
-    m_menuBar->Append(tableMenu, wxT("&Tables"));
-    m_menuBar->Append(insertMenu, wxT("&Insert"));
-    m_menuBar->Append(helpMenu, wxT("&Help"));
+    m_menuBar->Append(fileMenu, _("&File")); 
+    m_menuBar->Append(editMenu, _("&Edit")); 
+    m_menuBar->Append(formatMenu, _("F&ormat")); 
+    m_menuBar->Append(listsMenu, _("&Lists")); 
+    m_menuBar->Append(tableMenu, _("&Tables")); 
+    m_menuBar->Append(insertMenu, _("&Insert")); 
+    m_menuBar->Append(helpMenu, _("&Help")); 
 
     // ... and attach this menu bar to the frame
     SetMenuBar(m_menuBar);
@@ -221,7 +225,7 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     if ( !is_pda )
     {
         m_statusBar = CreateStatusBar(1);
-        SetStatusText(wxT("Welcome to wxRichTextCtrl!"));
+        SetStatusText(_("Welcome to Dailywork!")); 
     }
 #endif
 
@@ -276,40 +280,40 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
   //  mainSizer->Add(m_mainToolBar, 0, wxEXPAND);
 
 //    m_mainToolBar->AddTool(wxID_OPEN, wxEmptyString, wxBitmap(open_xpm), _("Open"));
-    m_mainToolBar->AddTool(ID_RELOAD, wxEmptyString, wxBitmap(reload_xpm), _("Recharger")); //Reload
+    m_mainToolBar->AddTool(ID_RELOAD, wxEmptyString, wxBitmap(reload_xpm), _("Reload")); 
     
-    m_mainToolBar->AddTool(wxID_SAVE, wxEmptyString, wxBitmap(save_xpm), _("Enregistrer")); //Save
+    m_mainToolBar->AddTool(wxID_SAVE, wxEmptyString, wxBitmap(save_xpm), _("Save")); 
     m_mainToolBar->AddSeparator();
-    m_mainToolBar->AddTool(ID_DELETE_DATE, wxEmptyString, wxBitmap(delete_xpm), _("Supprimer date")); //Delete date
+    m_mainToolBar->AddTool(ID_DELETE_DATE, wxEmptyString, wxBitmap(delete_xpm), _("Delete date")); 
     m_mainToolBar->AddSeparator();
-    m_mainToolBar->AddTool(wxID_CUT, wxEmptyString, wxBitmap(cut_xpm), _("Couper")); //Cut
-    m_mainToolBar->AddTool(wxID_COPY, wxEmptyString, wxBitmap(copy_xpm), _("Copier")); //Copy
-    m_mainToolBar->AddTool(wxID_PASTE, wxEmptyString, wxBitmap(paste_xpm), _("Coller")); //Paste
+    m_mainToolBar->AddTool(wxID_CUT, wxEmptyString, wxBitmap(cut_xpm), _("Cut")); 
+    m_mainToolBar->AddTool(wxID_COPY, wxEmptyString, wxBitmap(copy_xpm), _("Copy")); 
+    m_mainToolBar->AddTool(wxID_PASTE, wxEmptyString, wxBitmap(paste_xpm), _("Paste")); 
     m_mainToolBar->AddSeparator();
-    m_mainToolBar->AddTool(wxID_UNDO, wxEmptyString, wxBitmap(undo_xpm), _("Annuler")); //Undo
-    m_mainToolBar->AddTool(wxID_REDO, wxEmptyString, wxBitmap(redo_xpm), _("Retablie"));//Redo
+    m_mainToolBar->AddTool(wxID_UNDO, wxEmptyString, wxBitmap(undo_xpm), _("Undo")); 
+    m_mainToolBar->AddTool(wxID_REDO, wxEmptyString, wxBitmap(redo_xpm), _("Redo"));
     m_mainToolBar->AddSeparator();
-    m_mainToolBar->AddCheckTool(ID_FORMAT_BOLD, wxEmptyString, wxBitmap(bold_xpm), wxNullBitmap, _("Gras")); //Bold
-    m_mainToolBar->AddCheckTool(ID_FORMAT_ITALIC, wxEmptyString, wxBitmap(italic_xpm), wxNullBitmap, _("Italique")); //Italic
-    m_mainToolBar->AddCheckTool(ID_FORMAT_UNDERLINE, wxEmptyString, wxBitmap(underline_xpm), wxNullBitmap, _("Souligner")); //Underline
+    m_mainToolBar->AddCheckTool(ID_FORMAT_BOLD, wxEmptyString, wxBitmap(bold_xpm), wxNullBitmap, _("Bold")); 
+    m_mainToolBar->AddCheckTool(ID_FORMAT_ITALIC, wxEmptyString, wxBitmap(italic_xpm), wxNullBitmap, _("Italic")); 
+    m_mainToolBar->AddCheckTool(ID_FORMAT_UNDERLINE, wxEmptyString, wxBitmap(underline_xpm), wxNullBitmap, _("Underline")); 
     m_mainToolBar->AddSeparator();
-    m_mainToolBar->AddCheckTool(ID_FORMAT_ALIGN_LEFT, wxEmptyString, wxBitmap(alignleft_xpm), wxNullBitmap, _("Aligner à gauche")); //Align Left
-    m_mainToolBar->AddCheckTool(ID_FORMAT_ALIGN_CENTRE, wxEmptyString, wxBitmap(centre_xpm), wxNullBitmap, _("Centrer")); //Centre
-    m_mainToolBar->AddCheckTool(ID_FORMAT_ALIGN_RIGHT, wxEmptyString, wxBitmap(alignright_xpm), wxNullBitmap, _("Aligner à droite")); //Align Right
+    m_mainToolBar->AddCheckTool(ID_FORMAT_ALIGN_LEFT, wxEmptyString, wxBitmap(alignleft_xpm), wxNullBitmap, _("Align Left")); //Aligner à gauche
+    m_mainToolBar->AddCheckTool(ID_FORMAT_ALIGN_CENTRE, wxEmptyString, wxBitmap(centre_xpm), wxNullBitmap, _("Centre")); //Centrer
+    m_mainToolBar->AddCheckTool(ID_FORMAT_ALIGN_RIGHT, wxEmptyString, wxBitmap(alignright_xpm), wxNullBitmap, _("Align Right")); //Aligner à droite
     m_mainToolBar->AddSeparator();
-    m_mainToolBar->AddTool(ID_FORMAT_INDENT_LESS, wxEmptyString, wxBitmap(indentless_xpm), _("Indent Less"));
-    m_mainToolBar->AddTool(ID_FORMAT_INDENT_MORE, wxEmptyString, wxBitmap(indentmore_xpm), _("Indent More"));
+    m_mainToolBar->AddTool(ID_FORMAT_INDENT_LESS, wxEmptyString, wxBitmap(indentless_xpm), _("Indent Less")); //Réduire le retrait
+    m_mainToolBar->AddTool(ID_FORMAT_INDENT_MORE, wxEmptyString, wxBitmap(indentmore_xpm), _("Indent More")); //Augmenter le retrait
     m_mainToolBar->AddSeparator();
-    m_mainToolBar->AddTool(ID_FORMAT_FONT, wxEmptyString, wxBitmap(font_xpm), _("Police")); //Font
+    m_mainToolBar->AddTool(ID_FORMAT_FONT, wxEmptyString, wxBitmap(font_xpm), _("Font")); //Police
     m_mainToolBar->AddSeparator();
 
     m_comboBoxFavorite = new wxComboBox(m_mainToolBar, ID_HELPLIST, wxEmptyString);
     m_mainToolBar->AddControl(m_comboBoxFavorite);
 
-    m_mainToolBar->AddTool(ID_FAVORITE_ADD, wxEmptyString, wxBitmap(bookadd_xpm), _("Ajouter aux favoris")); //Add to favorites
-    m_mainToolBar->AddTool(ID_FAVORITE_GO, wxEmptyString, wxBitmap(bookgo_xpm), _("Inserer favoris")); //Insert favorite
-    m_mainToolBar->AddTool(ID_FAVORITE_DELETE, wxEmptyString, wxBitmap(bookdelete_xpm), _("Supprimer favoris")); //Delete favorite
-    m_mainToolBar->AddTool(ID_FAVORITE_EDIT, wxEmptyString, wxBitmap(bookedit_xpm), _("Gerer les favoris")); //Manage
+    m_mainToolBar->AddTool(ID_FAVORITE_ADD, wxEmptyString, wxBitmap(bookadd_xpm), _("Add to favorites")); //Ajouter aux favoris
+    m_mainToolBar->AddTool(ID_FAVORITE_GO, wxEmptyString, wxBitmap(bookgo_xpm), _("Insert favorite")); //Inserer favoris
+    m_mainToolBar->AddTool(ID_FAVORITE_DELETE, wxEmptyString, wxBitmap(bookdelete_xpm), _("Delete favorite")); //Supprimer favoris
+    m_mainToolBar->AddTool(ID_FAVORITE_EDIT, wxEmptyString, wxBitmap(bookedit_xpm), _("Manage favorites")); //Gerer les favoris
     
     m_mainToolBar->Realize();
 
@@ -353,6 +357,7 @@ void MainFrame::ConnectEvents()
 
     Connect(ID_Quit, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnQuit));
     Connect(ID_About, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnAbout));
+    Connect(ID_STAY_ON_TOP, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnStayOnTop());
 
     Connect(wxID_OPEN, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnOpen));
     Connect(wxID_SAVE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSave));
@@ -462,8 +467,10 @@ void MainFrame::DisconnectEvents()
 	m_calendar->Disconnect( wxEVT_SET_FOCUS, wxFocusEventHandler( MainFrame::OnCalendarSetFocus ), NULL, this );
  	m_calendar->Disconnect( wxEVT_CALENDAR_DOUBLECLICKED, wxCalendarEventHandler( MainFrame::OnCalendarDblClick ), NULL, this );    
 	Disconnect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( MainFrame::OnCloseFrame ) );
+
     Disconnect(ID_Quit, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnQuit));
     Disconnect(ID_About, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnAbout));
+    Connect(ID_STAY_ON_TOP, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnStayOnTop());
 
     Disconnect(wxID_OPEN, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnOpen));
     Disconnect(wxID_SAVE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSave));
@@ -627,7 +634,7 @@ void MainFrame::OnCloseFrame(wxCloseEvent& event)
     UpdateDWWork();
     bool exit = true;
     if (wxGetApp().IsModified()) {
-        wxMessageDialog dial(this, wxT("Le document a été modifié, voulez-vous enregistrer ?"), "Attention", wxYES_NO|wxCANCEL|wxCENTER_FRAME);
+        wxMessageDialog dial(this, _("This document was modified, would you like to save ?"), _("Warning"), wxYES_NO|wxCANCEL|wxCENTER_FRAME);
         int retour = dial.ShowModal();
         if (retour==wxID_YES)
             wxGetApp().Save();
@@ -773,8 +780,13 @@ void MainFrame::OnQuit(wxCommandEvent& event)
 void MainFrame::OnAbout(wxCommandEvent& event)
 {
     wxString msg;
-    msg.Printf( wxT("This is a daily notepad.\n(c) Laurent Silvestre\nThanks to Julian Smart and his wxRichTextCtrl demo (currently unused), 2005"));
-    wxMessageBox(msg, wxT("About Dailywork"), wxOK | wxICON_INFORMATION, this);
+    msg.Printf( _("This is a daily notepad.\n(c) Laurent Silvestre\nThanks to Julian Smart and his wxRichTextCtrl demo (currently unused), 2005"));
+    wxMessageBox(msg, _("About Dailywork"), wxOK | wxICON_INFORMATION, this);
+}
+
+void MainFrame::OnStayOnTop(wxCommandEvent& event)
+{
+   //setstyle() 
 }
 
 void MainFrame::OnSave(wxCommandEvent& event)
@@ -804,15 +816,14 @@ void MainFrame::OnSaveAs(wxCommandEvent& event)
         {
             UpdateDWWork(); // met à jour/ou pas le texte ecrit dans le richedit dans DWparser
             wxGetApp().SaveAs(path);
-            std::string s = "Enregistrer sous <";
-            s += path.ToStdString() +">";
-            OnStatusBarMessage(s);
+            wxString s = wxString::Format(_("Save as <%s>"), path); 
+            OnStatusBarMessage(s.ToStdString());
              //wxBusyCursor busy;
             //wxStopWatch stopwatch;
            // m_editor->SaveFile(path);
             //long t = stopwatch.Time();
             //wxLogDebug(wxT("Saving took %ldms"), t);
-            //wxMessageBox(wxString::Format(wxT("Saving took %ldms"), t));
+            //wxMessageBox(wxString::Format(_("Saving took %ldms"), t));
         }
     }
 }
@@ -1229,7 +1240,7 @@ void MainFrame::OnViewHTML(wxCommandEvent& event)
     wxHtmlWindow* win = new wxHtmlWindow(& dialog, wxID_ANY, wxDefaultPosition, wxSize(500, 400), wxSUNKEN_BORDER);
     boxSizer->Add(win, 1, wxALL, 5);
 
-    wxButton* cancelButton = new wxButton(& dialog, wxID_CANCEL, wxT("&Close"));
+    wxButton* cancelButton = new wxButton(& dialog, wxID_CANCEL, _("&Close"));
     boxSizer->Add(cancelButton, 0, wxALL|wxCENTRE, 5);
 
     wxString text;
@@ -1366,7 +1377,7 @@ void MainFrame::OnNumberList(wxCommandEvent& event)
     if (m_editor->HasSelection())
     {
         wxRichTextRange range = m_editor->GetSelectionRange();
-        m_editor->SetListStyle(range, wxT("Numbered List 1"), wxRICHTEXT_SETSTYLE_WITH_UNDO|wxRICHTEXT_SETSTYLE_RENUMBER);
+        m_editor->SetListStyle(range, _("Numbered List 1"), wxRICHTEXT_SETSTYLE_WITH_UNDO|wxRICHTEXT_SETSTYLE_RENUMBER);
     }
 }
 
@@ -1389,7 +1400,7 @@ void MainFrame::OnItemizeList(wxCommandEvent& event)
     if (m_editor->HasSelection())
     {
         wxRichTextRange range = m_editor->GetSelectionRange();
-        m_editor->SetListStyle(range, wxT("Bullet List 1"));
+        m_editor->SetListStyle(range, _("Bullet List 1"));
     }
 }
 
@@ -1559,17 +1570,17 @@ void MainFrame::OnPreview(wxCommandEvent& event)
 
 void MainFrame::OnPageSetup(wxCommandEvent& event)
 {
-    wxDialog dialog(this, wxID_ANY, wxT("Testing"), wxPoint(10, 10), wxSize(400, 300), wxDEFAULT_DIALOG_STYLE);
+    wxDialog dialog(this, wxID_ANY, _("Testing"), wxPoint(10, 10), wxSize(400, 300), wxDEFAULT_DIALOG_STYLE);
 
     wxNotebook* nb = new wxNotebook(& dialog, wxID_ANY, wxPoint(5, 5), wxSize(300, 250));
     wxPanel* panel = new wxPanel(nb, wxID_ANY, wxDefaultPosition, wxDefaultSize);
     wxPanel* panel2 = new wxPanel(nb, wxID_ANY, wxDefaultPosition, wxDefaultSize);
 
     new wxRichTextCtrl(panel, wxID_ANY, wxEmptyString, wxPoint(5, 5), wxSize(200, 150), wxVSCROLL|wxTE_READONLY);
-    nb->AddPage(panel, wxT("Page 1"));
+    nb->AddPage(panel, _("Page 1"));
 
     new wxRichTextCtrl(panel2, wxID_ANY, wxEmptyString, wxPoint(5, 5), wxSize(200, 150), wxVSCROLL|wxTE_READONLY);
-    nb->AddPage(panel2, wxT("Page 2"));
+    nb->AddPage(panel2, _("Page 2"));
 
     new wxButton(& dialog, wxID_OK, wxT("OK"), wxPoint(5, 180));
 
@@ -1581,7 +1592,7 @@ void MainFrame::OnPageSetup(wxCommandEvent& event)
 void MainFrame::OnSetFontScale(wxCommandEvent& event)
 {
     wxString value = wxString::Format(wxT("%g"), m_editor->GetFontScale());
-    wxString text = wxGetTextFromUser(wxT("Enter a text scale factor:"), wxT("Text Scale Factor"), value, wxGetTopLevelParent(this));
+    wxString text = wxGetTextFromUser(_("Enter a text scale factor:"), _("Text Scale Factor"), value, wxGetTopLevelParent(this));
     if (!text.IsEmpty() && value != text)
     {
         double scale = 1.0;
@@ -1593,7 +1604,7 @@ void MainFrame::OnSetFontScale(wxCommandEvent& event)
 void MainFrame::OnSetDimensionScale(wxCommandEvent& event)
 {
     wxString value = wxString::Format(wxT("%g"), m_editor->GetDimensionScale());
-    wxString text = wxGetTextFromUser(wxT("Enter a dimension scale factor:"), wxT("Dimension Scale Factor"), value, wxGetTopLevelParent(this));
+    wxString text = wxGetTextFromUser(_("Enter a dimension scale factor:"), _("Dimension Scale Factor"), value, wxGetTopLevelParent(this));
     if (!text.IsEmpty() && value != text)
     {
         double scale = 1.0;

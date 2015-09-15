@@ -113,6 +113,7 @@ protected:
 	void OnDeleteDate( wxCommandEvent& event );
     void OnQuit(wxCommandEvent& event);
     void OnAbout(wxCommandEvent& event);
+    void OnStayOnTop(wxCommandEvent& event);
 
     void OnComboBoxFavoriteUpdate( wxCommandEvent& event );
     void OnAddFavorite(wxCommandEvent& event);
