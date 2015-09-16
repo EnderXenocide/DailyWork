@@ -687,11 +687,12 @@ void MainFrame::OnTreeSelChanged( wxTreeEvent& event )
     ShowTreeItemSelectedText();   
 }
 
-void MainFrame::OnStatusBarMessage(std::string msg)
+void MainFrame::OnStatusBarMessage(wxString msg)
 {
 	//std::cout << msg << std::endl;
     //LOG(INFO) << msg ;
-    m_statusBar->SetStatusText(wxString::FromUTF8(msg.c_str()));
+//    m_statusBar->SetStatusText(wxString::FromUTF8(msg.c_str()));
+    m_statusBar->SetStatusText(msg);
 }
 
 void MainFrame::OnShowHirerarchicalTree(wxCommandEvent& event)

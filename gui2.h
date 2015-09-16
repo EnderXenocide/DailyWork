@@ -90,7 +90,7 @@ public:
    // MainFrame( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 699,413 ), long style = wxCLOSE_BOX|wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
     ~MainFrame();
  
-    void OnStatusBarMessage(std::string msg);
+    void OnStatusBarMessage(wxString msg);
     void ConnectEvents();
     void ConnectEventsSelChanged();
     void DisconnectEvents();

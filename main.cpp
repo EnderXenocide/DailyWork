@@ -49,7 +49,7 @@ bool MainApp::OnInit()
 
     MainFrame* sameframe  = frame;    
     
-    dwparser.ConnectCallback([sameframe](std::string msg) { sameframe->OnStatusBarMessage(msg); });
+    dwparser.ConnectCallback([sameframe](wxString msg) { sameframe->OnStatusBarMessage(msg); });
     InitDailyWorkParser();
     // and show it (the frames, unlike simple controls, are not shown when
     // created initially)
@@ -318,12 +318,12 @@ void MainApp::LoadDailyWorkInTree()
             tree->SetItemData(itemId, itemData);           
         }
         else {
-            std::string sdate = date.Format().ToStdString();
-            frame->OnStatusBarMessage("Erreur de chargement de la date <"+sdate +">");
-            LOG(ERROR) << "Erreur de chargement de la date <" << sdate << ">";
+             wxString errmsg = wxString::Format(_("Error loading date <%s>"), date.Format());
+            frame->OnStatusBarMessage(errmsg);
+            LOG(ERROR) << errmsg;
         }
     }
-    frame->OnStatusBarMessage("Dates chargées");
+    frame->OnStatusBarMessage(_("Dates loaded"));
     tree->ExpandAll();
     LOG(INFO) << "Tree Loaded";
 }

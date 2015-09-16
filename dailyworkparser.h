@@ -23,7 +23,7 @@
 
 using namespace rapidjson;
 
-typedef std::function<void(std::string)> CallbackMessageInfo;
+typedef std::function<void(wxString)> CallbackMessageInfo;
 // typedef std::function<int(int)> CallbackFunction;
 
 class DailyWorkParser

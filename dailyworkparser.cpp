@@ -27,10 +27,11 @@ int DailyWorkParser::Parse()
     //                               "{\"date\":\"2015-07-22\",\"work\":\"niet\"} ] }";
     modified = false;
 
-    LOG(INFO) << "Parse file";
+    "Parse file";
     std::ifstream ifs(JSON_FILE);
     if(!ifs) {
-        m_cbMessageInfo("Fichier non trouvé");
+        LOG(ERROR) << _("File not found");
+        m_cbMessageInfo(_("File not found"));
         return -1;
     }
     std::stringstream ss;
@@ -42,9 +43,10 @@ int DailyWorkParser::Parse()
     int retour = 0;
     if(document.Parse<0>(ss.str().c_str()).HasParseError()) {
         ParseErrorCode parseErrorCode = document.GetParseError();
-        std::string strErreur = wxString::Format("Erreur de lecture du fichier (offset %u): %s\n",
+        wxString strErreur = wxString::Format(_("Error reading file (offset %u): %s\n"),
                                                  (unsigned)document.GetErrorOffset(),
-                                                 GetParseError_En(parseErrorCode)).ToStdString();
+                                                 GetParseError_En(parseErrorCode));
+        LOG(ERROR) << strErreur;                                         
         m_cbMessageInfo(strErreur);
         retour = -1;
     }
