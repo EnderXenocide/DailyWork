@@ -112,7 +112,10 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     helpMenu->AppendSeparator();
     helpMenu->AppendCheckItem(ID_STAY_ON_TOP, _("&Stay on top\tF11"), _("Stay on top")); 
     helpMenu->Enable(ID_STAY_ON_TOP, false); //car non implementé
-
+//    helpMenu->AppendSeparator(); //todo à implémenter ?
+//    helpMenu->AppendRadioItem(ID_LANG_FR, wxT("Français"), _("Set french language")); 
+//    helpMenu->AppendRadioItem(ID_LANG_EN, wxT("English"), _("Set english language")); 
+    
     fileMenu->Append(wxID_OPEN, _("&Open\tCtrl+O"), _("Open a file")); 
     fileMenu->Enable(wxID_OPEN, false);
     fileMenu->Append(wxID_SAVE, _("&Save\tCtrl+S"), _("Save the work")); 
