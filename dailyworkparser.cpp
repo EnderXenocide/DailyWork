@@ -313,6 +313,7 @@ int DailyWorkParser::AddToFavorites(wxString text)
     Value &array = document[JSON_FAVORITES];
     array.PushBack(valueString, allocator); 
     modified = true;
+    return 0;
 }
 
 int DailyWorkParser::DeleteFavorite(wxString text)

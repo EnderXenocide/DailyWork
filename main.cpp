@@ -298,7 +298,7 @@ void MainApp::LoadDailyWorkInTree()
     wxTreeCtrl* tree = frame->m_treeDates;
     tree->DeleteAllItems();
     tree->SetWindowStyle(wxTR_HIDE_ROOT);
-    wxTreeItemId rootId = tree->AddRoot(wxT("Dates"));
+    wxTreeItemId rootId = tree->AddRoot(wxT("Dates")); //hidden
     wxTreeItemId (MainApp::*LoadBranch)(wxTreeItemId rootId, wxDateTime date); // pointeur de fonction
     if (hierarchicalTree) {
         LoadBranch = &LoadBranchHierarchy;
@@ -436,15 +436,15 @@ void MainApp::DeleteDateSelected()
         wxString textSelection = tree->GetItemText(itemId);
         wxString msg;
         if (! IsHierarchicalTree()) 
-            msg = wxT("la date ");
+            msg = _("the date");
         else if (textSelection.length()==4) //année
-            msg = wxT("l'année ");
+            msg = _("the year");
         else if (tree->ItemHasChildren(itemId))  // mois
-            msg = wxT("le mois ");
+            msg = _("the month");
         else 
-            msg = wxT("le jour ");
+            msg = _("the day");
  
-        wxMessageDialog dial(frame, wxT("Supprimer ")  + msg + textSelection + " ?", wxT("Attention"), wxYES_NO|wxCENTER_FRAME);
+        wxMessageDialog dial(frame, wxString::Format(_("Delete %s %s ?"),msg,textSelection), _("Warning"), wxYES_NO|wxCENTER_FRAME);
         if (dial.ShowModal()==wxID_YES) { //on supprime            
             if (DeleteItemData(itemId)) {
                 tree->Delete(itemId); 
@@ -514,13 +514,13 @@ void MainApp::SetWorkFromTreeSelection(wxString text)
 
 int MainApp::Save()
 {
-    frame->OnStatusBarMessage("Enregister le "+wxDateTime::Now().Format().ToStdString());
+    frame->OnStatusBarMessage("Save on "+wxDateTime::Now().Format().ToStdString());
     return dwparser.Save();     
 }
 
 int MainApp::SaveAs(wxString filename)
 {
-    frame->OnStatusBarMessage("Enregister sous... le"+wxDateTime::Now().Format().ToStdString());
+    frame->OnStatusBarMessage("Save As... on "+wxDateTime::Now().Format().ToStdString());
     return dwparser.SaveAs(filename);
 }
 
@@ -594,7 +594,7 @@ void MainApp::InitLanguageSupport()
         if(! m_locale->IsOk() )
         { 
             LOG(ERROR) << wxString::Format("Selected language '%s' is wrong",
-                       pInfo ? pInfo->GetLocaleName() : _("unknown"));
+                       pInfo ? pInfo->GetLocaleName() : "unknown");
             delete m_locale;
             m_locale = new wxLocale( wxLANGUAGE_ENGLISH );
             m_language = wxLANGUAGE_ENGLISH;
@@ -603,75 +603,9 @@ void MainApp::InitLanguageSupport()
     else
     {
         LOG(INFO) << wxString::Format("The selected language '%s' is not supported by your system.",
-                       pInfo ? pInfo->GetLocaleName() : _("unknown"))  << " Try installing support for this language.";
+                       pInfo ? pInfo->GetLocaleName() : "unknown")  << " Try installing support for this language.";
         m_locale = new wxLocale( wxLANGUAGE_ENGLISH );
         m_language = wxLANGUAGE_ENGLISH;
     }
  
 }
-
-void MainApp::InitLanguageSupport1()
-{ 
-    wxLanguage m_language;  // language specified by user
-    wxLocale m_locale;  // locale we'll be using
-    
-    m_language =  wxLANGUAGE_FRENCH; //wxLANGUAGE_DEFAULT;
-     
-     // don't use wxLOCALE_LOAD_DEFAULT flag so that Init() doesn't return
-    // false just because it failed to load wxstd catalog
-    if ( !m_locale.Init(m_language, wxLOCALE_DONT_LOAD_DEFAULT) )
-    {
-        LOG(INFO) << _("This language is not supported by the system.");
-        // continue nevertheless
-    }
-
-    // normally this wouldn't be necessary as the catalog files would be found
-    // in the default locations, but when the program is not installed the
-    // catalogs are in the build directory where we wouldn't find them by
-    // default
-    wxLocale::AddCatalogLookupPathPrefix(".");
- // Initialize the catalogs we'll be using
-    const wxLanguageInfo* pInfo = wxLocale::GetLanguageInfo(m_language);
-    if (!m_locale.AddCatalog("dailywork"))
-    {
-        LOG(ERROR) << wxString::Format(_("Couldn't find/load the 'dailywork' catalog for locale '%s'."),
-                   pInfo ? pInfo->GetLocaleName() : _("unknown"));
-    }    
-    //todo fake functions, use proper implementation
-    /*if( userWantsAnotherLanguageThanDefault() )
-        m_language = getUsersFavoriteLanguage();*/
- 
-    // load language if possible, fall back to english otherwise
-//    if(wxLocale::IsAvailable(m_language))
-//    {
-//       // m_locale = new wxLocale( m_language);
-// 
-//        #ifdef __WXGTK__
-//        // add locale search paths
-//        m_locale.AddCatalogLookupPathPrefix(wxT("/usr"));
-//        m_locale.AddCatalogLookupPathPrefix(wxT("/usr/local"));
-//        wxStandardPaths* paths = (wxStandardPaths*) &wxStandardPaths::Get();
-//        wxString prefix = paths->GetInstallPrefix();
-//        m_locale.AddCatalogLookupPathPrefix( prefix );
-//        #endif
-// 
-//        if (m_locale.AddCatalog(wxT("dailywork")))
-//           LOG(ERROR) << "catalog not found"; 
-// 
-//        if(! m_locale.IsOk() )
-//        {
-//            LOG(ERROR) << "selected language is wrong";
-//            delete m_locale;
-//            m_locale = new wxLocale( wxLANGUAGE_ENGLISH );
-//            m_language = wxLANGUAGE_ENGLISH;
-//        }
-//    }
-//    else
-//    {
-//        LOG(INFO) << "The selected language is not supported by your system."
-//                  << "Try installing support for this language.";
-//        m_locale = new wxLocale( wxLANGUAGE_ENGLISH );
-//        m_language = wxLANGUAGE_ENGLISH;
-//    } 
-}
-

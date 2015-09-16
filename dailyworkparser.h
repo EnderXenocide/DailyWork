@@ -13,7 +13,7 @@
 #define JSON_FILE "dailywork.json"
 #define JSON_DATE_FORMAT_EXT "%Y-%m-%d" // strptime()-like format string
 #define JSON_DATE_FORMAT "%4d-%02d-%02d"
-#define TREE_DATE_FORMAT "%02d/%02d/%4d"
+#define TREE_DATE_FORMAT "%02d/%02d/%4d" //todo format en/fr ?
 #define JSON_ITEMS "dailyworks"
 #define JSON_WORK "work"
 #define JSON_DATE "date"

@@ -78,7 +78,6 @@ private:
     wxRichTextStyleSheet*   m_styleSheet;
     DailyWorkParser dwparser; 
     void InitLanguageSupport();
-    void InitLanguageSupport1();
     
 #if wxUSE_PRINTING_ARCHITECTURE
     wxRichTextPrinting*     m_printing;
