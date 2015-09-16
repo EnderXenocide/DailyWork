@@ -43,6 +43,8 @@ class MainApp : public wxApp
 {
 public:
      MainFrame* frame; 
+     
+     MainApp() { m_language = wxLANGUAGE_UNKNOWN; };
 
     virtual bool OnInit();
     virtual int OnExit();
@@ -71,11 +73,12 @@ public:
     int DeleteSelectedFavorite();
 private:
     bool hierarchicalTree;
-    wxLocale* locale;
-    long language;
+    wxLanguage m_language;  // language specified by user
+    wxLocale* m_locale;  // locale we'll be using
     wxRichTextStyleSheet*   m_styleSheet;
     DailyWorkParser dwparser; 
     void InitLanguageSupport();
+    void InitLanguageSupport1();
     
 #if wxUSE_PRINTING_ARCHITECTURE
     wxRichTextPrinting*     m_printing;

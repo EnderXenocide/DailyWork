@@ -109,8 +109,9 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     // the "About" item should be in the help menu
     wxMenu *helpMenu = new wxMenu;
     helpMenu->Append(ID_About, _("&About\tF1"), _("Show about dialog")); 
-    fileMenu->AppendSeparator();
+    helpMenu->AppendSeparator();
     helpMenu->AppendCheckItem(ID_STAY_ON_TOP, _("&Stay on top\tF11"), _("Stay on top")); 
+    helpMenu->Enable(ID_STAY_ON_TOP, false); //car non implementé
 
     fileMenu->Append(wxID_OPEN, _("&Open\tCtrl+O"), _("Open a file")); 
     fileMenu->Enable(wxID_OPEN, false);
@@ -597,8 +598,8 @@ void MainFrame::UpdateDWWork()
 void MainFrame::ShowTreeItemSelectedText()
 {
     wxString texte = wxGetApp().GetWorkFromTreeSelection();
-    LOG(DEBUG ) << "Text to show in editor : " << texte;   
-    wxStringInputStream final(texte);
+    LOG_IF(texte.IsEmpty(), DEBUG) << "No text to show in editor "; 
+    LOG_IF(!texte.IsEmpty(), DEBUG) << "Text to show in editor <" << texte <<">";
     wxRichTextBuffer & rtb = m_editor->GetBuffer();
     m_editor->BeginSuppressUndo();
     rtb.ResetAndClearCommands();

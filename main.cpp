@@ -556,44 +556,122 @@ int MainApp::DeleteSelectedFavorite()
 }
 
 void MainApp::InitLanguageSupport()
-{ 
-    language =  wxLANGUAGE_FRENCH; //wxLANGUAGE_DEFAULT;
+{
+    m_language =  wxLANGUAGE_DEFAULT;
  
     //todo fake functions, use proper implementation
-    /*if( userWantsAnotherLanguageThanDefault() )
-        language = getUsersFavoriteLanguage();*/
+//    if( userWantsAnotherLanguageThanDefault() )
+//        m_language = getUsersFavoriteLanguage();
+
+    const wxLanguageInfo* pInfo = wxLocale::GetLanguageInfo(m_language);
  
     // load language if possible, fall back to english otherwise
-    if(wxLocale::IsAvailable(language))
+    if(wxLocale::IsAvailable(m_language))
     {
-        locale = new wxLocale( language);
+        m_locale = new wxLocale(m_language);
  
+    // normally this wouldn't be necessary as the catalog files would be found
+    // in the default locations, but when the program is not installed the
+    // catalogs are in the build directory where we wouldn't find them by
+    // default
+        wxLocale::AddCatalogLookupPathPrefix(".");
+        
         #ifdef __WXGTK__
         // add locale search paths
-        locale->AddCatalogLookupPathPrefix(wxT("/usr"));
-        locale->AddCatalogLookupPathPrefix(wxT("/usr/local"));
+        m_locale->AddCatalogLookupPathPrefix(wxT("/usr"));
+        m_locale->AddCatalogLookupPathPrefix(wxT("/usr/local"));
         wxStandardPaths* paths = (wxStandardPaths*) &wxStandardPaths::Get();
         wxString prefix = paths->GetInstallPrefix();
-        locale->AddCatalogLookupPathPrefix( prefix );
+        m_locale->AddCatalogLookupPathPrefix( prefix );
         #endif
  
-        if (locale->AddCatalog(wxT("dailywork")))
-           LOG(ERROR) << "catalog not found"; 
- 
-        if(! locale->IsOk() )
+        if (!m_locale->AddCatalog(wxT("dailywork")))
         {
-            LOG(ERROR) << "selected language is wrong";
-            delete locale;
-            locale = new wxLocale( wxLANGUAGE_ENGLISH );
-            language = wxLANGUAGE_ENGLISH;
+            LOG(ERROR) << wxString::Format("Couldn't find/load the 'dailywork' catalog for locale '%s'.",
+                       pInfo ? pInfo->GetLocaleName() : _("unknown"));
+        }          
+        
+        if(! m_locale->IsOk() )
+        { 
+            LOG(ERROR) << wxString::Format("Selected language '%s' is wrong",
+                       pInfo ? pInfo->GetLocaleName() : _("unknown"));
+            delete m_locale;
+            m_locale = new wxLocale( wxLANGUAGE_ENGLISH );
+            m_language = wxLANGUAGE_ENGLISH;
         }
     }
     else
     {
-        LOG(INFO) << "The selected language is not supported by your system."
-                  << "Try installing support for this language.";
-        locale = new wxLocale( wxLANGUAGE_ENGLISH );
-        language = wxLANGUAGE_ENGLISH;
-    } 
+        LOG(INFO) << wxString::Format("The selected language '%s' is not supported by your system.",
+                       pInfo ? pInfo->GetLocaleName() : _("unknown"))  << " Try installing support for this language.";
+        m_locale = new wxLocale( wxLANGUAGE_ENGLISH );
+        m_language = wxLANGUAGE_ENGLISH;
+    }
+ 
+}
+
+void MainApp::InitLanguageSupport1()
+{ 
+    wxLanguage m_language;  // language specified by user
+    wxLocale m_locale;  // locale we'll be using
+    
+    m_language =  wxLANGUAGE_FRENCH; //wxLANGUAGE_DEFAULT;
+     
+     // don't use wxLOCALE_LOAD_DEFAULT flag so that Init() doesn't return
+    // false just because it failed to load wxstd catalog
+    if ( !m_locale.Init(m_language, wxLOCALE_DONT_LOAD_DEFAULT) )
+    {
+        LOG(INFO) << _("This language is not supported by the system.");
+        // continue nevertheless
+    }
+
+    // normally this wouldn't be necessary as the catalog files would be found
+    // in the default locations, but when the program is not installed the
+    // catalogs are in the build directory where we wouldn't find them by
+    // default
+    wxLocale::AddCatalogLookupPathPrefix(".");
+ // Initialize the catalogs we'll be using
+    const wxLanguageInfo* pInfo = wxLocale::GetLanguageInfo(m_language);
+    if (!m_locale.AddCatalog("dailywork"))
+    {
+        LOG(ERROR) << wxString::Format(_("Couldn't find/load the 'dailywork' catalog for locale '%s'."),
+                   pInfo ? pInfo->GetLocaleName() : _("unknown"));
+    }    
+    //todo fake functions, use proper implementation
+    /*if( userWantsAnotherLanguageThanDefault() )
+        m_language = getUsersFavoriteLanguage();*/
+ 
+    // load language if possible, fall back to english otherwise
+//    if(wxLocale::IsAvailable(m_language))
+//    {
+//       // m_locale = new wxLocale( m_language);
+// 
+//        #ifdef __WXGTK__
+//        // add locale search paths
+//        m_locale.AddCatalogLookupPathPrefix(wxT("/usr"));
+//        m_locale.AddCatalogLookupPathPrefix(wxT("/usr/local"));
+//        wxStandardPaths* paths = (wxStandardPaths*) &wxStandardPaths::Get();
+//        wxString prefix = paths->GetInstallPrefix();
+//        m_locale.AddCatalogLookupPathPrefix( prefix );
+//        #endif
+// 
+//        if (m_locale.AddCatalog(wxT("dailywork")))
+//           LOG(ERROR) << "catalog not found"; 
+// 
+//        if(! m_locale.IsOk() )
+//        {
+//            LOG(ERROR) << "selected language is wrong";
+//            delete m_locale;
+//            m_locale = new wxLocale( wxLANGUAGE_ENGLISH );
+//            m_language = wxLANGUAGE_ENGLISH;
+//        }
+//    }
+//    else
+//    {
+//        LOG(INFO) << "The selected language is not supported by your system."
+//                  << "Try installing support for this language.";
+//        m_locale = new wxLocale( wxLANGUAGE_ENGLISH );
+//        m_language = wxLANGUAGE_ENGLISH;
+//    } 
 }
 
