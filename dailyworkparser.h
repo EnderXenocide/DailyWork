@@ -52,10 +52,11 @@ public:
     int DeleteItem(wxDateTime date);
     wxString GetWorkFromDate(const wxDateTime& date);
     
-    int AddToFavorites(wxString text);
+    bool AddToFavorites(wxString text);
     SizeType CountFavorites(); 
     int DeleteFavorite(wxString text);
     wxString GetFavorite(int itemIndex);
+    bool IsInFavorites(wxString text);
     
 private:
     int SetWorkFromItem(Value& item, wxString text);

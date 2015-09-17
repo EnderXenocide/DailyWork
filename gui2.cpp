@@ -707,19 +707,19 @@ void MainFrame::OnComboBoxFavoriteUpdate(wxCommandEvent& event)
     if ( !event.GetEventObject()->IsKindOf(CLASSINFO(wxComboCtrl)) )
         return;
 
-    if ( event.GetEventType() == wxEVT_COMBOBOX )
-    {
-        wxLogDebug(wxT("EVT_COMBOBOX(id=%i,selection=%i)"),event.GetId(),event.GetSelection());
-    }
-    else if ( event.GetEventType() == wxEVT_TEXT )
-    {
-        wxLogDebug(wxT("EVT_TEXT(id=%i,string=\"%s\")"),event.GetId(),event.GetString().c_str());
-    }
-    else if ( event.GetEventType() == wxEVT_TEXT_ENTER )
-    {
-        wxLogDebug("EVT_TEXT_ENTER(id=%i,string=\"%s\")",
-                   event.GetId(), event.GetString().c_str());
-    }
+//    if ( event.GetEventType() == wxEVT_COMBOBOX )
+//    {
+//        wxLogDebug(wxT("EVT_COMBOBOX(id=%i,selection=%i)"),event.GetId(),event.GetSelection());
+//    }
+//    else if ( event.GetEventType() == wxEVT_TEXT )
+//    {
+//        wxLogDebug(wxT("EVT_TEXT(id=%i,string=\"%s\")"),event.GetId(),event.GetString().c_str());
+//    }
+//    else if ( event.GetEventType() == wxEVT_TEXT_ENTER )
+//    {
+//        wxLogDebug("EVT_TEXT_ENTER(id=%i,string=\"%s\")",
+//                   event.GetId(), event.GetString().c_str());
+//    }
 }
 
 void MainFrame::OnAddFavorite(wxCommandEvent& event)
@@ -783,8 +783,7 @@ void MainFrame::OnQuit(wxCommandEvent& event)
 
 void MainFrame::OnAbout(wxCommandEvent& event)
 {
-    wxString msg;
-    msg.Printf( _("This is a daily notepad.\n(c) Laurent Silvestre\nThanks to Julian Smart and his wxRichTextCtrl demo (currently unused), 2005"));
+    wxString msg = _("This is a daily notepad.\n(c) Laurent Silvestre\nThanks to Julian Smart and his wxRichTextCtrl demo (currently unused), 2005");
     wxMessageBox(msg, _("About Dailywork"), wxOK | wxICON_INFORMATION, this);
 }
 

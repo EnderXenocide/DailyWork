@@ -268,9 +268,13 @@ void DailyWorkParser::TestAndUpdate()
     }                
 }
 
-int DailyWorkParser::AddToFavorites(wxString text)
+bool DailyWorkParser::AddToFavorites(wxString text)
 {
     std::string utf8Text = text.ToUTF8().data();
+    if (IsInFavorites(text)) {
+         LOG(INFO) << "Pas d'ajout du favoris <" << utf8Text <<"> déja éxistant";
+        return false;
+    }
     LOG(INFO) << "Ajoute le favoris <" << utf8Text <<">";
     Document::AllocatorType& allocator = document.GetAllocator();
     Value valueString(kStringType);
@@ -278,12 +282,12 @@ int DailyWorkParser::AddToFavorites(wxString text)
     Value &array = document[JSON_FAVORITES];
     array.PushBack(valueString, allocator); 
     modified = true;
-    return 0;
+    return true;
 }
 
 int DailyWorkParser::DeleteFavorite(wxString text)
 {
-    std::string utf8Text = text.ToStdString();
+    std::string utf8Text = text.ToUTF8().data();
     Value &array = document[JSON_FAVORITES];
     for (Value::ConstValueIterator itr = array.Begin(); itr != array.End(); itr++) {
         if (itr->GetString()==utf8Text) {
@@ -310,3 +314,15 @@ int DailyWorkParser::DeleteFavorite(wxString text)
 //    LOG(DEBUG) << "Date non trouvée :" << sdate;
 //    return false;
 //}
+
+bool DailyWorkParser::IsInFavorites(wxString text)
+{
+    std::string utf8Text = text.ToUTF8().data();
+    Value &array = document[JSON_FAVORITES];
+    for (Value::ConstValueIterator itr = array.Begin(); itr != array.End(); itr++) {
+        if (itr->GetString()==utf8Text) {
+                return true;
+        }
+    } 
+    return false; 
+}

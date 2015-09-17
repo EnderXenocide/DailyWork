@@ -549,8 +549,8 @@ void MainApp::LoadFavoritesInComboBox()
 
 int MainApp::AddToFavorites(wxString text)
 {
-   dwparser.AddToFavorites(text);
-   frame->m_comboBoxFavorite->Append(text);
+    if (dwparser.AddToFavorites(text))
+        frame->m_comboBoxFavorite->Append(text);
    return 0;
 }
 
