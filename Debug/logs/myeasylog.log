@@ -924,3 +924,62 @@ Sauvegarde
 2015-09-17 15:12:03,735 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:603] No text to show in editor 
 2015-09-17 15:12:24,702 INFO  [default] Pas d'ajout du favoris <Téléphone> déja éxistant
 2015-09-17 15:12:46,605 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetWorkFromTreeSelection(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:519] No DWItemData for the wxTreeItemId selected
+2015-09-17 15:48:45,822 DEBUG [default] [Trinquard@TRINQUARD-PC] [virtual bool MainApp::OnInit()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:30] START
+2015-09-17 15:48:46,525 INFO  [default] Parse file dailywork.json
+2015-09-17 15:48:46,557 INFO  [default] Loading Tree with json data...
+2015-09-17 15:48:46,557 INFO  [default] Loading Tree Hierarchy... 
+2015-09-17 15:48:46,557 INFO  [default] Tree Loaded
+2015-09-17 15:48:46,572 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetWorkFromTreeSelection(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:525] wxTreeItemId is not ok
+2015-09-17 15:48:46,572 DEBUG [default] [Trinquard@TRINQUARD-PC] [wxString MainApp::GetWorkFromTreeSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:504] Elément selectionné vide
+2015-09-17 15:48:46,572 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:603] No text to show in editor 
+2015-09-17 15:49:04,033 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:604] Text to show in editor <Dailywork
+Datafic Historique : correction compta
+Saisie des heures du 28/8 au 4/9 
+	ajout 1748/S482D et 1748/S507
+Plan
+Impression "tampons" sur flyers
+>
+2015-09-17 15:49:07,119 INFO  [default] Loading Tree with json data...
+2015-09-17 15:49:07,134 INFO  [default] Loading Tree Simple... 
+2015-09-17 15:49:07,150 INFO  [default] Tree Loaded
+2015-09-17 15:51:32,274 DEBUG [default] [Trinquard@TRINQUARD-PC] [virtual bool MainApp::OnInit()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:30] START
+2015-09-17 15:51:32,727 INFO  [default] Parse file dailywork.json
+2015-09-17 15:51:32,727 INFO  [default] Loading Tree with json data...
+2015-09-17 15:51:32,727 INFO  [default] Loading Tree Hierarchy... 
+2015-09-17 15:51:32,727 INFO  [default] Tree Loaded
+2015-09-17 15:51:32,742 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetWorkFromTreeSelection(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:525] wxTreeItemId is not ok
+2015-09-17 15:51:32,742 DEBUG [default] [Trinquard@TRINQUARD-PC] [wxString MainApp::GetWorkFromTreeSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:504] Elément selectionné vide
+2015-09-17 15:51:32,742 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:603] No text to show in editor 
+2015-09-17 15:51:40,095 INFO  [default] Loading Tree with json data...
+2015-09-17 15:51:40,110 INFO  [default] Loading Tree Simple... 
+2015-09-17 15:51:40,126 INFO  [default] Tree Loaded
+2015-09-17 15:52:30,359 DEBUG [default] [Trinquard@TRINQUARD-PC] [virtual bool MainApp::OnInit()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:30] START
+2015-09-17 15:52:30,812 INFO  [default] Parse file dailywork.json
+2015-09-17 15:52:30,812 INFO  [default] Loading Tree with json data...
+2015-09-17 15:52:30,812 INFO  [default] Loading Tree Hierarchy... 
+2015-09-17 15:52:30,812 INFO  [default] Tree Loaded
+2015-09-17 15:52:30,828 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetWorkFromTreeSelection(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:525] wxTreeItemId is not ok
+2015-09-17 15:52:30,828 DEBUG [default] [Trinquard@TRINQUARD-PC] [wxString MainApp::GetWorkFromTreeSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:504] Elément selectionné vide
+2015-09-17 15:52:30,828 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:603] No text to show in editor 
+2015-09-17 15:52:34,306 INFO  [default] Loading Tree with json data...
+2015-09-17 15:52:34,321 INFO  [default] Loading Tree Simple... 
+2015-09-17 15:52:34,337 INFO  [default] Tree Loaded
+2015-09-17 15:52:52,339 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:604] Text to show in editor <Dailywork
+Impression "tampons" sur flyers
+Etiquettes GLCB240>
+2015-09-17 15:52:53,058 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:604] Text to show in editor <Delphi FicFac : modif textes clôture / ouverture
+Dailywork
+Feuile de débit S470 (suite)
+Datafic Historique
+Room Arranger
+Mail SAV Scansit
+Sauvegarde
+
+>
+2015-09-17 15:52:53,839 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:604] Text to show in editor <Saisie des heures du 24/7 au 28/8
+Téléphone à dsdfdsf>
+2015-09-17 15:52:54,730 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:604] Text to show in editor <
+à é>
+2015-09-17 15:52:56,359 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:604] Text to show in editor <Dailywork
+Impression "tampons" sur flyers
+Etiquettes GLCB240>

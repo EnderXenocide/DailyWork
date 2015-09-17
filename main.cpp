@@ -334,13 +334,16 @@ wxTreeItemId MainApp::AddBranchHierarchy(wxTreeItemId rootId, wxDateTime date)
     wxTreeItemId itemId = AddItem(rootId, text, text, false);
     text = wxString::Format("%02d", date.GetMonth()+1);
     itemId = AddItem(itemId, text, text, false);
-    text = wxString::Format("%02d", date.GetDay());
+    wxString weekDay = wxDateTime::GetWeekDayName(date.GetWeekDay(), wxDateTime::Name_Abbr);
+    text = wxString::Format("%s %02d", weekDay, date.GetDay());
     return AddItem(itemId, text, text, false); 
 }
 
 wxTreeItemId MainApp::AddBranchSimple(wxTreeItemId rootId, wxDateTime date)
 {
-    return AddItem(rootId, dwparser.ToTreeDate(date), dwparser.ToDWDate(date), true);   
+    wxString weekDay = wxDateTime::GetWeekDayName(date.GetWeekDay(), wxDateTime::Name_Abbr);
+    wxString text = wxString::Format("%s %s", weekDay, dwparser.ToTreeDate(date));
+    return AddItem(rootId, text, dwparser.ToDWDate(date), true);   
 }
 
 wxTreeItemId MainApp::FindTextInTree(wxTreeItemId parent, wxString text)
