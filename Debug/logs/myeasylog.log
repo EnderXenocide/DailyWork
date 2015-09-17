@@ -983,3 +983,11 @@ Téléphone à dsdfdsf>
 2015-09-17 15:52:56,359 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:604] Text to show in editor <Dailywork
 Impression "tampons" sur flyers
 Etiquettes GLCB240>
+2015-09-17 16:12:00,428 DEBUG [default] [Trinquard@TRINQUARD-PC] [virtual bool MainApp::OnInit()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:30] START
+2015-09-17 16:12:00,850 INFO  [default] Parse file dailywork.json
+2015-09-17 16:12:00,850 INFO  [default] Loading Tree with json data...
+2015-09-17 16:12:00,850 INFO  [default] Loading Tree Hierarchy... 
+2015-09-17 16:12:00,866 INFO  [default] Tree Loaded
+2015-09-17 16:12:00,881 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetWorkFromTreeSelection(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:525] wxTreeItemId is not ok
+2015-09-17 16:12:00,881 DEBUG [default] [Trinquard@TRINQUARD-PC] [wxString MainApp::GetWorkFromTreeSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:504] Elément selectionné vide
+2015-09-17 16:12:00,881 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:603] No text to show in editor 

@@ -336,7 +336,7 @@ wxTreeItemId MainApp::AddBranchHierarchy(wxTreeItemId rootId, wxDateTime date)
     itemId = AddItem(itemId, text, text, false);
     wxString weekDay = wxDateTime::GetWeekDayName(date.GetWeekDay(), wxDateTime::Name_Abbr);
     text = wxString::Format("%s %02d", weekDay, date.GetDay());
-    return AddItem(itemId, text, text, false); 
+    return AddItem(itemId, text, dwparser.ToDWDate(date), true); 
 }
 
 wxTreeItemId MainApp::AddBranchSimple(wxTreeItemId rootId, wxDateTime date)
@@ -528,13 +528,13 @@ void MainApp::SetWorkFromTreeSelection(wxString text)
 
 int MainApp::Save()
 {
-    frame->OnStatusBarMessage("Save on "+wxDateTime::Now().Format().ToStdString());
+    frame->OnStatusBarMessage(_("Save on ")+wxDateTime::Now().Format().ToStdString());
     return dwparser.Save();    
 }
 
 int MainApp::SaveAs(wxString filename)
 {
-    frame->OnStatusBarMessage("Save As... on "+wxDateTime::Now().Format().ToStdString());
+    frame->OnStatusBarMessage(_("Save As... on ")+wxDateTime::Now().Format().ToStdString());
     return dwparser.SaveAs(filename);
 }
 

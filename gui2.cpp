@@ -310,6 +310,7 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     m_mainToolBar->AddSeparator();
 
     m_comboBoxFavorite = new wxComboBox(m_mainToolBar, ID_HELPLIST, wxEmptyString);
+    m_comboBoxFavorite->SetHint(_("Favorites List"));
     m_mainToolBar->AddControl(m_comboBoxFavorite);
 
     m_mainToolBar->AddTool(ID_FAVORITE_GO, wxEmptyString, wxBitmap(bookgo_xpm), _("Insert favorite")); //Inserer favoris
