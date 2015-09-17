@@ -55,7 +55,7 @@ int DailyWorkParser::Parse()
     return retour;
 }
 
-int DailyWorkParser::UpdateWork(const wxDateTime& date, std::string text)
+int DailyWorkParser::UpdateWork(const wxDateTime& date, wxString text)
 {
     if(date.IsValid()) {
         std::string sdate = ToDWDate(date).ToStdString();
@@ -150,7 +150,7 @@ wxString DailyWorkParser::ToTreeDate(const wxDateTime& date) const
 int DailyWorkParser::SetWorkFromItem(Value& item, wxString text)
 {
     assert(item.IsObject());
-    std::string utf8 = text.ToStdString();
+    std::string utf8 = text.ToUTF8().data();
     item[JSON_WORK].SetString(utf8.data(), utf8.size(), document.GetAllocator());
     modified = true;
     return 0;
@@ -186,7 +186,7 @@ int DailyWorkParser::DeleteItem(wxDateTime date)
 void DailyWorkParser::AddItem(wxDateTime& date, wxString work)
 {  
     std::string DWDate = ToDWDate(date).ToStdString();
-    std::string utf8Work = work.ToStdString();
+    std::string utf8Work = work.ToUTF8().data();
     LOG(INFO) << "Ajoute Date " << DWDate;
     Document::AllocatorType& allocator = document.GetAllocator();
     Value value(kObjectType);
@@ -205,42 +205,6 @@ void DailyWorkParser::AddItem(wxDateTime& date, wxString work)
 //    LOG(INFO) << "Type of member is " << kTypeNames[value.GetType()];    
 }
 
-wxDateTime DailyWorkParser::getSelectedDate()
-{
-    assert(IsSelectedOk());
-    return  DWToDate(selected[JSON_DATE].GetString()); 
-}
-
-wxString DailyWorkParser::getSelectedWork()
-{
-    assert(IsSelectedOk());
-    return selected[JSON_WORK].GetString();
-}
-
-int DailyWorkParser::setSelectedDate(const wxDateTime& date)
-{
-    if (IsSelectedOk())  {
-        std::string text = ToDWDate(date).ToStdString();
-        selected[JSON_DATE].SetString(text.data(), text.size(), document.GetAllocator());
-        modified = true;
-        return 0;
-        }
-    else
-        return -1;
-}
-
-int DailyWorkParser::setSelectedWork(wxString work)
-{
-    if (IsSelectedOk())  {
-        std::string utf8Work = work.ToStdString();
-        selected[JSON_WORK].SetString(utf8Work.data(), utf8Work.size(), document.GetAllocator());
-        modified = true;
-        return 0;        
-    }
-    else
-        return -1;
-}
-
 SizeType DailyWorkParser::CountItems()
 {
     return document[JSON_ITEMS].Size();
@@ -249,11 +213,6 @@ SizeType DailyWorkParser::CountItems()
 SizeType DailyWorkParser::CountFavorites()
 {
     return document[JSON_FAVORITES].Size();
-}
-
-bool DailyWorkParser::IsSelectedOk()
-{
-    return (selected != NULL) && (selected.IsObject());
 }
 
 wxString DailyWorkParser::GetFavorite(int itemIndex)
@@ -300,21 +259,22 @@ void DailyWorkParser::TestAndUpdate()
     }  
     
     version = document[JSON_VERSION].GetInt();
-    if (version>1) 
-        if (!document.HasMember(JSON_FAVORITES)) {
-            Value items(kArrayType);
-            document.AddMember(JSON_FAVORITES, items, allocator);  
-            modified = true;          
+    if (version==1) 
+       document[JSON_VERSION].SetInt(2);  //passage à la version 2
+    if (!document.HasMember(JSON_FAVORITES)) {
+        Value items(kArrayType);
+        document.AddMember(JSON_FAVORITES, items, allocator);  
+        modified = true;          
     }                
 }
 
 int DailyWorkParser::AddToFavorites(wxString text)
 {
-    std::string utf8Text = text.ToStdString();
+    std::string utf8Text = text.ToUTF8().data();
     LOG(INFO) << "Ajoute le favoris <" << utf8Text <<">";
     Document::AllocatorType& allocator = document.GetAllocator();
     Value valueString(kStringType);
-    valueString.SetString(utf8Text.data(), utf8Text.size(), document.GetAllocator());
+    valueString.SetString(utf8Text.c_str(), utf8Text.size(), document.GetAllocator());
     Value &array = document[JSON_FAVORITES];
     array.PushBack(valueString, allocator); 
     modified = true;

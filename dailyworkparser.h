@@ -34,20 +34,13 @@ public:
     void ConnectCallback(CallbackMessageInfo cb);
     int Parse();
     void New();
-    //DWItemData* AddDate(wxDateTime& date); 
-    int UpdateWork(const wxDateTime& date, std::string text);
+
+    int UpdateWork(const wxDateTime& date, wxString text);
     wxDateTime GetDateFromItem(int itemIndex);
     wxString ToDWDate(const wxDateTime& date) const;
     wxString ToTreeDate(const wxDateTime& date) const;
     wxDateTime DWToDate(const wxString DWDate);
-    //todo delete date 
 
-   // int selectItemFromDate(const wxDateTime& date);   
-    
-    wxString getSelectedWork();
-    int setSelectedWork(wxString work);
-    wxDateTime getSelectedDate();
-    int setSelectedDate(const wxDateTime& date);
     int GetVersion() const { return version; }
     bool IsModified() const { return modified; }
     int SaveAs(wxString filename);
@@ -76,7 +69,6 @@ private:
     Document document;
     int version;
     bool modified; // set if document was modified or not
-    Value selected;
 };
 
 #endif // DAILYWORKPARSER_H

@@ -502,7 +502,7 @@ void MainApp::SetWorkFromTreeSelection(wxString text)
         DWItemData* itemData=(DWItemData*) tree->GetItemData(itemId);
         if (itemData != NULL) {
             LOG(DEBUG ) << "Edit modified : " << text.ToUTF8();
-            dwparser.UpdateWork(itemData->GetValue(), text.ToUTF8().data()); 
+            dwparser.UpdateWork(itemData->GetValue(), text); 
             return ;
         }
         LOG(DEBUG) << "No DWItemData for the wxTreeItemId selected";

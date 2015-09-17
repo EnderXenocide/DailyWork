@@ -314,10 +314,10 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     m_comboBoxFavorite = new wxComboBox(m_mainToolBar, ID_HELPLIST, wxEmptyString);
     m_mainToolBar->AddControl(m_comboBoxFavorite);
 
-    m_mainToolBar->AddTool(ID_FAVORITE_ADD, wxEmptyString, wxBitmap(bookadd_xpm), _("Add to favorites")); //Ajouter aux favoris
     m_mainToolBar->AddTool(ID_FAVORITE_GO, wxEmptyString, wxBitmap(bookgo_xpm), _("Insert favorite")); //Inserer favoris
-    m_mainToolBar->AddTool(ID_FAVORITE_DELETE, wxEmptyString, wxBitmap(bookdelete_xpm), _("Delete favorite")); //Supprimer favoris
     m_mainToolBar->AddTool(ID_FAVORITE_EDIT, wxEmptyString, wxBitmap(bookedit_xpm), _("Manage favorites")); //Gerer les favoris
+    m_mainToolBar->AddTool(ID_FAVORITE_ADD, wxEmptyString, wxBitmap(bookadd_xpm), _("Add to favorites")); //Ajouter aux favoris
+    m_mainToolBar->AddTool(ID_FAVORITE_DELETE, wxEmptyString, wxBitmap(bookdelete_xpm), _("Delete favorite")); //Supprimer favoris
     
     m_mainToolBar->Realize();
 
