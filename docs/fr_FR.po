@@ -1,0 +1,577 @@
+# DAILYWORK TRANSLATION.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Laurent Silvestre <silvestre.laurent@gmail.com>, 2015.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-09-16 11:56+0200\n"
+"PO-Revision-Date: 2015-09-16 12:02+0200\n"
+"Last-Translator: Laurent Silvestre <silvestre.laurent@gmail.com>\n"
+"Language-Team: \n"
+"Language: fr_FR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.4\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: gui2.cpp:111
+msgid "&About\tF1"
+msgstr "À &propos\tF1"
+
+#: gui2.cpp:201
+msgid "&Add Column"
+msgstr "&Ajouter une colonne"
+
+#: gui2.cpp:160
+msgid "&Bold\tCtrl+B"
+msgstr "&Gras\tCtrl+B"
+
+#: gui2.cpp:170
+msgid "&Centre"
+msgstr "&Centrer"
+
+#: gui2.cpp:1248
+msgid "&Close"
+msgstr "&Fermer"
+
+#: gui2.cpp:150
+msgid "&Copy\tCtrl+C"
+msgstr "&Copier\tCtrl+C"
+
+#: gui2.cpp:204
+msgid "&Delete Row"
+msgstr "&Supprimer une ligne"
+
+#: gui2.cpp:144
+msgid "&Delete date\tCtrl+D"
+msgstr "Supprimer &date\tCtrl+D"
+
+#: gui2.cpp:214
+msgid "&Edit"
+msgstr "E&dition"
+
+#: gui.cpp:22 gui2.cpp:213
+msgid "&File"
+msgstr "&Fichier"
+
+#: gui2.cpp:182
+msgid "&Font..."
+msgstr "&Police..."
+
+#: gui2.cpp:219
+msgid "&Help"
+msgstr "Aid&e"
+
+#: gui2.cpp:125
+msgid "&Hierarchical Tree"
+msgstr "&Arborescence hiérarchique"
+
+#: gui2.cpp:209
+msgid "&Image..."
+msgstr "&Image..."
+
+#: gui2.cpp:218
+msgid "&Insert"
+msgstr "&Insertion"
+
+#: gui2.cpp:161
+msgid "&Italic\tCtrl+I"
+msgstr "&Italique\tCtrl+I"
+
+#: gui2.cpp:216
+msgid "&Lists"
+msgstr "&Listes"
+
+#: gui2.cpp:188
+msgid "&Manage Styles"
+msgstr "&Gestion des styles"
+
+#: gui2.cpp:119
+msgid "&Open\tCtrl+O"
+msgstr "&Ouvrir\tCtrl+O"
+
+#: gui2.cpp:184
+msgid "&Paragraph..."
+msgstr "&Paragraphe..."
+
+#: gui2.cpp:151
+msgid "&Paste\tCtrl+V"
+msgstr "C&oller\tCtrl+V"
+
+#: gui2.cpp:135
+msgid "&Print...\tCtrl+P"
+msgstr "Im&primer...\tCtrl+P"
+
+#: gui2.cpp:147
+msgid "&Redo\tCtrl+Y"
+msgstr "&Rétablir\tCtrl+Y"
+
+#: gui2.cpp:130
+msgid "&Reload\tF2"
+msgstr "&Recharger\tF2"
+
+#: gui2.cpp:169
+msgid "&Right Align"
+msgstr "Aligner à &droite"
+
+#: gui2.cpp:121
+msgid "&Save\tCtrl+S"
+msgstr "Enregi&strer\tCtrl+S"
+
+#: gui2.cpp:113
+msgid "&Stay on top\tF11"
+msgstr "&Rester au premier plan\tF11"
+
+#: gui2.cpp:187
+msgid "&Switch Style Sheets"
+msgstr ""
+
+#: gui2.cpp:207
+msgid "&Symbol...\tCtrl+I"
+msgstr "&Symboles...\tCtrl+I"
+
+#: gui2.cpp:217
+msgid "&Tables"
+msgstr "&Tables"
+
+#: gui2.cpp:208
+msgid "&URL..."
+msgstr "&URL..."
+
+#: gui2.cpp:162
+msgid "&Underline\tCtrl+U"
+msgstr "&Underline\tCtrl+U"
+
+#: gui2.cpp:146
+msgid "&Undo\tCtrl+Z"
+msgstr "Ann&uler\tCtrl+Z"
+
+#: gui2.cpp:179
+msgid "1.5 Line Spacing"
+msgstr "Espacement de ligne de 1,5"
+
+#: gui2.cpp:789
+msgid "About Dailywork"
+msgstr "A propos de Dailywork"
+
+#: gui2.cpp:202
+msgid "Add &Row"
+msgstr "Ajouter une &ligne"
+
+#: gui2.cpp:317
+msgid "Add to favorites"
+msgstr "Ajouter aux favoris"
+
+#: gui2.cpp:304
+msgid "Align Left"
+msgstr "Aligner à gauche"
+
+#: gui2.cpp:306
+msgid "Align Right"
+msgstr "Aligner à droite"
+
+#: gui2.cpp:300
+msgid "Bold"
+msgstr "Gras"
+
+#: gui2.cpp:1408
+msgid "Bullet List 1"
+msgstr "Puces"
+
+#: gui2.cpp:191
+msgid "Bullets and &Numbering..."
+msgstr "Puc&es et Numérotation..."
+
+#: gui2.cpp:1395
+msgid "Bullets and Numbering"
+msgstr "Puces et Numérotation"
+
+#: gui2.cpp:305
+msgid "Centre"
+msgstr "Centrer"
+
+#: gui2.cpp:810 gui2.cpp:891
+msgid "Choose a filename"
+msgstr "Choisir un fichier"
+
+#: gui2.cpp:1542
+msgid "Choose an image"
+msgstr "Choisir une image"
+
+#: gui2.cpp:198
+msgid "Clear List Formatting"
+msgstr ""
+
+#: gui2.cpp:294
+msgid "Copy"
+msgstr "Copier"
+
+#: gui2.cpp:149
+msgid "Cu&t\tCtrl+X"
+msgstr "&Coupert\tCtrl+X"
+
+#: gui2.cpp:293
+msgid "Cut"
+msgstr "Couper"
+
+#: main.cpp:326
+msgid "Dates loaded"
+msgstr "Dates chargées"
+
+#: gui2.cpp:176
+msgid "Decrease &Paragraph Spacing"
+msgstr ""
+
+#: main.cpp:447
+#, c-format
+msgid "Delete %s %s ?"
+msgstr "Supprimer %s %s ?"
+
+#: gui2.cpp:203
+msgid "Delete &Column"
+msgstr "Supprimer une &colonne"
+
+#: gui2.cpp:291
+msgid "Delete date"
+msgstr "Supprimer date"
+
+#: gui2.cpp:319
+msgid "Delete favorite"
+msgstr "Supprimer favoris"
+
+#: gui2.cpp:197
+msgid "Demote List Items"
+msgstr ""
+
+#: gui2.cpp:1612
+msgid "Dimension Scale Factor"
+msgstr ""
+
+#: gui2.cpp:180
+msgid "Double Line Spacing"
+msgstr ""
+
+#: gui.cpp:19
+msgid "E&xit"
+msgstr "&Fermer"
+
+#: gui2.cpp:141
+msgid "E&xit\tAlt+X"
+msgstr "&Quitter\tAlt+X"
+
+#: gui2.cpp:1612
+msgid "Enter a dimension scale factor:"
+msgstr ""
+
+#: gui2.cpp:1600
+msgid "Enter a text scale factor:"
+msgstr "Saisir une échelle du texte"
+
+#: main.cpp:321
+#, c-format
+msgid "Error loading date <%s>"
+msgstr "Erreur de chargement de la date <%s>"
+
+#: dailyworkparser.cpp:46
+#, c-format
+msgid "Error reading file (offset %u): %s\n"
+msgstr "Erreur de lecture du fichier (offset %u): %s\n"
+
+#: gui2.cpp:215
+msgid "F&ormat"
+msgstr "F&ormat"
+
+#: dailyworkparser.cpp:33 dailyworkparser.cpp:34
+msgid "File not found"
+msgstr "Fichier non trouvé"
+
+#: gui2.cpp:311
+msgid "Font"
+msgstr "Police"
+
+#: gui2.cpp:185
+msgid "Font and Pa&ragraph...\tShift+Ctrl+F"
+msgstr ""
+
+#: gui2.cpp:1240
+msgid "HTML"
+msgstr "HTML"
+
+#: gui2.cpp:183
+msgid "Image Property"
+msgstr "Propriétés de l'image"
+
+#: gui2.cpp:175
+msgid "Increase Paragraph &Spacing"
+msgstr ""
+
+#: gui2.cpp:173
+msgid "Indent &Less"
+msgstr "Réduire &le retrait"
+
+#: gui2.cpp:172
+msgid "Indent &More"
+msgstr "Aug&menter le retrait"
+
+#: gui2.cpp:308
+msgid "Indent Less"
+msgstr "Réduire le retrait"
+
+#: gui2.cpp:309
+msgid "Indent More"
+msgstr "Augmenter le retrait"
+
+#: gui2.cpp:1524
+msgid "Insert URL"
+msgstr "Insérer URL"
+
+#: gui2.cpp:318
+msgid "Insert favorite"
+msgstr "Insérer favoris"
+
+#: gui2.cpp:301
+msgid "Italic"
+msgstr "Italique"
+
+#: gui2.cpp:194
+msgid "Itemize List"
+msgstr ""
+
+#: gui2.cpp:168
+msgid "L&eft Align"
+msgstr "Aligner à &gauche"
+
+#: gui2.cpp:320
+msgid "Manage favorites"
+msgstr "Gestion des favoris"
+
+#: gui2.cpp:178
+msgid "Normal Line Spacing"
+msgstr ""
+
+#: gui2.cpp:193
+msgid "Number List"
+msgstr "Numérotation"
+
+#: gui2.cpp:1385
+msgid "Numbered List 1"
+msgstr ""
+
+#: gui2.cpp:119
+msgid "Open a file"
+msgstr "Ouvrir un fichier"
+
+#: gui2.cpp:1585
+msgid "Page 1"
+msgstr ""
+
+#: gui2.cpp:1588
+msgid "Page 2"
+msgstr ""
+
+#: gui2.cpp:133
+msgid "Page Set&up..."
+msgstr ""
+
+#: gui2.cpp:133
+msgid "Page setup"
+msgstr ""
+
+#: gui2.cpp:295
+msgid "Paste"
+msgstr "Coller"
+
+#: gui2.cpp:135
+msgid "Print"
+msgstr "Imprimer"
+
+#: gui2.cpp:136
+msgid "Print Pre&view"
+msgstr "Aperçu a&vant impression"
+
+#: gui2.cpp:136
+msgid "Print preview"
+msgstr "Aperçu avant impression"
+
+#: gui2.cpp:196
+msgid "Promote List Items"
+msgstr ""
+
+#: gui2.cpp:141
+msgid "Quit this program"
+msgstr "Ferme ce programme"
+
+#: gui2.cpp:298
+msgid "Redo"
+msgstr "Rétablir"
+
+#: gui2.cpp:287
+msgid "Reload"
+msgstr "Recharger"
+
+#: gui2.cpp:130
+msgid "Reload the file/tree"
+msgstr "Recharger le fichier/l'arborescence"
+
+#: gui2.cpp:195
+#, fuzzy
+msgid "Renumber List"
+msgstr "Renuméroter la liste"
+
+#: gui2.cpp:289
+msgid "Save"
+msgstr "Enregistrer"
+
+#: gui2.cpp:122
+msgid "Save As...\tF12"
+msgstr "Enregistrer sous...\tF12"
+
+#: gui2.cpp:824
+#, c-format
+msgid "Save as <%s>"
+msgstr "Enregistrer sous <%s>"
+
+#: gui2.cpp:121
+msgid "Save the work"
+msgstr "Enregistrer le travail"
+
+#: gui2.cpp:122
+msgid "Save to a new file"
+msgstr "Enregistrer dans un nouveau fichier"
+
+#: gui2.cpp:154
+msgid "Select A&ll\tCtrl+A"
+msgstr "&Tout sélectionner\tCtrl+A"
+
+#: gui2.cpp:157
+msgid "Set &Dimension Scale..."
+msgstr ""
+
+#: gui2.cpp:156
+msgid "Set &Text Scale..."
+msgstr ""
+
+#: gui2.cpp:111
+msgid "Show about dialog"
+msgstr "Voir la boite de dialogue À propos"
+
+#: gui2.cpp:113
+msgid "Stay on top"
+msgstr "Affiche le programme au dessus des autres"
+
+#: gui2.cpp:164
+msgid "Stri&kethrough"
+msgstr "&Biffure"
+
+#: gui2.cpp:1341
+msgid "Style Manager"
+msgstr "Gestion "
+
+#: gui2.cpp:166
+msgid "Subscrip&t"
+msgstr ""
+
+#: gui2.cpp:165
+msgid "Superscrip&t"
+msgstr ""
+
+#: gui2.cpp:1578
+msgid "Testing"
+msgstr ""
+
+#: gui2.cpp:1600
+#, fuzzy
+msgid "Text Scale Factor"
+msgstr "Echelle du texte"
+
+#: gui2.cpp:641
+msgid "This document was modified, would you like to save ?"
+msgstr "Le document a été modifié, voulez-vous enregistrer ? "
+
+#: gui2.cpp:788
+msgid ""
+"This is a daily notepad.\n"
+"(c) Laurent Silvestre\n"
+"Thanks to Julian Smart and his wxRichTextCtrl demo (currently unused), 2005"
+msgstr ""
+"C'est un bloc-note journalier.\n"
+"(c) Laurent Silvestre\n"
+"Merci à Julian Smart et sa demo du wxRichTextCtrl (partiellement utilisé), "
+"2005"
+
+#: gui2.cpp:125
+msgid "Toggle Simple/Hierarchical Tree"
+msgstr "Choisir entre arborescence hiérarchique ou simple"
+
+#: gui2.cpp:1524
+msgid "URL:"
+msgstr "URL:"
+
+#: gui2.cpp:302
+msgid "Underline"
+msgstr "Souligner"
+
+#: gui2.cpp:297
+msgid "Undo"
+msgstr "Annuler"
+
+#: gui2.cpp:139
+msgid "View HTML"
+msgstr "Voir en HTML"
+
+#: gui2.cpp:139
+msgid "View as HT&ML"
+msgstr "Voir en HT&ML"
+
+#: gui2.cpp:641 main.cpp:447
+msgid "Warning"
+msgstr "Attention"
+
+#: gui2.cpp:232
+msgid "Welcome to Dailywork!"
+msgstr "Bienvenue au Dailywork !"
+
+#: main.cpp:439
+msgid "the date"
+msgstr "la date"
+
+#: main.cpp:445
+msgid "the day"
+msgstr "le jour"
+
+#: main.cpp:443
+msgid "the month"
+msgstr "le mois"
+
+#: main.cpp:441
+msgid "the year"
+msgstr "l'année"
+
+#: main.cpp:591
+msgid "unknown"
+msgstr "inconnue"
+
+#~ msgid "Save As... on "
+#~ msgstr "Enregistrer sous... le "
+
+#~ msgid "Save on "
+#~ msgstr "Enregistrer le "
+
+#~ msgid "Save As... on"
+#~ msgstr "Enregistrer sous... le "
+
+#~ msgid "Stri&ke through"
+#~ msgstr "Barré"
+
+#~ msgid "Vie&w as HTML"
+#~ msgstr "Voir en &HTML"
+
+#~ msgid "&View as HTML"
+#~ msgstr "&Voir en HTML"
+
+#~ msgid "Save a file"
+#~ msgstr "Enregistrer un fichier"

@@ -37,19 +37,15 @@ public:
     //DWItemData* AddDate(wxDateTime& date); 
     int UpdateWork(const wxDateTime& date, std::string text);
     wxDateTime GetDateFromItem(int itemIndex);
-    std::string GetWorkFromDate(const wxDateTime& date);
     wxString ToDWDate(const wxDateTime& date) const;
     wxString ToTreeDate(const wxDateTime& date) const;
-    wxDateTime DWToDate(const std::string DWDate);
-    SizeType CountItems(); 
-    SizeType CountFavorites(); 
-    wxString GetFavorite(int itemIndex);
+    wxDateTime DWToDate(const wxString DWDate);
     //todo delete date 
 
    // int selectItemFromDate(const wxDateTime& date);   
     
-    std::string getSelectedWork();
-    int setSelectedWork(std::string work);
+    wxString getSelectedWork();
+    int setSelectedWork(wxString work);
     wxDateTime getSelectedDate();
     int setSelectedDate(const wxDateTime& date);
     int GetVersion() const { return version; }
@@ -57,13 +53,20 @@ public:
     int SaveAs(wxString filename);
     int Save();
     bool IsSelectedOk();
-    void AddItem(wxDateTime& date, std::string work="");
+    
+    void AddItem(wxDateTime& date, wxString work="");
+    SizeType CountItems(); 
     int DeleteItem(wxDateTime date);
+    wxString GetWorkFromDate(const wxDateTime& date);
+    
     int AddToFavorites(wxString text);
+    SizeType CountFavorites(); 
     int DeleteFavorite(wxString text);
+    wxString GetFavorite(int itemIndex);
+    
 private:
-    int SetWorkFromItem(Value& item, std::string text);
-    std::string GetWorkFromItem(const Value& item); 
+    int SetWorkFromItem(Value& item, wxString text);
+    wxString GetWorkFromItem(const Value& item); 
     void TestAndUpdate();
     //bool FindItem(const wxDateTime& date, Value& item); //todo fonction ne marche pas, bouge les objets
     //Value& FindItem(const wxDateTime& date);

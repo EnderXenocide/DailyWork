@@ -479,7 +479,7 @@ bool MainApp::DeleteItemData(wxTreeItemId itemId)
     return true;    //todo revoir retour
 } 
   
-std::string MainApp::GetWorkFromTreeSelection()
+wxString MainApp::GetWorkFromTreeSelection()
 {
    wxTreeCtrl* tree = frame->m_treeDates;
    wxTreeItemId itemId = tree->GetSelection();
@@ -548,7 +548,7 @@ int MainApp::DeleteSelectedFavorite()
    int index = frame->m_comboBoxFavorite->GetSelection();
    if (index != wxNOT_FOUND) {
         wxString selection = frame->m_comboBoxFavorite->GetString(index);
-        dwparser.DeleteFavorite(selection);  
+        dwparser.DeleteFavorite(selection.ToUTF8());  
         frame->m_comboBoxFavorite->Delete(index);
         return 0;
    }

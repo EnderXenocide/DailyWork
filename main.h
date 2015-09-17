@@ -63,7 +63,7 @@ public:
     wxTreeItemId FindDateInTree(wxDateTime date);
     wxTreeItemId FindTextInTree(wxTreeItemId parent, wxString text);
     void SetWorkFromTreeSelection(wxString text);
-    std::string GetWorkFromTreeSelection();
+    wxString GetWorkFromTreeSelection();
     void DeleteDateSelected();
     bool DeleteItemData(wxTreeItemId itemId);
     bool IsModified() const { return dwparser.IsModified(); }
