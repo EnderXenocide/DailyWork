@@ -692,3 +692,16 @@ Téléphone à>
 2015-09-17 10:42:13,233 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetWorkFromTreeSelection(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:511] wxTreeItemId is not ok
 2015-09-17 10:42:13,233 DEBUG [default] [Trinquard@TRINQUARD-PC] [wxString MainApp::GetWorkFromTreeSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:490] Elément selectionné vide
 2015-09-17 10:42:13,233 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:604] No text to show in editor 
+2015-09-17 10:54:35,675 DEBUG [default] [Trinquard@TRINQUARD-PC] [virtual bool MainApp::OnInit()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:30] START
+2015-09-17 10:54:36,526 INFO  [default] Parse file dailywork.json
+2015-09-17 10:54:36,527 INFO  [default] Loading Tree with json data...
+2015-09-17 10:54:36,527 INFO  [default] Loading Tree Hierarchy... 
+2015-09-17 10:54:36,530 INFO  [default] Tree Loaded
+2015-09-17 10:54:36,538 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetWorkFromTreeSelection(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:511] wxTreeItemId is not ok
+2015-09-17 10:54:36,539 DEBUG [default] [Trinquard@TRINQUARD-PC] [wxString MainApp::GetWorkFromTreeSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:490] Elément selectionné vide
+2015-09-17 10:54:36,539 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:605] No text to show in editor 
+2015-09-17 10:54:42,627 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:606] Text to show in editor <Saisie des heures du 24/7 au 28/8
+Téléphone à>
+2015-09-17 10:54:49,379 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetWorkFromTreeSelection(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:504] Edit modified : Saisie des heures du 24/7 au 28/8
+Téléphone à dsdfdsf
+2015-09-17 10:54:49,380 INFO  [default] Enregistrement

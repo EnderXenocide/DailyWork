@@ -515,7 +515,7 @@ void MainApp::SetWorkFromTreeSelection(wxString text)
 int MainApp::Save()
 {
     frame->OnStatusBarMessage("Save on "+wxDateTime::Now().Format().ToStdString());
-    return dwparser.Save();     
+    return dwparser.Save();    
 }
 
 int MainApp::SaveAs(wxString filename)

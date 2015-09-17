@@ -595,7 +595,8 @@ void MainFrame::UpdateDWWork()
     //todo garder function ici ? car same style que DailyWorkParser::GetWorkFromTree
     wxRichTextBuffer & rtb = m_editor->GetBuffer();
     if (rtb.IsModified() ) {
-         wxGetApp().SetWorkFromTreeSelection(rtb.GetText());
+        wxGetApp().SetWorkFromTreeSelection(rtb.GetText());
+        m_editor->DiscardEdits();
     }    
 }
 void MainFrame::ShowTreeItemSelectedText()
@@ -797,7 +798,7 @@ void MainFrame::OnStayOnTop(wxCommandEvent& event)
 void MainFrame::OnSave(wxCommandEvent& event)
 {
     UpdateDWWork(); // met à jour/ou pas le texte ecrit dans le richedit dans DWparser
-    wxGetApp().Save();
+    wxGetApp().Save();    
 }
 
 void MainFrame::OnSaveAs(wxCommandEvent& event)
