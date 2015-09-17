@@ -123,9 +123,7 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     
     fileMenu->AppendSeparator();
     fileMenu->AppendCheckItem(ID_HIERACHY, _("&Hierarchical Tree"), _("Toggle Simple/Hierarchical Tree"));
-    fileMenu->Check(ID_HIERACHY, wxGetApp().IsHierarchicalTree());    
-    fileMenu->Enable(ID_HIERACHY, false);
-    
+    fileMenu->Check(ID_HIERACHY, wxGetApp().IsHierarchicalTree());        
     fileMenu->AppendSeparator();
     fileMenu->Append(ID_RELOAD, _("&Reload\tF2"), _("Reload the file/tree"));
    // fileMenu->SetBitmap....
@@ -659,7 +657,7 @@ void MainFrame::OnCalendarDblClick(wxCalendarEvent& event)
 
 void MainFrame::OnCalendarSetFocus( wxFocusEvent& event )
 {
-    OnStatusBarMessage("Double-cliquer sur une date pour l'ajouter à la liste");
+    OnStatusBarMessage(_("Double-clicking on a date to add it on the tree")); //Double-cliquer sur une date pour l'ajouter à la liste
 }
 
 void MainFrame::OnCalendarKillFocus( wxFocusEvent& event )

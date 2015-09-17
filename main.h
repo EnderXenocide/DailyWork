@@ -59,7 +59,7 @@ public:
     wxRichTextPrinting* GetPrinting() const { return m_printing; }
 #endif   
     int AddDateToTree(wxDateTime& date, bool selectItem = false); // todo wxTreeCtrl& tree instead
-    wxTreeItemId AddItem(wxTreeItemId parent, wxString text);
+    wxTreeItemId AddItem(wxTreeItemId parent, wxString text, wxString textToCompare, bool compareWithData);
     wxTreeItemId FindDateInTree(wxDateTime date);
     wxTreeItemId FindTextInTree(wxTreeItemId parent, wxString text);
     void SetWorkFromTreeSelection(wxString text);
@@ -84,8 +84,8 @@ private:
 #endif      
 
     void InitRichText(); 
-    wxTreeItemId LoadBranchHierarchy(wxTreeItemId rootId, wxDateTime date);
-    wxTreeItemId LoadBranchSimple(wxTreeItemId rootId, wxDateTime date);
+    wxTreeItemId AddBranchHierarchy(wxTreeItemId rootId, wxDateTime date);
+    wxTreeItemId AddBranchSimple(wxTreeItemId rootId, wxDateTime date);
 };
 
 // declare global static function wxGetApp()

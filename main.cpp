@@ -301,11 +301,11 @@ void MainApp::LoadDailyWorkInTree()
     wxTreeItemId rootId = tree->AddRoot(wxT("Dates")); //hidden
     wxTreeItemId (MainApp::*LoadBranch)(wxTreeItemId rootId, wxDateTime date); // pointeur de fonction
     if (hierarchicalTree) {
-        LoadBranch = &LoadBranchHierarchy;
+        LoadBranch = &AddBranchHierarchy;
         LOG(INFO) << "Loading Tree Hierarchy... ";
     }
     else {
-        LoadBranch = &LoadBranchSimple;
+        LoadBranch = &AddBranchSimple;
             LOG(INFO) << "Loading Tree Simple... ";
     }
     wxTreeItemId itemId;
@@ -328,17 +328,19 @@ void MainApp::LoadDailyWorkInTree()
     LOG(INFO) << "Tree Loaded";
 }
 
-wxTreeItemId MainApp::LoadBranchHierarchy(wxTreeItemId rootId, wxDateTime date)
+wxTreeItemId MainApp::AddBranchHierarchy(wxTreeItemId rootId, wxDateTime date)
 {
-    wxTreeItemId itemId = AddItem(rootId, wxString::Format("%4d", date.GetYear()));
-    itemId = AddItem(itemId, wxString::Format("%02d", date.GetMonth()+1));
-    return AddItem(itemId, wxString::Format("%02d", date.GetDay()));       
+    wxString text = wxString::Format("%4d", date.GetYear());
+    wxTreeItemId itemId = AddItem(rootId, text, text, false);
+    text = wxString::Format("%02d", date.GetMonth()+1);
+    itemId = AddItem(itemId, text, text, false);
+    text = wxString::Format("%02d", date.GetDay());
+    return AddItem(itemId, text, text, false); 
 }
 
-wxTreeItemId MainApp::LoadBranchSimple(wxTreeItemId rootId, wxDateTime date)
+wxTreeItemId MainApp::AddBranchSimple(wxTreeItemId rootId, wxDateTime date)
 {
-    wxString sDate = dwparser.ToTreeDate(date);
-    return AddItem(rootId, sDate);   
+    return AddItem(rootId, dwparser.ToTreeDate(date), dwparser.ToDWDate(date), true);   
 }
 
 wxTreeItemId MainApp::FindTextInTree(wxTreeItemId parent, wxString text)
@@ -389,11 +391,10 @@ int MainApp::AddDateToTree(wxDateTime& date, bool selectItem)
 
     wxTreeItemId itemId;
     if(hierarchicalTree) {
-        itemId = AddItem(tree->GetRootItem(), wxString::Format("%4d", date.GetYear()));
-        itemId = AddItem(itemId, wxString::Format("%02d", date.GetMonth()+1));
-        itemId = AddItem(itemId, wxString::Format("%02d", date.GetDay()));
+        wxString sdate;
+        itemId = AddBranchHierarchy(tree->GetRootItem(), date);
     } else {
-        itemId = AddItem(tree->GetRootItem(), dwparser.ToTreeDate(date));
+        itemId = AddBranchSimple(tree->GetRootItem(), date);
     }
     dwparser.AddItem(date);
     DWItemData* data =  new DWItemData(date);
@@ -407,16 +408,26 @@ int MainApp::AddDateToTree(wxDateTime& date, bool selectItem)
 /*
  * Cherche l'item avec text comme text ou ajout un nouveau dans l'ordre alphabéthique inverse
  */
-wxTreeItemId MainApp::AddItem(wxTreeItemId parent, wxString text)
+wxTreeItemId MainApp::AddItem(wxTreeItemId parent, wxString text, wxString textToCompare, bool compareWithData)
 {
     wxTreeCtrl* tree = frame->m_treeDates;
     wxTreeItemIdValue cookie;
     wxTreeItemId itemId = tree->GetFirstChild(parent, cookie);
+    wxString itemText;
     while(itemId.IsOk()) {
-        wxString itemText = tree->GetItemText(itemId);
-        if(itemText == text)
+        if (compareWithData) {
+            DWItemData *itemData = (DWItemData *) tree->GetItemData(itemId);
+            if (itemData != NULL)
+                itemText = dwparser.ToDWDate(itemData->GetValue());
+            else    
+                itemText = tree->GetItemText(itemId);
+        }
+        else    
+            itemText = tree->GetItemText(itemId);
+                
+        if(itemText == textToCompare)
             return itemId;                         // pas besoin d'ajouter l'item
-        else if(text > itemText) {                 // item voulu doit se trouver après
+        else if(textToCompare > itemText) {                 // item voulu doit se trouver après
             itemId = tree->GetPrevSibling(itemId); // on prend l'item precedent pour pouvoir inserer celui qu'on veux
             if(itemId.IsOk())
                 return tree->InsertItem(parent, itemId, text);
