@@ -87,6 +87,8 @@ enum
     ID_FAVORITE_GO,
     
     ID_STAY_ON_TOP,
+    
+    ID_FOCUS_FAVORITES,
 };
 
 // BEGIN EVENTS
@@ -112,6 +114,7 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     helpMenu->AppendSeparator();
     helpMenu->AppendCheckItem(ID_STAY_ON_TOP, _("&Stay on top\tF11"), _("Stay on top")); 
     helpMenu->Enable(ID_STAY_ON_TOP, false); //car non implementé
+    helpMenu->Append(ID_FOCUS_FAVORITES, _("&Favorites List\tF5"), _("Focus to Favorites List")); 
 //    helpMenu->AppendSeparator(); //todo à implémenter ?
 //    helpMenu->AppendRadioItem(ID_LANG_FR, wxT("Français"), _("Set french language")); 
 //    helpMenu->AppendRadioItem(ID_LANG_EN, wxT("English"), _("Set english language")); 
@@ -310,7 +313,7 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     m_mainToolBar->AddSeparator();
 
     m_comboBoxFavorite = new wxComboBox(m_mainToolBar, ID_HELPLIST, wxEmptyString);
-    m_comboBoxFavorite->SetHint(_("Favorites List"));
+    m_comboBoxFavorite->SetHint(_("Favorites"));
     m_mainToolBar->AddControl(m_comboBoxFavorite);
 
     m_mainToolBar->AddTool(ID_FAVORITE_GO, wxEmptyString, wxBitmap(bookgo_xpm), _("Insert favorite")); //Inserer favoris
@@ -325,10 +328,10 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     //WriteInitialText();
  
     // désactive les options de mise en forme du text parceque pas de lecture de fichier rtf...
-    //m_menuBar->EnableTop(2, false);
-//    m_menuBar->EnableTop(3, false);
-//    m_menuBar->EnableTop(4, false);
-//    m_menuBar->EnableTop(5, false);
+    m_menuBar->EnableTop(2, false);
+    m_menuBar->EnableTop(3, false); 
+    m_menuBar->EnableTop(4, false);
+    m_menuBar->EnableTop(5, false);
     m_mainToolBar->EnableTool(ID_FORMAT_BOLD, false);
     m_mainToolBar->EnableTool(ID_FORMAT_ITALIC, false);
     m_mainToolBar->EnableTool(ID_FORMAT_UNDERLINE, false);
@@ -461,6 +464,8 @@ void MainFrame::ConnectEvents()
     Connect(ID_FAVORITE_ADD, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateAddFavorite));
     Connect(ID_FAVORITE_DELETE, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateDeleteFavorite));
     Connect(ID_FAVORITE_GO, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateGoFavorite));
+    
+    Connect(ID_FOCUS_FAVORITES, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnFocusComboFavorite));
  }
 
 void MainFrame::DisconnectEvents()
@@ -573,6 +578,8 @@ void MainFrame::DisconnectEvents()
     Disconnect(ID_FAVORITE_ADD, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateAddFavorite));
     Disconnect(ID_FAVORITE_DELETE, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateDeleteFavorite));
     Disconnect(ID_FAVORITE_GO, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateGoFavorite));
+ 
+    Disconnect(ID_FOCUS_FAVORITES, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnFocusComboFavorite));
 }
    
 void MainFrame::ConnectEventsSelChanged() {
@@ -632,7 +639,12 @@ void MainFrame::EnableShowHirerarchicalTree(bool hiearchy)
 }
 
 // BEGIN  MY EVENTS
-    
+
+void MainFrame::OnFocusComboFavorite(wxCommandEvent& event)
+{
+	m_comboBoxFavorite->SetFocus();
+}
+  
 void MainFrame::OnCloseFrame(wxCloseEvent& event)
 {
     UpdateDWWork();
@@ -658,7 +670,7 @@ void MainFrame::OnCalendarDblClick(wxCalendarEvent& event)
 
 void MainFrame::OnCalendarSetFocus( wxFocusEvent& event )
 {
-    OnStatusBarMessage(_("Double-clicking on a date to add it on the tree")); //Double-cliquer sur une date pour l'ajouter à la liste
+    OnStatusBarMessage(_("Double-clicking on a date to add it on the tree")); 
 }
 
 void MainFrame::OnCalendarKillFocus( wxFocusEvent& event )

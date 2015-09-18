@@ -46,7 +46,6 @@ bool MainApp::OnInit()
     m_printing->SetParentWindow(frame);
 #endif
 
-
     MainFrame* sameframe  = frame;    
     
     dwparser.ConnectCallback([sameframe](wxString msg) { sameframe->OnStatusBarMessage(msg); });
@@ -63,8 +62,7 @@ bool MainApp::OnInit()
 }
 
 int MainApp::OnExit()
-{
-      
+{    
         
 #if wxUSE_PRINTING_ARCHITECTURE
     delete m_printing;
@@ -294,6 +292,7 @@ void MainApp::InitDailyWorkParser()
 
 void MainApp::LoadDailyWorkInTree()
 {
+    wxStopWatch stopwatch;
     LOG(INFO) << "Loading Tree with json data...";
     wxTreeCtrl* tree = frame->m_treeDates;
     tree->DeleteAllItems();
@@ -325,24 +324,26 @@ void MainApp::LoadDailyWorkInTree()
     }
     frame->OnStatusBarMessage(_("Dates loaded"));
     tree->ExpandAll();
-    LOG(INFO) << "Tree Loaded";
+    long t = stopwatch.Time();
+    LOG(INFO) << wxString::Format("Tree Loaded in %ldms", t);
 }
 
 wxTreeItemId MainApp::AddBranchHierarchy(wxTreeItemId rootId, wxDateTime date)
 {
     wxString text = wxString::Format("%4d", date.GetYear());
     wxTreeItemId itemId = AddItem(rootId, text, text, false);
-    text = wxString::Format("%02d", date.GetMonth()+1);
+    wxString month = wxDateTime::GetMonthName(date.GetMonth(), wxDateTime::Name_Abbr);
+    text = wxString::Format("%02d %s", date.GetMonth()+1, month);
     itemId = AddItem(itemId, text, text, false);
     wxString weekDay = wxDateTime::GetWeekDayName(date.GetWeekDay(), wxDateTime::Name_Abbr);
-    text = wxString::Format("%s %02d", weekDay, date.GetDay());
+    text = wxString::Format("%02d %s", date.GetDay(), weekDay);
     return AddItem(itemId, text, dwparser.ToDWDate(date), true); 
 }
 
 wxTreeItemId MainApp::AddBranchSimple(wxTreeItemId rootId, wxDateTime date)
 {
     wxString weekDay = wxDateTime::GetWeekDayName(date.GetWeekDay(), wxDateTime::Name_Abbr);
-    wxString text = wxString::Format("%s %s", weekDay, dwparser.ToTreeDate(date));
+    wxString text = wxString::Format("%s %s", dwparser.ToTreeDate(date), weekDay);
     return AddItem(rootId, text, dwparser.ToDWDate(date), true);   
 }
 

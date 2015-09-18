@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-17 15:16+0200\n"
+"POT-Creation-Date: 2015-09-17 16:29+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -160,7 +160,7 @@ msgstr ""
 msgid "Add &Row"
 msgstr ""
 
-#: gui2.cpp:317
+#: gui2.cpp:318
 msgid "Add to favorites"
 msgstr ""
 
@@ -224,7 +224,7 @@ msgstr ""
 msgid "Decrease &Paragraph Spacing"
 msgstr ""
 
-#: main.cpp:458
+#: main.cpp:461
 #, c-format
 msgid "Delete %s %s ?"
 msgstr ""
@@ -237,7 +237,7 @@ msgstr ""
 msgid "Delete date"
 msgstr ""
 
-#: gui2.cpp:318
+#: gui2.cpp:319
 msgid "Delete favorite"
 msgstr ""
 
@@ -253,7 +253,7 @@ msgstr ""
 msgid "Double Line Spacing"
 msgstr ""
 
-#: gui2.cpp:660
+#: gui2.cpp:661
 msgid "Double-clicking on a date to add it on the tree"
 msgstr ""
 
@@ -285,6 +285,10 @@ msgstr ""
 
 #: gui2.cpp:213
 msgid "F&ormat"
+msgstr ""
+
+#: gui2.cpp:313
+msgid "Favorites"
 msgstr ""
 
 #: dailyworkparser.cpp:33 dailyworkparser.cpp:34
@@ -331,7 +335,7 @@ msgstr ""
 msgid "Insert URL"
 msgstr ""
 
-#: gui2.cpp:315
+#: gui2.cpp:316
 msgid "Insert favorite"
 msgstr ""
 
@@ -347,7 +351,7 @@ msgstr ""
 msgid "L&eft Align"
 msgstr ""
 
-#: gui2.cpp:316
+#: gui2.cpp:317
 msgid "Manage favorites"
 msgstr ""
 
@@ -431,9 +435,17 @@ msgstr ""
 msgid "Save As...\tF12"
 msgstr ""
 
+#: main.cpp:537
+msgid "Save As... on "
+msgstr ""
+
 #: gui2.cpp:823
 #, c-format
 msgid "Save as <%s>"
+msgstr ""
+
+#: main.cpp:531
+msgid "Save on "
 msgstr ""
 
 #: gui2.cpp:121
@@ -488,7 +500,7 @@ msgstr ""
 msgid "Text Scale Factor"
 msgstr ""
 
-#: gui2.cpp:640
+#: gui2.cpp:641
 msgid "This document was modified, would you like to save ?"
 msgstr ""
 
@@ -523,7 +535,7 @@ msgstr ""
 msgid "View as HT&ML"
 msgstr ""
 
-#: gui2.cpp:640 main.cpp:458
+#: gui2.cpp:641 main.cpp:461
 msgid "Warning"
 msgstr ""
 
@@ -531,22 +543,22 @@ msgstr ""
 msgid "Welcome to Dailywork!"
 msgstr ""
 
-#: main.cpp:450
+#: main.cpp:453
 msgid "the date"
 msgstr ""
 
-#: main.cpp:456
+#: main.cpp:459
 msgid "the day"
 msgstr ""
 
-#: main.cpp:454
+#: main.cpp:457
 msgid "the month"
 msgstr ""
 
-#: main.cpp:452
+#: main.cpp:455
 msgid "the year"
 msgstr ""
 
-#: main.cpp:602
+#: main.cpp:605
 msgid "unknown"
 msgstr ""

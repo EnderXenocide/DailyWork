@@ -48,6 +48,7 @@ public:
 
     virtual bool OnInit();
     virtual int OnExit();
+    
     void CreateStyles();
     void InitDailyWorkParser();
     void LoadFavoritesInComboBox();

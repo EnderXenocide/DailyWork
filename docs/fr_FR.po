@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-17 15:16+0200\n"
-"PO-Revision-Date: 2015-09-17 15:27+0200\n"
+"POT-Creation-Date: 2015-09-17 16:29+0200\n"
+"PO-Revision-Date: 2015-09-17 16:29+0200\n"
 "Last-Translator: Laurent Silvestre <silvestre.laurent@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr_FR\n"
@@ -163,7 +163,7 @@ msgstr "A propos de Dailywork"
 msgid "Add &Row"
 msgstr "Ajouter une &ligne"
 
-#: gui2.cpp:317
+#: gui2.cpp:318
 msgid "Add to favorites"
 msgstr "Ajouter aux favoris"
 
@@ -213,7 +213,7 @@ msgstr "Copier"
 
 #: gui2.cpp:147
 msgid "Cu&t\tCtrl+X"
-msgstr "&Coupert\tCtrl+X"
+msgstr "&Couper\tCtrl+X"
 
 #: gui2.cpp:291
 msgid "Cut"
@@ -227,7 +227,7 @@ msgstr "Dates chargées"
 msgid "Decrease &Paragraph Spacing"
 msgstr "Diminuer l'espacement entre paragraphes"
 
-#: main.cpp:458
+#: main.cpp:461
 #, c-format
 msgid "Delete %s %s ?"
 msgstr "Supprimer %s %s ?"
@@ -240,7 +240,7 @@ msgstr "Supprimer une &colonne"
 msgid "Delete date"
 msgstr "Supprimer date"
 
-#: gui2.cpp:318
+#: gui2.cpp:319
 msgid "Delete favorite"
 msgstr "Supprimer favoris"
 
@@ -256,9 +256,9 @@ msgstr ""
 msgid "Double Line Spacing"
 msgstr ""
 
-#: gui2.cpp:660
+#: gui2.cpp:661
 msgid "Double-clicking on a date to add it on the tree"
-msgstr ""
+msgstr "Double-cliquer sur une date pour l'ajouter à la liste"
 
 #: gui.cpp:19
 msgid "E&xit"
@@ -289,6 +289,10 @@ msgstr "Erreur de lecture du fichier (offset %u): %s\n"
 #: gui2.cpp:213
 msgid "F&ormat"
 msgstr "F&ormat"
+
+#: gui2.cpp:313
+msgid "Favorites"
+msgstr "Favoris"
 
 #: dailyworkparser.cpp:33 dailyworkparser.cpp:34
 msgid "File not found"
@@ -334,7 +338,7 @@ msgstr "Augmenter le retrait"
 msgid "Insert URL"
 msgstr "Insérer URL"
 
-#: gui2.cpp:315
+#: gui2.cpp:316
 msgid "Insert favorite"
 msgstr "Insérer favoris"
 
@@ -350,7 +354,7 @@ msgstr ""
 msgid "L&eft Align"
 msgstr "Aligner à &gauche"
 
-#: gui2.cpp:316
+#: gui2.cpp:317
 msgid "Manage favorites"
 msgstr "Gestion des favoris"
 
@@ -435,10 +439,18 @@ msgstr "Enregistrer"
 msgid "Save As...\tF12"
 msgstr "Enregistrer sous...\tF12"
 
+#: main.cpp:537
+msgid "Save As... on "
+msgstr "Enregistrer sous... le "
+
 #: gui2.cpp:823
 #, c-format
 msgid "Save as <%s>"
 msgstr "Enregistrer sous <%s>"
+
+#: main.cpp:531
+msgid "Save on "
+msgstr "Enregistrer le "
 
 #: gui2.cpp:121
 msgid "Save the work"
@@ -494,7 +506,7 @@ msgstr ""
 msgid "Text Scale Factor"
 msgstr "Echelle du texte"
 
-#: gui2.cpp:640
+#: gui2.cpp:641
 msgid "This document was modified, would you like to save ?"
 msgstr "Le document a été modifié, voulez-vous l'enregistrer ? "
 
@@ -533,7 +545,7 @@ msgstr "Voir en HTML"
 msgid "View as HT&ML"
 msgstr "Voir en HT&ML"
 
-#: gui2.cpp:640 main.cpp:458
+#: gui2.cpp:641 main.cpp:461
 msgid "Warning"
 msgstr "Attention"
 
@@ -541,31 +553,28 @@ msgstr "Attention"
 msgid "Welcome to Dailywork!"
 msgstr "Bienvenue au Dailywork !"
 
-#: main.cpp:450
+#: main.cpp:453
 msgid "the date"
 msgstr "la date"
 
-#: main.cpp:456
+#: main.cpp:459
 msgid "the day"
 msgstr "le jour"
 
-#: main.cpp:454
+#: main.cpp:457
 msgid "the month"
 msgstr "le mois"
 
-#: main.cpp:452
+#: main.cpp:455
 msgid "the year"
 msgstr "l'année"
 
-#: main.cpp:602
+#: main.cpp:605
 msgid "unknown"
 msgstr "inconnue"
 
-#~ msgid "Save As... on "
-#~ msgstr "Enregistrer sous... le "
-
-#~ msgid "Save on "
-#~ msgstr "Enregistrer le "
+#~ msgid "Favorites List"
+#~ msgstr "Liste des favoris"
 
 #~ msgid "Save As... on"
 #~ msgstr "Enregistrer sous... le "

@@ -108,6 +108,8 @@ protected:
     void OnCalendarSetFocus( wxFocusEvent& event );
 	void OnCalendarKillFocus( wxFocusEvent& event );
     
+    void OnFocusComboFavorite(wxCommandEvent& event);
+
     void OnShowHirerarchicalTree(wxCommandEvent& event);
 
 	void OnDeleteDate( wxCommandEvent& event );
