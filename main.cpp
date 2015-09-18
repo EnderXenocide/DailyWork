@@ -295,6 +295,7 @@ void MainApp::LoadDailyWorkInTree()
     wxStopWatch stopwatch;
     LOG(INFO) << "Loading Tree with json data...";
     wxTreeCtrl* tree = frame->m_treeDates;
+    tree->Freeze(); //prevent drawing
     tree->DeleteAllItems();
     tree->SetWindowStyle(wxTR_HIDE_ROOT);
     wxTreeItemId rootId = tree->AddRoot(wxT("Dates")); //hidden
@@ -321,6 +322,10 @@ void MainApp::LoadDailyWorkInTree()
     }
     frame->OnStatusBarMessage(_("Dates loaded"));
     tree->ExpandAll();
+    tree->Thaw(); // Re-enables window before selection
+    if (tree->HasChildren(rootId)) { //tree is never empty
+        tree->SelectItem(tree->GetFirstVisibleItem());
+    }
     long t = stopwatch.Time();
     LOG(INFO) << wxString::Format("Tree Loaded in %ldms", t);
 }
@@ -328,10 +333,13 @@ void MainApp::LoadDailyWorkInTree()
 wxTreeItemId MainApp::AddBranchHierarchy(wxTreeItemId rootId, wxDateTime date)
 {
     wxDateTime tempDate = date;
+    
     tempDate.SetMonth(wxDateTime::Jan).SetDay(1); //début d'année de date
     wxTreeItemId itemId = AddItem(rootId, date.Format("%Y"), tempDate, true);
+    
     tempDate.SetMonth(date.GetMonth()); //début de mois de date
     itemId = AddItem(itemId, date.Format("%m %b"), tempDate, true);
+    
     return AddItem(itemId, date.Format("%d %a"), date, false);  //%e ne marche pas 
 }
 
@@ -429,7 +437,7 @@ wxTreeItemId MainApp::AddItem(wxTreeItemId parent, wxString text, wxDateTime dat
         }
         itemId  = tree->GetNextChild(parent, cookie);
     }
-    newItemId =  tree->AppendItem(parent, text); // item voulu pas trouver
+    newItemId =  tree->AppendItem(parent, text); // item voulu non trouver
     return AddItemData(newItemId, date, setDataEmpty);
 }
     
