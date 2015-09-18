@@ -7,11 +7,17 @@
 class DWItemData : public wxTreeItemData
 {
 public:
-    DWItemData (const wxDateTime& date) : wxTreeItemData() {m_value = date;};
+    DWItemData (const wxDateTime& date, bool empty) : wxTreeItemData() 
+    {
+        m_date = date; 
+        m_empty = empty;
+    };
     ~DWItemData() {};
-    wxDateTime GetValue() const { return m_value; };   
+    wxDateTime GetDate() const { return m_date; };   
+    bool IsEmpty() const { return m_empty; };   
 private:
-    wxDateTime m_value; 
+    wxDateTime m_date; 
+    bool m_empty;
 };
 
 #endif // DWITEMDATA_H

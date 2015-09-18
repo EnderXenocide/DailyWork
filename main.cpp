@@ -308,13 +308,10 @@ void MainApp::LoadDailyWorkInTree()
             LOG(INFO) << "Loading Tree Simple... ";
     }
     wxTreeItemId itemId;
-    DWItemData *itemData;
     for(SizeType i = 0; i < dwparser.CountItems(); i++) { //todo faire des appels de dwparser
         wxDateTime date = dwparser.GetDateFromItem(i);
         if (date.IsValid()) {
             itemId = (this->*LoadBranch)(rootId, date);
-            itemData = new DWItemData(date);
-            tree->SetItemData(itemId, itemData);           
         }
         else {
              wxString errmsg = wxString::Format(_("Error loading date <%s>"), date.Format());
@@ -330,21 +327,17 @@ void MainApp::LoadDailyWorkInTree()
 
 wxTreeItemId MainApp::AddBranchHierarchy(wxTreeItemId rootId, wxDateTime date)
 {
-    wxString text = wxString::Format("%4d", date.GetYear());
-    wxTreeItemId itemId = AddItem(rootId, text, text, false);
-    wxString month = wxDateTime::GetMonthName(date.GetMonth(), wxDateTime::Name_Abbr);
-    text = wxString::Format("%02d %s", date.GetMonth()+1, month);
-    itemId = AddItem(itemId, text, text, false);
-    wxString weekDay = wxDateTime::GetWeekDayName(date.GetWeekDay(), wxDateTime::Name_Abbr);
-    text = wxString::Format("%02d %s", date.GetDay(), weekDay);
-    return AddItem(itemId, text, dwparser.ToDWDate(date), true); 
+    wxDateTime tempDate = date;
+    tempDate.SetMonth(wxDateTime::Jan).SetDay(1); //début d'année de date
+    wxTreeItemId itemId = AddItem(rootId, date.Format("%Y"), tempDate, true);
+    tempDate.SetMonth(date.GetMonth()); //début de mois de date
+    itemId = AddItem(itemId, date.Format("%m %b"), tempDate, true);
+    return AddItem(itemId, date.Format("%d %a"), date, false);  //%e ne marche pas 
 }
 
 wxTreeItemId MainApp::AddBranchSimple(wxTreeItemId rootId, wxDateTime date)
 {
-    wxString weekDay = wxDateTime::GetWeekDayName(date.GetWeekDay(), wxDateTime::Name_Abbr);
-    wxString text = wxString::Format("%s %s", dwparser.ToTreeDate(date), weekDay);
-    return AddItem(rootId, text, dwparser.ToDWDate(date), true);   
+    return AddItem(rootId, date.Format("%Y-%m-%d %a"), date, false);   //% F ne marche pas = Short YYYY-MM-DD date, equivalent to %Y-%m-%d
 }
 
 wxTreeItemId MainApp::FindTextInTree(wxTreeItemId parent, wxString text)
@@ -401,8 +394,6 @@ int MainApp::AddDateToTree(wxDateTime& date, bool selectItem)
         itemId = AddBranchSimple(tree->GetRootItem(), date);
     }
     dwparser.AddItem(date);
-    DWItemData* data =  new DWItemData(date);
-    tree->SetItemData(itemId, data);
     tree->ExpandAll(); //Expand(itemId);
     if(selectItem)
         tree->SelectItem(itemId, true);
@@ -410,37 +401,43 @@ int MainApp::AddDateToTree(wxDateTime& date, bool selectItem)
 }
 
 /*
- * Cherche l'item avec text comme text ou ajout un nouveau dans l'ordre alphabéthique inverse
+ * Cherche l'item avec date comme data ou ajout un nouveau dans l'ordre alphabéthique inverse
  */
-wxTreeItemId MainApp::AddItem(wxTreeItemId parent, wxString text, wxString textToCompare, bool compareWithData)
+wxTreeItemId MainApp::AddItem(wxTreeItemId parent, wxString text, wxDateTime date, bool setDataEmpty)
 {
     wxTreeCtrl* tree = frame->m_treeDates;
     wxTreeItemIdValue cookie;
     wxTreeItemId itemId = tree->GetFirstChild(parent, cookie);
-    wxString itemText;
+    wxDateTime itemDate;
+    wxTreeItemId newItemId;
     while(itemId.IsOk()) {
-        if (compareWithData) {
-            DWItemData *itemData = (DWItemData *) tree->GetItemData(itemId);
-            if (itemData != NULL)
-                itemText = dwparser.ToDWDate(itemData->GetValue());
-            else    
-                itemText = tree->GetItemText(itemId);
-        }
+        DWItemData *itemData = (DWItemData *) tree->GetItemData(itemId);
+        if (itemData != NULL)
+            itemDate = itemData->GetDate();
         else    
-            itemText = tree->GetItemText(itemId);
-                
-        if(itemText == textToCompare)
+            itemDate = (time_t)-1;
+            
+        if(itemDate == date)
             return itemId;                         // pas besoin d'ajouter l'item
-        else if(textToCompare > itemText) {                 // item voulu doit se trouver après
+        else if(date > itemDate) {                 // item voulu doit se trouver après
             itemId = tree->GetPrevSibling(itemId); // on prend l'item precedent pour pouvoir inserer celui qu'on veux
             if(itemId.IsOk())
-                return tree->InsertItem(parent, itemId, text);
+                newItemId = tree->InsertItem(parent, itemId, text);
             else                                          // pas d'item avant
-                return tree->InsertItem(parent, 0, text); // insert item en premier
+                newItemId =  tree->InsertItem(parent, 0, text); // insert item en premier
+            return AddItemData(newItemId, date, setDataEmpty);
         }
         itemId  = tree->GetNextChild(parent, cookie);
     }
-    return tree->AppendItem(parent, text); // item voulu pas trouver
+    newItemId =  tree->AppendItem(parent, text); // item voulu pas trouver
+    return AddItemData(newItemId, date, setDataEmpty);
+}
+    
+wxTreeItemId MainApp::AddItemData(wxTreeItemId itemId, wxDateTime date, bool setDataEmpty)
+{
+    DWItemData *itemData = new DWItemData(date, setDataEmpty);
+    frame->m_treeDates->SetItemData(itemId, itemData);  
+    return itemId; 
 }
 
 void MainApp::DeleteDateSelected()
@@ -484,8 +481,8 @@ bool MainApp::DeleteItemData(wxTreeItemId itemId)
             }            
         }
         DWItemData* itemData = (DWItemData*) tree->GetItemData(itemId); 
-        if (itemData != NULL) {
-            dwparser.DeleteItem(itemData->GetValue());
+        if ((itemData != NULL) && (! itemData->IsEmpty())){
+            dwparser.DeleteItem(itemData->GetDate());
         }
         else {
             LOG(DEBUG) << "Pas de donné associée à l'item";
@@ -500,8 +497,8 @@ wxString MainApp::GetWorkFromTreeSelection()
    wxTreeItemId itemId = tree->GetSelection();
     if(itemId.IsOk()) {
         DWItemData* itemData = (DWItemData*) tree->GetItemData(itemId);
-        if (itemData != NULL)
-            return dwparser.GetWorkFromDate(itemData->GetValue());
+        if ( (itemData != NULL) && (!itemData->IsEmpty()) )
+            return dwparser.GetWorkFromDate(itemData->GetDate());
         LOG(DEBUG) << "Elément selectionné vide";    
     } 
     else
@@ -515,9 +512,9 @@ void MainApp::SetWorkFromTreeSelection(wxString text)
     wxTreeItemId itemId = tree->GetSelection();
     if (itemId.IsOk()) {
         DWItemData* itemData=(DWItemData*) tree->GetItemData(itemId);
-        if (itemData != NULL) {
+        if ( (itemData != NULL) && (!itemData->IsEmpty()) ) {
             LOG(DEBUG ) << "Edit modified : " << text.ToUTF8();
-            dwparser.UpdateWork(itemData->GetValue(), text); 
+            dwparser.UpdateWork(itemData->GetDate(), text); 
             return ;
         }
         LOG(DEBUG) << "No DWItemData for the wxTreeItemId selected";

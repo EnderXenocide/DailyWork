@@ -60,7 +60,7 @@ public:
     wxRichTextPrinting* GetPrinting() const { return m_printing; }
 #endif   
     int AddDateToTree(wxDateTime& date, bool selectItem = false); // todo wxTreeCtrl& tree instead
-    wxTreeItemId AddItem(wxTreeItemId parent, wxString text, wxString textToCompare, bool compareWithData);
+    wxTreeItemId AddItem(wxTreeItemId parent, wxString text, wxDateTime date, bool setDataEmpty);
     wxTreeItemId FindDateInTree(wxDateTime date);
     wxTreeItemId FindTextInTree(wxTreeItemId parent, wxString text);
     void SetWorkFromTreeSelection(wxString text);
@@ -79,7 +79,8 @@ private:
     wxRichTextStyleSheet*   m_styleSheet;
     DailyWorkParser dwparser; 
     void InitLanguageSupport();
-    
+     wxTreeItemId AddItemData(wxTreeItemId itemId, wxDateTime date, bool setDataEmpty);
+   
 #if wxUSE_PRINTING_ARCHITECTURE
     wxRichTextPrinting*     m_printing;
 #endif      
