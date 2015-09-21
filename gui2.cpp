@@ -352,7 +352,6 @@ MainFrame::~MainFrame()
     DisconnectEvents();	
 }
 
-
 void MainFrame::ConnectEvents()
 {
     ConnectEventsSelChanged();
@@ -666,6 +665,7 @@ void MainFrame::OnCalendarDblClick(wxCalendarEvent& event)
     //chercher date dans tree
     wxDateTime selDate = m_calendar->GetDate();
     wxGetApp().AddDateToTree(selDate, true);
+    m_editor->SetFocus(); //todo correction 1re ligne vide
 }
 
 void MainFrame::OnCalendarSetFocus( wxFocusEvent& event )
@@ -716,22 +716,25 @@ void MainFrame::OnShowHirerarchicalTree(wxCommandEvent& event)
 
 void MainFrame::OnComboBoxFavoriteUpdate(wxCommandEvent& event)
 {
+     if ( event.GetEventType() == wxEVT_TEXT_ENTER )
+    {
+        OnGoFavorite(event);
+    }
         // Don't show messages for the log output window (it'll crash)
     if ( !event.GetEventObject()->IsKindOf(CLASSINFO(wxComboCtrl)) )
         return;
 
 //    if ( event.GetEventType() == wxEVT_COMBOBOX )
 //    {
-//        wxLogDebug(wxT("EVT_COMBOBOX(id=%i,selection=%i)"),event.GetId(),event.GetSelection());
+//        LOG(DEBUG) << wxT("EVT_COMBOBOX(id=%i,selection=%i)"),event.GetId(),event.GetSelection();
 //    }
 //    else if ( event.GetEventType() == wxEVT_TEXT )
 //    {
-//        wxLogDebug(wxT("EVT_TEXT(id=%i,string=\"%s\")"),event.GetId(),event.GetString().c_str());
+//        LOG(DEBUG) << wxT("EVT_TEXT(id=%i,string=\"%s\")"),event.GetId(),event.GetString().c_str();
 //    }
 //    else if ( event.GetEventType() == wxEVT_TEXT_ENTER )
 //    {
-//        wxLogDebug("EVT_TEXT_ENTER(id=%i,string=\"%s\")",
-//                   event.GetId(), event.GetString().c_str());
+//        LOG(DEBUG) << wxT(("EVT_TEXT_ENTER(id=%i,string=\"%s\")",              event.GetId(), event.GetString().c_str());
 //    }
 }
 

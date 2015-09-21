@@ -389,7 +389,6 @@ wxTreeItemId MainApp::FindDateInTree(wxDateTime date)
     return itemId;    
 }
 
-
 int MainApp::AddDateToTree(wxDateTime& date, bool selectItem)
 {
     wxTreeCtrl* tree = frame->m_treeDates;
