@@ -103,12 +103,15 @@ protected:
     void OnCloseFrame( wxCloseEvent& event );
     void OnTreeSelChanging( wxTreeEvent& event );
     void OnTreeSelChanged( wxTreeEvent& event );
+    void OnTreeRightClick( wxTreeEvent& event );
     void OnCalendarSelChanged( wxCalendarEvent& event );
     void OnCalendarDblClick( wxCalendarEvent& event );
     void OnCalendarSetFocus( wxFocusEvent& event );
 	void OnCalendarKillFocus( wxFocusEvent& event );
     
     void OnFocusComboFavorite(wxCommandEvent& event);
+    void OnComboFavoriteTextEnter( wxCommandEvent& event );
+    //void OnComboFavoriteUpdate( wxCommandEvent& event );
 
     void OnShowHirerarchicalTree(wxCommandEvent& event);
 
@@ -117,7 +120,6 @@ protected:
     void OnAbout(wxCommandEvent& event);
     void OnStayOnTop(wxCommandEvent& event);
 
-    void OnComboBoxFavoriteUpdate( wxCommandEvent& event );
     void OnAddFavorite(wxCommandEvent& event);
     void OnGoFavorite(wxCommandEvent& event);
     void OnDeleteFavorite(wxCommandEvent& event);

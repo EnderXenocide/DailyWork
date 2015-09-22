@@ -65,6 +65,7 @@ public:
     wxTreeItemId FindTextInTree(wxTreeItemId parent, wxString text);
     void SetWorkFromTreeSelection(wxString text);
     wxString GetWorkFromTreeSelection();
+    wxDateTime GetDateFromTreeSelection();
     void DeleteDateSelected();
     bool DeleteItemData(wxTreeItemId itemId);
     bool IsModified() const { return dwparser.IsModified(); }

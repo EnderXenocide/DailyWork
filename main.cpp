@@ -497,20 +497,25 @@ bool MainApp::DeleteItemData(wxTreeItemId itemId)
     } 
     return true;    //todo revoir retour
 } 
-  
-wxString MainApp::GetWorkFromTreeSelection()
+
+wxDateTime MainApp::GetDateFromTreeSelection()
 {
    wxTreeCtrl* tree = frame->m_treeDates;
    wxTreeItemId itemId = tree->GetSelection();
     if(itemId.IsOk()) {
         DWItemData* itemData = (DWItemData*) tree->GetItemData(itemId);
         if ( (itemData != NULL) && (!itemData->IsEmpty()) )
-            return dwparser.GetWorkFromDate(itemData->GetDate());
+            return itemData->GetDate();
         LOG(DEBUG) << "Elément selectionné vide";    
     } 
     else
         LOG(DEBUG) << "Aucun élément selectionné";
-    return "";   
+    return wxDateTime((time_t)-1);
+}
+      
+wxString MainApp::GetWorkFromTreeSelection()
+{
+    return dwparser.GetWorkFromDate(GetDateFromTreeSelection());
 }
 
 void MainApp::SetWorkFromTreeSelection(wxString text)

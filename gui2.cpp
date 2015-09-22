@@ -355,6 +355,7 @@ MainFrame::~MainFrame()
 void MainFrame::ConnectEvents()
 {
     ConnectEventsSelChanged();
+    m_treeDates->Connect( wxEVT_TREE_ITEM_RIGHT_CLICK, wxTreeEventHandler( MainFrame::OnTreeRightClick ), NULL, this );
 	m_calendar->Connect( wxEVT_KILL_FOCUS, wxFocusEventHandler( MainFrame::OnCalendarKillFocus ), NULL, this );
 	m_calendar->Connect( wxEVT_SET_FOCUS, wxFocusEventHandler( MainFrame::OnCalendarSetFocus ), NULL, this );
     m_calendar->Connect( wxEVT_CALENDAR_DOUBLECLICKED, wxCalendarEventHandler( MainFrame::OnCalendarDblClick ), NULL, this );
@@ -452,9 +453,10 @@ void MainFrame::ConnectEvents()
     Connect(ID_SET_FONT_SCALE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSetFontScale));
     Connect(ID_SET_DIMENSION_SCALE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSetDimensionScale));
 
-    Connect(wxID_ANY, wxEVT_TEXT, wxTextEventHandler(MainFrame::OnComboBoxFavoriteUpdate));
-    Connect(wxID_ANY, wxEVT_TEXT_ENTER, wxTextEventHandler(MainFrame::OnComboBoxFavoriteUpdate));
-    Connect(wxID_ANY, wxEVT_COMBOBOX, wxCommandEventHandler(MainFrame::OnComboBoxFavoriteUpdate));
+    m_comboBoxFavorite->Connect(wxEVT_TEXT_ENTER, wxCommandEventHandler(MainFrame::OnComboFavoriteTextEnter));
+//    Connect(wxID_ANY, wxEVT_TEXT, wxTextEventHandler(MainFrame::OnComboFavoriteUpdate));
+//    Connect(wxID_ANY, wxEVT_TEXT_ENTER, wxTextEventHandler(MainFrame::OnComboFavoriteUpdate));
+//    Connect(wxID_ANY, wxEVT_COMBOBOX, wxCommandEventHandler(MainFrame::OnComboFavoriteUpdate));
 
     Connect(ID_FAVORITE_ADD, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnAddFavorite));
     Connect(ID_FAVORITE_DELETE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnDeleteFavorite));
@@ -470,6 +472,7 @@ void MainFrame::ConnectEvents()
 void MainFrame::DisconnectEvents()
 {
     DisconnectEventsSelhanged();	
+    m_treeDates->Disconnect( wxEVT_TREE_ITEM_RIGHT_CLICK, wxTreeEventHandler( MainFrame::OnTreeRightClick ), NULL, this );
 	m_calendar->Disconnect( wxEVT_KILL_FOCUS, wxFocusEventHandler( MainFrame::OnCalendarKillFocus ), NULL, this );
 	m_calendar->Disconnect( wxEVT_SET_FOCUS, wxFocusEventHandler( MainFrame::OnCalendarSetFocus ), NULL, this );
  	m_calendar->Disconnect( wxEVT_CALENDAR_DOUBLECLICKED, wxCalendarEventHandler( MainFrame::OnCalendarDblClick ), NULL, this );    
@@ -566,9 +569,10 @@ void MainFrame::DisconnectEvents()
     Disconnect(ID_SET_FONT_SCALE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSetFontScale));
     Disconnect(ID_SET_DIMENSION_SCALE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSetDimensionScale));
     
-    Disconnect(wxID_ANY, wxEVT_TEXT, wxTextEventHandler(MainFrame::OnComboBoxFavoriteUpdate));
-    Disconnect(wxID_ANY, wxEVT_TEXT_ENTER, wxTextEventHandler(MainFrame::OnComboBoxFavoriteUpdate));
-    Disconnect(wxID_ANY, wxEVT_COMBOBOX, wxCommandEventHandler(MainFrame::OnComboBoxFavoriteUpdate));
+    m_comboBoxFavorite->Disconnect(wxEVT_TEXT_ENTER, wxCommandEventHandler(MainFrame::OnComboFavoriteTextEnter));
+//    Disconnect(wxID_ANY, wxEVT_TEXT, wxTextEventHandler(MainFrame::OnComboFavoriteUpdate));
+//    Disconnect(wxID_ANY, wxEVT_TEXT_ENTER, wxTextEventHandler(MainFrame::OnComboFavoriteUpdate));
+//    Disconnect(wxID_ANY, wxEVT_COMBOBOX, wxCommandEventHandler(MainFrame::OnComboFavoriteUpdate));
 
     Disconnect(ID_FAVORITE_ADD, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnAddFavorite));
     Disconnect(ID_FAVORITE_DELETE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnDeleteFavorite));
@@ -699,6 +703,13 @@ void MainFrame::OnTreeSelChanged( wxTreeEvent& event )
     ShowTreeItemSelectedText();   
 }
 
+void MainFrame::OnTreeRightClick(wxTreeEvent& event)
+{
+    wxDateTime date = wxGetApp().GetDateFromTreeSelection();   
+    if (date.IsValid())
+        m_calendar->SetDate(date);
+}
+
 void MainFrame::OnStatusBarMessage(wxString msg)
 {
 	//std::cout << msg << std::endl;
@@ -714,29 +725,30 @@ void MainFrame::OnShowHirerarchicalTree(wxCommandEvent& event)
     wxGetApp().LoadDailyWorkInTree();  
 }
 
-void MainFrame::OnComboBoxFavoriteUpdate(wxCommandEvent& event)
+void MainFrame::OnComboFavoriteTextEnter(wxCommandEvent& event)
 {
-     if ( event.GetEventType() == wxEVT_TEXT_ENTER )
-    {
-        OnGoFavorite(event);
-    }
-        // Don't show messages for the log output window (it'll crash)
+  // OnGoFavorite(event);
+}
+    
+/*void MainFrame::OnComboFavoriteUpdate(wxCommandEvent& event)
+{
+    // Don't show messages for the log output window (it'll crash)
     if ( !event.GetEventObject()->IsKindOf(CLASSINFO(wxComboCtrl)) )
         return;
 
-//    if ( event.GetEventType() == wxEVT_COMBOBOX )
-//    {
-//        LOG(DEBUG) << wxT("EVT_COMBOBOX(id=%i,selection=%i)"),event.GetId(),event.GetSelection();
-//    }
-//    else if ( event.GetEventType() == wxEVT_TEXT )
-//    {
-//        LOG(DEBUG) << wxT("EVT_TEXT(id=%i,string=\"%s\")"),event.GetId(),event.GetString().c_str();
-//    }
-//    else if ( event.GetEventType() == wxEVT_TEXT_ENTER )
-//    {
-//        LOG(DEBUG) << wxT(("EVT_TEXT_ENTER(id=%i,string=\"%s\")",              event.GetId(), event.GetString().c_str());
-//    }
-}
+    if ( event.GetEventType() == wxEVT_COMBOBOX )
+    {
+        LOG(DEBUG) << wxT("EVT_COMBOBOX(id=%i,selection=%i)"),event.GetId(),event.GetSelection();
+    }
+    else if ( event.GetEventType() == wxEVT_TEXT )
+    {
+        LOG(DEBUG) << wxT("EVT_TEXT(id=%i,string=\"%s\")"),event.GetId(),event.GetString().c_str();
+    }
+    else if ( event.GetEventType() == wxEVT_TEXT_ENTER )
+    {
+        LOG(DEBUG) << wxT(("EVT_TEXT_ENTER(id=%i,string=\"%s\")",              event.GetId(), event.GetString().c_str());
+    }
+}*/
 
 void MainFrame::OnAddFavorite(wxCommandEvent& event)
 {
@@ -755,12 +767,13 @@ void MainFrame::OnDeleteFavorite(wxCommandEvent& event)
 
 void MainFrame::OnEditFavorite(wxCommandEvent& event)
 {
-    
+    //todo
 }    
 
 void MainFrame::OnGoFavorite(wxCommandEvent& event)
 {
-    m_editor->WriteText(m_comboBoxFavorite->GetStringSelection());
+    wxString s = m_comboBoxFavorite->GetStringSelection();
+    m_editor->WriteText(s);
 }
     
 void MainFrame::OnUpdateAddFavorite(wxUpdateUIEvent& event)

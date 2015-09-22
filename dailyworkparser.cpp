@@ -102,8 +102,7 @@ wxDateTime DailyWorkParser::GetDateFromItem(int itemIndex)
         return DWToDate(item[JSON_DATE].GetString());        
     }
     else {
-        wxDateTime date((time_t)-1);
-        return date;        
+        return wxDateTime((time_t)-1);        
     }
 }
 
