@@ -110,7 +110,7 @@ protected:
 	void OnCalendarKillFocus( wxFocusEvent& event );
     
     void OnFocusComboFavorite(wxCommandEvent& event);
-    void OnComboFavoriteTextEnter( wxCommandEvent& event );
+    //void OnComboFavoriteTextEnter( wxCommandEvent& event );
     //void OnComboFavoriteUpdate( wxCommandEvent& event );
 
     void OnShowHirerarchicalTree(wxCommandEvent& event);

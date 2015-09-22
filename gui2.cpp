@@ -209,6 +209,14 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     insertMenu->Append(ID_INSERT_URL, _("&URL..."));
     insertMenu->Append(ID_INSERT_IMAGE, _("&Image..."));
 
+    wxMenu* favoriteMenu = new wxMenu;
+    favoriteMenu->Append(ID_FAVORITE_GO, _("&Insert\tF6"), _("Insert selected favorite"));
+    favoriteMenu->AppendSeparator();
+    favoriteMenu->Append(ID_FAVORITE_ADD, _("&Add"), _("Add selected text to favorites"));
+    favoriteMenu->Append(ID_FAVORITE_DELETE, _("&Delete"), _("Delete selected favorite"));
+    favoriteMenu->Append(ID_FAVORITE_EDIT, _("&Manage"), _("Manage favorites"));
+    favoriteMenu->Enable(ID_FAVORITE_EDIT, false);
+    
     // now append the freshly created menu to the menu bar...
     m_menuBar = new wxMenuBar();
     m_menuBar->Append(fileMenu, _("&File")); 
@@ -217,6 +225,7 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     m_menuBar->Append(listsMenu, _("&Lists")); 
     m_menuBar->Append(tableMenu, _("&Tables")); 
     m_menuBar->Append(insertMenu, _("&Insert")); 
+    m_menuBar->Append(favoriteMenu, _("Fa&vorites")); 
     m_menuBar->Append(helpMenu, _("&Help")); 
 
     // ... and attach this menu bar to the frame
@@ -453,7 +462,7 @@ void MainFrame::ConnectEvents()
     Connect(ID_SET_FONT_SCALE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSetFontScale));
     Connect(ID_SET_DIMENSION_SCALE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSetDimensionScale));
 
-    m_comboBoxFavorite->Connect(wxEVT_TEXT_ENTER, wxCommandEventHandler(MainFrame::OnComboFavoriteTextEnter));
+//    m_comboBoxFavorite->Connect(wxEVT_TEXT_ENTER, wxCommandEventHandler(MainFrame::OnComboFavoriteTextEnter));
 //    Connect(wxID_ANY, wxEVT_TEXT, wxTextEventHandler(MainFrame::OnComboFavoriteUpdate));
 //    Connect(wxID_ANY, wxEVT_TEXT_ENTER, wxTextEventHandler(MainFrame::OnComboFavoriteUpdate));
 //    Connect(wxID_ANY, wxEVT_COMBOBOX, wxCommandEventHandler(MainFrame::OnComboFavoriteUpdate));
@@ -569,7 +578,7 @@ void MainFrame::DisconnectEvents()
     Disconnect(ID_SET_FONT_SCALE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSetFontScale));
     Disconnect(ID_SET_DIMENSION_SCALE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSetDimensionScale));
     
-    m_comboBoxFavorite->Disconnect(wxEVT_TEXT_ENTER, wxCommandEventHandler(MainFrame::OnComboFavoriteTextEnter));
+//    m_comboBoxFavorite->Disconnect(wxEVT_TEXT_ENTER, wxCommandEventHandler(MainFrame::OnComboFavoriteTextEnter));
 //    Disconnect(wxID_ANY, wxEVT_TEXT, wxTextEventHandler(MainFrame::OnComboFavoriteUpdate));
 //    Disconnect(wxID_ANY, wxEVT_TEXT_ENTER, wxTextEventHandler(MainFrame::OnComboFavoriteUpdate));
 //    Disconnect(wxID_ANY, wxEVT_COMBOBOX, wxCommandEventHandler(MainFrame::OnComboFavoriteUpdate));
@@ -725,12 +734,13 @@ void MainFrame::OnShowHirerarchicalTree(wxCommandEvent& event)
     wxGetApp().LoadDailyWorkInTree();  
 }
 
+/*
 void MainFrame::OnComboFavoriteTextEnter(wxCommandEvent& event)
 {
-  // OnGoFavorite(event);
+   OnGoFavorite(event);
 }
     
-/*void MainFrame::OnComboFavoriteUpdate(wxCommandEvent& event)
+void MainFrame::OnComboFavoriteUpdate(wxCommandEvent& event)
 {
     // Don't show messages for the log output window (it'll crash)
     if ( !event.GetEventObject()->IsKindOf(CLASSINFO(wxComboCtrl)) )

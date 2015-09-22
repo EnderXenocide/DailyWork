@@ -1293,3 +1293,26 @@ Datafic Bilan Historique /Tampon
 Delphi FicFac : bug clôture
 Feuile de débit S470
 Room Arranger>
+2015-09-22 11:56:46,068 DEBUG [default] [Trinquard@TRINQUARD-PC] [virtual bool MainApp::OnInit()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:30] START
+2015-09-22 11:56:46,599 INFO  [default] Parse file dailywork.json
+2015-09-22 11:56:46,630 INFO  [default] Loading Tree with json data...
+2015-09-22 11:56:46,630 INFO  [default] Loading Tree Hierarchy... 
+2015-09-22 11:56:46,630 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetWorkFromTreeSelection(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:535] wxTreeItemId is not ok
+2015-09-22 11:56:46,630 DEBUG [default] [Trinquard@TRINQUARD-PC] [wxDateTime MainApp::GetDateFromTreeSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:509] Elément selectionné vide
+2015-09-22 11:56:46,630 DEBUG [default] [Trinquard@TRINQUARD-PC] [wxString DailyWorkParser::GetWorkFromDate(const wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/dailyworkparser.cpp:122] Date non valide
+2015-09-22 11:56:46,630 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:623] No text to show in editor 
+2015-09-22 11:56:46,630 INFO  [default] Tree Loaded in 6ms
+2015-09-22 11:57:05,466 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::ShowTreeItemSelectedText()] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:624] Text to show in editor <Dailywork
+Datafic Historique : correction compta
+Saisie des heures du 28/8 au 4/9 
+	ajout 1748/S482D et 1748/S507
+Plan
+Impression "tampons" sur flyers
+>
+2015-09-22 11:57:23,623 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetWorkFromTreeSelection(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:528] Edit modified : Dailywork
+Datafic Historique : correction compta
+Saisie des heures du 28/8 au 4/9 
+	ajout 1748/S482D et 1748/S507Impression
+Plan
+Impression "tampons" sur flyers
+
