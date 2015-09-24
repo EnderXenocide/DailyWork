@@ -467,7 +467,7 @@ void MainApp::DeleteDateSelected()
         if (dial.ShowModal()==wxID_YES) { //on supprime            
             if (DeleteItemData(itemId)) {
                 tree->Delete(itemId); 
-                frame->ShowTreeItemSelectedText();            
+                frame->SetText("");            
             }
         }
     }       
@@ -498,6 +498,60 @@ bool MainApp::DeleteItemData(wxTreeItemId itemId)
     return true;    //todo revoir retour
 } 
 
+/*
+ *  return item selected or ! isOk
+ * */
+wxTreeItemId MainApp::SelectDateInChild(wxTreeItemId parent, wxDateTime date, bool select)
+{
+   wxTreeCtrl* tree = frame->m_treeDates;
+    wxTreeItemIdValue cookie;
+    wxTreeItemId itemId = tree->GetFirstChild(parent, cookie);
+    wxTreeItemId itemId2;
+    wxDateTime itemDate;
+    while(itemId.IsOk()) {
+        DWItemData *itemData = (DWItemData *) tree->GetItemData(itemId);
+        if ( (itemData != NULL) && (!itemData->IsEmpty()) ){ //Compare only valid dates
+            itemDate = itemData->GetDate();
+            if(itemDate == date) {
+                tree->SelectItem(itemId, select); 
+                return itemId;                
+            }
+        }
+        itemId2 = SelectDateInChild(itemId, date, select);
+        if (itemId2.IsOk())
+            return itemId2;
+        itemId  = tree->GetNextChild(parent, cookie);
+    }
+    return itemId;  // ! IsOk()
+}
+
+void MainApp::SelectDateInTree(wxDateTime date, bool select)
+{
+    wxTreeCtrl* tree = frame->m_treeDates;
+    SelectDateInChild(tree->GetRootItem(), date, select);
+}
+
+void MainApp::SetCurrentDate(wxDateTime date, bool select)
+{
+    currentDate = date;
+    wxString text("");
+    if (date.IsValid()) {
+        wxDateTime treeDate = GetDateFromTreeSelection();
+        if ( ! date.IsSameDate(treeDate) )
+            SelectDateInTree(date, select);
+        text = dwparser.GetWorkFromDate(date);
+        //todo finir
+    }
+    else {
+    }
+    frame->SetText(text); 
+}
+
+void MainApp::SetCurrentDateFromTreeSelection()
+{
+   SetCurrentDate(GetDateFromTreeSelection(), false);
+ }
+
 wxDateTime MainApp::GetDateFromTreeSelection()
 {
    wxTreeCtrl* tree = frame->m_treeDates;
@@ -513,27 +567,9 @@ wxDateTime MainApp::GetDateFromTreeSelection()
     return wxDateTime((time_t)-1);
 }
       
-wxString MainApp::GetWorkFromTreeSelection()
+wxString MainApp::GetCurrentDateWork()
 {
-    return dwparser.GetWorkFromDate(GetDateFromTreeSelection());
-}
-
-void MainApp::SetWorkFromTreeSelection(wxString text)
-{        
-    wxTreeCtrl* tree = frame->m_treeDates;
-    wxTreeItemId itemId = tree->GetSelection();
-    if (itemId.IsOk()) {
-        DWItemData* itemData=(DWItemData*) tree->GetItemData(itemId);
-        if ( (itemData != NULL) && (!itemData->IsEmpty()) ) {
-            LOG(DEBUG ) << "Edit modified : " << text.ToUTF8();
-            dwparser.UpdateWork(itemData->GetDate(), text); 
-            return ;
-        }
-        LOG(DEBUG) << "No DWItemData for the wxTreeItemId selected";
-    }
-    else {
-        LOG(DEBUG ) << "wxTreeItemId is not ok";
-    }
+    return dwparser.GetWorkFromDate(currentDate);
 }
 
 int MainApp::Save()
@@ -630,6 +666,20 @@ void MainApp::InitLanguageSupport()
                        pInfo ? pInfo->GetLocaleName() : "unknown")  << " Try installing support for this language.";
         m_locale = new wxLocale( wxLANGUAGE_ENGLISH );
         m_language = wxLANGUAGE_ENGLISH;
-    }
- 
+    } 
+}
+
+void MainApp::UpdateCurrentWork()
+{
+    //todo garder function ici ? car same style que DailyWorkParser::GetWorkFromTree
+    wxRichTextBuffer & rtb = frame->m_editor->GetBuffer();
+    if (rtb.IsModified() ) {
+        if (currentDate.IsValid()) {
+            dwparser.UpdateWork(currentDate, rtb.GetText()); 
+        }
+        else {
+            LOG(DEBUG ) << "invalid date";
+        }
+        frame->m_editor->DiscardEdits();
+    }   
 }

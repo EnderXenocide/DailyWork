@@ -151,6 +151,7 @@ int DailyWorkParser::SetWorkFromItem(Value& item, wxString text)
     assert(item.IsObject());
     std::string utf8 = text.ToUTF8().data();
     item[JSON_WORK].SetString(utf8.data(), utf8.size(), document.GetAllocator());
+    LOG(DEBUG ) << "Edit modified : " << utf8;
     modified = true;
     return 0;
 }

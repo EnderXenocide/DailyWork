@@ -96,8 +96,7 @@ public:
     void DisconnectEvents();
     void DisconnectEventsSelhanged();
     void EnableShowHirerarchicalTree(bool hiearchy);
-    void ShowTreeItemSelectedText();
-    
+    void SetText(wxString texte);    
 protected:  
     // event handlers (these functions should _not_ be virtual)
     void OnCloseFrame( wxCloseEvent& event );
@@ -219,7 +218,7 @@ protected:
 private:
     // Write text
     void WriteInitialText(); // ce n'est pas utile 
-    void UpdateDWWork();
+
 };
 
 #endif //__GUI_H__

@@ -64,7 +64,9 @@ public:
     wxTreeItemId FindDateInTree(wxDateTime date);
     wxTreeItemId FindTextInTree(wxTreeItemId parent, wxString text);
     void SetWorkFromTreeSelection(wxString text);
-    wxString GetWorkFromTreeSelection();
+    void SetCurrentDate(wxDateTime date, bool select);
+    void SetCurrentDateFromTreeSelection();
+    wxString GetCurrentDateWork();
     wxDateTime GetDateFromTreeSelection();
     void DeleteDateSelected();
     bool DeleteItemData(wxTreeItemId itemId);
@@ -73,14 +75,18 @@ public:
     int SaveAs(wxString filename) ;
     int AddToFavorites(wxString text);
     int DeleteSelectedFavorite();
+    void UpdateCurrentWork();
 private:
     bool hierarchicalTree;
+    wxDateTime currentDate;
     wxLanguage m_language;  // language specified by user
     wxLocale* m_locale;  // locale we'll be using
     wxRichTextStyleSheet*   m_styleSheet;
     DailyWorkParser dwparser; 
     void InitLanguageSupport();
      wxTreeItemId AddItemData(wxTreeItemId itemId, wxDateTime date, bool setDataEmpty);
+    void SelectDateInTree(wxDateTime date, bool select);
+    wxTreeItemId SelectDateInChild(wxTreeItemId parent, wxDateTime date, bool select);
    
 #if wxUSE_PRINTING_ARCHITECTURE
     wxRichTextPrinting*     m_printing;

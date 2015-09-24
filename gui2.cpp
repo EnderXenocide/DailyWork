@@ -608,18 +608,8 @@ void MainFrame::DisconnectEventsSelhanged() {
 	m_calendar->Disconnect( wxEVT_CALENDAR_SEL_CHANGED, wxCalendarEventHandler( MainFrame::OnCalendarSelChanged ), NULL, this );  
 }
 
-void MainFrame::UpdateDWWork()
-{ 
-    //todo garder function ici ? car same style que DailyWorkParser::GetWorkFromTree
-    wxRichTextBuffer & rtb = m_editor->GetBuffer();
-    if (rtb.IsModified() ) {
-        wxGetApp().SetWorkFromTreeSelection(rtb.GetText());
-        m_editor->DiscardEdits();
-    }    
-}
-void MainFrame::ShowTreeItemSelectedText()
+void MainFrame::SetText(wxString texte)
 {
-    wxString texte = wxGetApp().GetWorkFromTreeSelection();
     LOG_IF(texte.IsEmpty(), DEBUG) << "No text to show in editor "; 
     LOG_IF(!texte.IsEmpty(), DEBUG) << "Text to show in editor <" << texte <<">";
     wxRichTextBuffer & rtb = m_editor->GetBuffer();
@@ -629,7 +619,6 @@ void MainFrame::ShowTreeItemSelectedText()
     m_editor->WriteText(wxString::FromUTF8(texte.c_str()));
     m_editor->EndSuppressUndo();
     m_editor->DiscardEdits();
-    //LOG(INFO) << texte ;
     
 //    bool retour = rtb.LoadFile(final); // == 0
 //    //rtb.AddParagraph(wxT("Testeeds"));
@@ -659,8 +648,8 @@ void MainFrame::OnFocusComboFavorite(wxCommandEvent& event)
   
 void MainFrame::OnCloseFrame(wxCloseEvent& event)
 {
-    UpdateDWWork();
     bool exit = true;
+    wxGetApp().UpdateCurrentWork();
     if (wxGetApp().IsModified()) {
         wxMessageDialog dial(this, _("This document was modified, would you like to save ?"), _("Warning"), wxYES_NO|wxCANCEL|wxCENTER_FRAME);
         int retour = dial.ShowModal();
@@ -704,12 +693,12 @@ void MainFrame::OnCalendarSelChanged(wxCalendarEvent& event)
 
 void MainFrame::OnTreeSelChanging( wxTreeEvent& event )
 {
-    UpdateDWWork();
+    wxGetApp().UpdateCurrentWork();
 }
 
 void MainFrame::OnTreeSelChanged( wxTreeEvent& event )
 {
-    ShowTreeItemSelectedText();   
+    wxGetApp().SetCurrentDateFromTreeSelection();   
 }
 
 void MainFrame::OnTreeRightClick(wxTreeEvent& event)
@@ -834,7 +823,7 @@ void MainFrame::OnStayOnTop(wxCommandEvent& event)
 
 void MainFrame::OnSave(wxCommandEvent& event)
 {
-    UpdateDWWork(); // met à jour/ou pas le texte ecrit dans le richedit dans DWparser
+    wxGetApp().UpdateCurrentWork(); // met à jour/ou pas le texte ecrit dans le richedit dans DWparser
     wxGetApp().Save();    
 }
 
@@ -857,7 +846,7 @@ void MainFrame::OnSaveAs(wxCommandEvent& event)
 
         if (!path.empty())
         {
-            UpdateDWWork(); // met à jour/ou pas le texte ecrit dans le richedit dans DWparser
+            wxGetApp().UpdateCurrentWork(); // met à jour/ou pas le texte ecrit dans le richedit dans DWparser
             wxGetApp().SaveAs(path);
             wxString s = wxString::Format(_("Save as <%s>"), path); 
             OnStatusBarMessage(s.ToStdString());
