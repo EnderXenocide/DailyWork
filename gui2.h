@@ -84,10 +84,15 @@ public:
     wxToolBar* m_mainToolBar;
     wxComboBox* m_comboBoxFavorite;
  
+    wxButton* m_buttonGoNextAvailable;
+    wxButton* m_buttonGoTomorrow;
+    wxButton* m_buttonGoYesterday;
+    wxButton* m_buttonGoPrevAvailable;
+ 
     MyRichTextCtrl* m_editor;
     
     MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_FRAME_STYLE);
-   // MainFrame( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 699,413 ), long style = wxCLOSE_BOX|wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+   // MainFrame(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 699,413 ), long style = wxCLOSE_BOX|wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL);
     ~MainFrame();
  
     void OnStatusBarMessage(wxString msg);
@@ -99,22 +104,22 @@ public:
     void SetText(wxString texte);    
 protected:  
     // event handlers (these functions should _not_ be virtual)
-    void OnCloseFrame( wxCloseEvent& event );
-    void OnTreeSelChanging( wxTreeEvent& event );
-    void OnTreeSelChanged( wxTreeEvent& event );
-    void OnTreeRightClick( wxTreeEvent& event );
-    void OnCalendarSelChanged( wxCalendarEvent& event );
-    void OnCalendarDblClick( wxCalendarEvent& event );
-    void OnCalendarSetFocus( wxFocusEvent& event );
-	void OnCalendarKillFocus( wxFocusEvent& event );
+    void OnCloseFrame(wxCloseEvent& event);
+    void OnTreeSelChanging(wxTreeEvent& event);
+    void OnTreeSelChanged(wxTreeEvent& event);
+    void OnTreeRightClick(wxTreeEvent& event);
+    void OnCalendarSelChanged(wxCalendarEvent& event);
+    void OnCalendarDblClick(wxCalendarEvent& event);
+    void OnCalendarSetFocus(wxFocusEvent& event);
+	void OnCalendarKillFocus(wxFocusEvent& event);
     
     void OnFocusComboFavorite(wxCommandEvent& event);
-    //void OnComboFavoriteTextEnter( wxCommandEvent& event );
-    //void OnComboFavoriteUpdate( wxCommandEvent& event );
+    //void OnComboFavoriteTextEnter(wxCommandEvent& event);
+    //void OnComboFavoriteUpdate(wxCommandEvent& event);
 
     void OnShowHirerarchicalTree(wxCommandEvent& event);
 
-	void OnDeleteDate( wxCommandEvent& event );
+	void OnDeleteDate(wxCommandEvent& event);
     void OnQuit(wxCommandEvent& event);
     void OnAbout(wxCommandEvent& event);
     void OnStayOnTop(wxCommandEvent& event);
@@ -126,6 +131,10 @@ protected:
     void OnUpdateAddFavorite(wxUpdateUIEvent& event);
     void OnUpdateGoFavorite(wxUpdateUIEvent& event);
     void OnUpdateDeleteFavorite(wxUpdateUIEvent& event);
+	void OnButtonGoNextAvailableClick(wxCommandEvent& event);
+	void OnButtonGoPrevAvailableClick(wxCommandEvent& event);
+	void OnButtonGoTomorrowClick(wxCommandEvent& event);
+	void OnButtonGoYesterdayClick(wxCommandEvent& event);
 
     void OnOpen(wxCommandEvent& event);
     void OnSave(wxCommandEvent& event);
@@ -218,7 +227,7 @@ protected:
 private:
     // Write text
     void WriteInitialText(); // ce n'est pas utile 
-
+    void CreateEditor();
 };
 
 #endif //__GUI_H__

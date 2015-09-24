@@ -59,13 +59,16 @@ public:
 #if wxUSE_PRINTING_ARCHITECTURE
     wxRichTextPrinting* GetPrinting() const { return m_printing; }
 #endif   
-    int AddDateToTree(wxDateTime& date, bool selectItem = false); // todo wxTreeCtrl& tree instead
+    int AddDateToTree(const wxDateTime& date, bool selectItem = false); // todo wxTreeCtrl& tree instead
     wxTreeItemId AddItem(wxTreeItemId parent, wxString text, wxDateTime date, bool setDataEmpty);
     wxTreeItemId FindDateInTree(wxDateTime date);
     wxTreeItemId FindTextInTree(wxTreeItemId parent, wxString text);
-    void SetWorkFromTreeSelection(wxString text);
-    void SetCurrentDate(wxDateTime date, bool select);
+    void SetCurrentDate(const wxDateTime &date, bool select);
     void SetCurrentDateFromTreeSelection();
+    void SetPrevDateAsCurrentDate();
+    void SetNextDateAsCurrentDate();    
+    void SetTomorrowAsCurrentDate();
+    void SetYesterdayAsCurrentDate();    
     wxString GetCurrentDateWork();
     wxDateTime GetDateFromTreeSelection();
     void DeleteDateSelected();
@@ -79,22 +82,28 @@ public:
 private:
     bool hierarchicalTree;
     wxDateTime currentDate;
+    wxDateTime currentYesterday;  
+    wxDateTime currentTomorrow; 
+    wxDateTime currentPrevDateAvailable;
+    wxDateTime currentNextDateAvailable;
     wxLanguage m_language;  // language specified by user
     wxLocale* m_locale;  // locale we'll be using
     wxRichTextStyleSheet*   m_styleSheet;
     DailyWorkParser dwparser; 
+    wxString dateToFullString(wxDateTime date);
     void InitLanguageSupport();
      wxTreeItemId AddItemData(wxTreeItemId itemId, wxDateTime date, bool setDataEmpty);
-    void SelectDateInTree(wxDateTime date, bool select);
+    void SelectDateInTree(const wxDateTime &date, bool select);
     wxTreeItemId SelectDateInChild(wxTreeItemId parent, wxDateTime date, bool select);
-   
+    wxTreeItemId AddBranchHierarchy(wxTreeItemId rootId, wxDateTime date);
+    wxTreeItemId AddBranchSimple(wxTreeItemId rootId, wxDateTime date);
+    void GetDatesAroundInTree(const wxDateTime &date, wxDateTime &prevDate, wxDateTime &nextDate);
+    
+    void InitRichText(); 
 #if wxUSE_PRINTING_ARCHITECTURE
     wxRichTextPrinting*     m_printing;
 #endif      
 
-    void InitRichText(); 
-    wxTreeItemId AddBranchHierarchy(wxTreeItemId rootId, wxDateTime date);
-    wxTreeItemId AddBranchSimple(wxTreeItemId rootId, wxDateTime date);
 };
 
 // declare global static function wxGetApp()

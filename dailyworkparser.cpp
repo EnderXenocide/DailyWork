@@ -183,7 +183,7 @@ int DailyWorkParser::DeleteItem(wxDateTime date)
     return 1; //non supprimé
 }
 
-void DailyWorkParser::AddItem(wxDateTime& date, wxString work)
+void DailyWorkParser::AddItem(const wxDateTime& date, wxString work)
 {  
     std::string DWDate = ToDWDate(date).ToStdString();
     std::string utf8Work = work.ToUTF8().data();

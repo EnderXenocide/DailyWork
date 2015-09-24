@@ -250,31 +250,34 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
 	datesSizer = new wxBoxSizer( wxVERTICAL );
 	
 	m_treeDates = new wxTreeCtrl( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTR_DEFAULT_STYLE );
-	datesSizer->Add( m_treeDates, 1, wxALL|wxEXPAND, 5 );
+	datesSizer->Add( m_treeDates, 1, wxALL|wxEXPAND, 2 );
 	
 	m_calendar = new wxCalendarCtrl( this, wxID_ANY, wxDefaultDateTime, wxDefaultPosition, wxDefaultSize, wxCAL_SHOW_HOLIDAYS );
-	datesSizer->Add( m_calendar, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 5 );
+	datesSizer->Add( m_calendar, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 2 );
 	
-	mainSizer->Add( datesSizer, 0, wxEXPAND, 5 );
-	 
-    wxFont textFont = wxFont(12, wxROMAN, wxNORMAL, wxNORMAL);
-    wxFont boldFont = wxFont(12, wxROMAN, wxNORMAL, wxBOLD);
-    wxFont italicFont = wxFont(12, wxROMAN, wxITALIC, wxNORMAL);
+	mainSizer->Add( datesSizer, 0, wxEXPAND, 2 );
+    
+	wxBoxSizer* editorSizer;
+	editorSizer = new wxBoxSizer( wxVERTICAL );
+	
+	m_buttonGoNextAvailable = new wxButton( this, wxID_ANY, _("Go to the next available date"), wxDefaultPosition, wxDefaultSize, 0 );
+	editorSizer->Add( m_buttonGoNextAvailable, 0, wxEXPAND | wxALL, 2 );
+	
+	m_buttonGoTomorrow = new wxButton( this, wxID_ANY, _("Go Tomorrow"), wxDefaultPosition, wxDefaultSize, 0 );
+	editorSizer->Add( m_buttonGoTomorrow, 0, wxEXPAND | wxALL, 2 );
 
-    m_editor = new MyRichTextCtrl(this, ID_RICHTEXT_CTRL, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxVSCROLL|wxHSCROLL/*|wxWANTS_CHARS*/);
-    wxASSERT(!m_editor->GetBuffer().GetAttributes().HasFontPixelSize());
+    CreateEditor();
+    editorSizer->Add( m_editor, 1, wxEXPAND | wxALL, 2 );
+        
+	m_buttonGoYesterday = new wxButton( this, wxID_ANY, _("Go Yesterday"), wxDefaultPosition, wxDefaultSize, 0 );
+	editorSizer->Add( m_buttonGoYesterday, 0, wxEXPAND | wxALL, 2 );
+	
+	m_buttonGoPrevAvailable = new wxButton( this, wxID_ANY, _("Go to the preivous available date"), wxDefaultPosition, wxDefaultSize, 0 );
+	editorSizer->Add( m_buttonGoPrevAvailable, 0, wxEXPAND | wxALL, 2 );
+    
+		
+	mainSizer->Add( editorSizer, 1, wxEXPAND, 2 );     //mainSizer->Add( m_editor, 1, wxEXPAND | wxALL, 5 );
 
-    wxFont font(12, wxROMAN, wxNORMAL, wxNORMAL);
-
-    m_editor->SetFont(font);
-
-    wxASSERT(!m_editor->GetBuffer().GetAttributes().HasFontPixelSize());
- 
-    m_editor->SetMargins(10, 10);
-
-    m_editor->SetStyleSheet(wxGetApp().GetStyleSheet());
-
-	mainSizer->Add( m_editor, 1, wxEXPAND | wxALL, 5 );
 	
 	this->SetSizer( mainSizer );
 	this->Layout();
@@ -361,6 +364,26 @@ MainFrame::~MainFrame()
     DisconnectEvents();	
 }
 
+void MainFrame::CreateEditor()
+{    
+    wxFont textFont = wxFont(12, wxROMAN, wxNORMAL, wxNORMAL);
+    wxFont boldFont = wxFont(12, wxROMAN, wxNORMAL, wxBOLD);
+    wxFont italicFont = wxFont(12, wxROMAN, wxITALIC, wxNORMAL);
+
+    m_editor = new MyRichTextCtrl(this, ID_RICHTEXT_CTRL, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxVSCROLL|wxHSCROLL/*|wxWANTS_CHARS*/);
+    wxASSERT(!m_editor->GetBuffer().GetAttributes().HasFontPixelSize());
+
+    wxFont font(12, wxROMAN, wxNORMAL, wxNORMAL);
+
+    m_editor->SetFont(font);
+
+    wxASSERT(!m_editor->GetBuffer().GetAttributes().HasFontPixelSize());
+ 
+    m_editor->SetMargins(10, 10);
+
+    m_editor->SetStyleSheet(wxGetApp().GetStyleSheet()); 
+}
+
 void MainFrame::ConnectEvents()
 {
     ConnectEventsSelChanged();
@@ -368,6 +391,11 @@ void MainFrame::ConnectEvents()
 	m_calendar->Connect( wxEVT_KILL_FOCUS, wxFocusEventHandler( MainFrame::OnCalendarKillFocus ), NULL, this );
 	m_calendar->Connect( wxEVT_SET_FOCUS, wxFocusEventHandler( MainFrame::OnCalendarSetFocus ), NULL, this );
     m_calendar->Connect( wxEVT_CALENDAR_DOUBLECLICKED, wxCalendarEventHandler( MainFrame::OnCalendarDblClick ), NULL, this );
+    m_buttonGoNextAvailable->Connect( wxEVT_COMMAND_BUTTON_CLICKED,  wxCommandEventHandler(MainFrame::OnButtonGoNextAvailableClick));
+    m_buttonGoPrevAvailable->Connect( wxEVT_COMMAND_BUTTON_CLICKED,  wxCommandEventHandler(MainFrame::OnButtonGoPrevAvailableClick));
+    m_buttonGoTomorrow->Connect( wxEVT_COMMAND_BUTTON_CLICKED,  wxCommandEventHandler(MainFrame::OnButtonGoTomorrowClick));
+    m_buttonGoYesterday->Connect( wxEVT_COMMAND_BUTTON_CLICKED,  wxCommandEventHandler(MainFrame::OnButtonGoYesterdayClick));
+
 	Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( MainFrame::OnCloseFrame ) );
 
     Connect(ID_Quit, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnQuit));
@@ -475,7 +503,7 @@ void MainFrame::ConnectEvents()
     Connect(ID_FAVORITE_DELETE, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateDeleteFavorite));
     Connect(ID_FAVORITE_GO, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateGoFavorite));
     
-    Connect(ID_FOCUS_FAVORITES, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnFocusComboFavorite));
+    Connect(ID_FOCUS_FAVORITES, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnFocusComboFavorite));   
  }
 
 void MainFrame::DisconnectEvents()
@@ -485,6 +513,11 @@ void MainFrame::DisconnectEvents()
 	m_calendar->Disconnect( wxEVT_KILL_FOCUS, wxFocusEventHandler( MainFrame::OnCalendarKillFocus ), NULL, this );
 	m_calendar->Disconnect( wxEVT_SET_FOCUS, wxFocusEventHandler( MainFrame::OnCalendarSetFocus ), NULL, this );
  	m_calendar->Disconnect( wxEVT_CALENDAR_DOUBLECLICKED, wxCalendarEventHandler( MainFrame::OnCalendarDblClick ), NULL, this );    
+    m_buttonGoNextAvailable->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED,  wxCommandEventHandler(MainFrame::OnButtonGoNextAvailableClick));
+    m_buttonGoPrevAvailable->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED,  wxCommandEventHandler(MainFrame::OnButtonGoPrevAvailableClick));
+    m_buttonGoTomorrow->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED,  wxCommandEventHandler(MainFrame::OnButtonGoTomorrowClick));
+    m_buttonGoYesterday->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED,  wxCommandEventHandler(MainFrame::OnButtonGoYesterdayClick));
+
 	Disconnect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( MainFrame::OnCloseFrame ) );
 
     Disconnect(ID_Quit, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnQuit));
@@ -790,7 +823,26 @@ void MainFrame::OnUpdateGoFavorite(wxUpdateUIEvent& event)
 {
     event.Enable(m_comboBoxFavorite->GetStringSelection() != ""); // (m_comboBoxFavorite->GetCount()==0) &&
 }
-    
+
+void MainFrame::OnButtonGoNextAvailableClick(wxCommandEvent& event)
+{
+    wxGetApp().SetNextDateAsCurrentDate();     
+}
+
+void MainFrame::OnButtonGoPrevAvailableClick(wxCommandEvent& event)
+{
+   wxGetApp().SetPrevDateAsCurrentDate();   
+}
+
+void MainFrame::OnButtonGoTomorrowClick(wxCommandEvent& event)
+{
+   wxGetApp().SetTomorrowAsCurrentDate();  
+}
+
+void MainFrame::OnButtonGoYesterdayClick(wxCommandEvent& event)
+{
+   wxGetApp().SetYesterdayAsCurrentDate();      
+}    
  
 void MainFrame::OnReload(wxCommandEvent& event)
 {

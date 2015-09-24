@@ -47,7 +47,7 @@ public:
     int Save();
     bool IsSelectedOk();
     
-    void AddItem(wxDateTime& date, wxString work="");
+    void AddItem(const wxDateTime& date, wxString work="");
     SizeType CountItems(); 
     int DeleteItem(wxDateTime date);
     wxString GetWorkFromDate(const wxDateTime& date);

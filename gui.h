@@ -23,6 +23,7 @@
 #include <wx/calctrl.h>
 #include <wx/treectrl.h>
 #include <wx/sizer.h>
+#include <wx/button.h>
 #include <wx/richtext/richtextctrl.h>
 #include <wx/statusbr.h>
 #include <wx/toolbar.h>
@@ -43,7 +44,11 @@ class MainFrameBase : public wxFrame
 		wxMenu* m_menuFile;
 		wxCalendarCtrl* m_calendar;
 		wxTreeCtrl* m_treeDates;
+		wxButton* m_buttonGoNextAvailable;
+		wxButton* m_buttonGoTomorrow;
 		wxRichTextCtrl* m_editor;
+		wxButton* m_buttonYesterday;
+		wxButton* m_buttonGoPrevAvailable;
 		wxStatusBar* m_statusBar;
 		wxToolBar* m_mainToolBar;
 		
@@ -54,6 +59,7 @@ class MainFrameBase : public wxFrame
 		virtual void OnCalendarKillFocus( wxFocusEvent& event ) { event.Skip(); }
 		virtual void OnCalendarSetFocus( wxFocusEvent& event ) { event.Skip(); }
 		virtual void OnTreeSelChanged( wxTreeEvent& event ) { event.Skip(); }
+		virtual void OnButtonGoNextAvailableClick( wxCommandEvent& event ) { event.Skip(); }
 		
 	
 	public:

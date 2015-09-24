@@ -389,7 +389,7 @@ wxTreeItemId MainApp::FindDateInTree(wxDateTime date)
     return itemId;    
 }
 
-int MainApp::AddDateToTree(wxDateTime& date, bool selectItem)
+int MainApp::AddDateToTree(const wxDateTime& date, bool selectItem)
 {
     wxTreeCtrl* tree = frame->m_treeDates;
 
@@ -525,24 +525,32 @@ wxTreeItemId MainApp::SelectDateInChild(wxTreeItemId parent, wxDateTime date, bo
     return itemId;  // ! IsOk()
 }
 
-void MainApp::SelectDateInTree(wxDateTime date, bool select)
+void MainApp::SelectDateInTree(const wxDateTime &date, bool select)
 {
     wxTreeCtrl* tree = frame->m_treeDates;
     SelectDateInChild(tree->GetRootItem(), date, select);
 }
 
-void MainApp::SetCurrentDate(wxDateTime date, bool select)
+void MainApp::SetCurrentDate(const wxDateTime &date, bool select)
 {
-    currentDate = date;
     wxString text("");
     if (date.IsValid()) {
+        currentDate = date;
+        currentYesterday = date.Subtract(wxDateSpan::Day());
+        currentTomorrow = date.Add(wxDateSpan::Day());
+        GetDatesAroundInTree(date, currentPrevDateAvailable, currentNextDateAvailable);
+        //currentNextAvailable = GetNextDateFromTree(date);
         wxDateTime treeDate = GetDateFromTreeSelection();
         if ( ! date.IsSameDate(treeDate) )
             SelectDateInTree(date, select);
         text = dwparser.GetWorkFromDate(date);
-        //todo finir
+        frame->m_buttonGoTomorrow->SetLabel("Go to "+dateToFullString(currentTomorrow));
+        frame->m_buttonGoYesterday->SetLabel("Go to "+dateToFullString(currentYesterday));
+        //frame->m_buttonGoNextAvailable->SetLabel("Go to "+date.Add(wxDateSpan::Day()).FormatDate());
+        //frame->m_buttonGoPrevAvailable->SetLabel("Go to "+date.Subtract(wxDateSpan::Day()).FormatDate());        //todo finir
     }
     else {
+        LOG(DEBUG) << "Date invalid";        
     }
     frame->SetText(text); 
 }
@@ -682,4 +690,47 @@ void MainApp::UpdateCurrentWork()
         }
         frame->m_editor->DiscardEdits();
     }   
+}
+
+wxString MainApp::dateToFullString(wxDateTime date)
+{
+    return date.Format("%A %d %B %Y");
+}
+
+void MainApp::GetDatesAroundInTree(const wxDateTime& date, wxDateTime& prevDate, wxDateTime& nextDate)
+{
+    prevDate = date;
+    nextDate = date;    
+}
+
+void MainApp::SetNextDateAsCurrentDate()
+{
+    if (currentNextDateAvailable.IsValid())
+        SetCurrentDate(currentNextDateAvailable, true);
+    else
+        LOG(DEBUG) << "Next Date Available invalid";
+}
+
+void MainApp::SetPrevDateAsCurrentDate()
+{
+     if (currentPrevDateAvailable.IsValid())
+        SetCurrentDate(currentPrevDateAvailable, true);
+    else
+        LOG(DEBUG) << "Prev Date Available invalid";
+}
+
+void MainApp::SetTomorrowAsCurrentDate()
+{
+      if (currentTomorrow.IsValid())
+        SetCurrentDate(currentTomorrow, true);
+    else
+        LOG(DEBUG) << "Tomorrow invalid";
+}
+
+void MainApp::SetYesterdayAsCurrentDate()
+{
+     if (currentYesterday.IsValid())
+        SetCurrentDate(currentYesterday, true);
+    else
+        LOG(DEBUG) << "Yesterday invalid";    
 }
