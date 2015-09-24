@@ -538,13 +538,13 @@ void MainApp::SetWorkFromTreeSelection(wxString text)
 
 int MainApp::Save()
 {
-    frame->OnStatusBarMessage(_("Save on ")+wxDateTime::Now().Format().ToStdString());
+    frame->OnStatusBarMessage(_("Save on ")+wxDateTime::Now().FormatTime().ToStdString());
     return dwparser.Save();    
 }
 
 int MainApp::SaveAs(wxString filename)
 {
-    frame->OnStatusBarMessage(_("Save As... on ")+wxDateTime::Now().Format().ToStdString());
+    frame->OnStatusBarMessage(_("Save As... on ")+wxDateTime::Now().FormatTime().ToStdString());
     return dwparser.SaveAs(filename);
 }
 

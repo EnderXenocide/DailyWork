@@ -782,7 +782,8 @@ void MainFrame::OnEditFavorite(wxCommandEvent& event)
 
 void MainFrame::OnGoFavorite(wxCommandEvent& event)
 {
-    wxString s = m_comboBoxFavorite->GetStringSelection();
+    m_editor->SetFocus();
+    wxString s = m_comboBoxFavorite->GetStringSelection(); 
     m_editor->WriteText(s);
 }
     
