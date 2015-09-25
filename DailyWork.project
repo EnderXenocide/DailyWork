@@ -53,6 +53,7 @@
     <File Name="gui2.h"/>
     <File Name="myrichtext.h"/>
     <File Name="wxlistviewcombopopup.h" ExcludeProjConfig="Debug"/>
+    <File Name="currentdates.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="resources">
     <File Name="gui.fbp"/>

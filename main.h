@@ -16,6 +16,7 @@
 
 
 #include "dailyworkparser.h"
+#include "currentdates.h"
 #include "gui2.h"
 
 // main wxWidgets header file
@@ -61,14 +62,14 @@ public:
 #endif   
     int AddDateToTree(const wxDateTime& date, bool selectItem = false); // todo wxTreeCtrl& tree instead
     wxTreeItemId AddItem(wxTreeItemId parent, wxString text, wxDateTime date, bool setDataEmpty);
-    wxTreeItemId FindDateInTree(wxDateTime date);
-    wxTreeItemId FindTextInTree(wxTreeItemId parent, wxString text);
+    //wxTreeItemId FindDateInTree(wxDateTime date);
+    //wxTreeItemId FindTextInTree(wxTreeItemId parent, wxString text);
     void SetCurrentDate(const wxDateTime &date, bool select);
     void SetCurrentDateFromTreeSelection();
     void SetPrevDateAsCurrentDate();
     void SetNextDateAsCurrentDate();    
-    void SetTomorrowAsCurrentDate();
-    void SetYesterdayAsCurrentDate();    
+    void AddTomorrowToTree();
+    void AddYesterdayToTree();    
     wxString GetCurrentDateWork();
     wxDateTime GetDateFromTreeSelection();
     void DeleteDateSelected();
@@ -81,23 +82,18 @@ public:
     void UpdateCurrentWork();
 private:
     bool hierarchicalTree;
-    wxDateTime currentDate;
-    wxDateTime currentYesterday;  
-    wxDateTime currentTomorrow; 
-    wxDateTime currentPrevDateAvailable;
-    wxDateTime currentNextDateAvailable;
+    CurrentDates currentDates;
     wxLanguage m_language;  // language specified by user
     wxLocale* m_locale;  // locale we'll be using
     wxRichTextStyleSheet*   m_styleSheet;
     DailyWorkParser dwparser; 
-    wxString dateToFullString(wxDateTime date);
     void InitLanguageSupport();
      wxTreeItemId AddItemData(wxTreeItemId itemId, wxDateTime date, bool setDataEmpty);
     void SelectDateInTree(const wxDateTime &date, bool select);
     wxTreeItemId SelectDateInChild(wxTreeItemId parent, wxDateTime date, bool select);
     wxTreeItemId AddBranchHierarchy(wxTreeItemId rootId, wxDateTime date);
     wxTreeItemId AddBranchSimple(wxTreeItemId rootId, wxDateTime date);
-    void GetDatesAroundInTree(const wxDateTime &date, wxDateTime &prevDate, wxDateTime &nextDate);
+    void GetDatesAround(const wxDateTime &date, wxDateTime &prevDate, wxDateTime &nextDate);
     
     void InitRichText(); 
 #if wxUSE_PRINTING_ARCHITECTURE

@@ -263,14 +263,14 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
 	m_buttonGoNextAvailable = new wxButton( this, wxID_ANY, _("Go to the next available date"), wxDefaultPosition, wxDefaultSize, 0 );
 	editorSizer->Add( m_buttonGoNextAvailable, 0, wxEXPAND | wxALL, 2 );
 	
-	m_buttonGoTomorrow = new wxButton( this, wxID_ANY, _("Go Tomorrow"), wxDefaultPosition, wxDefaultSize, 0 );
-	editorSizer->Add( m_buttonGoTomorrow, 0, wxEXPAND | wxALL, 2 );
+	m_buttonAddTomorrow = new wxButton( this, wxID_ANY, _("Add Tomorrow"), wxDefaultPosition, wxDefaultSize, 0 );
+	editorSizer->Add( m_buttonAddTomorrow, 0, wxEXPAND | wxALL, 2 );
 
     CreateEditor();
     editorSizer->Add( m_editor, 1, wxEXPAND | wxALL, 2 );
         
-	m_buttonGoYesterday = new wxButton( this, wxID_ANY, _("Go Yesterday"), wxDefaultPosition, wxDefaultSize, 0 );
-	editorSizer->Add( m_buttonGoYesterday, 0, wxEXPAND | wxALL, 2 );
+	m_buttonAddYesterday = new wxButton( this, wxID_ANY, _("Add Yesterday"), wxDefaultPosition, wxDefaultSize, 0 );
+	editorSizer->Add( m_buttonAddYesterday, 0, wxEXPAND | wxALL, 2 );
 	
 	m_buttonGoPrevAvailable = new wxButton( this, wxID_ANY, _("Go to the preivous available date"), wxDefaultPosition, wxDefaultSize, 0 );
 	editorSizer->Add( m_buttonGoPrevAvailable, 0, wxEXPAND | wxALL, 2 );
@@ -393,9 +393,9 @@ void MainFrame::ConnectEvents()
     m_calendar->Connect( wxEVT_CALENDAR_DOUBLECLICKED, wxCalendarEventHandler( MainFrame::OnCalendarDblClick ), NULL, this );
     m_buttonGoNextAvailable->Connect( wxEVT_COMMAND_BUTTON_CLICKED,  wxCommandEventHandler(MainFrame::OnButtonGoNextAvailableClick));
     m_buttonGoPrevAvailable->Connect( wxEVT_COMMAND_BUTTON_CLICKED,  wxCommandEventHandler(MainFrame::OnButtonGoPrevAvailableClick));
-    m_buttonGoTomorrow->Connect( wxEVT_COMMAND_BUTTON_CLICKED,  wxCommandEventHandler(MainFrame::OnButtonGoTomorrowClick));
-    m_buttonGoYesterday->Connect( wxEVT_COMMAND_BUTTON_CLICKED,  wxCommandEventHandler(MainFrame::OnButtonGoYesterdayClick));
-
+    m_buttonAddTomorrow->Connect( wxEVT_COMMAND_BUTTON_CLICKED,  wxCommandEventHandler(MainFrame::OnButtonAddTomorrowClick));
+    m_buttonAddYesterday->Connect( wxEVT_COMMAND_BUTTON_CLICKED,  wxCommandEventHandler(MainFrame::OnButtonAddYesterdayClick));
+    
 	Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( MainFrame::OnCloseFrame ) );
 
     Connect(ID_Quit, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnQuit));
@@ -515,8 +515,8 @@ void MainFrame::DisconnectEvents()
  	m_calendar->Disconnect( wxEVT_CALENDAR_DOUBLECLICKED, wxCalendarEventHandler( MainFrame::OnCalendarDblClick ), NULL, this );    
     m_buttonGoNextAvailable->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED,  wxCommandEventHandler(MainFrame::OnButtonGoNextAvailableClick));
     m_buttonGoPrevAvailable->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED,  wxCommandEventHandler(MainFrame::OnButtonGoPrevAvailableClick));
-    m_buttonGoTomorrow->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED,  wxCommandEventHandler(MainFrame::OnButtonGoTomorrowClick));
-    m_buttonGoYesterday->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED,  wxCommandEventHandler(MainFrame::OnButtonGoYesterdayClick));
+    m_buttonAddTomorrow->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED,  wxCommandEventHandler(MainFrame::OnButtonAddTomorrowClick));
+    m_buttonAddYesterday->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED,  wxCommandEventHandler(MainFrame::OnButtonAddYesterdayClick));
 
 	Disconnect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( MainFrame::OnCloseFrame ) );
 
@@ -715,13 +715,13 @@ void MainFrame::OnCalendarKillFocus( wxFocusEvent& event )
 
 void MainFrame::OnCalendarSelChanged(wxCalendarEvent& event) 
 { 
-    //todo find date in tree
-    wxTreeItemId itemId = wxGetApp().FindDateInTree(m_calendar->GetDate());
-    if (itemId.IsOk()) {
-        m_treeDates->SelectItem(itemId, true);
-//        wxString msg = m_treeDates->GetItemText(ItemID);
-//        OnStatusBarMessage(msg.ToStdString()); 
-    }
+    //todo find date in tree ??
+ //   wxGetApp().SetCurrentDate(m_calendar->GetDate());  
+  
+//    wxTreeItemId itemId = wxGetApp().FindDateInTree(m_calendar->GetDate());
+//    if (itemId.IsOk()) {
+//        m_treeDates->SelectItem(itemId, true);
+//    }
 }  
 
 void MainFrame::OnTreeSelChanging( wxTreeEvent& event )
@@ -834,14 +834,14 @@ void MainFrame::OnButtonGoPrevAvailableClick(wxCommandEvent& event)
    wxGetApp().SetPrevDateAsCurrentDate();   
 }
 
-void MainFrame::OnButtonGoTomorrowClick(wxCommandEvent& event)
+void MainFrame::OnButtonAddTomorrowClick(wxCommandEvent& event)
 {
-   wxGetApp().SetTomorrowAsCurrentDate();  
+   wxGetApp().AddTomorrowToTree();  
 }
 
-void MainFrame::OnButtonGoYesterdayClick(wxCommandEvent& event)
+void MainFrame::OnButtonAddYesterdayClick(wxCommandEvent& event)
 {
-   wxGetApp().SetYesterdayAsCurrentDate();      
+   wxGetApp().AddYesterdayToTree();      
 }    
  
 void MainFrame::OnReload(wxCommandEvent& event)

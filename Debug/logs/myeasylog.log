@@ -1935,3 +1935,227 @@ Impression "tampons" sur flyers
 2015-09-24 17:48:44,047 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:647] Text to show in editor <Dailywork
 Impression "tampons" sur flyers
 Etiquettes GLCB240>
+2015-09-25 11:26:41,866 DEBUG [default] [Trinquard@TRINQUARD-PC] [virtual bool MainApp::OnInit()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:30] START
+2015-09-25 11:26:42,647 INFO  [default] Parse file dailywork.json
+2015-09-25 11:26:42,678 INFO  [default] Loading Tree with json data...
+2015-09-25 11:26:42,678 INFO  [default] Loading Tree Hierarchy... 
+2015-09-25 11:26:42,678 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::UpdateCurrentWork()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:689] invalid date
+2015-09-25 11:26:42,678 DEBUG [default] [Trinquard@TRINQUARD-PC] [wxDateTime MainApp::GetDateFromTreeSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:571] Elément selectionné vide
+2015-09-25 11:26:42,678 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetCurrentDate(const wxDateTime&, bool)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:553] Date invalid
+2015-09-25 11:26:42,678 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:646] No text to show in editor 
+2015-09-25 11:26:42,678 INFO  [default] Tree Loaded in 5ms
+2015-09-25 11:26:44,850 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:647] Text to show in editor <Dailywork
+Datafic Historique : correction compta
+Saisie des heures du 28/8 au 4/9 
+	ajout 1748/S482D et 1748/S507
+Plan
+Impression "tampons" sur flyers
+>
+2015-09-25 11:26:47,507 DEBUG [default] [Trinquard@TRINQUARD-PC] [wxString DailyWorkParser::GetWorkFromDate(const wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/dailyworkparser.cpp:119] Date non trouvée :2015-09-09
+2015-09-25 11:26:47,507 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:646] No text to show in editor 
+2015-09-25 11:26:50,069 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:647] Text to show in editor <
+à é>
+2015-09-25 11:26:50,069 DEBUG [default] [Trinquard@TRINQUARD-PC] [wxString DailyWorkParser::GetWorkFromDate(const wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/dailyworkparser.cpp:119] Date non trouvée :2015-09-11
+2015-09-25 11:26:50,069 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:646] No text to show in editor 
+2015-09-25 11:26:51,960 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:647] Text to show in editor <Dailywork
+Impression "tampons" sur flyers
+Etiquettes GLCB240>
+2015-09-25 11:26:51,960 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:647] Text to show in editor <Dailywork
+Datafic Historique : correction compta
+Saisie des heures du 28/8 au 4/9 
+	ajout 1748/S482D et 1748/S507
+Plan
+Impression "tampons" sur flyers
+>
+2015-09-25 11:26:54,069 DEBUG [default] [Trinquard@TRINQUARD-PC] [wxString DailyWorkParser::GetWorkFromDate(const wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/dailyworkparser.cpp:119] Date non trouvée :2015-09-06
+2015-09-25 11:26:54,069 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:646] No text to show in editor 
+2015-09-25 11:26:57,976 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:647] Text to show in editor <Dailywork
+Impression "tampons" sur flyers
+Etiquettes GLCB240>
+2015-09-25 11:27:07,288 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:647] Text to show in editor <Dailywork
+Datafic Historique : correction compta
+Saisie des heures du 28/8 au 4/9 
+	ajout 1748/S482D et 1748/S507
+Plan
+Impression "tampons" sur flyers
+>
+2015-09-25 11:27:07,914 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:647] Text to show in editor <Dailywork
+Impression "tampons" sur flyers
+Etiquettes GLCB240>
+2015-09-25 11:27:11,429 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:647] Text to show in editor <Dailywork
+Datafic Historique : correction compta
+Saisie des heures du 28/8 au 4/9 
+	ajout 1748/S482D et 1748/S507
+Plan
+Impression "tampons" sur flyers
+>
+2015-09-25 11:27:16,836 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:647] Text to show in editor <Dailywork
+Impression "tampons" sur flyers
+Etiquettes GLCB240>
+2015-09-25 11:27:50,853 DEBUG [default] [Trinquard@TRINQUARD-PC] [wxString DailyWorkParser::GetWorkFromDate(const wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/dailyworkparser.cpp:119] Date non trouvée :2015-09-06
+2015-09-25 11:27:50,853 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:646] No text to show in editor 
+2015-09-25 11:28:01,634 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:647] Text to show in editor <Dailywork
+Datafic Historique : correction compta
+Saisie des heures du 28/8 au 4/9 
+	ajout 1748/S482D et 1748/S507
+Plan
+Impression "tampons" sur flyers
+>
+2015-09-25 11:28:02,400 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:647] Text to show in editor <Dailywork
+Impression "tampons" sur flyers
+Etiquettes GLCB240>
+2015-09-25 11:32:27,035 DEBUG [default] [Trinquard@TRINQUARD-PC] [virtual bool MainApp::OnInit()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:30] START
+2015-09-25 11:32:27,551 INFO  [default] Parse file dailywork.json
+2015-09-25 11:32:27,551 INFO  [default] Loading Tree with json data...
+2015-09-25 11:32:27,551 INFO  [default] Loading Tree Hierarchy... 
+2015-09-25 11:32:27,551 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::UpdateCurrentWork()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:721] invalid date
+2015-09-25 11:32:32,442 DEBUG [default] [Trinquard@TRINQUARD-PC] [wxDateTime MainApp::GetDateFromTreeSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:603] Elément selectionné vide
+2015-09-25 11:32:37,973 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetCurrentDate(const wxDateTime&, bool)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:553] Date invalid
+2015-09-25 11:32:37,973 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:646] No text to show in editor 
+2015-09-25 11:32:37,973 INFO  [default] Tree Loaded in 10427ms
+2015-09-25 11:32:43,958 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:647] Text to show in editor <Dailywork
+Datafic Historique : correction compta
+Saisie des heures du 28/8 au 4/9 
+	ajout 1748/S482D et 1748/S507
+Plan
+Impression "tampons" sur flyers
+>
+2015-09-25 11:32:57,693 DEBUG [default] [Trinquard@TRINQUARD-PC] [wxString DailyWorkParser::GetWorkFromDate(const wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/dailyworkparser.cpp:119] Date non trouvée :2015-09-09
+2015-09-25 11:32:57,693 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:646] No text to show in editor 
+2015-09-25 11:33:21,834 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:647] Text to show in editor <Dailywork
+Impression "tampons" sur flyers
+Etiquettes GLCB240>
+2015-09-25 11:41:40,214 DEBUG [default] [Trinquard@TRINQUARD-PC] [virtual bool MainApp::OnInit()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:30] START
+2015-09-25 11:41:40,698 INFO  [default] Parse file dailywork.json
+2015-09-25 11:41:40,698 INFO  [default] Loading Tree with json data...
+2015-09-25 11:41:40,698 INFO  [default] Loading Tree Hierarchy... 
+2015-09-25 11:41:40,698 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::UpdateCurrentWork()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:721] invalid date
+2015-09-25 11:41:44,198 DEBUG [default] [Trinquard@TRINQUARD-PC] [wxDateTime MainApp::GetDateFromTreeSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:603] Elément selectionné vide
+2015-09-25 11:41:47,167 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetCurrentDate(const wxDateTime&, bool)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:553] Date invalid
+2015-09-25 11:41:47,167 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:646] No text to show in editor 
+2015-09-25 11:41:47,167 INFO  [default] Tree Loaded in 6462ms
+2015-09-25 11:41:50,011 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::AddTomorrowToTree()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:579] Tomorrow invalid
+2015-09-25 11:41:51,605 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::AddTomorrowToTree()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:579] Tomorrow invalid
+2015-09-25 11:41:52,605 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::AddYesterdayToTree()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:587] Yesterday invalid
+2015-09-25 11:41:53,292 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetPrevDateAsCurrentDate()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:571] Prev Date Available invalid
+2015-09-25 11:41:54,417 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetNextDateAsCurrentDate()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:563] Next Date Available invalid
+2015-09-25 11:41:55,136 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::AddTomorrowToTree()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:579] Tomorrow invalid
+2015-09-25 11:41:59,214 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:647] Text to show in editor <Dailywork
+Impression "tampons" sur flyers
+Etiquettes GLCB240>
+2015-09-25 11:42:09,293 INFO  [default] Ajoute Date 2015-09-09
+2015-09-25 11:42:30,450 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:646] No text to show in editor 
+2015-09-25 11:42:40,857 DEBUG [default] [Trinquard@TRINQUARD-PC] [int DailyWorkParser::SetWorkFromItem(rapidjson::Value&, wxString)] [I:/Workspace/CodeLiteC++/DailyWork/dailyworkparser.cpp:154] Edit modified : ajout
+2015-09-25 11:42:46,872 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:647] Text to show in editor <Dailywork
+Impression "tampons" sur flyers
+Etiquettes GLCB240>
+2015-09-25 11:42:49,404 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:647] Text to show in editor <ajout>
+2015-09-25 11:51:24,533 DEBUG [default] [Trinquard@TRINQUARD-PC] [virtual bool MainApp::OnInit()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:30] START
+2015-09-25 11:51:24,987 INFO  [default] Parse file dailywork.json
+2015-09-25 11:51:24,987 INFO  [default] Loading Tree with json data...
+2015-09-25 11:51:24,987 INFO  [default] Loading Tree Hierarchy... 
+2015-09-25 11:52:03,379 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::UpdateCurrentWork()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:730] invalid date
+2015-09-25 11:52:03,379 DEBUG [default] [Trinquard@TRINQUARD-PC] [wxDateTime MainApp::GetDateFromTreeSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:605] Elément selectionné vide
+2015-09-25 11:52:03,379 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetCurrentDate(const wxDateTime&, bool)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:555] Date invalid
+2015-09-25 11:52:03,379 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:646] No text to show in editor 
+2015-09-25 11:52:03,379 INFO  [default] Tree Loaded in 38389ms
+2015-09-25 11:52:35,068 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:647] Text to show in editor <Dailywork
+Impression "tampons" sur flyers
+Etiquettes GLCB240>
+2015-09-25 15:00:18,061 DEBUG [default] [Trinquard@TRINQUARD-PC] [virtual bool MainApp::OnInit()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:30] START
+2015-09-25 15:00:18,909 INFO  [default] Parse file dailywork.json
+2015-09-25 15:00:18,933 INFO  [default] Loading Tree with json data...
+2015-09-25 15:00:18,934 INFO  [default] Loading Tree Hierarchy... 
+2015-09-25 15:00:18,938 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::UpdateCurrentWork()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:773] invalid date
+2015-09-25 15:00:18,938 DEBUG [default] [Trinquard@TRINQUARD-PC] [wxDateTime MainApp::GetDateFromTreeSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:606] Elément selectionné vide
+2015-09-25 15:00:18,938 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetCurrentDate(const wxDateTime&, bool)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:556] Date invalid
+2015-09-25 15:00:18,938 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:646] No text to show in editor 
+2015-09-25 15:00:18,941 INFO  [default] Tree Loaded in 7ms
+2015-09-25 15:00:46,964 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:647] Text to show in editor <Dailywork
+Impression "tampons" sur flyers
+Etiquettes GLCB240>
+2015-09-25 15:00:53,772 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:647] Text to show in editor <Calc : Exposants M&O
+Prog : Dailywork
+Room Arranger
+DataFic
+Etiquettes Europe Z.
+>
+2015-09-25 15:01:08,557 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:647] Text to show in editor <Saisie des heures du 24/7 au 28/8
+Téléphone à dsdfdsf>
+2015-09-25 15:17:33,204 DEBUG [default] [Trinquard@TRINQUARD-PC] [virtual bool MainApp::OnInit()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:30] START
+2015-09-25 15:17:35,387 INFO  [default] Parse file dailywork.json
+2015-09-25 15:17:35,431 INFO  [default] Loading Tree with json data...
+2015-09-25 15:17:35,431 INFO  [default] Loading Tree Hierarchy... 
+2015-09-25 15:17:35,441 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::UpdateCurrentWork()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:747] invalid date
+2015-09-25 15:17:35,442 DEBUG [default] [Trinquard@TRINQUARD-PC] [wxDateTime MainApp::GetDateFromTreeSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:612] Elément selectionné vide
+2015-09-25 15:17:35,442 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetCurrentDate(const wxDateTime&, bool)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:562] Date invalid
+2015-09-25 15:17:35,442 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:646] No text to show in editor 
+2015-09-25 15:17:35,449 INFO  [default] Tree Loaded in 18ms
+2015-09-25 15:20:24,676 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:647] Text to show in editor <Dailywork
+Datafic Historique : correction compta
+Saisie des heures du 28/8 au 4/9 
+	ajout 1748/S482D et 1748/S507
+Plan
+Impression "tampons" sur flyers
+>
+2015-09-25 15:26:54,586 DEBUG [default] [Trinquard@TRINQUARD-PC] [virtual bool MainApp::OnInit()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:30] START
+2015-09-25 15:26:55,100 INFO  [default] Parse file dailywork.json
+2015-09-25 15:26:55,101 INFO  [default] Loading Tree with json data...
+2015-09-25 15:26:55,101 INFO  [default] Loading Tree Hierarchy... 
+2015-09-25 15:26:55,105 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::UpdateCurrentWork()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:748] invalid date
+2015-09-25 15:26:55,105 DEBUG [default] [Trinquard@TRINQUARD-PC] [wxDateTime MainApp::GetDateFromTreeSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:614] Elément selectionné vide
+2015-09-25 15:26:55,105 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetCurrentDate(const wxDateTime&, bool)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:564] Date invalid
+2015-09-25 15:26:55,105 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:646] No text to show in editor 
+2015-09-25 15:26:55,108 INFO  [default] Tree Loaded in 7ms
+2015-09-25 15:27:38,068 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:647] Text to show in editor <Dailywork
+Datafic Historique : correction compta
+Saisie des heures du 28/8 au 4/9 
+	ajout 1748/S482D et 1748/S507
+Plan
+Impression "tampons" sur flyers
+>
+2015-09-25 15:31:06,169 DEBUG [default] [Trinquard@TRINQUARD-PC] [virtual bool MainApp::OnInit()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:30] START
+2015-09-25 15:31:06,657 INFO  [default] Parse file dailywork.json
+2015-09-25 15:31:06,657 INFO  [default] Loading Tree with json data...
+2015-09-25 15:31:06,658 INFO  [default] Loading Tree Hierarchy... 
+2015-09-25 15:31:06,661 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::UpdateCurrentWork()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:748] invalid date
+2015-09-25 15:31:06,661 DEBUG [default] [Trinquard@TRINQUARD-PC] [wxDateTime MainApp::GetDateFromTreeSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:614] Elément selectionné vide
+2015-09-25 15:31:06,661 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetCurrentDate(const wxDateTime&, bool)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:564] Date invalid
+2015-09-25 15:31:06,661 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:646] No text to show in editor 
+2015-09-25 15:31:06,664 INFO  [default] Tree Loaded in 6ms
+2015-09-25 15:31:09,412 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:647] Text to show in editor <Dailywork
+Datafic Historique : correction compta
+Saisie des heures du 28/8 au 4/9 
+	ajout 1748/S482D et 1748/S507
+Plan
+Impression "tampons" sur flyers
+>
+2015-09-25 15:31:21,004 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:647] Text to show in editor <
+à é>
+2015-09-25 15:31:24,195 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:647] Text to show in editor <Dailywork
+Impression "tampons" sur flyers
+Etiquettes GLCB240>
+2015-09-25 15:31:28,845 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:647] Text to show in editor <Dailywork
+Datafic Historique : correction compta
+Saisie des heures du 28/8 au 4/9 
+	ajout 1748/S482D et 1748/S507
+Plan
+Impression "tampons" sur flyers
+>
+2015-09-25 15:31:30,052 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:647] Text to show in editor <
+à é>
+2015-09-25 15:31:37,771 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:647] Text to show in editor <Dailywork
+Impression "tampons" sur flyers
+Etiquettes GLCB240>
+2015-09-25 15:31:38,348 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:647] Text to show in editor <Dailywork
+Datafic Historique : correction compta
+Saisie des heures du 28/8 au 4/9 
+	ajout 1748/S482D et 1748/S507
+Plan
+Impression "tampons" sur flyers
+>
+2015-09-25 15:31:40,804 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:647] Text to show in editor <
+à é>
+2015-09-25 15:31:50,955 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:647] Text to show in editor <Dailywork
+Impression "tampons" sur flyers
+Etiquettes GLCB240>

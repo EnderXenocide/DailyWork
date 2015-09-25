@@ -84,9 +84,9 @@ public:
     wxToolBar* m_mainToolBar;
     wxComboBox* m_comboBoxFavorite;
  
+    wxButton* m_buttonAddTomorrow;
+    wxButton* m_buttonAddYesterday;
     wxButton* m_buttonGoNextAvailable;
-    wxButton* m_buttonGoTomorrow;
-    wxButton* m_buttonGoYesterday;
     wxButton* m_buttonGoPrevAvailable;
  
     MyRichTextCtrl* m_editor;
@@ -133,8 +133,8 @@ protected:
     void OnUpdateDeleteFavorite(wxUpdateUIEvent& event);
 	void OnButtonGoNextAvailableClick(wxCommandEvent& event);
 	void OnButtonGoPrevAvailableClick(wxCommandEvent& event);
-	void OnButtonGoTomorrowClick(wxCommandEvent& event);
-	void OnButtonGoYesterdayClick(wxCommandEvent& event);
+	void OnButtonAddTomorrowClick(wxCommandEvent& event);
+	void OnButtonAddYesterdayClick(wxCommandEvent& event);
 
     void OnOpen(wxCommandEvent& event);
     void OnSave(wxCommandEvent& event);
