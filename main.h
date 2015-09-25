@@ -80,9 +80,9 @@ public:
     int AddToFavorites(wxString text);
     int DeleteSelectedFavorite();
     void UpdateCurrentWork();
+    CurrentDates currentDates;
 private:
     bool hierarchicalTree;
-    CurrentDates currentDates;
     wxLanguage m_language;  // language specified by user
     wxLocale* m_locale;  // locale we'll be using
     wxRichTextStyleSheet*   m_styleSheet;
@@ -94,6 +94,7 @@ private:
     wxTreeItemId AddBranchHierarchy(wxTreeItemId rootId, wxDateTime date);
     wxTreeItemId AddBranchSimple(wxTreeItemId rootId, wxDateTime date);
     void GetDatesAround(const wxDateTime &date, wxDateTime &prevDate, wxDateTime &nextDate);
+    void SetButtonsState();
     
     void InitRichText(); 
 #if wxUSE_PRINTING_ARCHITECTURE

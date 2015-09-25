@@ -445,7 +445,8 @@ wxTreeItemId MainApp::AddItem(wxTreeItemId parent, wxString text, wxDateTime dat
     
 wxTreeItemId MainApp::AddItemData(wxTreeItemId itemId, wxDateTime date, bool setDataEmpty)
 {
-    currentDates.dates.insert(date); 
+    if ( ! setDataEmpty)
+        currentDates.dates.insert(date);  // on ne stocke que les date valide
     DWItemData *itemData = new DWItemData(date, setDataEmpty);
     frame->m_treeDates->SetItemData(itemId, itemData);  
     return itemId; 
@@ -540,36 +541,44 @@ void MainApp::SetCurrentDate(const wxDateTime &date, bool select)
 {
     wxString text("");
     if (date.IsValid()) {
-        currentDates.today.Set(date, true);
-        currentDates.yesterday.Set(date.Subtract(wxDateSpan::Day()), true);
-        currentDates.tomorrow.Set(date.Add(wxDateSpan::Day()), true);
-        GetDatesAround(date, currentDates.prevAvailable.date, currentDates.nextAvailable.date);
+        currentDates.today = date;
+        currentDates.yesterday = date.Subtract(wxDateSpan::Day());
+        currentDates.tomorrow = date.Add(wxDateSpan::Day());
+        GetDatesAround(currentDates.today, currentDates.prevAvailable, currentDates.nextAvailable);
         
         wxDateTime treeDate = GetDateFromTreeSelection();
         if ( ! date.IsSameDate(treeDate) )
             SelectDateInTree(date, select);
         
-        text = dwparser.GetWorkFromDate(date);
-        
-        frame->m_buttonAddTomorrow->Enable(currentDates.tomorrow!=currentDates.nextAvailable);
-        frame->m_buttonAddYesterday->Enable(currentDates.yesterday!=currentDates.prevAvailable);
-        
-        frame->m_buttonAddTomorrow->SetLabel(_("Add ")+currentDates.tomorrow.ToFullString());
-        frame->m_buttonAddYesterday->SetLabel(_("Add ")+currentDates.yesterday.ToFullString());
-        
-        frame->m_buttonGoNextAvailable->SetLabel(_("Go to ")+currentDates.nextAvailable.ToFullString());
-        frame->m_buttonGoPrevAvailable->SetLabel(_("Go to ")+currentDates.prevAvailable.ToFullString());
-    }
+        text = dwparser.GetWorkFromDate(date);        
+   }
     else {
+        currentDates.Init(); 
+        //
         LOG(DEBUG) << "Date invalid";        
     }
+    SetButtonsState();
     frame->SetText(text); 
 }
 
+void MainApp::SetButtonsState()
+{
+    frame->m_buttonAddTomorrow->SetLabel(_("Add ")+currentDates.TomorrowToString());
+    frame->m_buttonAddYesterday->SetLabel(_("Add ")+currentDates.YesterdayToString());
+    frame->m_buttonGoNextAvailable->SetLabel(_("Go to ")+currentDates.NextAvailableToString());
+    frame->m_buttonGoPrevAvailable->SetLabel(_("Go to ")+currentDates.PrevAvailableToString());
+
+    bool enable = ( !currentDates.nextAvailable.IsValid() ) || ( currentDates.tomorrow!=currentDates.nextAvailable );
+    frame->m_buttonAddTomorrow->Enable(enable);
+    enable = ( !currentDates.prevAvailable.IsValid() ) || ( currentDates.yesterday!=currentDates.prevAvailable );
+    frame->m_buttonGoNextAvailable->Enable(currentDates.nextAvailable.IsValid());
+    frame->m_buttonGoPrevAvailable->Enable(currentDates.prevAvailable.IsValid());   
+}
+    
 void MainApp::SetNextDateAsCurrentDate()
 {
     if (currentDates.nextAvailable.IsValid())
-        SetCurrentDate(currentDates.nextAvailable.date, false);
+        SetCurrentDate(currentDates.nextAvailable, false);
     else
         LOG(DEBUG) << "Next Date Available invalid";
 }
@@ -577,7 +586,7 @@ void MainApp::SetNextDateAsCurrentDate()
 void MainApp::SetPrevDateAsCurrentDate()
 {
      if (currentDates.prevAvailable.IsValid())
-        SetCurrentDate(currentDates.prevAvailable.date, false);
+        SetCurrentDate(currentDates.prevAvailable, false);
     else
         LOG(DEBUG) << "Prev Date Available invalid";
 }
@@ -585,7 +594,7 @@ void MainApp::SetPrevDateAsCurrentDate()
 void MainApp::AddTomorrowToTree()
 {    
     if (currentDates.tomorrow.IsValid())
-        AddDateToTree(currentDates.tomorrow.date, true);
+        AddDateToTree(currentDates.tomorrow, true);
     else
         LOG(DEBUG) << "Tomorrow invalid";
 }
@@ -593,7 +602,7 @@ void MainApp::AddTomorrowToTree()
 void MainApp::AddYesterdayToTree()
 {
      if (currentDates.yesterday.IsValid())
-        AddDateToTree(currentDates.yesterday.date, true);
+        AddDateToTree(currentDates.yesterday, true);
     else
         LOG(DEBUG) << "Yesterday invalid";    
 }
@@ -620,13 +629,16 @@ wxDateTime MainApp::GetDateFromTreeSelection()
       
 wxString MainApp::GetCurrentDateWork()
 {
-    return dwparser.GetWorkFromDate(currentDates.today.date);
+    return dwparser.GetWorkFromDate(currentDates.today);
 }
 
 void MainApp::GetDatesAround(const wxDateTime& date, wxDateTime& prevDate, wxDateTime& nextDate)
 {
     std::set<wxDateTime>::iterator it, prevIt, nextIt;    
 //currentNextAvailable = GetNextDateFromTree(date);
+    prevDate = (time_t)-1;
+    nextDate = (time_t)-1;       
+    if (! date.IsValid()) return;
     it = currentDates.dates.find(date);
     if (it != currentDates.dates.end()) { // date trouvée
         it--; //jour precedent
@@ -635,7 +647,7 @@ void MainApp::GetDatesAround(const wxDateTime& date, wxDateTime& prevDate, wxDat
         it++; //retour à date
         it++;  //jour suivant
         if (it != currentDates.dates.end())
-            nextDate = *it;            
+            nextDate = *it;     
     }    
 }
 
@@ -742,7 +754,7 @@ void MainApp::UpdateCurrentWork()
     wxRichTextBuffer & rtb = frame->m_editor->GetBuffer();
     if (rtb.IsModified() ) {
         if (currentDates.today.IsValid()) {
-            dwparser.UpdateWork(currentDates.today.date, rtb.GetText()); 
+            dwparser.UpdateWork(currentDates.today, rtb.GetText()); 
         }
         else {
             LOG(DEBUG ) << "invalid date";

@@ -826,7 +826,12 @@ void MainFrame::OnUpdateGoFavorite(wxUpdateUIEvent& event)
 
 void MainFrame::OnButtonGoNextAvailableClick(wxCommandEvent& event)
 {
-    wxGetApp().SetNextDateAsCurrentDate();     
+    wxGetApp().SetNextDateAsCurrentDate();    
+//    wxDateTime d; 
+//    for(auto i = wxGetApp().currentDates.dates.begin(); i != wxGetApp().currentDates.dates.end(); ++i) {
+//        d = *i;
+//        LOG(INFO) <<d.Format().ToStdString();        
+//    }
 }
 
 void MainFrame::OnButtonGoPrevAvailableClick(wxCommandEvent& event)
