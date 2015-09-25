@@ -348,49 +348,6 @@ wxTreeItemId MainApp::AddBranchSimple(wxTreeItemId rootId, wxDateTime date)
     return AddItem(rootId, date.Format("%Y-%m-%d %a"), date, false);   //% F ne marche pas = Short YYYY-MM-DD date, equivalent to %Y-%m-%d
 }
 
-/*
-wxTreeItemId MainApp::FindTextInTree(wxTreeItemId parent, wxString text)
-{
-    if (!parent.IsOk())
-        return parent;
-        
-    wxTreeCtrl* tree = frame->m_treeDates;
-    wxTreeItemIdValue cookie;
-    wxTreeItemId itemId = tree->GetFirstChild(parent, cookie);
-    while(itemId.IsOk()) {
-        wxString itemText = tree->GetItemText(itemId);
-        if(itemText == text) {
-            return itemId;
-        }
-        itemId = tree->GetNextChild(parent, cookie);
-    }
-    return itemId; // ! IsOk
-}
-
-
-wxTreeItemId MainApp::FindDateInTree(wxDateTime date)
-{
-    wxTreeItemId itemId = frame->m_treeDates->GetRootItem();
-    
-    if (IsHierarchicalTree()) {
-        wxString annee = wxString::Format("%4d", date.GetYear());
-        itemId = FindTextInTree(itemId, annee);
-        if (itemId.IsOk()) {
-            wxString mois = wxString::Format("%02d", date.GetMonth()+1);
-            itemId = FindTextInTree(itemId, mois);
-            if (itemId.IsOk()) {
-                wxString jour = wxString::Format("%02d", date.GetDay());
-                itemId = FindTextInTree(itemId, jour);
-            }
-        }
-    }        
-    else {   
-        wxString dateToFind = dwparser.ToTreeDate(date);
-        itemId = FindTextInTree(itemId, dateToFind);
-    }
-    return itemId;    
-}
-*/
 
 int MainApp::AddDateToTree(const wxDateTime& date, bool selectItem)
 {
@@ -406,7 +363,7 @@ int MainApp::AddDateToTree(const wxDateTime& date, bool selectItem)
     dwparser.AddItem(date);
     tree->ExpandAll(); //Expand(itemId);
     if(selectItem)
-        tree->SelectItem(itemId, true);
+        tree->SelectItem(itemId);
     return 0;
 }
 
@@ -507,7 +464,7 @@ bool MainApp::DeleteItemData(wxTreeItemId itemId)
 /*
  *  return item selected or ! isOk
  * */
-wxTreeItemId MainApp::SelectDateInChild(wxTreeItemId parent, wxDateTime date, bool select)
+wxTreeItemId MainApp::SelectDateInChild(wxTreeItemId parent, wxDateTime date)
 {
     wxTreeCtrl* tree = frame->m_treeDates;
     wxTreeItemIdValue cookie;
@@ -519,11 +476,11 @@ wxTreeItemId MainApp::SelectDateInChild(wxTreeItemId parent, wxDateTime date, bo
         if ( (itemData != NULL) && (!itemData->IsEmpty()) ){ //Compare only valid dates
             itemDate = itemData->GetDate();
             if(itemDate == date) {
-                tree->SelectItem(itemId, select); 
+                tree->SelectItem(itemId); 
                 return itemId;                
             }
         }
-        itemId2 = SelectDateInChild(itemId, date, select);
+        itemId2 = SelectDateInChild(itemId, date);
         if (itemId2.IsOk())
             return itemId2;
         itemId  = tree->GetNextChild(parent, cookie);
@@ -531,34 +488,18 @@ wxTreeItemId MainApp::SelectDateInChild(wxTreeItemId parent, wxDateTime date, bo
     return itemId;  // ! IsOk()
 }
 
-void MainApp::SelectDateInTree(const wxDateTime &date, bool select)
+void MainApp::SelectDateInTree(const wxDateTime &date)
 {
-    wxTreeCtrl* tree = frame->m_treeDates;
-    SelectDateInChild(tree->GetRootItem(), date, select);
+    SelectDateInChild(frame->m_treeDates->GetRootItem(), date);
 }
 
-void MainApp::SetCurrentDate(const wxDateTime &date, bool select)
+void MainApp::SetCurrentDate(const wxDateTime &date)
 {
-    wxString text("");
-    if (date.IsValid()) {
-        currentDates.today = date;
-        currentDates.yesterday = date.Subtract(wxDateSpan::Day());
-        currentDates.tomorrow = date.Add(wxDateSpan::Day());
-        GetDatesAround(currentDates.today, currentDates.prevAvailable, currentDates.nextAvailable);
-        
+    if ( date.IsValid() ) {
         wxDateTime treeDate = GetDateFromTreeSelection();
-        if ( ! date.IsSameDate(treeDate) )
-            SelectDateInTree(date, select);
-        
-        text = dwparser.GetWorkFromDate(date);        
-   }
-    else {
-        currentDates.Init(); 
-        //
-        LOG(DEBUG) << "Date invalid";        
+        if ( ( ! treeDate.IsValid() ) || ( ! date.IsSameDate(treeDate) ) )
+            SelectDateInTree(date);        
     }
-    SetButtonsState();
-    frame->SetText(text); 
 }
 
 void MainApp::SetButtonsState()
@@ -571,6 +512,7 @@ void MainApp::SetButtonsState()
     bool enable = ( !currentDates.nextAvailable.IsValid() ) || ( currentDates.tomorrow!=currentDates.nextAvailable );
     frame->m_buttonAddTomorrow->Enable(enable);
     enable = ( !currentDates.prevAvailable.IsValid() ) || ( currentDates.yesterday!=currentDates.prevAvailable );
+    frame->m_buttonAddYesterday->Enable(enable);
     frame->m_buttonGoNextAvailable->Enable(currentDates.nextAvailable.IsValid());
     frame->m_buttonGoPrevAvailable->Enable(currentDates.prevAvailable.IsValid());   
 }
@@ -578,7 +520,7 @@ void MainApp::SetButtonsState()
 void MainApp::SetNextDateAsCurrentDate()
 {
     if (currentDates.nextAvailable.IsValid())
-        SetCurrentDate(currentDates.nextAvailable, false);
+        SetCurrentDate(currentDates.nextAvailable);
     else
         LOG(DEBUG) << "Next Date Available invalid";
 }
@@ -586,7 +528,7 @@ void MainApp::SetNextDateAsCurrentDate()
 void MainApp::SetPrevDateAsCurrentDate()
 {
      if (currentDates.prevAvailable.IsValid())
-        SetCurrentDate(currentDates.prevAvailable, false);
+        SetCurrentDate(currentDates.prevAvailable);
     else
         LOG(DEBUG) << "Prev Date Available invalid";
 }
@@ -609,7 +551,23 @@ void MainApp::AddYesterdayToTree()
 
 void MainApp::SetCurrentDateFromTreeSelection()
 {
-   SetCurrentDate(GetDateFromTreeSelection(), false);
+    wxString text("");
+    wxDateTime date = GetDateFromTreeSelection();
+    if (date.IsValid()) {
+        LOG(DEBUG) << "Show date " << date.FormatDate();
+        currentDates.today = date;    
+        currentDates.yesterday = date - wxDateSpan::Day();
+        currentDates.tomorrow = date + wxDateSpan::Day();
+        GetDatesAround(date, currentDates.prevAvailable, currentDates.nextAvailable);
+        text = dwparser.GetWorkFromDate(date);        
+   }
+    else {
+        currentDates.Init(); 
+        //
+        LOG(DEBUG) << "Date invalid, nothing to show";        
+    }
+    SetButtonsState();
+    frame->SetText(text);    
  }
  
 wxDateTime MainApp::GetDateFromTreeSelection()

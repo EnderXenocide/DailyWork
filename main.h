@@ -64,7 +64,7 @@ public:
     wxTreeItemId AddItem(wxTreeItemId parent, wxString text, wxDateTime date, bool setDataEmpty);
     //wxTreeItemId FindDateInTree(wxDateTime date);
     //wxTreeItemId FindTextInTree(wxTreeItemId parent, wxString text);
-    void SetCurrentDate(const wxDateTime &date, bool select);
+    void SetCurrentDate(const wxDateTime &date);
     void SetCurrentDateFromTreeSelection();
     void SetPrevDateAsCurrentDate();
     void SetNextDateAsCurrentDate();    
@@ -89,8 +89,8 @@ private:
     DailyWorkParser dwparser; 
     void InitLanguageSupport();
      wxTreeItemId AddItemData(wxTreeItemId itemId, wxDateTime date, bool setDataEmpty);
-    void SelectDateInTree(const wxDateTime &date, bool select);
-    wxTreeItemId SelectDateInChild(wxTreeItemId parent, wxDateTime date, bool select);
+    void SelectDateInTree(const wxDateTime &date);
+    wxTreeItemId SelectDateInChild(wxTreeItemId parent, wxDateTime date);
     wxTreeItemId AddBranchHierarchy(wxTreeItemId rootId, wxDateTime date);
     wxTreeItemId AddBranchSimple(wxTreeItemId rootId, wxDateTime date);
     void GetDatesAround(const wxDateTime &date, wxDateTime &prevDate, wxDateTime &nextDate);
