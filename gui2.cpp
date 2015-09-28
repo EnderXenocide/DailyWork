@@ -827,11 +827,6 @@ void MainFrame::OnUpdateGoFavorite(wxUpdateUIEvent& event)
 void MainFrame::OnButtonGoNextAvailableClick(wxCommandEvent& event)
 {
     wxGetApp().SetNextDateAsCurrentDate();    
-//    wxDateTime d; 
-//    for(auto i = wxGetApp().currentDates.dates.begin(); i != wxGetApp().currentDates.dates.end(); ++i) {
-//        d = *i;
-//        LOG(INFO) <<d.Format().ToStdString();        
-//    }
 }
 
 void MainFrame::OnButtonGoPrevAvailableClick(wxCommandEvent& event)
@@ -880,8 +875,13 @@ void MainFrame::OnStayOnTop(wxCommandEvent& event)
 
 void MainFrame::OnSave(wxCommandEvent& event)
 {
-    wxGetApp().UpdateCurrentWork(); // met à jour/ou pas le texte ecrit dans le richedit dans DWparser
+   wxGetApp().UpdateCurrentWork(); // met à jour/ou pas le texte ecrit dans le richedit dans DWparser
     wxGetApp().Save();    
+//    wxDateTime d; 
+//    for(auto i = wxGetApp().currentDates.dates.begin(); i != wxGetApp().currentDates.dates.end(); ++i) {
+//        d = *i;
+//        LOG(INFO) <<d.Format().ToStdString();        
+//    }    
 }
 
 void MainFrame::OnSaveAs(wxCommandEvent& event)

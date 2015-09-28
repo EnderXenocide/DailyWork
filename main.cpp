@@ -599,15 +599,15 @@ void MainApp::GetDatesAround(const wxDateTime& date, wxDateTime& prevDate, wxDat
     if (! date.IsValid()) return;
     it = currentDates.dates.find(date);
     if (it != currentDates.dates.end()) { // date trouvée
-        LOG(DEBUG) << "actuel" << (*it).Format().ToStdString(); 
-        it--; //jour precedent
-        LOG(DEBUG) << "precedent" << (*it).Format().ToStdString(); 
-        if (it != currentDates.dates.begin())
+        if (it != currentDates.dates.begin()) {
+            it--; //jour precedent
+            LOG(DEBUG) << "precedent " << (*it).Format().ToStdString(); 
             prevDate = *it;
-        it++; //retour à date
-        LOG(DEBUG) << "actuel" << (*it).Format().ToStdString(); 
+            it++; //retour à date
+        }
+        LOG(DEBUG) << "actuel " << (*it).Format().ToStdString(); 
         it++;  //jour suivant
-        LOG(DEBUG) << "suivant" << (*it).Format().ToStdString(); 
+        LOG(DEBUG) << "suivant " << (*it).Format().ToStdString(); 
         if (it != currentDates.dates.end())
             nextDate = *it;     
     }    
