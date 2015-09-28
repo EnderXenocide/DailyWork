@@ -315,7 +315,7 @@ void MainApp::LoadDailyWorkInTree()
             itemId = (this->*LoadBranch)(rootId, date);
         }
         else {
-             wxString errmsg = wxString::Format(_("Error loading date <%s>"), date.Format());
+            wxString errmsg = wxString::Format(_("Error loading date <%s>"), date.Format());
             frame->OnStatusBarMessage(errmsg);
             LOG(ERROR) << errmsg;
         }
@@ -592,18 +592,22 @@ wxString MainApp::GetCurrentDateWork()
 
 void MainApp::GetDatesAround(const wxDateTime& date, wxDateTime& prevDate, wxDateTime& nextDate)
 {
-    std::set<wxDateTime>::iterator it, prevIt, nextIt;    
+    std::set<wxDateTime>::iterator it; 
 //currentNextAvailable = GetNextDateFromTree(date);
     prevDate = (time_t)-1;
     nextDate = (time_t)-1;       
     if (! date.IsValid()) return;
     it = currentDates.dates.find(date);
     if (it != currentDates.dates.end()) { // date trouvée
+        LOG(DEBUG) << "actuel" << (*it).Format().ToStdString(); 
         it--; //jour precedent
+        LOG(DEBUG) << "precedent" << (*it).Format().ToStdString(); 
         if (it != currentDates.dates.begin())
             prevDate = *it;
         it++; //retour à date
+        LOG(DEBUG) << "actuel" << (*it).Format().ToStdString(); 
         it++;  //jour suivant
+        LOG(DEBUG) << "suivant" << (*it).Format().ToStdString(); 
         if (it != currentDates.dates.end())
             nextDate = *it;     
     }    
