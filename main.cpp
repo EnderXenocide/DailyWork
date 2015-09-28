@@ -568,6 +568,7 @@ void MainApp::SetCurrentDateFromTreeSelection()
     }
     SetButtonsState();
     frame->SetText(text);    
+    frame->m_editor->SetFocus(); //todo here ?
  }
  
 wxDateTime MainApp::GetDateFromTreeSelection()
@@ -615,13 +616,13 @@ void MainApp::GetDatesAround(const wxDateTime& date, wxDateTime& prevDate, wxDat
 
 int MainApp::Save()
 {
-    frame->OnStatusBarMessage(_("Save on ")+wxDateTime::Now().FormatTime().ToStdString());
+    frame->OnStatusBarMessage(_("Save at ")+wxDateTime::Now().FormatTime().ToStdString());
     return dwparser.Save();    
 }
 
 int MainApp::SaveAs(wxString filename)
 {
-    frame->OnStatusBarMessage(_("Save As... on ")+wxDateTime::Now().FormatTime().ToStdString());
+    frame->OnStatusBarMessage(_("Save As... at ")+wxDateTime::Now().FormatTime().ToStdString());
     return dwparser.SaveAs(filename);
 }
 

@@ -94,6 +94,7 @@ private:
     wxTreeItemId AddBranchHierarchy(wxTreeItemId rootId, wxDateTime date);
     wxTreeItemId AddBranchSimple(wxTreeItemId rootId, wxDateTime date);
     void GetDatesAround(const wxDateTime &date, wxDateTime &prevDate, wxDateTime &nextDate);
+    void GetNewDatesAround(const wxDateTime &date, wxDateTime &yesterday, wxDateTime &tomorrow);
     void SetButtonsState();
     
     void InitRichText(); 
