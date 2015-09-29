@@ -57,7 +57,7 @@ public:
     MainApp& SetHierarchicalTree( bool hierarchy){this->hierarchicalTree = hierarchy; return *this; }
     bool IsHierarchicalTree() const{ return hierarchicalTree; }
     wxRichTextStyleSheet* GetStyleSheet() const { return m_styleSheet; } 
-#if wxUSE_PRINTING_ARCHITECTURE
+#if wxUSE_PRINTING_ARCHITECTURE & USE_RICH_EDIT
     wxRichTextPrinting* GetPrinting() const { return m_printing; }
 #endif   
     int AddDateToTree(const wxDateTime& date, bool selectItem = false); // todo wxTreeCtrl& tree instead
@@ -98,7 +98,8 @@ private:
     void SetButtonsState();
     
     void InitRichText(); 
-#if wxUSE_PRINTING_ARCHITECTURE
+    
+#if wxUSE_PRINTING_ARCHITECTURE & USE_RICH_EDIT
     wxRichTextPrinting*     m_printing;
 #endif      
 

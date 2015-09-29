@@ -136,8 +136,10 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     fileMenu->Append(ID_PRINT, _("&Print...\tCtrl+P"), _("Print")); 
     fileMenu->Append(ID_PREVIEW, _("Print Pre&view"), _("Print preview")); 
 #endif
+#if USE_RICH_EDIT
     fileMenu->AppendSeparator();
     fileMenu->Append(ID_VIEW_HTML, _("View as HT&ML"), _("View HTML")); 
+#endif // USE_RICH_EDIT 
     fileMenu->AppendSeparator();
     fileMenu->Append(ID_Quit, _("E&xit\tAlt+X"), _("Quit this program")); 
 
@@ -151,6 +153,7 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     editMenu->Append(wxID_COPY, _("&Copy\tCtrl+C")); 
     editMenu->Append(wxID_PASTE, _("&Paste\tCtrl+V")); 
 
+#if USE_RICH_EDIT
     editMenu->AppendSeparator();
     editMenu->Append(wxID_SELECTALL, _("Select A&ll\tCtrl+A")); 
     editMenu->AppendSeparator();
@@ -208,6 +211,7 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     insertMenu->Append(ID_INSERT_SYMBOL, _("&Symbol...\tCtrl+I"));
     insertMenu->Append(ID_INSERT_URL, _("&URL..."));
     insertMenu->Append(ID_INSERT_IMAGE, _("&Image..."));
+#endif // USE_RICH_EDIT
 
     wxMenu* favoriteMenu = new wxMenu;
     favoriteMenu->Append(ID_FAVORITE_GO, _("&Insert\tF6"), _("Insert selected favorite"));
@@ -221,10 +225,12 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     m_menuBar = new wxMenuBar();
     m_menuBar->Append(fileMenu, _("&File")); 
     m_menuBar->Append(editMenu, _("&Edit")); 
+#if USE_RICH_EDIT
     m_menuBar->Append(formatMenu, _("F&ormat")); 
     m_menuBar->Append(listsMenu, _("&Lists")); 
     m_menuBar->Append(tableMenu, _("&Tables")); 
     m_menuBar->Append(insertMenu, _("&Insert")); 
+#endif // USE_RICH_EDIT
     m_menuBar->Append(favoriteMenu, _("Fa&vorites")); 
     m_menuBar->Append(helpMenu, _("&Help")); 
 
@@ -309,6 +315,7 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     m_mainToolBar->AddSeparator();
     m_mainToolBar->AddTool(wxID_UNDO, wxEmptyString, wxBitmap(undo_xpm), _("Undo")); 
     m_mainToolBar->AddTool(wxID_REDO, wxEmptyString, wxBitmap(redo_xpm), _("Redo"));
+#if USE_RICH_EDIT
     m_mainToolBar->AddSeparator();
     m_mainToolBar->AddCheckTool(ID_FORMAT_BOLD, wxEmptyString, wxBitmap(bold_xpm), wxNullBitmap, _("Bold")); 
     m_mainToolBar->AddCheckTool(ID_FORMAT_ITALIC, wxEmptyString, wxBitmap(italic_xpm), wxNullBitmap, _("Italic")); 
@@ -322,8 +329,9 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     m_mainToolBar->AddTool(ID_FORMAT_INDENT_MORE, wxEmptyString, wxBitmap(indentmore_xpm), _("Indent More")); //Augmenter le retrait
     m_mainToolBar->AddSeparator();
     m_mainToolBar->AddTool(ID_FORMAT_FONT, wxEmptyString, wxBitmap(font_xpm), _("Font")); //Police
+#endif // USE_RICH_EDIT
+    
     m_mainToolBar->AddSeparator();
-
     m_comboBoxFavorite = new wxComboBox(m_mainToolBar, ID_HELPLIST, wxEmptyString);
     m_comboBoxFavorite->SetHint(_("Favorites"));
     m_mainToolBar->AddControl(m_comboBoxFavorite);
@@ -339,6 +347,7 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
 
     //WriteInitialText();
  
+#if USE_RICH_EDIT
     // désactive les options de mise en forme du text parceque pas de lecture de fichier rtf...
     m_menuBar->EnableTop(2, false);
     m_menuBar->EnableTop(3, false); 
@@ -355,6 +364,7 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     m_mainToolBar->EnableTool(ID_FORMAT_FONT, false);
     m_mainToolBar->EnableTool(ID_FORMAT_FONT, false); 
     m_mainToolBar->EnableTool(ID_FAVORITE_EDIT, false); 
+#endif // USE_RICH_EDIT
     
     ConnectEvents();
 }   
@@ -366,22 +376,24 @@ MainFrame::~MainFrame()
 
 void MainFrame::CreateEditor()
 {    
+#if USE_RICH_EDIT
     wxFont textFont = wxFont(12, wxROMAN, wxNORMAL, wxNORMAL);
     wxFont boldFont = wxFont(12, wxROMAN, wxNORMAL, wxBOLD);
     wxFont italicFont = wxFont(12, wxROMAN, wxITALIC, wxNORMAL);
+    wxFont font(12, wxROMAN, wxNORMAL, wxNORMAL);
 
     m_editor = new MyRichTextCtrl(this, ID_RICHTEXT_CTRL, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxVSCROLL|wxHSCROLL/*|wxWANTS_CHARS*/);
     wxASSERT(!m_editor->GetBuffer().GetAttributes().HasFontPixelSize());
-
-    wxFont font(12, wxROMAN, wxNORMAL, wxNORMAL);
-
+#else
+    m_editor = new wxTextCtrl(this, wxID_ANY, wxT(""), wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER | wxTE_MULTILINE);
+    wxFont font(11, wxROMAN, wxNORMAL, wxNORMAL);
+#endif  // USE_RICH_EDIT
     m_editor->SetFont(font);
-
+#if USE_RICH_EDIT
     wxASSERT(!m_editor->GetBuffer().GetAttributes().HasFontPixelSize());
- 
-    m_editor->SetMargins(10, 10);
-
     m_editor->SetStyleSheet(wxGetApp().GetStyleSheet()); 
+#endif  // USE_RICH_EDIT
+    m_editor->SetMargins(10, 10);
 }
 
 void MainFrame::ConnectEvents()
@@ -407,7 +419,11 @@ void MainFrame::ConnectEvents()
     Connect(wxID_SAVEAS, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSaveAs));
     
     Connect(ID_HIERACHY, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnShowHirerarchicalTree));
+ 
+    Connect(ID_RELOAD, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnReload));
+    Connect(ID_DELETE_DATE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnDeleteDate));
 
+#if USE_RICH_EDIT
     Connect(ID_FORMAT_BOLD, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnBold));
     Connect(ID_FORMAT_ITALIC, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnItalic));
     Connect(ID_FORMAT_UNDERLINE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnUnderline));
@@ -450,9 +466,6 @@ void MainFrame::ConnectEvents()
     Connect(ID_FORMAT_PARAGRAPH_SPACING_MORE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnParagraphSpacingMore));
     Connect(ID_FORMAT_PARAGRAPH_SPACING_LESS, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnParagraphSpacingLess));
 
-    Connect(ID_RELOAD, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnReload));
-    Connect(ID_DELETE_DATE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnDeleteDate));
-
     Connect(ID_INSERT_SYMBOL, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnInsertSymbol));
     Connect(ID_INSERT_URL, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnInsertURL));
     Connect(ID_INSERT_IMAGE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnInsertImage));
@@ -469,26 +482,27 @@ void MainFrame::ConnectEvents()
     Connect(ID_TABLE_DELETE_COLUMN, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnTableDeleteColumn));
     Connect(ID_TABLE_DELETE_ROW, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnTableDeleteRow));
 
-   Connect(ID_TABLE_ADD_COLUMN, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnTableFocusedUpdateUI));
-   Connect(ID_TABLE_ADD_ROW, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnTableFocusedUpdateUI));
-   Connect(ID_TABLE_DELETE_COLUMN, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnTableHasCellsUpdateUI));
-   Connect(ID_TABLE_DELETE_ROW, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnTableHasCellsUpdateUI));
+    Connect(ID_TABLE_ADD_COLUMN, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnTableFocusedUpdateUI));
+    Connect(ID_TABLE_ADD_ROW, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnTableFocusedUpdateUI));
+    Connect(ID_TABLE_DELETE_COLUMN, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnTableHasCellsUpdateUI));
+    Connect(ID_TABLE_DELETE_ROW, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnTableHasCellsUpdateUI));
 
     Connect(ID_VIEW_HTML, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnViewHTML));
     Connect(ID_SWITCH_STYLE_SHEETS, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSwitchStyleSheets));
     Connect(ID_MANAGE_STYLES, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnManageStyles));
 
-#if wxUSE_PRINTING_ARCHITECTURE
+    Connect(wxID_ANY, wxEVT_TEXT_URL,  wxTextUrlEventHandler(MainFrame::OnURL));
+    Connect(wxID_ANY, wxEVT_RICHTEXT_STYLESHEET_REPLACING,  wxRichTextEventHandler(MainFrame::OnStyleSheetReplacing));
+    Connect(ID_SET_FONT_SCALE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSetFontScale));
+    Connect(ID_SET_DIMENSION_SCALE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSetDimensionScale));
+    
+    Connect(ID_PAGE_SETUP, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnPageSetup));
+#endif
+    
+#if wxUSE_PRINTING_ARCHITECTURE & USE_RICH_EDIT
     Connect(ID_PRINT, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnPrint));
     Connect(ID_PREVIEW, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnPreview));
 #endif
-    Connect(ID_PAGE_SETUP, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnPageSetup));
-
-   Connect(wxID_ANY, wxEVT_TEXT_URL,  wxTextUrlEventHandler(MainFrame::OnURL));
-   Connect(wxID_ANY, wxEVT_RICHTEXT_STYLESHEET_REPLACING,  wxRichTextEventHandler(MainFrame::OnStyleSheetReplacing));
-
-    Connect(ID_SET_FONT_SCALE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSetFontScale));
-    Connect(ID_SET_DIMENSION_SCALE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSetDimensionScale));
 
 //    m_comboBoxFavorite->Connect(wxEVT_TEXT_ENTER, wxCommandEventHandler(MainFrame::OnComboFavoriteTextEnter));
 //    Connect(wxID_ANY, wxEVT_TEXT, wxTextEventHandler(MainFrame::OnComboFavoriteUpdate));
@@ -529,7 +543,10 @@ void MainFrame::DisconnectEvents()
     Disconnect(wxID_SAVEAS, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSaveAs));
     
     Disconnect(ID_HIERACHY, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnShowHirerarchicalTree));
+    Disconnect(ID_RELOAD, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnReload));
+    Disconnect(ID_DELETE_DATE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnDeleteDate));
 
+#if USE_RICH_EDIT
     Disconnect(ID_FORMAT_BOLD, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnBold));
     Disconnect(ID_FORMAT_ITALIC, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnItalic));
     Disconnect(ID_FORMAT_UNDERLINE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnUnderline));
@@ -572,8 +589,6 @@ void MainFrame::DisconnectEvents()
     Disconnect(ID_FORMAT_PARAGRAPH_SPACING_MORE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnParagraphSpacingMore));
     Disconnect(ID_FORMAT_PARAGRAPH_SPACING_LESS, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnParagraphSpacingLess));
 
-    Disconnect(ID_RELOAD, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnReload));
-
     Disconnect(ID_INSERT_SYMBOL, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnInsertSymbol));
     Disconnect(ID_INSERT_URL, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnInsertURL));
     Disconnect(ID_INSERT_IMAGE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnInsertImage));
@@ -599,10 +614,6 @@ void MainFrame::DisconnectEvents()
     Disconnect(ID_SWITCH_STYLE_SHEETS, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSwitchStyleSheets));
     Disconnect(ID_MANAGE_STYLES, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnManageStyles));
 
-#if wxUSE_PRINTING_ARCHITECTURE
-    Disconnect(ID_PRINT, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnPrint));
-    Disconnect(ID_PREVIEW, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnPreview));
-#endif
     Disconnect(ID_PAGE_SETUP, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnPageSetup));
 
    Disconnect(wxID_ANY, wxEVT_TEXT_URL,  wxTextUrlEventHandler(MainFrame::OnURL));
@@ -610,6 +621,12 @@ void MainFrame::DisconnectEvents()
 
     Disconnect(ID_SET_FONT_SCALE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSetFontScale));
     Disconnect(ID_SET_DIMENSION_SCALE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSetDimensionScale));
+#endif
+
+#if wxUSE_PRINTING_ARCHITECTURE & USE_RICH_EDIT
+    Disconnect(ID_PRINT, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnPrint));
+    Disconnect(ID_PREVIEW, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnPreview));
+#endif
     
 //    m_comboBoxFavorite->Disconnect(wxEVT_TEXT_ENTER, wxCommandEventHandler(MainFrame::OnComboFavoriteTextEnter));
 //    Disconnect(wxID_ANY, wxEVT_TEXT, wxTextEventHandler(MainFrame::OnComboFavoriteUpdate));
@@ -645,12 +662,15 @@ void MainFrame::SetText(wxString texte)
 {
     LOG_IF(texte.IsEmpty(), DEBUG) << "No text to show in editor "; 
     LOG_IF(!texte.IsEmpty(), DEBUG) << "Text to show in editor <" << texte <<">";
+/*#if USE_RICH_EDIT
     wxRichTextBuffer & rtb = m_editor->GetBuffer();
     m_editor->BeginSuppressUndo();
     rtb.ResetAndClearCommands();
     m_editor->Clear();
     m_editor->WriteText(wxString::FromUTF8(texte.c_str()));
     m_editor->EndSuppressUndo();
+#else*/
+    m_editor->SetValue(wxString::FromUTF8(texte.c_str()));
     m_editor->DiscardEdits();
     
 //    bool retour = rtb.LoadFile(final); // == 0
@@ -921,6 +941,51 @@ void MainFrame::OnSaveAs(wxCommandEvent& event)
 
 // event handlers
 
+void MainFrame::OnOpen(wxCommandEvent&event)
+{
+    wxString path;
+    wxString filename;
+    wxArrayInt fileTypes;
+
+    wxString filter = wxRichTextBuffer::GetExtWildcard(false, false, & fileTypes);
+    if (!filter.empty())
+        filter += wxT("|");
+    filter += wxT("All files (*.*)|*.*");
+
+    wxFileDialog dialog(this,
+        _("Choose a filename"),
+        path,
+        filename,
+        filter,
+        wxFD_OPEN);
+
+    if (dialog.ShowModal() == wxID_OK)
+    {
+        wxString path = dialog.GetPath();
+
+        if (!path.empty())
+        {
+            int filterIndex = dialog.GetFilterIndex();
+            int fileType = (filterIndex < (int) fileTypes.GetCount())
+                           ? fileTypes[filterIndex]
+                           : wxRICHTEXT_TYPE_TEXT;
+            m_editor->LoadFile(path, fileType);
+        }
+    }
+}
+
+#if wxUSE_PRINTING_ARCHITECTURE  & USE_RICH_EDIT
+void MainFrame::OnPrint(wxCommandEvent& event)
+{
+    wxGetApp().GetPrinting()->PrintBuffer(m_editor->GetBuffer());
+}
+
+void MainFrame::OnPreview(wxCommandEvent& event)
+{
+    wxGetApp().GetPrinting()->PreviewBuffer(m_editor->GetBuffer());       
+}
+#endif
+
 // Forward command events to the current rich text control, if any
 bool MainFrame::ProcessEvent(wxEvent& event)
 {
@@ -960,37 +1025,26 @@ bool MainFrame::ProcessEvent(wxEvent& event)
     return wxFrame::ProcessEvent(event);
 }
 
-void MainFrame::OnOpen(wxCommandEvent&event)
+#if USE_RICH_EDIT
+void MainFrame::OnPageSetup(wxCommandEvent& event)
 {
-    wxString path;
-    wxString filename;
-    wxArrayInt fileTypes;
+    wxDialog dialog(this, wxID_ANY, _("Testing"), wxPoint(10, 10), wxSize(400, 300), wxDEFAULT_DIALOG_STYLE);
 
-    wxString filter = wxRichTextBuffer::GetExtWildcard(false, false, & fileTypes);
-    if (!filter.empty())
-        filter += wxT("|");
-    filter += wxT("All files (*.*)|*.*");
+    wxNotebook* nb = new wxNotebook(& dialog, wxID_ANY, wxPoint(5, 5), wxSize(300, 250));
+    wxPanel* panel = new wxPanel(nb, wxID_ANY, wxDefaultPosition, wxDefaultSize);
+    wxPanel* panel2 = new wxPanel(nb, wxID_ANY, wxDefaultPosition, wxDefaultSize);
 
-    wxFileDialog dialog(this,
-        _("Choose a filename"),
-        path,
-        filename,
-        filter,
-        wxFD_OPEN);
+    new wxRichTextCtrl(panel, wxID_ANY, wxEmptyString, wxPoint(5, 5), wxSize(200, 150), wxVSCROLL|wxTE_READONLY);
+    nb->AddPage(panel, _("Page 1"));
 
-    if (dialog.ShowModal() == wxID_OK)
-    {
-        wxString path = dialog.GetPath();
+    new wxRichTextCtrl(panel2, wxID_ANY, wxEmptyString, wxPoint(5, 5), wxSize(200, 150), wxVSCROLL|wxTE_READONLY);
+    nb->AddPage(panel2, _("Page 2"));
 
-        if (!path.empty())
-        {
-            int filterIndex = dialog.GetFilterIndex();
-            int fileType = (filterIndex < (int) fileTypes.GetCount())
-                           ? fileTypes[filterIndex]
-                           : wxRICHTEXT_TYPE_TEXT;
-            m_editor->LoadFile(path, fileType);
-        }
-    }
+    new wxButton(& dialog, wxID_OK, wxT("OK"), wxPoint(5, 180));
+
+    dialog.ShowModal();
+
+//    wxGetApp().GetPrinting()->PageSetup();
 }
 
 void MainFrame::OnBold(wxCommandEvent& event)
@@ -1022,7 +1076,6 @@ void MainFrame::OnSubscript(wxCommandEvent& event)
 {
     m_editor->ApplyTextEffectToSelection(wxTEXT_ATTR_EFFECT_SUBSCRIPT);
 }
-
 
 void MainFrame::OnUpdateBold(wxUpdateUIEvent& event)
 {
@@ -1316,8 +1369,6 @@ void MainFrame::OnParagraphSpacingLess(wxCommandEvent& event)
         }
     }
 }
-
-
 
 void MainFrame::OnViewHTML(wxCommandEvent& event)
 {
@@ -1645,39 +1696,6 @@ void MainFrame::OnStyleSheetReplacing(wxRichTextEvent& event)
     event.Veto();
 }
 
-#if wxUSE_PRINTING_ARCHITECTURE
-void MainFrame::OnPrint(wxCommandEvent& event)
-{
-    wxGetApp().GetPrinting()->PrintBuffer(m_editor->GetBuffer());
-}
-
-void MainFrame::OnPreview(wxCommandEvent& event)
-{
-    wxGetApp().GetPrinting()->PreviewBuffer(m_editor->GetBuffer());
-}
-#endif
-
-void MainFrame::OnPageSetup(wxCommandEvent& event)
-{
-    wxDialog dialog(this, wxID_ANY, _("Testing"), wxPoint(10, 10), wxSize(400, 300), wxDEFAULT_DIALOG_STYLE);
-
-    wxNotebook* nb = new wxNotebook(& dialog, wxID_ANY, wxPoint(5, 5), wxSize(300, 250));
-    wxPanel* panel = new wxPanel(nb, wxID_ANY, wxDefaultPosition, wxDefaultSize);
-    wxPanel* panel2 = new wxPanel(nb, wxID_ANY, wxDefaultPosition, wxDefaultSize);
-
-    new wxRichTextCtrl(panel, wxID_ANY, wxEmptyString, wxPoint(5, 5), wxSize(200, 150), wxVSCROLL|wxTE_READONLY);
-    nb->AddPage(panel, _("Page 1"));
-
-    new wxRichTextCtrl(panel2, wxID_ANY, wxEmptyString, wxPoint(5, 5), wxSize(200, 150), wxVSCROLL|wxTE_READONLY);
-    nb->AddPage(panel2, _("Page 2"));
-
-    new wxButton(& dialog, wxID_OK, wxT("OK"), wxPoint(5, 180));
-
-    dialog.ShowModal();
-
-//    wxGetApp().GetPrinting()->PageSetup();
-}
-
 void MainFrame::OnSetFontScale(wxCommandEvent& event)
 {
     wxString value = wxString::Format(wxT("%g"), m_editor->GetFontScale());
@@ -1702,9 +1720,10 @@ void MainFrame::OnSetDimensionScale(wxCommandEvent& event)
     }
 }
 
-// Write text
+
 void MainFrame::WriteInitialText()
 {
+// Write text
     MyRichTextCtrl& r = *m_editor;
 
     r.SetDefaultStyle(wxRichTextAttr());
@@ -2038,3 +2057,4 @@ void MainFrame::WriteInitialText()
 
     r.Thaw();
 }
+#endif //USE_RICH_EDIT

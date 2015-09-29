@@ -1,6 +1,7 @@
 #ifndef __GUI_H__
 #define __GUI_H__
 
+#define USE_RICH_EDIT    false
 
 #include <wx/artprov.h>
 #include <wx/xrc/xmlres.h>
@@ -18,11 +19,17 @@
 #include <wx/calctrl.h>
 #include <wx/sizer.h>
 #include <wx/toolbar.h>
-#include <wx/richtext/richtextctrl.h>
 #include <wx/statusbr.h>
 #include <wx/frame.h>
 #include <wx/app.h>
+#include <wx/combobox.h>
+#include <wx/sysopt.h>
 
+#include "easylogging++.h"
+
+
+#if USE_RICH_EDIT
+#include <wx/richtext/richtextctrl.h>
 #include "wx/richtext/richtextctrl.h"
 #include "wx/richtext/richtextstyles.h"
 #include "wx/richtext/richtextxml.h"
@@ -34,15 +41,18 @@
 #include "wx/richtext/richtextimagedlg.h"
 
 #include "myrichtext.h"
-#include "easylogging++.h"
+#endif // USE_RICH_EDIT
+
 
 #ifndef wxHAS_IMAGES_IN_RESOURCES
     #include "../sample.xpm"
 #endif
 
+#if USE_RICH_EDIT
 #include "bitmaps/smiley.xpm"
 // #include "bitmaps/idea.xpm"
 #include "bitmaps/zebra.xpm"
+#endif  // USE_RICH_EDIT
 
 #include "bitmaps/reload.xpm"
 #include "bitmaps/delete.xpm"
@@ -70,6 +80,7 @@
 #include "bitmaps/bookedit.xpm"
 #include "bitmaps/bookgo.xpm"
 
+
 ///////////////////////////////////////////////////////////////////////////
 /// Class MainFrame
 ///////////////////////////////////////////////////////////////////////////////
@@ -79,7 +90,6 @@ public:
     wxMenuBar* m_menuBar;
     wxTreeCtrl* m_treeDates;
     wxCalendarCtrl* m_calendar;
-    wxToolBar* m_richTextToolBar;
     wxStatusBar* m_statusBar;
     wxToolBar* m_mainToolBar;
     wxComboBox* m_comboBoxFavorite;
@@ -89,7 +99,11 @@ public:
     wxButton* m_buttonGoNextAvailable;
     wxButton* m_buttonGoPrevAvailable;
  
+ #if USE_RICH_EDIT
     MyRichTextCtrl* m_editor;
+#else
+    wxTextCtrl* m_editor;      
+#endif
     
     MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_FRAME_STYLE);
    // MainFrame(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 699,413 ), long style = wxCLOSE_BOX|wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL);
@@ -140,7 +154,9 @@ protected:
     void OnSave(wxCommandEvent& event);
     void OnSaveAs(wxCommandEvent& event);
     
-
+    void OnReload(wxCommandEvent& event);
+    
+ #if USE_RICH_EDIT
     void OnBold(wxCommandEvent& event);
     void OnItalic(wxCommandEvent& event);
     void OnUnderline(wxCommandEvent& event);
@@ -198,8 +214,6 @@ protected:
     void OnTableFocusedUpdateUI(wxUpdateUIEvent& event);
     void OnTableHasCellsUpdateUI(wxUpdateUIEvent& event);
 
-    void OnReload(wxCommandEvent& event);
-
     void OnViewHTML(wxCommandEvent& event);
 
     void OnSwitchStyleSheets(wxCommandEvent& event);
@@ -208,25 +222,29 @@ protected:
     void OnInsertURL(wxCommandEvent& event);
     void OnURL(wxTextUrlEvent& event);
     void OnStyleSheetReplacing(wxRichTextEvent& event);
-
-#if wxUSE_PRINTING_ARCHITECTURE
+    
+    void OnInsertImage(wxCommandEvent& event);
+    
+    void OnSetFontScale(wxCommandEvent& event);
+    void OnSetDimensionScale(wxCommandEvent& event);
+    
+    void OnPageSetup(wxCommandEvent& event);
+ #endif
+    
+    // Forward command events to the current (rich) text control, if any
+    bool ProcessEvent(wxEvent& event);
+    
+#if wxUSE_PRINTING_ARCHITECTURE & USE_RICH_EDIT
     void OnPrint(wxCommandEvent& event);
     void OnPreview(wxCommandEvent& event);
 #endif
-    void OnPageSetup(wxCommandEvent& event);
-
-    void OnInsertImage(wxCommandEvent& event);
-
-    void OnSetFontScale(wxCommandEvent& event);
-    void OnSetDimensionScale(wxCommandEvent& event);
-
-    // Forward command events to the current rich text control, if any
-    bool ProcessEvent(wxEvent& event);
 
    
 private:
     // Write text
+#if USE_RICH_EDIT
     void WriteInitialText(); // ce n'est pas utile 
+#endif   
     void CreateEditor();
 };
 

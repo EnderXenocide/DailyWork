@@ -42,7 +42,7 @@ bool MainApp::OnInit()
     size.Scale(0.75, 0.75);
     frame = new MainFrame(wxT("DailyWork"), wxID_ANY, wxDefaultPosition, size);
 
-#if wxUSE_PRINTING_ARCHITECTURE
+#if wxUSE_PRINTING_ARCHITECTURE & USE_RICH_EDIT
     m_printing->SetParentWindow(frame);
 #endif
 
@@ -64,7 +64,7 @@ bool MainApp::OnInit()
 int MainApp::OnExit()
 {    
         
-#if wxUSE_PRINTING_ARCHITECTURE
+#if wxUSE_PRINTING_ARCHITECTURE & USE_RICH_EDIT
     delete m_printing;
 #endif
     delete m_styleSheet;
@@ -78,7 +78,7 @@ void MainApp::InitRichText()
     wxHelpProvider::Set(new wxSimpleHelpProvider);
 #endif
     
-#if wxUSE_PRINTING_ARCHITECTURE
+#if wxUSE_PRINTING_ARCHITECTURE & USE_RICH_EDIT
     m_printing = new wxRichTextPrinting(wxT("Test Document"));
 
     m_printing->SetFooterText(wxT("@TITLE@"), wxRICHTEXT_PAGE_ALL, wxRICHTEXT_PAGE_CENTRE);
@@ -713,15 +713,13 @@ void MainApp::InitLanguageSupport()
 
 void MainApp::UpdateCurrentWork()
 {
-    //todo garder function ici ? car same style que DailyWorkParser::GetWorkFromTree
-    wxRichTextBuffer & rtb = frame->m_editor->GetBuffer();
-    if (rtb.IsModified() ) {
+    if (frame->m_editor->IsModified() ) {
         if (currentDates.today.IsValid()) {
-            dwparser.UpdateWork(currentDates.today, rtb.GetText()); 
+            dwparser.UpdateWork(currentDates.today, frame->m_editor->GetValue()); 
         }
         else {
             LOG(DEBUG ) << "invalid date";
         }
         frame->m_editor->DiscardEdits();
-    }   
+    }  
 }
