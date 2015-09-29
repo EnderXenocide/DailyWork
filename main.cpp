@@ -14,7 +14,6 @@
 #include "main.h"
 #include "easylogging++.h"
 
-
 INITIALIZE_EASYLOGGINGPP
 
 // initialize the application
@@ -33,7 +32,12 @@ bool MainApp::OnInit()
         return false;
 
     InitLanguageSupport();
+#if wxUSE_HELP
+    wxHelpProvider::Set(new wxSimpleHelpProvider);
+#endif   
+#if USE_RICH_EDIT 
     InitRichText();
+#endif   
 
     SetHierarchicalTree(true); // avant creation de la frame pour le menu ShowHierarchicalTree
     
@@ -67,16 +71,16 @@ int MainApp::OnExit()
 #if wxUSE_PRINTING_ARCHITECTURE & USE_RICH_EDIT
     delete m_printing;
 #endif
+#if USE_RICH_EDIT
     delete m_styleSheet;
+#endif
 
     return 0;
 }
 
+#if USE_RICH_EDIT
 void MainApp::InitRichText()
 {
-#if wxUSE_HELP
-    wxHelpProvider::Set(new wxSimpleHelpProvider);
-#endif
     
 #if wxUSE_PRINTING_ARCHITECTURE & USE_RICH_EDIT
     m_printing = new wxRichTextPrinting(wxT("Test Document"));
@@ -88,7 +92,6 @@ void MainApp::InitRichText()
     m_styleSheet = new wxRichTextStyleSheet;
 
     CreateStyles();
-    
 //
 //    MyRichTextCtrl::SetEnhancedDrawingHandler();
 //
@@ -115,6 +118,7 @@ void MainApp::InitRichText()
 //    wxRichTextFieldTypeCompositeTest* s4 = new wxRichTextFieldTypeCompositeTest(wxT("composite"), wxT("This is a field value"));
 //    wxRichTextBuffer::AddFieldType(s4);
 //
+
 //    // Add image handlers
 //#if wxUSE_LIBPNG
 //    wxImage::AddHandler( new wxPNGHandler );
@@ -282,6 +286,8 @@ void MainApp::CreateStyles()
     m_styleSheet->AddListStyle(outlineList);
 
 }
+
+#endif //USE_RICH_EDIT
 
 void MainApp::InitDailyWorkParser()
 {

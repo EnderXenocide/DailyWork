@@ -56,7 +56,9 @@ public:
     void LoadDailyWorkInTree();
     MainApp& SetHierarchicalTree( bool hierarchy){this->hierarchicalTree = hierarchy; return *this; }
     bool IsHierarchicalTree() const{ return hierarchicalTree; }
+#if USE_RICH_EDIT
     wxRichTextStyleSheet* GetStyleSheet() const { return m_styleSheet; } 
+#endif    
 #if wxUSE_PRINTING_ARCHITECTURE & USE_RICH_EDIT
     wxRichTextPrinting* GetPrinting() const { return m_printing; }
 #endif   
@@ -85,7 +87,6 @@ private:
     bool hierarchicalTree;
     wxLanguage m_language;  // language specified by user
     wxLocale* m_locale;  // locale we'll be using
-    wxRichTextStyleSheet*   m_styleSheet;
     DailyWorkParser dwparser; 
     void InitLanguageSupport();
      wxTreeItemId AddItemData(wxTreeItemId itemId, wxDateTime date, bool setDataEmpty);
@@ -96,9 +97,12 @@ private:
     void GetDatesAround(const wxDateTime &date, wxDateTime &prevDate, wxDateTime &nextDate);
     void GetNewDatesAround(const wxDateTime &date, wxDateTime &yesterday, wxDateTime &tomorrow);
     void SetButtonsState();
-    
+ 
+ #if USE_RICH_EDIT   
+    wxRichTextStyleSheet*   m_styleSheet;
     void InitRichText(); 
-    
+#endif 
+   
 #if wxUSE_PRINTING_ARCHITECTURE & USE_RICH_EDIT
     wxRichTextPrinting*     m_printing;
 #endif      
