@@ -79,7 +79,7 @@ enum
     
     ID_HIERACHY,
     
-    ID_HELPLIST,
+    ID_FAVORITE_LIST,
     
     ID_FAVORITE_DELETE, 
     ID_FAVORITE_EDIT, 
@@ -332,7 +332,7 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
 #endif // USE_RICH_EDIT
     
     m_mainToolBar->AddSeparator();
-    m_comboBoxFavorite = new wxComboBox(m_mainToolBar, ID_HELPLIST, wxEmptyString);
+    m_comboBoxFavorite = new wxComboBox(m_mainToolBar, ID_FAVORITE_LIST, wxEmptyString, wxDefaultPosition, wxSize(150,-1));
     m_comboBoxFavorite->SetHint(_("Favorites"));
     m_mainToolBar->AddControl(m_comboBoxFavorite);
 
