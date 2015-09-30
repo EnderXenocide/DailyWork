@@ -13,7 +13,7 @@ CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
 User                   :=Trinquard
-Date                   :=29/09/2015
+Date                   :=30/09/2015
 CodeLitePath           :="C:\Program Files\CodeLite"
 LinkerName             :=C:/Utils/TDM-GCC-64/bin/g++.exe
 SharedObjectLinkerName :=C:/Utils/TDM-GCC-64/bin/g++.exe -shared -fPIC
@@ -37,7 +37,7 @@ PCHCompileFlags        :=
 MakeDirCommand         :=makedir
 RcCmpOptions           := $(shell wx-config --rcflags)
 RcCompilerName         :=C:/Utils/TDM-GCC-64/bin/windres.exe
-LinkOptions            :=  -mwindows $(shell wx-config --debug=yes --libs --unicode=yes)
+LinkOptions            :=  -mwindows $(shell wx-config --debug=yes --libs std,stc --unicode=yes)
 IncludePath            :=  $(IncludeSwitch). $(IncludeSwitch)I:/Workspace/CodeLiteC++/rapidjson/include 
 IncludePCH             := 
 RcIncludePath          := 
@@ -52,7 +52,7 @@ LibPath                := $(LibraryPathSwitch).
 AR       := C:/Utils/TDM-GCC-64/bin/ar.exe rcu
 CXX      := C:/Utils/TDM-GCC-64/bin/g++.exe
 CC       := C:/Utils/TDM-GCC-64/bin/gcc.exe
-CXXFLAGS :=  -g -O0 -Wall $(shell wx-config --cxxflags --unicode=yes --debug=yes) $(Preprocessors)
+CXXFLAGS :=  -g -O0 -Wall -std=c++11 $(shell wx-config --cxxflags --unicode=yes --debug=yes) $(Preprocessors)
 CFLAGS   :=  -g -O0 -Wall $(shell wx-config --cxxflags --unicode=yes --debug=yes) $(Preprocessors)
 ASFLAGS  := 
 AS       := C:/Utils/TDM-GCC-64/bin/as.exe

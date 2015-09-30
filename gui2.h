@@ -27,7 +27,6 @@
 
 #include "easylogging++.h"
 
-
 #if USE_RICH_EDIT
 #include <wx/richtext/richtextctrl.h>
 #include "wx/richtext/richtextctrl.h"
@@ -39,10 +38,10 @@
 #include "wx/richtext/richtextstyledlg.h"
 #include "wx/richtext/richtextprint.h"
 #include "wx/richtext/richtextimagedlg.h"
-
 #include "myrichtext.h"
+#else
+#include <wx/stc/stc.h>
 #endif // USE_RICH_EDIT
-
 
 #ifndef wxHAS_IMAGES_IN_RESOURCES
     #include "../sample.xpm"
@@ -102,7 +101,7 @@ public:
  #if USE_RICH_EDIT
     MyRichTextCtrl* m_editor;
 #else
-    wxTextCtrl* m_editor;      
+     wxStyledTextCtrl* m_editor;      
 #endif
     
     MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_FRAME_STYLE);
@@ -238,7 +237,6 @@ protected:
     void OnPrint(wxCommandEvent& event);
     void OnPreview(wxCommandEvent& event);
 #endif
-
    
 private:
     // Write text

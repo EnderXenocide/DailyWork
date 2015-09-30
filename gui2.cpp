@@ -380,20 +380,22 @@ void MainFrame::CreateEditor()
     wxFont textFont = wxFont(12, wxROMAN, wxNORMAL, wxNORMAL);
     wxFont boldFont = wxFont(12, wxROMAN, wxNORMAL, wxBOLD);
     wxFont italicFont = wxFont(12, wxROMAN, wxITALIC, wxNORMAL);
-    wxFont font(12, wxROMAN, wxNORMAL, wxNORMAL);
 
     m_editor = new MyRichTextCtrl(this, ID_RICHTEXT_CTRL, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxVSCROLL|wxHSCROLL/*|wxWANTS_CHARS*/);
     wxASSERT(!m_editor->GetBuffer().GetAttributes().HasFontPixelSize());
-#else
-    m_editor = new wxTextCtrl(this, wxID_ANY, wxT(""), wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER | wxTE_MULTILINE);
-    wxFont font(11, wxROMAN, wxNORMAL, wxNORMAL);
-#endif  // USE_RICH_EDIT
+    wxFont font(12, wxROMAN, wxNORMAL, wxNORMAL);
     m_editor->SetFont(font);
-#if USE_RICH_EDIT
     wxASSERT(!m_editor->GetBuffer().GetAttributes().HasFontPixelSize());
     m_editor->SetStyleSheet(wxGetApp().GetStyleSheet()); 
+#else
+    //m_editor = new  wxTextCtrl(this, wxID_ANY, wxT(""), wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER | wxTE_MULTILINE);
+    m_editor = new wxStyledTextCtrl(this, wxID_ANY);
+    m_editor->SetWrapMode(true);
+    wxFont font(11, wxROMAN, wxNORMAL, wxNORMAL);
+    m_editor->StyleSetFont(0, font);
+    
 #endif  // USE_RICH_EDIT
-    m_editor->SetMargins(10, 10);
+   // m_editor->SetMargins(10, 10);
 }
 
 void MainFrame::ConnectEvents()
