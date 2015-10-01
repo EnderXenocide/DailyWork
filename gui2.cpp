@@ -16,6 +16,9 @@ enum
     // menu items
     ID_Quit = wxID_EXIT,
     ID_About = wxID_ABOUT,
+    ID_UNDO = wxID_UNDO,
+    ID_REDO = wxID_REDO,
+    
 
     ID_FORMAT_BOLD = 100,
     ID_FORMAT_ITALIC,
@@ -31,6 +34,9 @@ enum
     ID_RELOAD,
     ID_DELETE_DATE,
 
+//    ID_UNDO,
+//    ID_REDO,
+    
     ID_INSERT_SYMBOL,
     ID_INSERT_URL,
     ID_INSERT_IMAGE,
@@ -81,10 +87,10 @@ enum
     
     ID_FAVORITE_LIST,
     
-    ID_FAVORITE_DELETE, 
-    ID_FAVORITE_EDIT, 
     ID_FAVORITE_ADD,
+    ID_FAVORITE_DELETE, 
     ID_FAVORITE_GO,
+    ID_FAVORITE_MANAGE, 
     
     ID_STAY_ON_TOP,
     
@@ -146,8 +152,8 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     wxMenu* editMenu = new wxMenu;
     editMenu->Append(ID_DELETE_DATE, _("&Delete date\tCtrl+D")); 
     editMenu->AppendSeparator();
-    editMenu->Append(wxID_UNDO, _("&Undo\tCtrl+Z")); 
-    editMenu->Append(wxID_REDO, _("&Redo\tCtrl+Y")); 
+    editMenu->Append(ID_UNDO, _("&Undo\tCtrl+Z")); 
+    editMenu->Append(ID_REDO, _("&Redo\tCtrl+Y")); 
     editMenu->AppendSeparator();
     editMenu->Append(wxID_CUT, _("Cu&t\tCtrl+X")); 
     editMenu->Append(wxID_COPY, _("&Copy\tCtrl+C")); 
@@ -218,8 +224,7 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     favoriteMenu->AppendSeparator();
     favoriteMenu->Append(ID_FAVORITE_ADD, _("&Add"), _("Add selected text to favorites"));
     favoriteMenu->Append(ID_FAVORITE_DELETE, _("&Delete"), _("Delete selected favorite"));
-    favoriteMenu->Append(ID_FAVORITE_EDIT, _("&Manage"), _("Manage favorites"));
-    favoriteMenu->Enable(ID_FAVORITE_EDIT, false);
+    favoriteMenu->Append(ID_FAVORITE_MANAGE, _("&Manage"), _("Manage favorites"));
     
     // now append the freshly created menu to the menu bar...
     m_menuBar = new wxMenuBar();
@@ -313,8 +318,8 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     m_mainToolBar->AddTool(wxID_COPY, wxEmptyString, wxBitmap(copy_xpm), _("Copy")); 
     m_mainToolBar->AddTool(wxID_PASTE, wxEmptyString, wxBitmap(paste_xpm), _("Paste")); 
     m_mainToolBar->AddSeparator();
-    m_mainToolBar->AddTool(wxID_UNDO, wxEmptyString, wxBitmap(undo_xpm), _("Undo")); 
-    m_mainToolBar->AddTool(wxID_REDO, wxEmptyString, wxBitmap(redo_xpm), _("Redo"));
+    m_mainToolBar->AddTool(ID_UNDO, wxEmptyString, wxBitmap(undo_xpm), _("Undo")); 
+    m_mainToolBar->AddTool(ID_REDO, wxEmptyString, wxBitmap(redo_xpm), _("Redo"));
 #if USE_RICH_EDIT
     m_mainToolBar->AddSeparator();
     m_mainToolBar->AddCheckTool(ID_FORMAT_BOLD, wxEmptyString, wxBitmap(bold_xpm), wxNullBitmap, _("Bold")); 
@@ -337,10 +342,9 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     m_mainToolBar->AddControl(m_comboBoxFavorite);
 
     m_mainToolBar->AddTool(ID_FAVORITE_GO, wxEmptyString, wxBitmap(bookgo_xpm), _("Insert favorite")); //Inserer favoris
-    m_mainToolBar->AddTool(ID_FAVORITE_EDIT, wxEmptyString, wxBitmap(bookedit_xpm), _("Manage favorites")); //Gerer les favoris
+    m_mainToolBar->AddTool(ID_FAVORITE_MANAGE, wxEmptyString, wxBitmap(bookedit_xpm), _("Manage favorites")); //Gerer les favoris
     m_mainToolBar->AddTool(ID_FAVORITE_ADD, wxEmptyString, wxBitmap(bookadd_xpm), _("Add to favorites")); //Ajouter aux favoris
     m_mainToolBar->AddTool(ID_FAVORITE_DELETE, wxEmptyString, wxBitmap(bookdelete_xpm), _("Delete favorite")); //Supprimer favoris
-    
     m_mainToolBar->Realize();
 
 	this->Centre( wxBOTH );
@@ -349,10 +353,10 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
  
 #if USE_RICH_EDIT
     // désactive les options de mise en forme du text parceque pas de lecture de fichier rtf...
-    m_menuBar->EnableTop(2, false);
-    m_menuBar->EnableTop(3, false); 
-    m_menuBar->EnableTop(4, false);
-    m_menuBar->EnableTop(5, false);
+//    m_menuBar->EnableTop(2, false); //formatMenu
+    m_menuBar->EnableTop(3, false); //listsMenu
+    m_menuBar->EnableTop(4, false); //tableMenu
+    m_menuBar->EnableTop(5, false); //insertMenu
     m_mainToolBar->EnableTool(ID_FORMAT_BOLD, false);
     m_mainToolBar->EnableTool(ID_FORMAT_ITALIC, false);
     m_mainToolBar->EnableTool(ID_FORMAT_UNDERLINE, false);
@@ -363,9 +367,8 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     m_mainToolBar->EnableTool(ID_FORMAT_INDENT_MORE, false);
     m_mainToolBar->EnableTool(ID_FORMAT_FONT, false);
     m_mainToolBar->EnableTool(ID_FORMAT_FONT, false); 
-    m_mainToolBar->EnableTool(ID_FAVORITE_EDIT, false); 
 #endif // USE_RICH_EDIT
-    
+
     ConnectEvents();
 }   
  
@@ -392,10 +395,18 @@ void MainFrame::CreateEditor()
     m_editor = new wxStyledTextCtrl(this, wxID_ANY);
     m_editor->SetWrapMode(true);
     wxFont font(11, wxROMAN, wxNORMAL, wxNORMAL);
-    m_editor->StyleSetFont(0, font);
-    
+    m_editor->StyleSetFont(0, font); //utile ?
+    m_editor->SetLexer(wxSTC_LEX_HTML);
+    m_editor->StyleSetForeground (wxSTC_H_DOUBLESTRING,     wxColour(255,0,0));
+    m_editor->StyleSetForeground (wxSTC_H_SINGLESTRING,     wxColour(255,0,0));
+    m_editor->StyleSetForeground (wxSTC_H_ENTITY,           wxColour(255,0,0));
+    m_editor->StyleSetForeground (wxSTC_H_TAG,              wxColour(0,150,0));
+    m_editor->StyleSetForeground (wxSTC_H_TAGUNKNOWN,       wxColour(0,150,0));
+    m_editor->StyleSetForeground (wxSTC_H_ATTRIBUTE,        wxColour(0,0,150));
+    m_editor->StyleSetForeground (wxSTC_H_ATTRIBUTEUNKNOWN, wxColour(0,0,150));
+    m_editor->StyleSetForeground (wxSTC_H_COMMENT,          wxColour(150,150,150));   
 #endif  // USE_RICH_EDIT
-   // m_editor->SetMargins(10, 10);
+    m_editor->SetMargins(10, 10);
 }
 
 void MainFrame::ConnectEvents()
@@ -424,6 +435,11 @@ void MainFrame::ConnectEvents()
  
     Connect(ID_RELOAD, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnReload));
     Connect(ID_DELETE_DATE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnDeleteDate));
+
+    Connect(ID_UNDO, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnUndo));
+    Connect(ID_REDO, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnRedo));
+    Connect(ID_UNDO, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateUndo));
+    Connect(ID_REDO, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateRedo));
 
 #if USE_RICH_EDIT
     Connect(ID_FORMAT_BOLD, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnBold));
@@ -513,7 +529,7 @@ void MainFrame::ConnectEvents()
 
     Connect(ID_FAVORITE_ADD, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnAddFavorite));
     Connect(ID_FAVORITE_DELETE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnDeleteFavorite));
-    Connect(ID_FAVORITE_EDIT, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnEditFavorite));
+    Connect(ID_FAVORITE_MANAGE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnManageFavorite));
     Connect(ID_FAVORITE_GO, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnGoFavorite));
     Connect(ID_FAVORITE_ADD, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateAddFavorite));
     Connect(ID_FAVORITE_DELETE, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateDeleteFavorite));
@@ -637,7 +653,7 @@ void MainFrame::DisconnectEvents()
 
     Disconnect(ID_FAVORITE_ADD, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnAddFavorite));
     Disconnect(ID_FAVORITE_DELETE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnDeleteFavorite));
-    Disconnect(ID_FAVORITE_EDIT, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnEditFavorite));
+    Disconnect(ID_FAVORITE_MANAGE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnManageFavorite));
     Disconnect(ID_FAVORITE_GO, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnGoFavorite));
     Disconnect(ID_FAVORITE_ADD, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateAddFavorite));
     Disconnect(ID_FAVORITE_DELETE, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateDeleteFavorite));
@@ -819,9 +835,10 @@ void MainFrame::OnDeleteFavorite(wxCommandEvent& event)
        wxGetApp().DeleteSelectedFavorite();     
 }
 
-void MainFrame::OnEditFavorite(wxCommandEvent& event)
+void MainFrame::OnManageFavorite(wxCommandEvent& event)
 {
-    //todo
+    //todo faire fonction avec listbox et ...
+    wxMessageDialog(this, _("Unimplemented ?"), _("Information"), wxOK|wxCENTER_FRAME).ShowModal();
 }    
 
 void MainFrame::OnGoFavorite(wxCommandEvent& event)
@@ -870,6 +887,18 @@ void MainFrame::OnReload(wxCommandEvent& event)
 {
     LOG(INFO) << "Ouverture du fichier json " ;
     wxGetApp().InitDailyWorkParser();
+}
+    
+void MainFrame::OnUndo(wxCommandEvent& event)
+{
+    if (m_editor->CanUndo())
+        m_editor->Undo();
+}
+
+void MainFrame::OnRedo(wxCommandEvent& event)
+{
+    if (m_editor->CanRedo())
+        m_editor->Redo();
 }
 
 void MainFrame::OnDeleteDate(wxCommandEvent& event)
@@ -976,6 +1005,16 @@ void MainFrame::OnOpen(wxCommandEvent&event)
     }
 }
 
+void MainFrame::OnUpdateUndo(wxUpdateUIEvent& event)
+{
+    event.Enable(m_editor->CanUndo());   
+}
+
+void MainFrame::OnUpdateRedo(wxUpdateUIEvent& event)
+{
+    event.Enable(m_editor->CanRedo()); 
+}
+
 #if wxUSE_PRINTING_ARCHITECTURE  & USE_RICH_EDIT
 void MainFrame::OnPrint(wxCommandEvent& event)
 {
@@ -991,40 +1030,33 @@ void MainFrame::OnPreview(wxCommandEvent& event)
 // Forward command events to the current rich text control, if any
 bool MainFrame::ProcessEvent(wxEvent& event)
 {
-    if (event.IsCommandEvent() && !event.IsKindOf(CLASSINFO(wxChildFocusEvent)))
+    static wxEvent* s_lastEvent = NULL;
+   
+    //prevent infinite recursion
+    if (&event == s_lastEvent )
+        return false;
+        
+    if ( event.IsCommandEvent() && 
+        !event.IsKindOf(CLASSINFO(wxChildFocusEvent)) &&
+        !event.IsKindOf(CLASSINFO(wxContextMenuEvent))  )
     {
-        // Problem: we can get infinite recursion because the events
-        // climb back up to this frame, and repeat.
-        // Assume that command events don't cause another command event
-        // to be called, so we can rely on inCommand not being overwritten
+       s_lastEvent = & event;
 
-        static int s_eventType = 0;
-        static wxWindowID s_id = 0;
+        wxWindow* focusWin = wxFindFocusDescendant(this);
+        bool success = false;
+        if (focusWin)
+            success = focusWin->GetEventHandler()->ProcessEvent(event);
+        
+        if (!success)
+            success = wxFrame::ProcessEvent(event);
+        
+        s_lastEvent = NULL;    
 
-        if (s_id != event.GetId() && s_eventType != event.GetEventType())
-        {
-            s_eventType = event.GetEventType();
-            s_id = event.GetId();
-
-            wxWindow* focusWin = wxFindFocusDescendant(this);
-            if (focusWin && focusWin->GetEventHandler()->ProcessEvent(event))
-            {
-                //s_command = NULL;
-                s_eventType = 0;
-                s_id = 0;
-                return true;
-            }
-
-            s_eventType = 0;
-            s_id = 0;
-        }
-        else
-        {
-            return false;
-        }
+        return success;
+    }   
+    else {
+        return wxFrame::ProcessEvent(event);
     }
-
-    return wxFrame::ProcessEvent(event);
 }
 
 #if USE_RICH_EDIT

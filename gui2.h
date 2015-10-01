@@ -140,10 +140,11 @@ protected:
     void OnAddFavorite(wxCommandEvent& event);
     void OnGoFavorite(wxCommandEvent& event);
     void OnDeleteFavorite(wxCommandEvent& event);
-    void OnEditFavorite(wxCommandEvent& event);
+    void OnManageFavorite(wxCommandEvent& event);
     void OnUpdateAddFavorite(wxUpdateUIEvent& event);
     void OnUpdateGoFavorite(wxUpdateUIEvent& event);
     void OnUpdateDeleteFavorite(wxUpdateUIEvent& event);
+
 	void OnButtonGoNextAvailableClick(wxCommandEvent& event);
 	void OnButtonGoPrevAvailableClick(wxCommandEvent& event);
 	void OnButtonAddTomorrowClick(wxCommandEvent& event);
@@ -154,6 +155,12 @@ protected:
     void OnSaveAs(wxCommandEvent& event);
     
     void OnReload(wxCommandEvent& event);
+
+    void OnUndo(wxCommandEvent& event);
+    void OnRedo(wxCommandEvent& event);
+    
+    void OnUpdateUndo(wxUpdateUIEvent& event);
+    void OnUpdateRedo(wxUpdateUIEvent& event);
     
  #if USE_RICH_EDIT
     void OnBold(wxCommandEvent& event);
