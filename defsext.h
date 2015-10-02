@@ -60,9 +60,9 @@ enum {
     myID_ANNOTATION_ADD,
     myID_ANNOTATION_REMOVE,
     myID_ANNOTATION_CLEAR,
-    myID_ANNOTATION_STYLE_HIDDEN,
-    myID_ANNOTATION_STYLE_STANDARD,
-    myID_ANNOTATION_STYLE_BOXED,
+    myID_ANNOTATION_STYLE_HIDDEN, // important order 1
+    myID_ANNOTATION_STYLE_STANDARD, // important order 2
+    myID_ANNOTATION_STYLE_BOXED,    // important order 3
     myID_CHANGECASE,
     myID_CHANGELOWER,
     myID_CHANGEUPPER,
@@ -70,9 +70,9 @@ enum {
     myID_HILIGHTFIRST,
     myID_HILIGHTLAST = myID_HILIGHTFIRST + 99,
     myID_CONVERTEOL,
-    myID_CONVERTCR,
-    myID_CONVERTCRLF,
-    myID_CONVERTLF,
+    myID_CONVERTCR,     // important order 1
+    myID_CONVERTCRLF, // important order 2
+    myID_CONVERTLF,     // important order 3
     myID_USECHARSET,
     myID_CHARSETANSI,
     myID_CHARSETMAC,

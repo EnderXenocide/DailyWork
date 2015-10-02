@@ -123,73 +123,59 @@ MyStyledTextCtrl::MyStyledTextCtrl (wxWindow *parent, wxWindowID id,
     ConnectEvents();
 }
 
-MyStyledTextCtrl::~MyStyledTextCtrl () 
-{ 
-    DisconnectEvents();
-}
+MyStyledTextCtrl::~MyStyledTextCtrl () { }
 
 void MyStyledTextCtrl::ConnectEvents()
 {
-
     // common
-    Connect(wxID_ANY, wxEVT_SIZE,  wxSizeEventHandler(MyStyledTextCtrl::OnSize));
+    Bind(wxEVT_SIZE,  &MyStyledTextCtrl::OnSize, this);
     // edit
-    Connect(wxID_CLEAR, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MyStyledTextCtrl::OnEditClear));
-    Connect(wxID_CUT, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MyStyledTextCtrl::OnEditCut));
-    Connect(wxID_COPY, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MyStyledTextCtrl::OnEditCopy));
-    Connect(wxID_PASTE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MyStyledTextCtrl::OnEditPaste));
-    Connect(myID_INDENTINC, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MyStyledTextCtrl::OnEditIndentInc));
-    Connect(myID_INDENTRED, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MyStyledTextCtrl::OnEditIndentRed));
-    Connect(wxID_SELECTALL, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MyStyledTextCtrl::OnEditSelectAll));
-    Connect(myID_SELECTLINE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MyStyledTextCtrl::OnEditSelectLine));
-    Connect(wxID_REDO, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MyStyledTextCtrl::OnEditRedo));
-    Connect(wxID_UNDO, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MyStyledTextCtrl::OnEditUndo));
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnEditClear, this, wxID_CLEAR);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnEditCut, this, wxID_CUT);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnEditCopy, this, wxID_COPY);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnEditPaste, this, wxID_PASTE);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnEditIndentInc, this, myID_INDENTINC);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnEditIndentRed, this, myID_INDENTRED);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnEditSelectAll, this, wxID_SELECTALL);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnEditSelectLine, this, myID_SELECTLINE);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnEditRedo, this, wxID_REDO);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnEditUndo, this, wxID_UNDO);
     // find
-    Connect(wxID_FIND, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MyStyledTextCtrl::OnFind));
-    Connect(myID_FINDNEXT, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MyStyledTextCtrl::OnFindNext));
-    Connect(myID_REPLACE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MyStyledTextCtrl::OnReplace));
-    Connect(myID_REPLACENEXT, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MyStyledTextCtrl::OnReplaceNext));
-    Connect(myID_BRACEMATCH, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MyStyledTextCtrl::OnBraceMatch));
-    Connect(myID_GOTO, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MyStyledTextCtrl::OnGoto));
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnFind, this, wxID_FIND);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnFindNext, this, myID_FINDNEXT);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnReplace, this, myID_REPLACE);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnReplaceNext, this, myID_REPLACENEXT);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnBraceMatch, this, myID_BRACEMATCH);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnGoto, this, myID_GOTO);
     // view
-    Connect(myID_HILIGHTFIRST, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MyStyledTextCtrl::OnHilightLang));
-    Connect(myID_HILIGHTLAST, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MyStyledTextCtrl::OnHilightLang));
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnHilightLang, this, myID_HILIGHTFIRST, myID_HILIGHTLAST);
 
-    Connect(myID_DISPLAYEOL, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MyStyledTextCtrl::OnDisplayEOL));
-    Connect(myID_INDENTGUIDE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MyStyledTextCtrl::OnIndentGuide));
-    Connect(myID_LINENUMBER, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MyStyledTextCtrl::OnLineNumber));
-    Connect(myID_LONGLINEON, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MyStyledTextCtrl::OnLongLineOn));
-    Connect(myID_WHITESPACE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MyStyledTextCtrl::OnWhiteSpace));
-    Connect(myID_FOLDTOGGLE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MyStyledTextCtrl::OnFoldToggle));
-    Connect(myID_OVERTYPE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MyStyledTextCtrl::OnSetOverType));
-    Connect(myID_READONLY, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MyStyledTextCtrl::OnSetReadOnly));
-    Connect(myID_WRAPMODEON, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MyStyledTextCtrl::OnWrapmodeOn));
-    Connect(myID_CHARSETANSI, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MyStyledTextCtrl::OnUseCharset));
-    Connect(myID_CHARSETMAC, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MyStyledTextCtrl::OnUseCharset));
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnDisplayEOL, this, myID_DISPLAYEOL);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnIndentGuide, this, myID_INDENTGUIDE);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnLineNumber, this, myID_LINENUMBER);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnLongLineOn, this, myID_LONGLINEON);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnWhiteSpace, this, myID_WHITESPACE);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnFoldToggle, this, myID_FOLDTOGGLE);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnSetOverType, this, myID_OVERTYPE);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnSetReadOnly, this, myID_READONLY);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnWrapmodeOn, this, myID_WRAPMODEON);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnUseCharset, this, myID_CHARSETANSI);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnUseCharset, this, myID_CHARSETMAC);
     // annotations
-    Connect(myID_ANNOTATION_ADD, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MyStyledTextCtrl::OnAnnotationAdd));
-    Connect(myID_ANNOTATION_REMOVE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MyStyledTextCtrl::OnAnnotationRemove));
-    Connect(myID_ANNOTATION_CLEAR, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MyStyledTextCtrl::OnAnnotationClear));
-    Connect(myID_ANNOTATION_STYLE_HIDDEN, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MyStyledTextCtrl::OnAnnotationStyle));
-    Connect(myID_ANNOTATION_STYLE_STANDARD, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MyStyledTextCtrl::OnAnnotationStyle));
-    Connect(myID_ANNOTATION_STYLE_BOXED, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MyStyledTextCtrl::OnAnnotationStyle));
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnAnnotationAdd, this, myID_ANNOTATION_ADD);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnAnnotationRemove, this, myID_ANNOTATION_REMOVE);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnAnnotationClear, this, myID_ANNOTATION_CLEAR);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnAnnotationStyle, this, myID_ANNOTATION_STYLE_HIDDEN, myID_ANNOTATION_STYLE_BOXED); // + myID_ANNOTATION_STYLE_STANDARD
     // extra
-    Connect(myID_CHANGELOWER, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MyStyledTextCtrl::OnChangeCase));
-    Connect(myID_CHANGEUPPER, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MyStyledTextCtrl::OnChangeCase));
-    Connect(myID_CONVERTCR, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MyStyledTextCtrl::OnConvertEOL));
-    Connect(myID_CONVERTCRLF, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MyStyledTextCtrl::OnConvertEOL));
-    Connect(myID_CONVERTLF, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MyStyledTextCtrl::OnConvertEOL));
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnChangeCase, this, myID_CHANGELOWER);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnChangeCase, this, myID_CHANGEUPPER);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnConvertEOL, this, myID_CONVERTCR, myID_CONVERTLF); // + myID_CONVERTCRLF
     // stc
-    Connect(wxID_ANY, wxEVT_STC_MARGINCLICK,  wxStyledTextEventHandler(MyStyledTextCtrl::OnMarginClick));
-    Connect(wxID_ANY, wxEVT_STC_CHARADDED,  wxStyledTextEventHandler(MyStyledTextCtrl::OnCharAdded));
-    Connect(wxID_ANY, wxEVT_STC_KEY,  wxStyledTextEventHandler(MyStyledTextCtrl::OnKey));
+    Bind(wxEVT_STC_MARGINCLICK,  &MyStyledTextCtrl::OnMarginClick, this);
+    Bind(wxEVT_STC_CHARADDED,  &MyStyledTextCtrl::OnCharAdded, this);
+    Bind(wxEVT_STC_KEY,  &MyStyledTextCtrl::OnKey, this);
 
-//    ( MyStyledTextCtrl:: )
-    Connect(wxID_ANY, wxEVT_KEY_DOWN,  wxKeyEventHandler(MyStyledTextCtrl::OnKeyDown));
-}
-
-void MyStyledTextCtrl::DisconnectEvents()
-{
+    Bind(wxEVT_KEY_DOWN,  &MyStyledTextCtrl::OnKeyDown, this);
 }
 
 //----------------------------------------------------------------------------

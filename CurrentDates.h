@@ -45,6 +45,7 @@ public :
     wxString PrevAvailableToString() {  return ToString(prevAvailable); };  
     wxString NextAvailableToString() {  return ToString(nextAvailable); };      
     void Init() {  today = (time_t)-1; yesterday = today; tomorrow = today; prevAvailable = today; nextAvailable = today;};
+    void clear() { Init(); dates.clear(); };
 private :
     wxString ToString(wxDateTime date) 
     {

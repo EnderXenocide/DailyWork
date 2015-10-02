@@ -110,7 +110,6 @@ public:
  
     void OnStatusBarMessage(wxString msg);
     void ConnectEvents();
-    void DisconnectEvents();
     void EnableShowHirerarchicalTree(bool hiearchy);
     void SetText(wxString texte);    
 protected:  

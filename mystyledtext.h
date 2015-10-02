@@ -121,7 +121,6 @@ private:
     int m_DividerID;
 
     void ConnectEvents();
-    void DisconnectEvents();   
 };
 
 //----------------------------------------------------------------------------

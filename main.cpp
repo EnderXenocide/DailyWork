@@ -277,6 +277,7 @@ void MainApp::CreateStyles()
 void MainApp::InitDailyWorkParser()
 {
    dwparser.Parse();
+   currentDates.clear();
    LoadDailyWorkInTree();  // même si parse renvoie -1,  on charge quand même l'arbre   
    LoadFavoritesInComboBox();
 }
