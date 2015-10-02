@@ -101,7 +101,7 @@ public:
  #if USE_RICH_EDIT
     MyRichTextCtrl* m_editor;
 #else
-     MyStyledTextCtrl* m_editor;      
+    MyStyledTextCtrl* m_editor;      
 #endif
     
     MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_FRAME_STYLE);
@@ -110,9 +110,7 @@ public:
  
     void OnStatusBarMessage(wxString msg);
     void ConnectEvents();
-    void ConnectEventsSelChanged();
     void DisconnectEvents();
-    void DisconnectEventsSelhanged();
     void EnableShowHirerarchicalTree(bool hiearchy);
     void SetText(wxString texte);    
 protected:  
@@ -228,9 +226,7 @@ protected:
     void OnSetFontScale(wxCommandEvent& event);
     void OnSetDimensionScale(wxCommandEvent& event);
     
-    void OnPageSetup(wxCommandEvent& event);
  #else
-    void OnEdit (wxCommandEvent &event);
     void OnUpdateUndo(wxUpdateUIEvent& event);
     void OnUpdateRedo(wxUpdateUIEvent& event);    
  #endif

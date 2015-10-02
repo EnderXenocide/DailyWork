@@ -20,10 +20,10 @@ enum
     ID_FORMAT_STRIKETHROUGH,
     ID_FORMAT_SUPERSCRIPT,
     ID_FORMAT_SUBSCRIPT,
-    ID_FORMAT_FONT,
-    ID_FORMAT_IMAGE,
-    ID_FORMAT_PARAGRAPH,
     ID_FORMAT_CONTENT,
+    ID_FORMAT_FONT,
+    ID_FORMAT_PARAGRAPH,
+    ID_FORMAT_IMAGE,
 
     ID_RELOAD,
     ID_DELETE_DATE,
@@ -268,6 +268,7 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
 	editorSizer->Add( m_buttonAddTomorrow, 0, wxEXPAND | wxALL, 2 );
 
     CreateEditor();
+    
     editorSizer->Add( m_editor, 1, wxEXPAND | wxALL, 2 );
         
 	m_buttonAddYesterday = new wxButton( this, wxID_ANY, _("Add Yesterday"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -343,7 +344,7 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
  
 #if USE_RICH_EDIT
     // désactive les options de mise en forme du text parceque pas de lecture de fichier rtf...
-//    m_menuBar->EnableTop(2, false); //formatMenu
+    m_menuBar->EnableTop(2, false); //formatMenu
     m_menuBar->EnableTop(3, false); //listsMenu
     m_menuBar->EnableTop(4, false); //tableMenu
     m_menuBar->EnableTop(5, false); //insertMenu
@@ -382,135 +383,115 @@ void MainFrame::CreateEditor()
     m_editor->SetStyleSheet(wxGetApp().GetStyleSheet()); 
 #else
     //m_editor = new  wxTextCtrl(this, wxID_ANY, wxT(""), wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER | wxTE_MULTILINE);
-    m_editor = new MyStyledTextCtrl(this, wxID_ANY);
-    m_editor->SetWrapMode(true);
-    wxFont font(11, wxROMAN, wxNORMAL, wxNORMAL);
-    m_editor->StyleSetFont(0, font); //utile ?
-    m_editor->SetLexer(wxSTC_LEX_HTML);
-    m_editor->StyleSetForeground (wxSTC_H_DOUBLESTRING,     wxColour(255,0,0));
-    m_editor->StyleSetForeground (wxSTC_H_SINGLESTRING,     wxColour(255,0,0));
-    m_editor->StyleSetForeground (wxSTC_H_ENTITY,           wxColour(255,0,0));
-    m_editor->StyleSetForeground (wxSTC_H_TAG,              wxColour(0,150,0));
-    m_editor->StyleSetForeground (wxSTC_H_TAGUNKNOWN,       wxColour(0,150,0));
-    m_editor->StyleSetForeground (wxSTC_H_ATTRIBUTE,        wxColour(0,0,150));
-    m_editor->StyleSetForeground (wxSTC_H_ATTRIBUTEUNKNOWN, wxColour(0,0,150));
-    m_editor->StyleSetForeground (wxSTC_H_COMMENT,          wxColour(150,150,150));   
+    m_editor = new MyStyledTextCtrl(this);
 #endif  // USE_RICH_EDIT
-    m_editor->SetMargins(10, 10);
+    m_editor->SetMargins(5, 5);
 }
 
 void MainFrame::ConnectEvents()
 {
-    ConnectEventsSelChanged();
-    m_treeDates->Connect( wxEVT_TREE_ITEM_RIGHT_CLICK, wxTreeEventHandler( MainFrame::OnTreeRightClick ), NULL, this );
-	m_calendar->Connect( wxEVT_KILL_FOCUS, wxFocusEventHandler( MainFrame::OnCalendarKillFocus ), NULL, this );
-	m_calendar->Connect( wxEVT_SET_FOCUS, wxFocusEventHandler( MainFrame::OnCalendarSetFocus ), NULL, this );
-    m_calendar->Connect( wxEVT_CALENDAR_DOUBLECLICKED, wxCalendarEventHandler( MainFrame::OnCalendarDblClick ), NULL, this );
-    m_buttonGoNextAvailable->Connect( wxEVT_COMMAND_BUTTON_CLICKED,  wxCommandEventHandler(MainFrame::OnButtonGoNextAvailableClick));
-    m_buttonGoPrevAvailable->Connect( wxEVT_COMMAND_BUTTON_CLICKED,  wxCommandEventHandler(MainFrame::OnButtonGoPrevAvailableClick));
-    m_buttonAddTomorrow->Connect( wxEVT_COMMAND_BUTTON_CLICKED,  wxCommandEventHandler(MainFrame::OnButtonAddTomorrowClick));
-    m_buttonAddYesterday->Connect( wxEVT_COMMAND_BUTTON_CLICKED,  wxCommandEventHandler(MainFrame::OnButtonAddYesterdayClick));
+    //todo prevenir wxEVT_TREE_SEL_CHANGING au demarage connection fait aprés chargement  dwparser 
+	m_treeDates->Bind( wxEVT_TREE_SEL_CHANGED, &MainFrame::OnTreeSelChanged, this );
+	m_treeDates->Bind( wxEVT_TREE_SEL_CHANGING, &MainFrame::OnTreeSelChanging, this );    
+    m_treeDates->Bind( wxEVT_TREE_ITEM_RIGHT_CLICK, &MainFrame::OnTreeRightClick, this );
+	m_calendar->Bind( wxEVT_CALENDAR_SEL_CHANGED, &MainFrame::OnCalendarSelChanged, this );
+    m_calendar->Bind( wxEVT_KILL_FOCUS, &MainFrame::OnCalendarKillFocus, this );
+	m_calendar->Bind( wxEVT_SET_FOCUS,  &MainFrame::OnCalendarSetFocus, this );
+    m_calendar->Bind( wxEVT_CALENDAR_DOUBLECLICKED, &MainFrame::OnCalendarDblClick, this );
+    m_buttonGoNextAvailable->Bind( wxEVT_COMMAND_BUTTON_CLICKED,  &MainFrame::OnButtonGoNextAvailableClick, this);
+    m_buttonGoPrevAvailable->Bind( wxEVT_COMMAND_BUTTON_CLICKED,  &MainFrame::OnButtonGoPrevAvailableClick, this);
+    m_buttonAddTomorrow->Bind( wxEVT_COMMAND_BUTTON_CLICKED,  &MainFrame::OnButtonAddTomorrowClick, this);
+    m_buttonAddYesterday->Bind( wxEVT_COMMAND_BUTTON_CLICKED,  &MainFrame::OnButtonAddYesterdayClick, this);
     
-	Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( MainFrame::OnCloseFrame ) );
+    Bind(wxEVT_CLOSE_WINDOW, &MainFrame::OnCloseFrame, this);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnQuit, this, wxID_EXIT);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnAbout, this, wxID_ABOUT);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnStayOnTop, this, ID_STAY_ON_TOP);
 
-    Connect(wxID_EXIT, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnQuit));
-    Connect(wxID_ABOUT, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnAbout));
-    Connect(ID_STAY_ON_TOP, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnStayOnTop));
-
-    Connect(wxID_OPEN, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnOpen));
-    Connect(wxID_SAVE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSave));
-    Connect(wxID_SAVEAS, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSaveAs));
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnOpen, this, wxID_OPEN);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnSave, this, wxID_SAVE);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnSaveAs, this, wxID_SAVEAS);
     
-    Connect(ID_HIERACHY, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnShowHirerarchicalTree));
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnShowHirerarchicalTree, this, ID_HIERACHY);
  
-    Connect(ID_RELOAD, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnReload));
-    Connect(ID_DELETE_DATE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnDeleteDate));
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnReload, this, ID_RELOAD);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnDeleteDate, this, ID_DELETE_DATE);
 
 #if USE_RICH_EDIT
-    Connect(ID_FORMAT_BOLD, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnBold));
-    Connect(ID_FORMAT_ITALIC, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnItalic));
-    Connect(ID_FORMAT_UNDERLINE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnUnderline));
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnBold, this, ID_FORMAT_BOLD);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnItalic, this, ID_FORMAT_ITALIC);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnUnderline, this, ID_FORMAT_UNDERLINE);
 
-    Connect(ID_FORMAT_STRIKETHROUGH, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnStrikethrough));
-    Connect(ID_FORMAT_SUPERSCRIPT, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSuperscript));
-    Connect(ID_FORMAT_SUBSCRIPT, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSubscript));
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnStrikethrough, this, ID_FORMAT_STRIKETHROUGH);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnSuperscript, this, ID_FORMAT_SUPERSCRIPT);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnSubscript, this, ID_FORMAT_SUBSCRIPT);
 
-    Connect(ID_FORMAT_ITALIC, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateItalic));
-    Connect(ID_FORMAT_UNDERLINE, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateUnderline));
+    Bind(wxEVT_UPDATE_UI,  &MainFrame::OnUpdateItalic, this, ID_FORMAT_ITALIC);
+    Bind(wxEVT_UPDATE_UI,  &MainFrame::OnUpdateUnderline, this, ID_FORMAT_UNDERLINE);
 
-    Connect(ID_FORMAT_STRIKETHROUGH, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateStrikethrough));
-    Connect(ID_FORMAT_SUPERSCRIPT, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateSuperscript));
-    Connect(ID_FORMAT_SUBSCRIPT, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateSubscript));
+    Bind(wxEVT_UPDATE_UI,  &MainFrame::OnUpdateStrikethrough, this, ID_FORMAT_STRIKETHROUGH);
+    Bind(wxEVT_UPDATE_UI,  &MainFrame::OnUpdateSuperscript, this, ID_FORMAT_SUPERSCRIPT);
+    Bind(wxEVT_UPDATE_UI,  &MainFrame::OnUpdateSubscript, this, ID_FORMAT_SUBSCRIPT);
 
-    Connect(ID_FORMAT_ALIGN_LEFT, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnAlignLeft));
-    Connect(ID_FORMAT_ALIGN_CENTRE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnAlignCentre));
-    Connect(ID_FORMAT_ALIGN_RIGHT, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnAlignRight));
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnAlignLeft, this, ID_FORMAT_ALIGN_LEFT);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnAlignCentre, this, ID_FORMAT_ALIGN_CENTRE);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnAlignRight, this, ID_FORMAT_ALIGN_RIGHT);
 
-    Connect(ID_FORMAT_ALIGN_LEFT, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateAlignLeft));
-    Connect(ID_FORMAT_ALIGN_CENTRE, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateAlignCentre));
-    Connect(ID_FORMAT_ALIGN_RIGHT, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateAlignRight));
+    Bind(ID_FORMAT_ALIGN_LEFT, wxEVT_UPDATE_UI,  &MainFrame::OnUpdateAlignLeft, this, );
+    Bind(ID_FORMAT_ALIGN_CENTRE, wxEVT_UPDATE_UI,  &MainFrame::OnUpdateAlignCentre, this, );
+    Bind(ID_FORMAT_ALIGN_RIGHT, wxEVT_UPDATE_UI,  &MainFrame::OnUpdateAlignRight, this, );
 
-    Connect(ID_FORMAT_FONT, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnFont));
-    Connect(ID_FORMAT_IMAGE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnImage));
-    Connect(ID_FORMAT_PARAGRAPH, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnParagraph));
-    Connect(ID_FORMAT_CONTENT, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnFormat));
-    Connect(ID_FORMAT_CONTENT, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateFormat));
-    Connect(ID_FORMAT_FONT, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateFormat));
-    Connect(ID_FORMAT_IMAGE, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateImage));
-    Connect(ID_FORMAT_PARAGRAPH, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateFormat));
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnFont, this, ID_FORMAT_FONT);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnImage, this, ID_FORMAT_IMAGE);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnParagraph, this, ID_FORMAT_PARAGRAPH);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnFormat, this, ID_FORMAT_CONTENT);
+    Bind(wxEVT_UPDATE_UI,  &MainFrame::OnUpdateFormat, this, ID_FORMAT_CONTENT, ID_FORMAT_PARAGRAPH);
+    //Bind(wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateFormat, this, ID_FORMAT_FONT);
+    //Bind(wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateFormat, this, ID_FORMAT_PARAGRAPH);
+    Bind(wxEVT_UPDATE_UI,  &MainFrame::OnUpdateImage, this, ID_FORMAT_IMAGE);
 
-    Connect(ID_FORMAT_INDENT_MORE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnIndentMore));
-    Connect(ID_FORMAT_INDENT_LESS, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnIndentLess));
+    Bind(ID_FORMAT_INDENT_MORE, wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnIndentMore, this, );
+    Bind(ID_FORMAT_INDENT_LESS, wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnIndentLess, this, );
 
-    Connect(ID_FORMAT_LINE_SPACING_HALF, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnLineSpacingHalf));
-    Connect(ID_FORMAT_LINE_SPACING_SINGLE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnLineSpacingSingle));
-    Connect(ID_FORMAT_LINE_SPACING_DOUBLE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnLineSpacingDouble));
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnLineSpacingHalf, this, ID_FORMAT_LINE_SPACING_HALF);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnLineSpacingSingle, this, ID_FORMAT_LINE_SPACING_SINGLE);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnLineSpacingDouble, this, ID_FORMAT_LINE_SPACING_DOUBLE);
 
-    Connect(ID_FORMAT_PARAGRAPH_SPACING_MORE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnParagraphSpacingMore));
-    Connect(ID_FORMAT_PARAGRAPH_SPACING_LESS, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnParagraphSpacingLess));
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnParagraphSpacingMore, this, ID_FORMAT_PARAGRAPH_SPACING_MORE);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnParagraphSpacingLess, this, ID_FORMAT_PARAGRAPH_SPACING_LESS);
 
-    Connect(ID_INSERT_SYMBOL, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnInsertSymbol));
-    Connect(ID_INSERT_URL, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnInsertURL));
-    Connect(ID_INSERT_IMAGE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnInsertImage));
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnInsertSymbol, this, ID_INSERT_SYMBOL);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnInsertURL, this, ID_INSERT_URL);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnInsertImage, this, ID_INSERT_IMAGE);
 
-    Connect(ID_FORMAT_NUMBER_LIST, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnNumberList));
-    Connect(ID_FORMAT_BULLETS_AND_NUMBERING, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnBulletsAndNumbering));
-    Connect(ID_FORMAT_ITEMIZE_LIST, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnItemizeList));
-    Connect(ID_FORMAT_RENUMBER_LIST, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnRenumberList));
-    Connect(ID_FORMAT_PROMOTE_LIST, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnPromoteList));
-    Connect(ID_FORMAT_DEMOTE_LIST, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnDemoteList));
-    Connect(ID_FORMAT_CLEAR_LIST, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnClearList));
-    Connect(ID_TABLE_ADD_COLUMN, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnTableAddColumn));
-    Connect(ID_TABLE_ADD_ROW, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnTableAddRow));
-    Connect(ID_TABLE_DELETE_COLUMN, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnTableDeleteColumn));
-    Connect(ID_TABLE_DELETE_ROW, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnTableDeleteRow));
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnNumberList, this, ID_FORMAT_NUMBER_LIST);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnBulletsAndNumbering, this, ID_FORMAT_BULLETS_AND_NUMBERING);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnItemizeList, this, ID_FORMAT_ITEMIZE_LIST);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnRenumberList, this, ID_FORMAT_RENUMBER_LIST);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnPromoteList, this, ID_FORMAT_PROMOTE_LIST);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnDemoteList, this, ID_FORMAT_DEMOTE_LIST);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnClearList, this, ID_FORMAT_CLEAR_LIST);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnTableAddColumn, this, ID_TABLE_ADD_COLUMN);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnTableAddRow, this, ID_TABLE_ADD_ROW);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnTableDeleteColumn, this, ID_TABLE_DELETE_COLUMN);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnTableDeleteRow, this, ID_TABLE_DELETE_ROW);
 
-    Connect(ID_TABLE_ADD_COLUMN, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnTableFocusedUpdateUI));
-    Connect(ID_TABLE_ADD_ROW, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnTableFocusedUpdateUI));
-    Connect(ID_TABLE_DELETE_COLUMN, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnTableHasCellsUpdateUI));
-    Connect(ID_TABLE_DELETE_ROW, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnTableHasCellsUpdateUI));
+    Bind(wxEVT_UPDATE_UI,  &MainFrame::OnTableFocusedUpdateUI, this, ID_TABLE_ADD_COLUMN, ID_TABLE_ADD_ROW);
+    Bind(wxEVT_UPDATE_UI,  &MainFrame::OnTableHasCellsUpdateUI, this, ID_TABLE_DELETE_COLUMN, ID_TABLE_DELETE_ROW);
+//    Bind(wxEVT_UPDATE_UI,  &MainFrame::OnTableHasCellsUpdateUI, this, ID_TABLE_DELETE_ROW);
 
-    Connect(ID_VIEW_HTML, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnViewHTML));
-    Connect(ID_SWITCH_STYLE_SHEETS, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSwitchStyleSheets));
-    Connect(ID_MANAGE_STYLES, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnManageStyles));
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnViewHTML, this, ID_VIEW_HTML);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnSwitchStyleSheets, this, ID_SWITCH_STYLE_SHEETS);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnManageStyles, this, ID_MANAGE_STYLES);
 
-    Connect(wxID_ANY, wxEVT_TEXT_URL,  wxTextUrlEventHandler(MainFrame::OnURL));
-    Connect(wxID_ANY, wxEVT_RICHTEXT_STYLESHEET_REPLACING,  wxRichTextEventHandler(MainFrame::OnStyleSheetReplacing));
-    Connect(ID_SET_FONT_SCALE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSetFontScale));
-    Connect(ID_SET_DIMENSION_SCALE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSetDimensionScale));
+    Bind(wxEVT_TEXT_URL,  &MainFrame::OnURL, this, wxID_ANY);
+    Bind(wxEVT_RICHTEXT_STYLESHEET_REPLACING,  &MainFrame::OnStyleSheetReplacing, this, wxID_ANY);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnSetFontScale, this, ID_SET_FONT_SCALE);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnSetDimensionScale, this, ID_SET_DIMENSION_SCALE);
     
-    Connect(ID_PAGE_SETUP, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnPageSetup));
 #else
-    Connect(wxID_CLEAR, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnEdit));
-    Connect(wxID_CUT, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnEdit));
-    Connect(wxID_COPY, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnEdit));
-    Connect(wxID_PASTE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnEdit));
-    Connect(wxID_SELECTALL, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnEdit));
-    Connect(wxID_FIND, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnEdit));
-    Connect(wxID_UNDO, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnEdit));
-    Connect(wxID_REDO, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnEdit));
-    Connect(wxID_UNDO, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateUndo));
-    Connect(wxID_REDO, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateRedo));
+    Bind(wxEVT_UPDATE_UI,  &MainFrame::OnUpdateUndo, this, wxID_UNDO);
+    Bind(wxEVT_UPDATE_UI,  &MainFrame::OnUpdateRedo, this, wxID_REDO);
 #endif
 
 //    m_comboBoxFavorite->Connect(wxEVT_TEXT_ENTER, wxCommandEventHandler(MainFrame::OnComboFavoriteTextEnter));
@@ -518,159 +499,136 @@ void MainFrame::ConnectEvents()
 //    Connect(wxID_ANY, wxEVT_TEXT_ENTER, wxTextEventHandler(MainFrame::OnComboFavoriteUpdate));
 //    Connect(wxID_ANY, wxEVT_COMBOBOX, wxCommandEventHandler(MainFrame::OnComboFavoriteUpdate));
 
-    Connect(ID_FAVORITE_ADD, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnAddFavorite));
-    Connect(ID_FAVORITE_DELETE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnDeleteFavorite));
-    Connect(ID_FAVORITE_MANAGE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnManageFavorite));
-    Connect(ID_FAVORITE_GO, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnGoFavorite));
-    Connect(ID_FAVORITE_ADD, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateAddFavorite));
-    Connect(ID_FAVORITE_DELETE, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateDeleteFavorite));
-    Connect(ID_FAVORITE_GO, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateGoFavorite));
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnAddFavorite, this, ID_FAVORITE_ADD);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnDeleteFavorite, this, ID_FAVORITE_DELETE);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnManageFavorite, this, ID_FAVORITE_MANAGE);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnGoFavorite, this, ID_FAVORITE_GO);
+    Bind(wxEVT_UPDATE_UI,  &MainFrame::OnUpdateAddFavorite, this, ID_FAVORITE_ADD);
+    Bind(wxEVT_UPDATE_UI,  &MainFrame::OnUpdateDeleteFavorite, this, ID_FAVORITE_DELETE);
+    Bind(wxEVT_UPDATE_UI,  &MainFrame::OnUpdateGoFavorite, this, ID_FAVORITE_GO);
     
-    Connect(ID_FOCUS_FAVORITES, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnFocusComboFavorite));   
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnFocusComboFavorite, this, ID_FOCUS_FAVORITES);   
  }
 
 void MainFrame::DisconnectEvents()
 {
-    DisconnectEventsSelhanged();	
-    m_treeDates->Disconnect( wxEVT_TREE_ITEM_RIGHT_CLICK, wxTreeEventHandler( MainFrame::OnTreeRightClick ), NULL, this );
-	m_calendar->Disconnect( wxEVT_KILL_FOCUS, wxFocusEventHandler( MainFrame::OnCalendarKillFocus ), NULL, this );
-	m_calendar->Disconnect( wxEVT_SET_FOCUS, wxFocusEventHandler( MainFrame::OnCalendarSetFocus ), NULL, this );
- 	m_calendar->Disconnect( wxEVT_CALENDAR_DOUBLECLICKED, wxCalendarEventHandler( MainFrame::OnCalendarDblClick ), NULL, this );    
-    m_buttonGoNextAvailable->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED,  wxCommandEventHandler(MainFrame::OnButtonGoNextAvailableClick));
-    m_buttonGoPrevAvailable->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED,  wxCommandEventHandler(MainFrame::OnButtonGoPrevAvailableClick));
-    m_buttonAddTomorrow->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED,  wxCommandEventHandler(MainFrame::OnButtonAddTomorrowClick));
-    m_buttonAddYesterday->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED,  wxCommandEventHandler(MainFrame::OnButtonAddYesterdayClick));
-
-	Disconnect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( MainFrame::OnCloseFrame ) );
-
-    Disconnect(wxID_EXIT, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnQuit));
-    Disconnect(wxID_ABOUT, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnAbout));
-    Connect(ID_STAY_ON_TOP, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnStayOnTop));
-
-    Disconnect(wxID_OPEN, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnOpen));
-    Disconnect(wxID_SAVE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSave));
-    Disconnect(wxID_SAVEAS, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSaveAs));
+	m_treeDates->Unbind( wxEVT_TREE_SEL_CHANGED, &MainFrame::OnTreeSelChanged, this );
+	m_treeDates->Unbind( wxEVT_TREE_SEL_CHANGING, &MainFrame::OnTreeSelChanging, this );    
+    m_treeDates->Unbind( wxEVT_TREE_ITEM_RIGHT_CLICK, &MainFrame::OnTreeRightClick, this );
+	m_calendar->Unbind( wxEVT_CALENDAR_SEL_CHANGED, &MainFrame::OnCalendarSelChanged, this );
+    m_calendar->Unbind( wxEVT_KILL_FOCUS, &MainFrame::OnCalendarKillFocus, this );
+	m_calendar->Unbind( wxEVT_SET_FOCUS,  &MainFrame::OnCalendarSetFocus, this );
+    m_calendar->Unbind( wxEVT_CALENDAR_DOUBLECLICKED, &MainFrame::OnCalendarDblClick, this );
+    m_buttonGoNextAvailable->Unbind( wxEVT_COMMAND_BUTTON_CLICKED,  &MainFrame::OnButtonGoNextAvailableClick, this);
+    m_buttonGoPrevAvailable->Unbind( wxEVT_COMMAND_BUTTON_CLICKED,  &MainFrame::OnButtonGoPrevAvailableClick, this);
+    m_buttonAddTomorrow->Unbind( wxEVT_COMMAND_BUTTON_CLICKED,  &MainFrame::OnButtonAddTomorrowClick, this);
+    m_buttonAddYesterday->Unbind( wxEVT_COMMAND_BUTTON_CLICKED,  &MainFrame::OnButtonAddYesterdayClick, this);
     
-    Disconnect(ID_HIERACHY, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnShowHirerarchicalTree));
-    Disconnect(ID_RELOAD, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnReload));
-    Disconnect(ID_DELETE_DATE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnDeleteDate));
+    Unbind(wxEVT_CLOSE_WINDOW, &MainFrame::OnCloseFrame, this);
+    Unbind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnQuit, this, wxID_EXIT);
+    Unbind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnAbout, this, wxID_ABOUT);
+    Unbind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnStayOnTop, this, ID_STAY_ON_TOP);
+
+    Unbind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnOpen, this, wxID_OPEN);
+    Unbind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnSave, this, wxID_SAVE);
+    Unbind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnSaveAs, this, wxID_SAVEAS);
+    
+    Unbind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnShowHirerarchicalTree, this, ID_HIERACHY);
+ 
+    Unbind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnReload, this, ID_RELOAD);
+    Unbind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnDeleteDate, this, ID_DELETE_DATE);
 
 #if USE_RICH_EDIT
-    Disconnect(ID_FORMAT_BOLD, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnBold));
-    Disconnect(ID_FORMAT_ITALIC, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnItalic));
-    Disconnect(ID_FORMAT_UNDERLINE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnUnderline));
+    Unbind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnBold, this, ID_FORMAT_BOLD);
+    Unbind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnItalic, this, ID_FORMAT_ITALIC);
+    Unbind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnUnderline, this, ID_FORMAT_UNDERLINE);
 
-    Disconnect(ID_FORMAT_STRIKETHROUGH, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnStrikethrough));
-    Disconnect(ID_FORMAT_SUPERSCRIPT, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSuperscript));
-    Disconnect(ID_FORMAT_SUBSCRIPT, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSubscript));
+    Unbind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnStrikethrough, this, ID_FORMAT_STRIKETHROUGH);
+    Unbind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnSuperscript, this, ID_FORMAT_SUPERSCRIPT);
+    Unbind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnSubscript, this, ID_FORMAT_SUBSCRIPT);
 
-    Disconnect(ID_FORMAT_ITALIC, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateItalic));
-    Disconnect(ID_FORMAT_UNDERLINE, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateUnderline));
+    Unbind(wxEVT_UPDATE_UI,  &MainFrame::OnUpdateItalic, this, ID_FORMAT_ITALIC);
+    Unbind(wxEVT_UPDATE_UI,  &MainFrame::OnUpdateUnderline, this, ID_FORMAT_UNDERLINE);
 
-    Disconnect(ID_FORMAT_STRIKETHROUGH, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateStrikethrough));
-    Disconnect(ID_FORMAT_SUPERSCRIPT, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateSuperscript));
-    Disconnect(ID_FORMAT_SUBSCRIPT, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateSubscript));
+    Unbind(wxEVT_UPDATE_UI,  &MainFrame::OnUpdateStrikethrough, this, ID_FORMAT_STRIKETHROUGH);
+    Unbind(wxEVT_UPDATE_UI,  &MainFrame::OnUpdateSuperscript, this, ID_FORMAT_SUPERSCRIPT);
+    Unbind(wxEVT_UPDATE_UI,  &MainFrame::OnUpdateSubscript, this, ID_FORMAT_SUBSCRIPT);
 
-    Disconnect(ID_FORMAT_ALIGN_LEFT, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnAlignLeft));
-    Disconnect(ID_FORMAT_ALIGN_CENTRE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnAlignCentre));
-    Disconnect(ID_FORMAT_ALIGN_RIGHT, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnAlignRight));
+    Unbind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnAlignLeft, this, ID_FORMAT_ALIGN_LEFT);
+    Unbind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnAlignCentre, this, ID_FORMAT_ALIGN_CENTRE);
+    Unbind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnAlignRight, this, ID_FORMAT_ALIGN_RIGHT);
 
-    Disconnect(ID_FORMAT_ALIGN_LEFT, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateAlignLeft));
-    Disconnect(ID_FORMAT_ALIGN_CENTRE, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateAlignCentre));
-    Disconnect(ID_FORMAT_ALIGN_RIGHT, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateAlignRight));
+    Unbind(ID_FORMAT_ALIGN_LEFT, wxEVT_UPDATE_UI,  &MainFrame::OnUpdateAlignLeft, this, );
+    Unbind(ID_FORMAT_ALIGN_CENTRE, wxEVT_UPDATE_UI,  &MainFrame::OnUpdateAlignCentre, this, );
+    Unbind(ID_FORMAT_ALIGN_RIGHT, wxEVT_UPDATE_UI,  &MainFrame::OnUpdateAlignRight, this, );
 
-    Disconnect(ID_FORMAT_FONT, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnFont));
-    Disconnect(ID_FORMAT_IMAGE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnImage));
-    Disconnect(ID_FORMAT_PARAGRAPH, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnParagraph));
-    Disconnect(ID_FORMAT_CONTENT, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnFormat));
-    Disconnect(ID_FORMAT_CONTENT, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateFormat));
-    Disconnect(ID_FORMAT_FONT, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateFormat));
-    Disconnect(ID_FORMAT_IMAGE, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateImage));
-    Disconnect(ID_FORMAT_PARAGRAPH, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateFormat));
+    Unbind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnFont, this, ID_FORMAT_FONT);
+    Unbind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnImage, this, ID_FORMAT_IMAGE);
+    Unbind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnParagraph, this, ID_FORMAT_PARAGRAPH);
+    Unbind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnFormat, this, ID_FORMAT_CONTENT);
+    Unbind(wxEVT_UPDATE_UI,  &MainFrame::OnUpdateFormat, this, ID_FORMAT_CONTENT, ID_FORMAT_PARAGRAPH);
+    //Unbind(wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateFormat, this, ID_FORMAT_FONT);
+    //Unbind(wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateFormat, this, ID_FORMAT_PARAGRAPH);
+    Unbind(wxEVT_UPDATE_UI,  &MainFrame::OnUpdateImage, this, ID_FORMAT_IMAGE);
 
-    Disconnect(ID_FORMAT_INDENT_MORE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnIndentMore));
-    Disconnect(ID_FORMAT_INDENT_LESS, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnIndentLess));
+    Unbind(ID_FORMAT_INDENT_MORE, wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnIndentMore, this, );
+    Unbind(ID_FORMAT_INDENT_LESS, wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnIndentLess, this, );
 
-    Disconnect(ID_FORMAT_LINE_SPACING_HALF, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnLineSpacingHalf));
-    Disconnect(ID_FORMAT_LINE_SPACING_SINGLE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnLineSpacingSingle));
-    Disconnect(ID_FORMAT_LINE_SPACING_DOUBLE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnLineSpacingDouble));
+    Unbind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnLineSpacingHalf, this, ID_FORMAT_LINE_SPACING_HALF);
+    Unbind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnLineSpacingSingle, this, ID_FORMAT_LINE_SPACING_SINGLE);
+    Unbind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnLineSpacingDouble, this, ID_FORMAT_LINE_SPACING_DOUBLE);
 
-    Disconnect(ID_FORMAT_PARAGRAPH_SPACING_MORE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnParagraphSpacingMore));
-    Disconnect(ID_FORMAT_PARAGRAPH_SPACING_LESS, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnParagraphSpacingLess));
+    Unbind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnParagraphSpacingMore, this, ID_FORMAT_PARAGRAPH_SPACING_MORE);
+    Unbind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnParagraphSpacingLess, this, ID_FORMAT_PARAGRAPH_SPACING_LESS);
 
-    Disconnect(ID_INSERT_SYMBOL, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnInsertSymbol));
-    Disconnect(ID_INSERT_URL, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnInsertURL));
-    Disconnect(ID_INSERT_IMAGE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnInsertImage));
+    Unbind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnInsertSymbol, this, ID_INSERT_SYMBOL);
+    Unbind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnInsertURL, this, ID_INSERT_URL);
+    Unbind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnInsertImage, this, ID_INSERT_IMAGE);
 
-    Disconnect(ID_FORMAT_NUMBER_LIST, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnNumberList));
-    Disconnect(ID_FORMAT_BULLETS_AND_NUMBERING, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnBulletsAndNumbering));
-    Disconnect(ID_FORMAT_ITEMIZE_LIST, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnItemizeList));
-    Disconnect(ID_FORMAT_RENUMBER_LIST, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnRenumberList));
-    Disconnect(ID_FORMAT_PROMOTE_LIST, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnPromoteList));
-    Disconnect(ID_FORMAT_DEMOTE_LIST, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnDemoteList));
-    Disconnect(ID_FORMAT_CLEAR_LIST, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnClearList));
-    Disconnect(ID_TABLE_ADD_COLUMN, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnTableAddColumn));
-    Disconnect(ID_TABLE_ADD_ROW, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnTableAddRow));
-    Disconnect(ID_TABLE_DELETE_COLUMN, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnTableDeleteColumn));
-    Disconnect(ID_TABLE_DELETE_ROW, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnTableDeleteRow));
+    Unbind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnNumberList, this, ID_FORMAT_NUMBER_LIST);
+    Unbind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnBulletsAndNumbering, this, ID_FORMAT_BULLETS_AND_NUMBERING);
+    Unbind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnItemizeList, this, ID_FORMAT_ITEMIZE_LIST);
+    Unbind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnRenumberList, this, ID_FORMAT_RENUMBER_LIST);
+    Unbind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnPromoteList, this, ID_FORMAT_PROMOTE_LIST);
+    Unbind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnDemoteList, this, ID_FORMAT_DEMOTE_LIST);
+    Unbind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnClearList, this, ID_FORMAT_CLEAR_LIST);
+    Unbind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnTableAddColumn, this, ID_TABLE_ADD_COLUMN);
+    Unbind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnTableAddRow, this, ID_TABLE_ADD_ROW);
+    Unbind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnTableDeleteColumn, this, ID_TABLE_DELETE_COLUMN);
+    Unbind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnTableDeleteRow, this, ID_TABLE_DELETE_ROW);
 
-    Disconnect(ID_TABLE_ADD_COLUMN, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnTableFocusedUpdateUI));
-    Disconnect(ID_TABLE_ADD_ROW, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnTableFocusedUpdateUI));
-    Disconnect(ID_TABLE_DELETE_COLUMN, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnTableHasCellsUpdateUI));
-    Disconnect(ID_TABLE_DELETE_ROW, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnTableHasCellsUpdateUI));
+    Unbind(wxEVT_UPDATE_UI,  &MainFrame::OnTableFocusedUpdateUI, this, ID_TABLE_ADD_COLUMN, ID_TABLE_ADD_ROW);
+    Unbind(wxEVT_UPDATE_UI,  &MainFrame::OnTableHasCellsUpdateUI, this, ID_TABLE_DELETE_COLUMN, ID_TABLE_DELETE_ROW);
+//    Unbind(wxEVT_UPDATE_UI,  &MainFrame::OnTableHasCellsUpdateUI, this, ID_TABLE_DELETE_ROW);
 
-    Disconnect(ID_VIEW_HTML, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnViewHTML));
-    Disconnect(ID_SWITCH_STYLE_SHEETS, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSwitchStyleSheets));
-    Disconnect(ID_MANAGE_STYLES, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnManageStyles));
+    Unbind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnViewHTML, this, ID_VIEW_HTML);
+    Unbind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnSwitchStyleSheets, this, ID_SWITCH_STYLE_SHEETS);
+    Unbind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnManageStyles, this, ID_MANAGE_STYLES);
 
-    Disconnect(ID_PAGE_SETUP, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnPageSetup));
-
-   Disconnect(wxID_ANY, wxEVT_TEXT_URL,  wxTextUrlEventHandler(MainFrame::OnURL));
-   Disconnect(wxID_ANY, wxEVT_RICHTEXT_STYLESHEET_REPLACING,  wxRichTextEventHandler(MainFrame::OnStyleSheetReplacing));
-
-    Disconnect(ID_SET_FONT_SCALE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSetFontScale));
-    Disconnect(ID_SET_DIMENSION_SCALE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnSetDimensionScale));
+    Unbind(wxEVT_TEXT_URL,  &MainFrame::OnURL, this, wxID_ANY);
+    Unbind(wxEVT_RICHTEXT_STYLESHEET_REPLACING,  &MainFrame::OnStyleSheetReplacing, this, wxID_ANY);
+    Unbind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnSetFontScale, this, ID_SET_FONT_SCALE);
+    Unbind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnSetDimensionScale, this, ID_SET_DIMENSION_SCALE);
+    
 #else
-    Disconnect(wxID_CLEAR, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnEdit));
-    Disconnect(wxID_CUT, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnEdit));
-    Disconnect(wxID_COPY, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnEdit));
-    Disconnect(wxID_PASTE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnEdit));
-    Disconnect(wxID_SELECTALL, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnEdit));
-    Disconnect(wxID_FIND, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnEdit));
-    Disconnect(wxID_UNDO, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnEdit));
-    Disconnect(wxID_REDO, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnEdit));
-    Connect(wxID_UNDO, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateUndo));
-    Connect(wxID_REDO, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateRedo));
+    Unbind(wxEVT_UPDATE_UI,  &MainFrame::OnUpdateUndo, this, wxID_UNDO);
+    Unbind(wxEVT_UPDATE_UI,  &MainFrame::OnUpdateRedo, this, wxID_REDO);
 #endif
 
-//    m_comboBoxFavorite->Disconnect(wxEVT_TEXT_ENTER, wxCommandEventHandler(MainFrame::OnComboFavoriteTextEnter));
-//    Disconnect(wxID_ANY, wxEVT_TEXT, wxTextEventHandler(MainFrame::OnComboFavoriteUpdate));
-//    Disconnect(wxID_ANY, wxEVT_TEXT_ENTER, wxTextEventHandler(MainFrame::OnComboFavoriteUpdate));
-//    Disconnect(wxID_ANY, wxEVT_COMBOBOX, wxCommandEventHandler(MainFrame::OnComboFavoriteUpdate));
+//    m_comboBoxFavorite->Connect(wxEVT_TEXT_ENTER, wxCommandEventHandler(MainFrame::OnComboFavoriteTextEnter));
+//    Connect(wxID_ANY, wxEVT_TEXT, wxTextEventHandler(MainFrame::OnComboFavoriteUpdate));
+//    Connect(wxID_ANY, wxEVT_TEXT_ENTER, wxTextEventHandler(MainFrame::OnComboFavoriteUpdate));
+//    Connect(wxID_ANY, wxEVT_COMBOBOX, wxCommandEventHandler(MainFrame::OnComboFavoriteUpdate));
 
-    Disconnect(ID_FAVORITE_ADD, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnAddFavorite));
-    Disconnect(ID_FAVORITE_DELETE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnDeleteFavorite));
-    Disconnect(ID_FAVORITE_MANAGE, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnManageFavorite));
-    Disconnect(ID_FAVORITE_GO, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnGoFavorite));
-    Disconnect(ID_FAVORITE_ADD, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateAddFavorite));
-    Disconnect(ID_FAVORITE_DELETE, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateDeleteFavorite));
-    Disconnect(ID_FAVORITE_GO, wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateGoFavorite));
- 
-    Disconnect(ID_FOCUS_FAVORITES, wxEVT_COMMAND_MENU_SELECTED,  wxCommandEventHandler(MainFrame::OnFocusComboFavorite));
-}
-   
-void MainFrame::ConnectEventsSelChanged() {
- // conection fait après chargement 
-//todo prevenir wxEVT_TREE_SEL_CHANGING au demarage connection fait aprés chargement  dwparser 
-	m_treeDates->Connect( wxEVT_TREE_SEL_CHANGED, wxTreeEventHandler( MainFrame::OnTreeSelChanged ), NULL, this );
-	m_treeDates->Connect( wxEVT_TREE_SEL_CHANGING, wxTreeEventHandler( MainFrame::OnTreeSelChanging ), NULL, this );    
-	m_calendar->Connect( wxEVT_CALENDAR_SEL_CHANGED, wxCalendarEventHandler( MainFrame::OnCalendarSelChanged ), NULL, this );
-}
-
-void MainFrame::DisconnectEventsSelhanged() {
-    m_treeDates->Disconnect( wxEVT_COMMAND_TREE_SEL_CHANGED, wxTreeEventHandler( MainFrame::OnTreeSelChanged ), NULL, this );
-	m_treeDates->Disconnect( wxEVT_TREE_SEL_CHANGING, wxTreeEventHandler( MainFrame::OnTreeSelChanging ), NULL, this );
-	m_calendar->Disconnect( wxEVT_CALENDAR_SEL_CHANGED, wxCalendarEventHandler( MainFrame::OnCalendarSelChanged ), NULL, this );  
+    Unbind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnAddFavorite, this, ID_FAVORITE_ADD);
+    Unbind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnDeleteFavorite, this, ID_FAVORITE_DELETE);
+    Unbind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnManageFavorite, this, ID_FAVORITE_MANAGE);
+    Unbind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnGoFavorite, this, ID_FAVORITE_GO);
+    Unbind(wxEVT_UPDATE_UI,  &MainFrame::OnUpdateAddFavorite, this, ID_FAVORITE_ADD);
+    Unbind(wxEVT_UPDATE_UI,  &MainFrame::OnUpdateDeleteFavorite, this, ID_FAVORITE_DELETE);
+    Unbind(wxEVT_UPDATE_UI,  &MainFrame::OnUpdateGoFavorite, this, ID_FAVORITE_GO);
+    
+    Unbind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnFocusComboFavorite, this, ID_FOCUS_FAVORITES);  
 }
 
 void MainFrame::SetText(wxString texte)
@@ -686,6 +644,9 @@ void MainFrame::SetText(wxString texte)
     m_editor->EndSuppressUndo();
 #else*/
     m_editor->SetValue(wxString::FromUTF8(texte.c_str()));
+#if USE_RICH_EDIT == false
+    m_editor->EmptyUndoBuffer();
+#endif    
     m_editor->DiscardEdits();
     
 //    bool retour = rtb.LoadFile(final); // == 0
@@ -835,7 +796,7 @@ void MainFrame::OnDeleteFavorite(wxCommandEvent& event)
 void MainFrame::OnManageFavorite(wxCommandEvent& event)
 {
     //todo faire fonction avec listbox et ...
-    wxMessageDialog(this, _("Unimplemented ?"), _("Information"), wxOK|wxCENTER_FRAME).ShowModal();
+    wxMessageDialog(this, _("Not yet implemented..."), _("Information"), wxOK|wxCENTER_FRAME).ShowModal();
     
 }    
 
@@ -901,13 +862,17 @@ void MainFrame::OnQuit(wxCommandEvent& event)
 
 void MainFrame::OnAbout(wxCommandEvent& event)
 {
+ #if USE_RICH_EDIT
     wxString msg = _("This is a daily notepad.\n(c) Laurent Silvestre\nThanks to Julian Smart and his wxRichTextCtrl demo (currently unused), 2005");
+#else
+    wxString msg = _("This is a daily notepad.\n(c) Laurent Silvestre\nThanks to Wyo and his STC test module, 2015");
+#endif
     wxMessageBox(msg, _("About Dailywork"), wxOK | wxICON_INFORMATION, this);
 }
 
 void MainFrame::OnStayOnTop(wxCommandEvent& event)
 {
-   //setstyle() 
+   //todo possible ?
 }
 
 void MainFrame::OnSave(wxCommandEvent& event)
@@ -996,11 +961,6 @@ void MainFrame::OnOpen(wxCommandEvent&event)
 }
 
 #if USE_RICH_EDIT == false
- // edit events
-void MainFrame::OnEdit (wxCommandEvent &event) {
-  //  if (m_editor) m_editor->GetEventHandler()->ProcessEvent (event);
-}
-
 void MainFrame::OnUpdateUndo(wxUpdateUIEvent& event)
 {
     event.Enable(m_editor->CanUndo());   
@@ -1045,26 +1005,6 @@ bool MainFrame::ProcessEvent(wxEvent& event)
 }
 
 #if USE_RICH_EDIT
-void MainFrame::OnPageSetup(wxCommandEvent& event)
-{
-    wxDialog dialog(this, wxID_ANY, _("Testing"), wxPoint(10, 10), wxSize(400, 300), wxDEFAULT_DIALOG_STYLE);
-
-    wxNotebook* nb = new wxNotebook(& dialog, wxID_ANY, wxPoint(5, 5), wxSize(300, 250));
-    wxPanel* panel = new wxPanel(nb, wxID_ANY, wxDefaultPosition, wxDefaultSize);
-    wxPanel* panel2 = new wxPanel(nb, wxID_ANY, wxDefaultPosition, wxDefaultSize);
-
-    new wxRichTextCtrl(panel, wxID_ANY, wxEmptyString, wxPoint(5, 5), wxSize(200, 150), wxVSCROLL|wxTE_READONLY);
-    nb->AddPage(panel, _("Page 1"));
-
-    new wxRichTextCtrl(panel2, wxID_ANY, wxEmptyString, wxPoint(5, 5), wxSize(200, 150), wxVSCROLL|wxTE_READONLY);
-    nb->AddPage(panel2, _("Page 2"));
-
-    new wxButton(& dialog, wxID_OK, wxT("OK"), wxPoint(5, 180));
-
-    dialog.ShowModal();
-
-//    wxGetApp().GetPrinting()->PageSetup();
-}
 
 void MainFrame::OnBold(wxCommandEvent& event)
 {

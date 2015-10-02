@@ -47,44 +47,6 @@ const int ANNOTATION_STYLE = wxSTC_STYLE_LASTPREDEFINED + 1;
 // MyStyledTextCtrl
 //----------------------------------------------------------------------------
 
-//wxBEGIN_EVENT_TABLE (MyStyledTextCtrl, wxStyledTextCtrl)
-//    // common
-//    EVT_SIZE (                         MyStyledTextCtrl::OnSize)
-//    // view
-//    EVT_MENU_RANGE (myID_HILIGHTFIRST, myID_HILIGHTLAST,
-//                                       MyStyledTextCtrl::OnHilightLang)
-//    EVT_MENU (myID_DISPLAYEOL,         MyStyledTextCtrl::OnDisplayEOL)
-//    EVT_MENU (myID_INDENTGUIDE,        MyStyledTextCtrl::OnIndentGuide)
-//    EVT_MENU (myID_LINENUMBER,         MyStyledTextCtrl::OnLineNumber)
-//    EVT_MENU (myID_LONGLINEON,         MyStyledTextCtrl::OnLongLineOn)
-//    EVT_MENU (myID_WHITESPACE,         MyStyledTextCtrl::OnWhiteSpace)
-//    EVT_MENU (myID_FOLDTOGGLE,         MyStyledTextCtrl::OnFoldToggle)
-//    EVT_MENU (myID_OVERTYPE,           MyStyledTextCtrl::OnSetOverType)
-//    EVT_MENU (myID_READONLY,           MyStyledTextCtrl::OnSetReadOnly)
-//    EVT_MENU (myID_WRAPMODEON,         MyStyledTextCtrl::OnWrapmodeOn)
-//    EVT_MENU (myID_CHARSETANSI,        MyStyledTextCtrl::OnUseCharset)
-//    EVT_MENU (myID_CHARSETMAC,         MyStyledTextCtrl::OnUseCharset)
-//    // annotations
-//    EVT_MENU (myID_ANNOTATION_ADD,     MyStyledTextCtrl::OnAnnotationAdd)
-//    EVT_MENU (myID_ANNOTATION_REMOVE,  MyStyledTextCtrl::OnAnnotationRemove)
-//    EVT_MENU (myID_ANNOTATION_CLEAR,   MyStyledTextCtrl::OnAnnotationClear)
-//    EVT_MENU (myID_ANNOTATION_STYLE_HIDDEN,   MyStyledTextCtrl::OnAnnotationStyle)
-//    EVT_MENU (myID_ANNOTATION_STYLE_STANDARD, MyStyledTextCtrl::OnAnnotationStyle)
-//    EVT_MENU (myID_ANNOTATION_STYLE_BOXED,    MyStyledTextCtrl::OnAnnotationStyle)
-//    // extra
-//    EVT_MENU (myID_CHANGELOWER,        MyStyledTextCtrl::OnChangeCase)
-//    EVT_MENU (myID_CHANGEUPPER,        MyStyledTextCtrl::OnChangeCase)
-//    EVT_MENU (myID_CONVERTCR,          MyStyledTextCtrl::OnConvertEOL)
-//    EVT_MENU (myID_CONVERTCRLF,        MyStyledTextCtrl::OnConvertEOL)
-//    EVT_MENU (myID_CONVERTLF,          MyStyledTextCtrl::OnConvertEOL)
-//    // stc
-//    EVT_STC_MARGINCLICK (wxID_ANY,     MyStyledTextCtrl::OnMarginClick)
-//    EVT_STC_CHARADDED (wxID_ANY,       MyStyledTextCtrl::OnCharAdded)
-//    EVT_STC_KEY( wxID_ANY , MyStyledTextCtrl::OnKey )
-//
-//    EVT_KEY_DOWN( MyStyledTextCtrl::OnKeyDown )
-//wxEND_EVENT_TABLE()
-
 MyStyledTextCtrl::MyStyledTextCtrl (wxWindow *parent, wxWindowID id,
             const wxPoint &pos,
             const wxSize &size,
@@ -103,49 +65,61 @@ MyStyledTextCtrl::MyStyledTextCtrl (wxWindow *parent, wxWindowID id,
     // Use all the bits in the style byte as styles, not indicators.
     SetStyleBits(8);
     
-    // default font for all styles
-    SetViewEOL (g_CommonPrefs.displayEOLEnable);
-    SetIndentationGuides (g_CommonPrefs.indentGuideEnable);
-    SetEdgeMode (g_CommonPrefs.longLineOnEnable?
-                 wxSTC_EDGE_LINE: wxSTC_EDGE_NONE);
-    SetViewWhiteSpace (g_CommonPrefs.whiteSpaceEnable?
-                       wxSTC_WS_VISIBLEALWAYS: wxSTC_WS_INVISIBLE);
-    SetOvertype (g_CommonPrefs.overTypeInitial);
-    SetReadOnly (g_CommonPrefs.readOnlyInitial);
-    SetWrapMode (g_CommonPrefs.wrapModeInitial?
-                 wxSTC_WRAP_WORD: wxSTC_WRAP_NONE);
-    wxFont font (10, wxMODERN, wxNORMAL, wxNORMAL);
-    StyleSetFont (wxSTC_STYLE_DEFAULT, font);
-    StyleSetForeground (wxSTC_STYLE_DEFAULT, *wxBLACK);
-    StyleSetBackground (wxSTC_STYLE_DEFAULT, *wxWHITE);
-    StyleSetForeground (wxSTC_STYLE_LINENUMBER, wxColour (wxT("DARK GREY")));
-    StyleSetBackground (wxSTC_STYLE_LINENUMBER, *wxWHITE);
-    StyleSetForeground(wxSTC_STYLE_INDENTGUIDE, wxColour (wxT("DARK GREY")));
-    InitializePrefs (DEFAULT_LANGUAGE);
+//    // default font for all styles
+//    SetViewEOL (g_CommonPrefs.displayEOLEnable);
+//    SetIndentationGuides (g_CommonPrefs.indentGuideEnable);
+//    SetEdgeMode (g_CommonPrefs.longLineOnEnable?
+//                 wxSTC_EDGE_LINE: wxSTC_EDGE_NONE);
+//    SetViewWhiteSpace (g_CommonPrefs.whiteSpaceEnable?
+//                       wxSTC_WS_VISIBLEALWAYS: wxSTC_WS_INVISIBLE);
+//    SetOvertype (g_CommonPrefs.overTypeInitial);
+//    SetReadOnly (g_CommonPrefs.readOnlyInitial);
+//    SetWrapMode (g_CommonPrefs.wrapModeInitial?
+//                 wxSTC_WRAP_WORD: wxSTC_WRAP_NONE);
+//    wxFont font (10, wxMODERN, wxNORMAL, wxNORMAL);
+//    StyleSetFont (wxSTC_STYLE_DEFAULT, font);
+//    StyleSetForeground (wxSTC_STYLE_DEFAULT, *wxBLACK);
+//    StyleSetBackground (wxSTC_STYLE_DEFAULT, *wxWHITE);
+//    StyleSetForeground (wxSTC_STYLE_LINENUMBER, wxColour (wxT("DARK GREY")));
+//    StyleSetBackground (wxSTC_STYLE_LINENUMBER, *wxWHITE);
+//    StyleSetForeground(wxSTC_STYLE_INDENTGUIDE, wxColour (wxT("DARK GREY")));
+//    InitializePrefs (DEFAULT_LANGUAGE);
+//
+//    // set visibility
+//    SetVisiblePolicy (wxSTC_VISIBLE_STRICT|wxSTC_VISIBLE_SLOP, 1);
+//    SetXCaretPolicy (wxSTC_CARET_EVEN|wxSTC_VISIBLE_STRICT|wxSTC_CARET_SLOP, 1);
+//    SetYCaretPolicy (wxSTC_CARET_EVEN|wxSTC_VISIBLE_STRICT|wxSTC_CARET_SLOP, 1);
+//
+//    // markers
+//    MarkerDefine (wxSTC_MARKNUM_FOLDER,        wxSTC_MARK_DOTDOTDOT, wxT("BLACK"), wxT("BLACK"));
+//    MarkerDefine (wxSTC_MARKNUM_FOLDEROPEN,    wxSTC_MARK_ARROWDOWN, wxT("BLACK"), wxT("BLACK"));
+//    MarkerDefine (wxSTC_MARKNUM_FOLDERSUB,     wxSTC_MARK_EMPTY,     wxT("BLACK"), wxT("BLACK"));
+//    MarkerDefine (wxSTC_MARKNUM_FOLDEREND,     wxSTC_MARK_DOTDOTDOT, wxT("BLACK"), wxT("WHITE"));
+//    MarkerDefine (wxSTC_MARKNUM_FOLDEROPENMID, wxSTC_MARK_ARROWDOWN, wxT("BLACK"), wxT("WHITE"));
+//    MarkerDefine (wxSTC_MARKNUM_FOLDERMIDTAIL, wxSTC_MARK_EMPTY,     wxT("BLACK"), wxT("BLACK"));
+//    MarkerDefine (wxSTC_MARKNUM_FOLDERTAIL,    wxSTC_MARK_EMPTY,     wxT("BLACK"), wxT("BLACK"));
+//
+//    // annotations
+//    AnnotationSetVisible(wxSTC_ANNOTATION_BOXED);
+//
+//    // miscellaneous
+//    m_LineNrMargin = TextWidth (wxSTC_STYLE_LINENUMBER, wxT("_999999"));
+//    m_FoldingMargin = 16;
+//    CmdKeyClear (wxSTC_KEY_TAB, 0); // this is done by the menu accelerator key
+//    SetLayoutCache (wxSTC_CACHE_PAGE);
 
-    // set visibility
-    SetVisiblePolicy (wxSTC_VISIBLE_STRICT|wxSTC_VISIBLE_SLOP, 1);
-    SetXCaretPolicy (wxSTC_CARET_EVEN|wxSTC_VISIBLE_STRICT|wxSTC_CARET_SLOP, 1);
-    SetYCaretPolicy (wxSTC_CARET_EVEN|wxSTC_VISIBLE_STRICT|wxSTC_CARET_SLOP, 1);
-
-    // markers
-    MarkerDefine (wxSTC_MARKNUM_FOLDER,        wxSTC_MARK_DOTDOTDOT, wxT("BLACK"), wxT("BLACK"));
-    MarkerDefine (wxSTC_MARKNUM_FOLDEROPEN,    wxSTC_MARK_ARROWDOWN, wxT("BLACK"), wxT("BLACK"));
-    MarkerDefine (wxSTC_MARKNUM_FOLDERSUB,     wxSTC_MARK_EMPTY,     wxT("BLACK"), wxT("BLACK"));
-    MarkerDefine (wxSTC_MARKNUM_FOLDEREND,     wxSTC_MARK_DOTDOTDOT, wxT("BLACK"), wxT("WHITE"));
-    MarkerDefine (wxSTC_MARKNUM_FOLDEROPENMID, wxSTC_MARK_ARROWDOWN, wxT("BLACK"), wxT("WHITE"));
-    MarkerDefine (wxSTC_MARKNUM_FOLDERMIDTAIL, wxSTC_MARK_EMPTY,     wxT("BLACK"), wxT("BLACK"));
-    MarkerDefine (wxSTC_MARKNUM_FOLDERTAIL,    wxSTC_MARK_EMPTY,     wxT("BLACK"), wxT("BLACK"));
-
-    // annotations
-    AnnotationSetVisible(wxSTC_ANNOTATION_BOXED);
-
-    // miscellaneous
-    m_LineNrMargin = TextWidth (wxSTC_STYLE_LINENUMBER, wxT("_999999"));
-    m_FoldingMargin = 16;
-    CmdKeyClear (wxSTC_KEY_TAB, 0); // this is done by the menu accelerator key
-    SetLayoutCache (wxSTC_CACHE_PAGE);
-
+    SetWrapMode(true);
+    wxFont font(11, wxROMAN, wxNORMAL, wxNORMAL);
+    StyleSetFont(0, font); //utile ?
+    SetLexer(wxSTC_LEX_HTML);
+    StyleSetForeground (wxSTC_H_DOUBLESTRING,     wxColour(255,0,0));
+    StyleSetForeground (wxSTC_H_SINGLESTRING,     wxColour(255,0,0));
+    StyleSetForeground (wxSTC_H_ENTITY,           wxColour(255,0,0));
+    StyleSetForeground (wxSTC_H_TAG,              wxColour(0,150,0));
+    StyleSetForeground (wxSTC_H_TAGUNKNOWN,       wxColour(0,150,0));
+    StyleSetForeground (wxSTC_H_ATTRIBUTE,        wxColour(0,0,150));
+    StyleSetForeground (wxSTC_H_ATTRIBUTEUNKNOWN, wxColour(0,0,150));
+    StyleSetForeground (wxSTC_H_COMMENT,          wxColour(150,150,150));   
     ConnectEvents();
 }
 
