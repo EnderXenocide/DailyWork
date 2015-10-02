@@ -13,7 +13,7 @@ CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
 User                   :=Trinquard
-Date                   :=01/10/2015
+Date                   :=02/10/2015
 CodeLitePath           :="C:\Program Files\CodeLite"
 LinkerName             :=C:/Utils/TDM-GCC-64/bin/g++.exe
 SharedObjectLinkerName :=C:/Utils/TDM-GCC-64/bin/g++.exe -shared -fPIC
@@ -64,7 +64,7 @@ AS       := C:/Utils/TDM-GCC-64/bin/as.exe
 CodeLiteDir:=C:\Program Files\CodeLite
 WXWIN:=C:\Utils\wxWidgets-3.0.2
 WXCFG:=gcc_dll\mswu
-Objects0=$(IntermediateDirectory)/gui.cpp$(ObjectSuffix) $(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IntermediateDirectory)/dailyworkparser.cpp$(ObjectSuffix) $(IntermediateDirectory)/gui2.cpp$(ObjectSuffix) $(IntermediateDirectory)/myrichtext.cpp$(ObjectSuffix) $(IntermediateDirectory)/win_resources.rc$(ObjectSuffix) 
+Objects0=$(IntermediateDirectory)/gui.cpp$(ObjectSuffix) $(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IntermediateDirectory)/dailyworkparser.cpp$(ObjectSuffix) $(IntermediateDirectory)/gui2.cpp$(ObjectSuffix) $(IntermediateDirectory)/myrichtext.cpp$(ObjectSuffix) $(IntermediateDirectory)/prefs.cpp$(ObjectSuffix) $(IntermediateDirectory)/mystyledtext.cpp$(ObjectSuffix) $(IntermediateDirectory)/win_resources.rc$(ObjectSuffix) 
 
 
 
@@ -134,6 +134,22 @@ $(IntermediateDirectory)/myrichtext.cpp$(DependSuffix): myrichtext.cpp
 
 $(IntermediateDirectory)/myrichtext.cpp$(PreprocessSuffix): myrichtext.cpp
 	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/myrichtext.cpp$(PreprocessSuffix) "myrichtext.cpp"
+
+$(IntermediateDirectory)/prefs.cpp$(ObjectSuffix): prefs.cpp $(IntermediateDirectory)/prefs.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "I:/Workspace/CodeLiteC++/DailyWork/prefs.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/prefs.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/prefs.cpp$(DependSuffix): prefs.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/prefs.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/prefs.cpp$(DependSuffix) -MM "prefs.cpp"
+
+$(IntermediateDirectory)/prefs.cpp$(PreprocessSuffix): prefs.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/prefs.cpp$(PreprocessSuffix) "prefs.cpp"
+
+$(IntermediateDirectory)/mystyledtext.cpp$(ObjectSuffix): mystyledtext.cpp $(IntermediateDirectory)/mystyledtext.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "I:/Workspace/CodeLiteC++/DailyWork/mystyledtext.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/mystyledtext.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/mystyledtext.cpp$(DependSuffix): mystyledtext.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/mystyledtext.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/mystyledtext.cpp$(DependSuffix) -MM "mystyledtext.cpp"
+
+$(IntermediateDirectory)/mystyledtext.cpp$(PreprocessSuffix): mystyledtext.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/mystyledtext.cpp$(PreprocessSuffix) "mystyledtext.cpp"
 
 $(IntermediateDirectory)/win_resources.rc$(ObjectSuffix): win_resources.rc
 	$(RcCompilerName) -i "I:/Workspace/CodeLiteC++/DailyWork/win_resources.rc" $(RcCmpOptions)   $(ObjectSwitch)$(IntermediateDirectory)/win_resources.rc$(ObjectSuffix) $(RcIncludePath)

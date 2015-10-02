@@ -59,9 +59,6 @@ public:
 #if USE_RICH_EDIT
     wxRichTextStyleSheet* GetStyleSheet() const { return m_styleSheet; } 
 #endif    
-#if wxUSE_PRINTING_ARCHITECTURE & USE_RICH_EDIT
-    wxRichTextPrinting* GetPrinting() const { return m_printing; }
-#endif   
     int AddDateToTree(const wxDateTime& date, bool selectItem = false); // todo wxTreeCtrl& tree instead
     wxTreeItemId AddItem(wxTreeItemId parent, wxString text, wxDateTime date, bool setDataEmpty);
     //wxTreeItemId FindDateInTree(wxDateTime date);
@@ -102,10 +99,6 @@ private:
     wxRichTextStyleSheet*   m_styleSheet;
     void InitRichText(); 
 #endif 
-   
-#if wxUSE_PRINTING_ARCHITECTURE & USE_RICH_EDIT
-    wxRichTextPrinting*     m_printing;
-#endif      
 
 };
 

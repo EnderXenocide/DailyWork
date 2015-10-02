@@ -1,1 +1,1 @@
-./Debug/gui.cpp.o ./Debug/main.cpp.o ./Debug/dailyworkparser.cpp.o ./Debug/gui2.cpp.o ./Debug/myrichtext.cpp.o ./Debug/win_resources.rc.o   
+./Debug/gui.cpp.o ./Debug/main.cpp.o ./Debug/dailyworkparser.cpp.o ./Debug/gui2.cpp.o ./Debug/myrichtext.cpp.o ./Debug/prefs.cpp.o ./Debug/mystyledtext.cpp.o ./Debug/win_resources.rc.o   

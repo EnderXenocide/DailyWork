@@ -46,9 +46,6 @@ bool MainApp::OnInit()
     size.Scale(0.75, 0.75);
     frame = new MainFrame(wxT("DailyWork"), wxID_ANY, wxDefaultPosition, size);
 
-#if wxUSE_PRINTING_ARCHITECTURE & USE_RICH_EDIT
-    m_printing->SetParentWindow(frame);
-#endif
 
     MainFrame* sameframe  = frame;    
     
@@ -67,10 +64,6 @@ bool MainApp::OnInit()
 
 int MainApp::OnExit()
 {    
-        
-#if wxUSE_PRINTING_ARCHITECTURE & USE_RICH_EDIT
-    delete m_printing;
-#endif
 #if USE_RICH_EDIT
     delete m_styleSheet;
 #endif
@@ -81,14 +74,6 @@ int MainApp::OnExit()
 #if USE_RICH_EDIT
 void MainApp::InitRichText()
 {
-    
-#if wxUSE_PRINTING_ARCHITECTURE & USE_RICH_EDIT
-    m_printing = new wxRichTextPrinting(wxT("Test Document"));
-
-    m_printing->SetFooterText(wxT("@TITLE@"), wxRICHTEXT_PAGE_ALL, wxRICHTEXT_PAGE_CENTRE);
-    m_printing->SetFooterText(wxT("Page @PAGENUM@"), wxRICHTEXT_PAGE_ALL, wxRICHTEXT_PAGE_RIGHT);
-#endif
-
     m_styleSheet = new wxRichTextStyleSheet;
 
     CreateStyles();

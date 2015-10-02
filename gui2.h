@@ -40,7 +40,7 @@
 #include "wx/richtext/richtextimagedlg.h"
 #include "myrichtext.h"
 #else
-#include <wx/stc/stc.h>
+#include "mystyledtext.h"
 #endif // USE_RICH_EDIT
 
 #ifndef wxHAS_IMAGES_IN_RESOURCES
@@ -101,7 +101,7 @@ public:
  #if USE_RICH_EDIT
     MyRichTextCtrl* m_editor;
 #else
-     wxStyledTextCtrl* m_editor;      
+     MyStyledTextCtrl* m_editor;      
 #endif
     
     MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_FRAME_STYLE);
@@ -155,13 +155,7 @@ protected:
     void OnSaveAs(wxCommandEvent& event);
     
     void OnReload(wxCommandEvent& event);
-
-    void OnUndo(wxCommandEvent& event);
-    void OnRedo(wxCommandEvent& event);
-    
-    void OnUpdateUndo(wxUpdateUIEvent& event);
-    void OnUpdateRedo(wxUpdateUIEvent& event);
-    
+   
  #if USE_RICH_EDIT
     void OnBold(wxCommandEvent& event);
     void OnItalic(wxCommandEvent& event);
@@ -235,15 +229,14 @@ protected:
     void OnSetDimensionScale(wxCommandEvent& event);
     
     void OnPageSetup(wxCommandEvent& event);
+ #else
+    void OnEdit (wxCommandEvent &event);
+    void OnUpdateUndo(wxUpdateUIEvent& event);
+    void OnUpdateRedo(wxUpdateUIEvent& event);    
  #endif
     
     // Forward command events to the current (rich) text control, if any
     bool ProcessEvent(wxEvent& event);
-    
-#if wxUSE_PRINTING_ARCHITECTURE & USE_RICH_EDIT
-    void OnPrint(wxCommandEvent& event);
-    void OnPreview(wxCommandEvent& event);
-#endif
    
 private:
     // Write text

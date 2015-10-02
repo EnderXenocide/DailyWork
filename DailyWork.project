@@ -43,6 +43,7 @@
     <File Name="dailyworkparser.cpp"/>
     <File Name="gui2.cpp"/>
     <File Name="myrichtext.cpp"/>
+    <File Name="prefs.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="gui.h"/>
@@ -53,6 +54,10 @@
     <File Name="gui2.h"/>
     <File Name="myrichtext.h"/>
     <File Name="currentdates.h"/>
+    <File Name="mystyledtext.cpp"/>
+    <File Name="mystyledtext.h"/>
+    <File Name="prefs.h"/>
+    <File Name="defsext.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="resources">
     <File Name="gui.fbp"/>
@@ -188,4 +193,7 @@
       </Completion>
     </Configuration>
   </Settings>
+  <Dependencies Name="Debug"/>
+  <Dependencies Name="Linux Release"/>
+  <Dependencies Name="Release"/>
 </CodeLite_Project>
