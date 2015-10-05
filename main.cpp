@@ -715,3 +715,7 @@ void MainApp::UpdateCurrentWork()
         frame->m_editor->DiscardEdits();
     }  
 }
+int MainApp::CountDates()
+{
+    return dwparser.CountItems();
+}

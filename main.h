@@ -61,8 +61,6 @@ public:
 #endif    
     int AddDateToTree(const wxDateTime& date, bool selectItem = false); // todo wxTreeCtrl& tree instead
     wxTreeItemId AddItem(wxTreeItemId parent, wxString text, wxDateTime date, bool setDataEmpty);
-    //wxTreeItemId FindDateInTree(wxDateTime date);
-    //wxTreeItemId FindTextInTree(wxTreeItemId parent, wxString text);
     void SetCurrentDate(const wxDateTime &date);
     void SetCurrentDateFromTreeSelection();
     void SetPrevDateAsCurrentDate();
@@ -79,8 +77,9 @@ public:
     int AddToFavorites(wxString text);
     int DeleteSelectedFavorite();
     void UpdateCurrentWork();
-    CurrentDates currentDates;
+    int CountDates();
 private:
+    CurrentDates currentDates;
     bool hierarchicalTree;
     wxLanguage m_language;  // language specified by user
     wxLocale* m_locale;  // locale we'll be using
@@ -92,7 +91,6 @@ private:
     wxTreeItemId AddBranchHierarchy(wxTreeItemId rootId, wxDateTime date);
     wxTreeItemId AddBranchSimple(wxTreeItemId rootId, wxDateTime date);
     void GetDatesAround(const wxDateTime &date, wxDateTime &prevDate, wxDateTime &nextDate);
-    void GetNewDatesAround(const wxDateTime &date, wxDateTime &yesterday, wxDateTime &tomorrow);
     void SetButtonsState();
  
  #if USE_RICH_EDIT   

@@ -746,7 +746,7 @@ void MainFrame::OnAbout(wxCommandEvent& event)
 #else
     wxString msg = _("This is a daily notepad.\n(c) Laurent Silvestre\nThanks to Wyo and his STC test module, 2015");
 #endif
-    wxMessageBox(msg, _("About Dailywork"), wxOK | wxICON_INFORMATION, this);
+    wxMessageBox(msg+wxString::Format(_("\nDates counted : %i"), wxGetApp().CountDates()), _("About Dailywork"), wxOK | wxICON_INFORMATION, this);
 }
 
 void MainFrame::OnStayOnTop(wxCommandEvent& event)
