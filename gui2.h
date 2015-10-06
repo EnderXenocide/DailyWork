@@ -239,6 +239,8 @@ private:
     void WriteInitialText(); // ce n'est pas utile 
 #endif   
     void CreateEditor();
+    void CreateMenu();
+    void CreateMainToolBar();    
 };
 
 #endif //__GUI_H__

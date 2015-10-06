@@ -105,6 +105,145 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     // set the frame icon
     SetIcon(wxICON(sample));
 
+    CreateMenu();
+
+    // create a status bar just for fun (by default with 1 pane only)
+    // but don't create it on limited screen space (WinCE)
+    bool is_pda = wxSystemSettings::GetScreenType() <= wxSYS_SCREEN_PDA;
+
+#if wxUSE_STATUSBAR
+    if ( !is_pda )
+    {
+        m_statusBar = CreateStatusBar(1);
+        SetStatusText(_("Welcome to Dailywork!")); 
+    }
+#endif
+
+	wxBoxSizer* mainSizer;
+	mainSizer = new wxBoxSizer( wxHORIZONTAL );
+	
+ 	wxBoxSizer* datesSizer;
+	datesSizer = new wxBoxSizer( wxVERTICAL );
+	
+	m_treeDates = new wxTreeCtrl( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTR_DEFAULT_STYLE );
+	datesSizer->Add( m_treeDates, 1, wxALL|wxEXPAND, 2 );
+	
+	m_calendar = new wxCalendarCtrl( this, wxID_ANY, wxDefaultDateTime, wxDefaultPosition, wxDefaultSize, wxCAL_SHOW_HOLIDAYS );
+	datesSizer->Add( m_calendar, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 2 );
+	
+	mainSizer->Add( datesSizer, 0, wxEXPAND, 2 );
+    
+	wxBoxSizer* editorSizer;
+	editorSizer = new wxBoxSizer( wxVERTICAL );
+	
+	m_buttonGoNextAvailable = new wxButton( this, wxID_ANY, _("Go to the next available date"), wxDefaultPosition, wxDefaultSize, 0 );
+	editorSizer->Add( m_buttonGoNextAvailable, 0, wxEXPAND | wxALL, 2 );
+	
+	m_buttonAddTomorrow = new wxButton( this, wxID_ANY, _("Add Tomorrow"), wxDefaultPosition, wxDefaultSize, 0 );
+	editorSizer->Add( m_buttonAddTomorrow, 0, wxEXPAND | wxALL, 2 );
+
+    CreateEditor();
+    
+    editorSizer->Add( m_editor, 1, wxEXPAND | wxALL, 2 );
+        
+	m_buttonAddYesterday = new wxButton( this, wxID_ANY, _("Add Yesterday"), wxDefaultPosition, wxDefaultSize, 0 );
+	editorSizer->Add( m_buttonAddYesterday, 0, wxEXPAND | wxALL, 2 );
+	
+	m_buttonGoPrevAvailable = new wxButton( this, wxID_ANY, _("Go to the preivous available date"), wxDefaultPosition, wxDefaultSize, 0 );
+	editorSizer->Add( m_buttonGoPrevAvailable, 0, wxEXPAND | wxALL, 2 );
+    
+		
+	mainSizer->Add( editorSizer, 1, wxEXPAND, 2 );     //mainSizer->Add( m_editor, 1, wxEXPAND | wxALL, 5 );
+
+	
+	this->SetSizer( mainSizer );
+	this->Layout();
+
+    CreateMainToolBar();
+
+
+    ConnectEvents();
+}   
+ 
+MainFrame::~MainFrame() { }
+
+void MainFrame::CreateMainToolBar()
+{
+	//m_statusBar = this->CreateStatusBar( 1, wxST_SIZEGRIP, wxID_ANY );
+    // On Mac, don't create a 'native' wxToolBar because small bitmaps are not supported by native
+    // toolbars. On Mac, a non-native, small-bitmap toolbar doesn't show unless it is explicitly
+    // managed, hence the use of sizers. In a real application, use larger icons for the main
+    // toolbar to avoid the need for this workaround. Or, use the toolbar in a container window
+    // as part of a more complex hierarchy, and the toolbar will automatically be non-native.
+
+    wxSystemOptions::SetOption(wxT("mac.toolbar.no-native"), 1);
+
+ 	m_mainToolBar = this->CreateToolBar( wxTB_HORIZONTAL, wxID_ANY ); 
+  //  wxToolBar* m_mainToolBar = new wxToolBar(this, wxID_ANY, wxDefaultPosition, wxDefaultSize,
+  //                                    wxNO_BORDER|wxTB_FLAT|wxTB_NODIVIDER|wxTB_NOALIGN);
+  //  mainSizer->Add(m_mainToolBar, 0, wxEXPAND);
+
+//    m_mainToolBar->AddTool(wxID_OPEN, wxEmptyString, wxBitmap(open_xpm), _("Open"));
+    m_mainToolBar->AddTool(ID_RELOAD, wxEmptyString, wxBitmap(reload_xpm), _("Reload")); 
+    
+    m_mainToolBar->AddTool(wxID_SAVE, wxEmptyString, wxBitmap(save_xpm), _("Save")); 
+    m_mainToolBar->AddSeparator();
+    m_mainToolBar->AddTool(ID_DELETE_DATE, wxEmptyString, wxBitmap(delete_xpm), _("Delete date")); 
+    m_mainToolBar->AddSeparator();
+    m_mainToolBar->AddTool(wxID_CUT, wxEmptyString, wxBitmap(cut_xpm), _("Cut")); 
+    m_mainToolBar->AddTool(wxID_COPY, wxEmptyString, wxBitmap(copy_xpm), _("Copy")); 
+    m_mainToolBar->AddTool(wxID_PASTE, wxEmptyString, wxBitmap(paste_xpm), _("Paste")); 
+    m_mainToolBar->AddSeparator();
+    m_mainToolBar->AddTool(wxID_UNDO, wxEmptyString, wxBitmap(undo_xpm), _("Undo")); 
+    m_mainToolBar->AddTool(wxID_REDO, wxEmptyString, wxBitmap(redo_xpm), _("Redo"));
+#if USE_RICH_EDIT
+    m_mainToolBar->AddSeparator();
+    m_mainToolBar->AddCheckTool(ID_FORMAT_BOLD, wxEmptyString, wxBitmap(bold_xpm), wxNullBitmap, _("Bold")); 
+    m_mainToolBar->AddCheckTool(ID_FORMAT_ITALIC, wxEmptyString, wxBitmap(italic_xpm), wxNullBitmap, _("Italic")); 
+    m_mainToolBar->AddCheckTool(ID_FORMAT_UNDERLINE, wxEmptyString, wxBitmap(underline_xpm), wxNullBitmap, _("Underline")); 
+    m_mainToolBar->AddSeparator();
+    m_mainToolBar->AddCheckTool(ID_FORMAT_ALIGN_LEFT, wxEmptyString, wxBitmap(alignleft_xpm), wxNullBitmap, _("Align Left")); //Aligner à gauche
+    m_mainToolBar->AddCheckTool(ID_FORMAT_ALIGN_CENTRE, wxEmptyString, wxBitmap(centre_xpm), wxNullBitmap, _("Centre")); //Centrer
+    m_mainToolBar->AddCheckTool(ID_FORMAT_ALIGN_RIGHT, wxEmptyString, wxBitmap(alignright_xpm), wxNullBitmap, _("Align Right")); //Aligner à droite
+    m_mainToolBar->AddSeparator();
+    m_mainToolBar->AddTool(ID_FORMAT_INDENT_LESS, wxEmptyString, wxBitmap(indentless_xpm), _("Indent Less")); //Réduire le retrait
+    m_mainToolBar->AddTool(ID_FORMAT_INDENT_MORE, wxEmptyString, wxBitmap(indentmore_xpm), _("Indent More")); //Augmenter le retrait
+    m_mainToolBar->AddSeparator();
+    m_mainToolBar->AddTool(ID_FORMAT_FONT, wxEmptyString, wxBitmap(font_xpm), _("Font")); //Police
+#endif // USE_RICH_EDIT
+    
+    m_mainToolBar->AddSeparator();
+    m_comboBoxFavorite = new wxComboBox(m_mainToolBar, ID_FAVORITE_LIST, wxEmptyString, wxDefaultPosition, wxSize(150,-1));
+    m_comboBoxFavorite->SetHint(_("Favorites"));
+    m_mainToolBar->AddControl(m_comboBoxFavorite);
+
+    m_mainToolBar->AddTool(ID_FAVORITE_GO, wxEmptyString, wxBitmap(bookgo_xpm), _("Insert favorite")); //Inserer favoris
+    m_mainToolBar->AddTool(ID_FAVORITE_MANAGE, wxEmptyString, wxBitmap(bookedit_xpm), _("Manage favorites")); //Gerer les favoris
+    m_mainToolBar->AddTool(ID_FAVORITE_ADD, wxEmptyString, wxBitmap(bookadd_xpm), _("Add to favorites")); //Ajouter aux favoris
+    m_mainToolBar->AddTool(ID_FAVORITE_DELETE, wxEmptyString, wxBitmap(bookdelete_xpm), _("Delete favorite")); //Supprimer favoris
+    m_mainToolBar->Realize();
+
+	this->Centre( wxBOTH );
+
+    //WriteInitialText();
+ 
+#if USE_RICH_EDIT
+    // désactive les options de mise en forme du text parceque pas de lecture de fichier rtf...
+    m_mainToolBar->EnableTool(ID_FORMAT_BOLD, false);
+    m_mainToolBar->EnableTool(ID_FORMAT_ITALIC, false);
+    m_mainToolBar->EnableTool(ID_FORMAT_UNDERLINE, false);
+    m_mainToolBar->EnableTool(ID_FORMAT_ALIGN_LEFT, false);
+    m_mainToolBar->EnableTool(ID_FORMAT_ALIGN_CENTRE, false);
+    m_mainToolBar->EnableTool(ID_FORMAT_ALIGN_RIGHT, false);
+    m_mainToolBar->EnableTool(ID_FORMAT_INDENT_LESS, false);
+    m_mainToolBar->EnableTool(ID_FORMAT_INDENT_MORE, false);
+    m_mainToolBar->EnableTool(ID_FORMAT_FONT, false);
+    m_mainToolBar->EnableTool(ID_FORMAT_FONT, false); 
+#endif // USE_RICH_EDIT
+}
+
+void MainFrame::CreateMenu() 
+{
     // create a menu bar
     wxMenu *fileMenu = new wxMenu;
 
@@ -230,140 +369,16 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     m_menuBar->Append(helpMenu, _("&Help")); 
 
     // ... and attach this menu bar to the frame
-    SetMenuBar(m_menuBar);
+    SetMenuBar(m_menuBar); 
 
-    // create a status bar just for fun (by default with 1 pane only)
-    // but don't create it on limited screen space (WinCE)
-    bool is_pda = wxSystemSettings::GetScreenType() <= wxSYS_SCREEN_PDA;
-
-#if wxUSE_STATUSBAR
-    if ( !is_pda )
-    {
-        m_statusBar = CreateStatusBar(1);
-        SetStatusText(_("Welcome to Dailywork!")); 
-    }
-#endif
-
-	wxBoxSizer* mainSizer;
-	mainSizer = new wxBoxSizer( wxHORIZONTAL );
-	
- 	wxBoxSizer* datesSizer;
-	datesSizer = new wxBoxSizer( wxVERTICAL );
-	
-	m_treeDates = new wxTreeCtrl( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTR_DEFAULT_STYLE );
-	datesSizer->Add( m_treeDates, 1, wxALL|wxEXPAND, 2 );
-	
-	m_calendar = new wxCalendarCtrl( this, wxID_ANY, wxDefaultDateTime, wxDefaultPosition, wxDefaultSize, wxCAL_SHOW_HOLIDAYS );
-	datesSizer->Add( m_calendar, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 2 );
-	
-	mainSizer->Add( datesSizer, 0, wxEXPAND, 2 );
-    
-	wxBoxSizer* editorSizer;
-	editorSizer = new wxBoxSizer( wxVERTICAL );
-	
-	m_buttonGoNextAvailable = new wxButton( this, wxID_ANY, _("Go to the next available date"), wxDefaultPosition, wxDefaultSize, 0 );
-	editorSizer->Add( m_buttonGoNextAvailable, 0, wxEXPAND | wxALL, 2 );
-	
-	m_buttonAddTomorrow = new wxButton( this, wxID_ANY, _("Add Tomorrow"), wxDefaultPosition, wxDefaultSize, 0 );
-	editorSizer->Add( m_buttonAddTomorrow, 0, wxEXPAND | wxALL, 2 );
-
-    CreateEditor();
-    
-    editorSizer->Add( m_editor, 1, wxEXPAND | wxALL, 2 );
-        
-	m_buttonAddYesterday = new wxButton( this, wxID_ANY, _("Add Yesterday"), wxDefaultPosition, wxDefaultSize, 0 );
-	editorSizer->Add( m_buttonAddYesterday, 0, wxEXPAND | wxALL, 2 );
-	
-	m_buttonGoPrevAvailable = new wxButton( this, wxID_ANY, _("Go to the preivous available date"), wxDefaultPosition, wxDefaultSize, 0 );
-	editorSizer->Add( m_buttonGoPrevAvailable, 0, wxEXPAND | wxALL, 2 );
-    
-		
-	mainSizer->Add( editorSizer, 1, wxEXPAND, 2 );     //mainSizer->Add( m_editor, 1, wxEXPAND | wxALL, 5 );
-
-	
-	this->SetSizer( mainSizer );
-	this->Layout();
-
-	//m_statusBar = this->CreateStatusBar( 1, wxST_SIZEGRIP, wxID_ANY );
-    // On Mac, don't create a 'native' wxToolBar because small bitmaps are not supported by native
-    // toolbars. On Mac, a non-native, small-bitmap toolbar doesn't show unless it is explicitly
-    // managed, hence the use of sizers. In a real application, use larger icons for the main
-    // toolbar to avoid the need for this workaround. Or, use the toolbar in a container window
-    // as part of a more complex hierarchy, and the toolbar will automatically be non-native.
-
-    wxSystemOptions::SetOption(wxT("mac.toolbar.no-native"), 1);
-
- 	m_mainToolBar = this->CreateToolBar( wxTB_HORIZONTAL, wxID_ANY ); 
-  //  wxToolBar* m_mainToolBar = new wxToolBar(this, wxID_ANY, wxDefaultPosition, wxDefaultSize,
-  //                                    wxNO_BORDER|wxTB_FLAT|wxTB_NODIVIDER|wxTB_NOALIGN);
-  //  mainSizer->Add(m_mainToolBar, 0, wxEXPAND);
-
-//    m_mainToolBar->AddTool(wxID_OPEN, wxEmptyString, wxBitmap(open_xpm), _("Open"));
-    m_mainToolBar->AddTool(ID_RELOAD, wxEmptyString, wxBitmap(reload_xpm), _("Reload")); 
-    
-    m_mainToolBar->AddTool(wxID_SAVE, wxEmptyString, wxBitmap(save_xpm), _("Save")); 
-    m_mainToolBar->AddSeparator();
-    m_mainToolBar->AddTool(ID_DELETE_DATE, wxEmptyString, wxBitmap(delete_xpm), _("Delete date")); 
-    m_mainToolBar->AddSeparator();
-    m_mainToolBar->AddTool(wxID_CUT, wxEmptyString, wxBitmap(cut_xpm), _("Cut")); 
-    m_mainToolBar->AddTool(wxID_COPY, wxEmptyString, wxBitmap(copy_xpm), _("Copy")); 
-    m_mainToolBar->AddTool(wxID_PASTE, wxEmptyString, wxBitmap(paste_xpm), _("Paste")); 
-    m_mainToolBar->AddSeparator();
-    m_mainToolBar->AddTool(wxID_UNDO, wxEmptyString, wxBitmap(undo_xpm), _("Undo")); 
-    m_mainToolBar->AddTool(wxID_REDO, wxEmptyString, wxBitmap(redo_xpm), _("Redo"));
-#if USE_RICH_EDIT
-    m_mainToolBar->AddSeparator();
-    m_mainToolBar->AddCheckTool(ID_FORMAT_BOLD, wxEmptyString, wxBitmap(bold_xpm), wxNullBitmap, _("Bold")); 
-    m_mainToolBar->AddCheckTool(ID_FORMAT_ITALIC, wxEmptyString, wxBitmap(italic_xpm), wxNullBitmap, _("Italic")); 
-    m_mainToolBar->AddCheckTool(ID_FORMAT_UNDERLINE, wxEmptyString, wxBitmap(underline_xpm), wxNullBitmap, _("Underline")); 
-    m_mainToolBar->AddSeparator();
-    m_mainToolBar->AddCheckTool(ID_FORMAT_ALIGN_LEFT, wxEmptyString, wxBitmap(alignleft_xpm), wxNullBitmap, _("Align Left")); //Aligner à gauche
-    m_mainToolBar->AddCheckTool(ID_FORMAT_ALIGN_CENTRE, wxEmptyString, wxBitmap(centre_xpm), wxNullBitmap, _("Centre")); //Centrer
-    m_mainToolBar->AddCheckTool(ID_FORMAT_ALIGN_RIGHT, wxEmptyString, wxBitmap(alignright_xpm), wxNullBitmap, _("Align Right")); //Aligner à droite
-    m_mainToolBar->AddSeparator();
-    m_mainToolBar->AddTool(ID_FORMAT_INDENT_LESS, wxEmptyString, wxBitmap(indentless_xpm), _("Indent Less")); //Réduire le retrait
-    m_mainToolBar->AddTool(ID_FORMAT_INDENT_MORE, wxEmptyString, wxBitmap(indentmore_xpm), _("Indent More")); //Augmenter le retrait
-    m_mainToolBar->AddSeparator();
-    m_mainToolBar->AddTool(ID_FORMAT_FONT, wxEmptyString, wxBitmap(font_xpm), _("Font")); //Police
-#endif // USE_RICH_EDIT
-    
-    m_mainToolBar->AddSeparator();
-    m_comboBoxFavorite = new wxComboBox(m_mainToolBar, ID_FAVORITE_LIST, wxEmptyString, wxDefaultPosition, wxSize(150,-1));
-    m_comboBoxFavorite->SetHint(_("Favorites"));
-    m_mainToolBar->AddControl(m_comboBoxFavorite);
-
-    m_mainToolBar->AddTool(ID_FAVORITE_GO, wxEmptyString, wxBitmap(bookgo_xpm), _("Insert favorite")); //Inserer favoris
-    m_mainToolBar->AddTool(ID_FAVORITE_MANAGE, wxEmptyString, wxBitmap(bookedit_xpm), _("Manage favorites")); //Gerer les favoris
-    m_mainToolBar->AddTool(ID_FAVORITE_ADD, wxEmptyString, wxBitmap(bookadd_xpm), _("Add to favorites")); //Ajouter aux favoris
-    m_mainToolBar->AddTool(ID_FAVORITE_DELETE, wxEmptyString, wxBitmap(bookdelete_xpm), _("Delete favorite")); //Supprimer favoris
-    m_mainToolBar->Realize();
-
-	this->Centre( wxBOTH );
-
-    //WriteInitialText();
- 
 #if USE_RICH_EDIT
     // désactive les options de mise en forme du text parceque pas de lecture de fichier rtf...
     m_menuBar->EnableTop(2, false); //formatMenu
     m_menuBar->EnableTop(3, false); //listsMenu
     m_menuBar->EnableTop(4, false); //tableMenu
-    m_menuBar->EnableTop(5, false); //insertMenu
-    m_mainToolBar->EnableTool(ID_FORMAT_BOLD, false);
-    m_mainToolBar->EnableTool(ID_FORMAT_ITALIC, false);
-    m_mainToolBar->EnableTool(ID_FORMAT_UNDERLINE, false);
-    m_mainToolBar->EnableTool(ID_FORMAT_ALIGN_LEFT, false);
-    m_mainToolBar->EnableTool(ID_FORMAT_ALIGN_CENTRE, false);
-    m_mainToolBar->EnableTool(ID_FORMAT_ALIGN_RIGHT, false);
-    m_mainToolBar->EnableTool(ID_FORMAT_INDENT_LESS, false);
-    m_mainToolBar->EnableTool(ID_FORMAT_INDENT_MORE, false);
-    m_mainToolBar->EnableTool(ID_FORMAT_FONT, false);
-    m_mainToolBar->EnableTool(ID_FORMAT_FONT, false); 
-#endif // USE_RICH_EDIT
-
-    ConnectEvents();
-}   
- 
-MainFrame::~MainFrame() { }
+    m_menuBar->EnableTop(5, false); //insertMenu  
+#endif // USE_RICH_EDIT  
+}
 
 void MainFrame::CreateEditor()
 {    
