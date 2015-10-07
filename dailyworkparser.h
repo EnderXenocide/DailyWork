@@ -3,12 +3,14 @@
 
 #include <string>
 #include <functional>
+#include <set>
 #include <rapidjson/document.h>
 #include <rapidjson/filewritestream.h>
 #include <rapidjson/writer.h>
 #include <wx/treectrl.h>
 
 #include "dwitemdata.h"
+#include "results.h"
 
 #define JSON_FILE "dailywork.json"
 #define JSON_DATE_FORMAT_EXT "%Y-%m-%d" // strptime()-like format string
@@ -26,6 +28,8 @@ using namespace rapidjson;
 typedef std::function<void(wxString)> CallbackMessageInfo;
 // typedef std::function<int(int)> CallbackFunction;
 
+typedef std::multiset<Result, ResultComp> MapFind;
+
 class DailyWorkParser
 {
 public:
@@ -39,7 +43,7 @@ public:
     wxDateTime GetDateFromItem(int itemIndex);
     wxString ToDWDate(const wxDateTime& date) const;
     wxString ToTreeDate(const wxDateTime& date) const;
-    wxDateTime DWToDate(const wxString DWDate);
+    wxDateTime DWToDate(const wxString DWDate) const;
 
     int GetVersion() const { return version; }
     bool IsModified() const { return modified; }
@@ -57,14 +61,15 @@ public:
     int DeleteFavorite(wxString text);
     wxString GetFavorite(int itemIndex);
     bool IsInFavorites(wxString text);
-    
+
+    int FindInDates(const wxString text, MapFind &results);
+    std::string GetLine(std::string str, std::size_t idx) const;
+   
 private:
     int SetWorkFromItem(Value& item, wxString text);
     wxString GetWorkFromItem(const Value& item); 
     void TestAndUpdate();
-    //bool FindItem(const wxDateTime& date, Value& item); //todo fonction ne marche pas, bouge les objets
-    //Value& FindItem(const wxDateTime& date);
-
+    
     // The callback provided by the client via ConnectCallback().
     CallbackMessageInfo m_cbMessageInfo;
     Document document;

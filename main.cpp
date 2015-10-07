@@ -55,7 +55,7 @@ bool MainApp::OnInit()
     // created initially)
     SetTopWindow(frame);
     frame->Show(true);
-    
+    FindInDates("Saisi");
     // success: wxApp::OnRun() will be called which will enter the main message
     // loop and the application will run. If we returned false here, the
     // application would exit immediately.
@@ -718,4 +718,29 @@ void MainApp::UpdateCurrentWork()
 int MainApp::CountDates()
 {
     return dwparser.CountItems();
+}
+
+int MainApp::FindInDates(wxString text)
+{
+    MapFind results;
+    int n = dwparser.FindInDates(text, results);
+    if (n>0) {
+        wxTreeCtrl *tree = frame->m_treeFind;
+        tree->Freeze(); //prevent drawing
+        tree->DeleteAllItems();
+        tree->SetWindowStyle(wxTR_HIDE_ROOT);
+        wxTreeItemId rootId = tree->AddRoot(wxT("Results")); //hidden
+        for (MapFind::iterator it=results.begin(); it!=results.end(); ++it) {
+//            std::cout << it->first << " => " << it->second << '\n';
+            wxTreeItemId itemId = tree->AppendItem(rootId, dwparser.ToTreeDate(it->date));  
+            //tree->addItemData(itemId);
+            tree->AppendItem(itemId, it->text); 
+            // add data ?          
+        }
+        tree->ExpandAll();
+        tree->Thaw(); // Re-enables window before selection        
+        
+        return n;        
+    }
+    return 0;    
 }

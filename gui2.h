@@ -97,6 +97,9 @@ public:
     wxButton* m_buttonAddYesterday;
     wxButton* m_buttonGoNextAvailable;
     wxButton* m_buttonGoPrevAvailable;
+    
+    wxTextCtrl* m_textFind;
+    wxTreeCtrl* m_treeFind;
  
  #if USE_RICH_EDIT
     MyRichTextCtrl* m_editor;

@@ -78,6 +78,7 @@ public:
     int DeleteSelectedFavorite();
     void UpdateCurrentWork();
     int CountDates();
+    int FindInDates(wxString text);
 private:
     CurrentDates currentDates;
     bool hierarchicalTree;

@@ -58,6 +58,7 @@
     <File Name="mystyledtext.h"/>
     <File Name="prefs.h"/>
     <File Name="defsext.h"/>
+    <File Name="results.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="resources">
     <File Name="gui.fbp"/>

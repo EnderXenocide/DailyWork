@@ -157,7 +157,7 @@ int DailyWorkParser::SetWorkFromItem(Value& item, wxString text)
     return 0;
 }
 
-wxDateTime DailyWorkParser::DWToDate(const wxString DWDate)
+wxDateTime DailyWorkParser::DWToDate(const wxString DWDate) const
 {
     wxDateTime date;
 //	if (!date.ParseISODate(DWDate)) {
@@ -302,20 +302,6 @@ int DailyWorkParser::DeleteFavorite(wxString text)
     return  -1; 
 }
 
-//bool DailyWorkParser::FindItem(const wxDateTime& date, Value& item)
-//{
-//    std::string sdate = ToDWDate(date).ToStdString();
-//    Value &array = document[JSON_ITEMS];
-//    for (SizeType i = 0; i < array.Size(); i++) {
-//        if (array[i][JSON_DATE].GetString()==sdate) {
-//            item = array[i]; 
-//            return TRUE;  
-//        }  
-//    }
-//    LOG(DEBUG) << "Date non trouvée :" << sdate;
-//    return false;
-//}
-
 bool DailyWorkParser::IsInFavorites(wxString text)
 {
     std::string utf8Text = text.ToUTF8().data();
@@ -326,4 +312,58 @@ bool DailyWorkParser::IsInFavorites(wxString text)
         }
     } 
     return false; 
+}
+
+
+int DailyWorkParser::FindInDates(const wxString text, MapFind &results)
+{
+    std::string utf8Text = text.ToUTF8().data();
+    Value &array = document[JSON_ITEMS];    
+    for (Value::ConstValueIterator itr = array.Begin(); itr != array.End(); itr++) {
+         Value::ConstMemberIterator mitrString = itr->FindMember(JSON_WORK);
+         if ( mitrString != itr->MemberEnd() ) {
+            std::string  str = mitrString->value.GetString();
+            std::size_t idx = str.find(utf8Text);
+             if(idx != std::string::npos){
+                Value::ConstMemberIterator mitrDate = itr->FindMember(JSON_DATE);
+                if ( mitrDate != itr->MemberEnd() ) {
+                    wxDateTime date = DWToDate(mitrDate->value.GetString());
+                    std::string line = GetLine(str, idx);
+                    Result result(date, line);
+                    results.insert(result);
+                }
+            }            
+//            for(std::size_t pos = 0;pos != std::string::npos && pos < str.size();++pos){
+//                std::size_t idx = str.find(utf8Text,pos);
+//                if(pos != std::string::npos){
+//                    std::cout << sub_str << " trouvé dans " << str
+//                        << " à la position " << idx << std::endl;
+//                }
+//                pos = idx + 1;
+//            }            
+         }
+    } 
+    return results.size();
+}
+
+std::string DailyWorkParser::GetLine(std::string str, std::size_t idx) const
+{
+    std::size_t idxFirstCR = str.find_last_of('\n', idx); //cherche un retour à la ligne avant idx
+    if (idxFirstCR != std::string::npos) { // un retour à la ligne trouvé
+        std::size_t len;
+        std::size_t pos;
+
+        std::size_t idxLastCR = str.find_first_of('\n', idx+1); // cherche un retour à la ligne après idx
+       if (idxFirstCR<idx)  // retour à la ligne trouvé avant idx
+            pos = idxFirstCR+1; 
+        else 
+            pos = 0; //idx sest sur la première igne
+        if ( idxLastCR != std::string::npos) // retour à la ligne trouvé après idx
+            len = idxLastCR-pos;  
+        else
+            len = std::string::npos;   // recupère reste de la chaine                 
+        return str.substr(pos, len);
+    }
+    else
+        return str; // renvoie str qui est sur une ligne
 }

@@ -155,7 +155,16 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
 		
 	mainSizer->Add( editorSizer, 1, wxEXPAND, 2 );     //mainSizer->Add( m_editor, 1, wxEXPAND | wxALL, 5 );
 
+ 	wxBoxSizer* findSizer;
+	findSizer = new wxBoxSizer( wxVERTICAL );
+    m_textFind = new wxTextCtrl( this, wxID_ANY); //, wxEmptyString, wxDefaultPosition, wxSize(150,-1)
+    m_textFind->SetHint(_("Find"));
+    findSizer->Add(m_textFind, 0, wxEXPAND | wxALL, 2);    
+    m_treeFind = new wxTreeCtrl( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTR_DEFAULT_STYLE );
+	findSizer->Add( m_treeFind, 1, wxALL|wxEXPAND, 2 );
 	
+    mainSizer->Add( findSizer, 0, wxEXPAND, 2 );
+ 
 	this->SetSizer( mainSizer );
 	this->Layout();
 
