@@ -24,6 +24,7 @@
 #include <wx/app.h>
 #include <wx/combobox.h>
 #include <wx/sysopt.h>
+#include <wx/splitter.h>
 
 #include "easylogging++.h"
 
@@ -155,7 +156,10 @@ protected:
     void OnSaveAs(wxCommandEvent& event);
     
     void OnReload(wxCommandEvent& event);
-   
+    
+    void OnFindTextEnter(wxCommandEvent& event);  
+    void OnTreeFindSelChanged(wxTreeEvent& event);
+  
  #if USE_RICH_EDIT
     void OnBold(wxCommandEvent& event);
     void OnItalic(wxCommandEvent& event);
@@ -241,7 +245,7 @@ private:
 #if USE_RICH_EDIT
     void WriteInitialText(); // ce n'est pas utile 
 #endif   
-    void CreateEditor();
+    void CreateEditor(wxWindow *parent);
     void CreateMenu();
     void CreateMainToolBar();    
 };

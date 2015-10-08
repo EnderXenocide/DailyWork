@@ -55,7 +55,7 @@ bool MainApp::OnInit()
     // created initially)
     SetTopWindow(frame);
     frame->Show(true);
-    FindInDates("Saisi");
+    
     // success: wxApp::OnRun() will be called which will enter the main message
     // loop and the application will run. If we returned false here, the
     // application would exit immediately.
@@ -494,6 +494,15 @@ void MainApp::SetCurrentDate(const wxDateTime &date)
     }
 }
 
+void MainApp::SetCurrentDateFromTreeFindSelection()
+{
+    wxDateTime date = GetDateFromTree(frame->m_treeFind);
+    if ( date.IsValid() ) 
+        SetCurrentDate(date);
+    else
+        LOG(DEBUG) << "Date in Find invalid";
+}
+
 void MainApp::SetButtonsState()
 {
     frame->m_buttonAddTomorrow->SetLabel(_("Add ")+currentDates.TomorrowToString());
@@ -565,7 +574,11 @@ void MainApp::SetCurrentDateFromTreeSelection()
  
 wxDateTime MainApp::GetDateFromTreeSelection()
 {
-   wxTreeCtrl* tree = frame->m_treeDates;
+   return  GetDateFromTree(frame->m_treeDates);
+}
+
+wxDateTime MainApp::GetDateFromTree(wxTreeCtrl* tree)
+{
    wxTreeItemId itemId = tree->GetSelection();
     if(itemId.IsOk()) {
         DWItemData* itemData = (DWItemData*) tree->GetItemData(itemId);
@@ -722,6 +735,8 @@ int MainApp::CountDates()
 
 int MainApp::FindInDates(wxString text)
 {
+    if (text.length() < 3 ) return  -1; //on prend au moins 3 caractères
+    
     MapFind results;
     int n = dwparser.FindInDates(text, results);
     if (n>0) {
@@ -733,7 +748,8 @@ int MainApp::FindInDates(wxString text)
         for (MapFind::iterator it=results.begin(); it!=results.end(); ++it) {
 //            std::cout << it->first << " => " << it->second << '\n';
             wxTreeItemId itemId = tree->AppendItem(rootId, dwparser.ToTreeDate(it->date));  
-            //tree->addItemData(itemId);
+            DWItemData *itemData = new DWItemData(it->date, false);
+            tree->SetItemData(itemId, itemData);  
             tree->AppendItem(itemId, it->text); 
             // add data ?          
         }

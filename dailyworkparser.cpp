@@ -329,7 +329,7 @@ int DailyWorkParser::FindInDates(const wxString text, MapFind &results)
                 if ( mitrDate != itr->MemberEnd() ) {
                     wxDateTime date = DWToDate(mitrDate->value.GetString());
                     std::string line = GetLine(str, idx);
-                    Result result(date, line);
+                    Result result(date, wxString::FromUTF8(wxString(line)));
                     results.insert(result);
                 }
             }            

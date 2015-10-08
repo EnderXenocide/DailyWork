@@ -14,7 +14,7 @@ DECLARE_APP(MainApp)
 enum
 {
     // menu items
-    ID_FORMAT_BOLD = 100,
+    ID_FORMAT_BOLD = wxID_HIGHEST + 1,
     ID_FORMAT_ITALIC,
     ID_FORMAT_UNDERLINE,
     ID_FORMAT_STRIKETHROUGH,
@@ -85,10 +85,11 @@ enum
     ID_FAVORITE_DELETE, 
     ID_FAVORITE_GO,
     ID_FAVORITE_MANAGE, 
+    ID_FOCUS_FAVORITES,
     
     ID_STAY_ON_TOP,
-    
-    ID_FOCUS_FAVORITES,
+        
+    ID_TEXT_FIND,
 };
 
 // BEGIN EVENTS
@@ -119,53 +120,62 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     }
 #endif
 
-	wxBoxSizer* mainSizer;
-	mainSizer = new wxBoxSizer( wxHORIZONTAL );
+	wxBoxSizer* mainSizer = new wxBoxSizer( wxHORIZONTAL );
 	
- 	wxBoxSizer* datesSizer;
-	datesSizer = new wxBoxSizer( wxVERTICAL );
+ 	wxBoxSizer* datesSizer = new wxBoxSizer( wxVERTICAL );
 	
 	m_treeDates = new wxTreeCtrl( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTR_DEFAULT_STYLE );
-	datesSizer->Add( m_treeDates, 1, wxALL|wxEXPAND, 2 );
+	datesSizer->Add( m_treeDates, 1, wxEXPAND | wxALL, 2 );
 	
 	m_calendar = new wxCalendarCtrl( this, wxID_ANY, wxDefaultDateTime, wxDefaultPosition, wxDefaultSize, wxCAL_SHOW_HOLIDAYS );
-	datesSizer->Add( m_calendar, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 2 );
+	datesSizer->Add( m_calendar, 0,  wxALIGN_CENTER_HORIZONTAL | wxLEFT | wxRIGHT | wxBOTTOM, 2 );
 	
 	mainSizer->Add( datesSizer, 0, wxEXPAND, 2 );
-    
-	wxBoxSizer* editorSizer;
-	editorSizer = new wxBoxSizer( wxVERTICAL );
+
+    // Create the wxSplitterWindow window
+    // and set a minimum pane size to prevent unsplitting
+    wxSplitterWindow* splitterEditorFind = new wxSplitterWindow(this, wxID_ANY);
+    splitterEditorFind->SetMinimumPaneSize(50);     
+
+    wxPanel* editorPanel = new wxPanel(splitterEditorFind, wxID_ANY);	
+    wxBoxSizer* editorSizer = new wxBoxSizer( wxVERTICAL );
 	
-	m_buttonGoNextAvailable = new wxButton( this, wxID_ANY, _("Go to the next available date"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_buttonGoNextAvailable = new wxButton( editorPanel, wxID_ANY, _("Go to the next available date"), wxDefaultPosition, wxDefaultSize, 0 );
 	editorSizer->Add( m_buttonGoNextAvailable, 0, wxEXPAND | wxALL, 2 );
 	
-	m_buttonAddTomorrow = new wxButton( this, wxID_ANY, _("Add Tomorrow"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_buttonAddTomorrow = new wxButton( editorPanel, wxID_ANY, _("Add Tomorrow"), wxDefaultPosition, wxDefaultSize, 0 );
 	editorSizer->Add( m_buttonAddTomorrow, 0, wxEXPAND | wxALL, 2 );
 
-    CreateEditor();
-    
+    CreateEditor(editorPanel);    
     editorSizer->Add( m_editor, 1, wxEXPAND | wxALL, 2 );
         
-	m_buttonAddYesterday = new wxButton( this, wxID_ANY, _("Add Yesterday"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_buttonAddYesterday = new wxButton( editorPanel, wxID_ANY, _("Add Yesterday"), wxDefaultPosition, wxDefaultSize, 0 );
 	editorSizer->Add( m_buttonAddYesterday, 0, wxEXPAND | wxALL, 2 );
 	
-	m_buttonGoPrevAvailable = new wxButton( this, wxID_ANY, _("Go to the preivous available date"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_buttonGoPrevAvailable = new wxButton( editorPanel, wxID_ANY, _("Go to the preivous available date"), wxDefaultPosition, wxDefaultSize, 0 );
 	editorSizer->Add( m_buttonGoPrevAvailable, 0, wxEXPAND | wxALL, 2 );
     
-		
-	mainSizer->Add( editorSizer, 1, wxEXPAND, 2 );     //mainSizer->Add( m_editor, 1, wxEXPAND | wxALL, 5 );
+    editorPanel->SetSizer(editorSizer);		
+	//mainSizer->Add( editorSizer, 1, wxEXPAND, 2 );     //mainSizer->Add( m_editor, 1, wxEXPAND | wxALL, 5 );
 
- 	wxBoxSizer* findSizer;
-	findSizer = new wxBoxSizer( wxVERTICAL );
-    m_textFind = new wxTextCtrl( this, wxID_ANY); //, wxEmptyString, wxDefaultPosition, wxSize(150,-1)
+ 	wxBoxSizer* findSizer = new wxBoxSizer( wxVERTICAL );
+    
+    wxPanel* findPanel = new wxPanel(splitterEditorFind, wxID_ANY);
+    m_textFind = new wxTextCtrl( findPanel, wxID_ANY); //, wxEmptyString, wxDefaultPosition, wxSize(150,-1)
     m_textFind->SetHint(_("Find"));
     findSizer->Add(m_textFind, 0, wxEXPAND | wxALL, 2);    
-    m_treeFind = new wxTreeCtrl( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTR_DEFAULT_STYLE );
+    m_treeFind = new wxTreeCtrl( findPanel, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTR_DEFAULT_STYLE );
 	findSizer->Add( m_treeFind, 1, wxALL|wxEXPAND, 2 );
 	
-    mainSizer->Add( findSizer, 0, wxEXPAND, 2 );
+    findPanel->SetSizer(findSizer);
+    
+//    mainSizer->Add( editorPanel, 1, wxEXPAND, 2 );
+//    mainSizer->Add( findPanel, 1, wxEXPAND, 2 );
+    splitterEditorFind->SplitVertically(editorPanel, findPanel);
+    
+    mainSizer->Add(splitterEditorFind, 1, wxEXPAND, 2 );     //mainSizer->Add( m_editor, 1, wxEXPAND | wxALL, 5 );
  
-	this->SetSizer( mainSizer );
+	this->SetSizerAndFit( mainSizer );
 	this->Layout();
 
     CreateMainToolBar();
@@ -174,7 +184,13 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     ConnectEvents();
 }   
  
-MainFrame::~MainFrame() { }
+MainFrame::~MainFrame() 
+{ 
+    // important pour les selections
+	m_treeDates->Unbind( wxEVT_TREE_SEL_CHANGED, &MainFrame::OnTreeSelChanged, this );
+	m_calendar->Unbind( wxEVT_CALENDAR_SEL_CHANGED, &MainFrame::OnCalendarSelChanged, this );
+	m_treeFind->Unbind( wxEVT_TREE_SEL_CHANGED, &MainFrame::OnTreeFindSelChanged, this );    
+}
 
 void MainFrame::CreateMainToolBar()
 {
@@ -389,14 +405,14 @@ void MainFrame::CreateMenu()
 #endif // USE_RICH_EDIT  
 }
 
-void MainFrame::CreateEditor()
+void MainFrame::CreateEditor(wxWindow *parent)
 {    
 #if USE_RICH_EDIT
     wxFont textFont = wxFont(12, wxROMAN, wxNORMAL, wxNORMAL);
     wxFont boldFont = wxFont(12, wxROMAN, wxNORMAL, wxBOLD);
     wxFont italicFont = wxFont(12, wxROMAN, wxITALIC, wxNORMAL);
 
-    m_editor = new MyRichTextCtrl(this, ID_RICHTEXT_CTRL, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxVSCROLL|wxHSCROLL/*|wxWANTS_CHARS*/);
+    m_editor = new MyRichTextCtrl(parent, ID_RICHTEXT_CTRL, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxVSCROLL|wxHSCROLL/*|wxWANTS_CHARS*/);
     wxASSERT(!m_editor->GetBuffer().GetAttributes().HasFontPixelSize());
     wxFont font(12, wxROMAN, wxNORMAL, wxNORMAL);
     m_editor->SetFont(font);
@@ -404,7 +420,7 @@ void MainFrame::CreateEditor()
     m_editor->SetStyleSheet(wxGetApp().GetStyleSheet()); 
 #else
     //m_editor = new  wxTextCtrl(this, wxID_ANY, wxT(""), wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER | wxTE_MULTILINE);
-    m_editor = new MyStyledTextCtrl(this);
+    m_editor = new MyStyledTextCtrl(parent);
 #endif  // USE_RICH_EDIT
     m_editor->SetMargins(5, 5);
 }
@@ -423,7 +439,9 @@ void MainFrame::ConnectEvents()
     m_buttonGoPrevAvailable->Bind( wxEVT_COMMAND_BUTTON_CLICKED,  &MainFrame::OnButtonGoPrevAvailableClick, this);
     m_buttonAddTomorrow->Bind( wxEVT_COMMAND_BUTTON_CLICKED,  &MainFrame::OnButtonAddTomorrowClick, this);
     m_buttonAddYesterday->Bind( wxEVT_COMMAND_BUTTON_CLICKED,  &MainFrame::OnButtonAddYesterdayClick, this);
-    
+    m_textFind->Bind(wxEVT_TEXT,  &MainFrame::OnFindTextEnter, this);        //wxEVT_TEXT_ENTER
+	m_treeFind->Bind( wxEVT_TREE_SEL_CHANGED, &MainFrame::OnTreeFindSelChanged, this );
+        
     Bind(wxEVT_CLOSE_WINDOW, &MainFrame::OnCloseFrame, this);
     Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnQuit, this, wxID_EXIT);
     Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnAbout, this, wxID_ABOUT);
@@ -593,10 +611,9 @@ void MainFrame::OnCloseFrame(wxCloseEvent& event)
 
 void MainFrame::OnCalendarDblClick(wxCalendarEvent& event)
 {
-    //chercher date dans tree
     wxDateTime selDate = m_calendar->GetDate();
     wxGetApp().AddDateToTree(selDate, true);
-    m_editor->SetFocus(); //todo correction 1re ligne vide
+    m_editor->SetFocus(); 
 }
 
 void MainFrame::OnCalendarSetFocus( wxFocusEvent& event )
@@ -741,6 +758,16 @@ void MainFrame::OnButtonAddYesterdayClick(wxCommandEvent& event)
 {
    wxGetApp().AddYesterdayToTree();      
 }    
+ 
+void MainFrame::OnFindTextEnter(wxCommandEvent& event)
+{
+   wxGetApp().FindInDates(m_textFind->GetValue());
+}
+
+void MainFrame::OnTreeFindSelChanged(wxTreeEvent& event)
+{
+    wxGetApp().SetCurrentDateFromTreeFindSelection();
+}
  
 void MainFrame::OnReload(wxCommandEvent& event)
 {
