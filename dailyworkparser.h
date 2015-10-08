@@ -63,8 +63,8 @@ public:
     bool IsInFavorites(wxString text);
 
     int FindInDates(const wxString text, MapFind &results);
-    std::string GetLine(std::string str, std::size_t idx) const;
-   
+    std::string GetLine(const std::string &str, std::size_t idx) const;
+    std::size_t findStringIC(const std::string &strHaystack, const std::string &strNeedle) const;
 private:
     int SetWorkFromItem(Value& item, wxString text);
     wxString GetWorkFromItem(const Value& item); 

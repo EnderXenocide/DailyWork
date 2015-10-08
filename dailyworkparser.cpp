@@ -323,7 +323,8 @@ int DailyWorkParser::FindInDates(const wxString text, MapFind &results)
          Value::ConstMemberIterator mitrString = itr->FindMember(JSON_WORK);
          if ( mitrString != itr->MemberEnd() ) {
             std::string  str = mitrString->value.GetString();
-            std::size_t idx = str.find(utf8Text);
+            //std::size_t idx = str.find(utf8Text); //case sensitive
+            std::size_t idx = findStringIC(str, utf8Text); 
              if(idx != std::string::npos){
                 Value::ConstMemberIterator mitrDate = itr->FindMember(JSON_DATE);
                 if ( mitrDate != itr->MemberEnd() ) {
@@ -346,8 +347,20 @@ int DailyWorkParser::FindInDates(const wxString text, MapFind &results)
     return results.size();
 }
 
-std::string DailyWorkParser::GetLine(std::string str, std::size_t idx) const
+/// Try to find in the Haystack the Needle - ignore case
+// http://stackoverflow.com/users/195527/cc
+std::size_t DailyWorkParser::findStringIC(const std::string &strHaystack, const std::string &strNeedle) const
 {
+    std::string strHaystackUC = strHaystack;    
+    for (auto & c: strHaystackUC) c = toupper(c);
+    std::string strNeedleUC = strNeedle;
+    for (auto & c: strNeedleUC) c = toupper(c);
+    return strHaystackUC.find(strNeedleUC); //case sensitive
+}
+
+std::string DailyWorkParser::GetLine(const std::string &str, std::size_t idx) const
+{
+    //std::string upperstr = str.
     std::size_t idxFirstCR = str.find_last_of('\n', idx); //cherche un retour à la ligne avant idx
     if (idxFirstCR != std::string::npos) { // un retour à la ligne trouvé
         std::size_t len;
@@ -357,7 +370,7 @@ std::string DailyWorkParser::GetLine(std::string str, std::size_t idx) const
        if (idxFirstCR<idx)  // retour à la ligne trouvé avant idx
             pos = idxFirstCR+1; 
         else 
-            pos = 0; //idx sest sur la première igne
+            pos = 0; //idx sest sur la première igne  return (it != strHaystack.end() );
         if ( idxLastCR != std::string::npos) // retour à la ligne trouvé après idx
             len = idxLastCR-pos;  
         else

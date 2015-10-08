@@ -156,7 +156,6 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
 	editorSizer->Add( m_buttonGoPrevAvailable, 0, wxEXPAND | wxALL, 2 );
     
     editorPanel->SetSizer(editorSizer);		
-	//mainSizer->Add( editorSizer, 1, wxEXPAND, 2 );     //mainSizer->Add( m_editor, 1, wxEXPAND | wxALL, 5 );
 
  	wxBoxSizer* findSizer = new wxBoxSizer( wxVERTICAL );
     
@@ -169,17 +168,14 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
 	
     findPanel->SetSizer(findSizer);
     
-//    mainSizer->Add( editorPanel, 1, wxEXPAND, 2 );
-//    mainSizer->Add( findPanel, 1, wxEXPAND, 2 );
-    splitterEditorFind->SplitVertically(editorPanel, findPanel);
+    splitterEditorFind->SplitVertically(editorPanel, findPanel, 1);
     
     mainSizer->Add(splitterEditorFind, 1, wxEXPAND, 2 );     //mainSizer->Add( m_editor, 1, wxEXPAND | wxALL, 5 );
  
-	this->SetSizerAndFit( mainSizer );
+	this->SetSizer( mainSizer );
 	this->Layout();
 
     CreateMainToolBar();
-
 
     ConnectEvents();
 }   
