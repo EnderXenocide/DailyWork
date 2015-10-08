@@ -1,7 +1,7 @@
 #ifndef __GUI_H__
 #define __GUI_H__
 
-#define USE_RICH_EDIT    false
+#define USE_RICH_EDIT false
 
 #include <wx/artprov.h>
 #include <wx/xrc/xmlres.h>
@@ -102,6 +102,10 @@ public:
     wxTextCtrl* m_textFind;
     wxTreeCtrl* m_treeFind;
  
+    wxMenu* m_editMenu;
+    wxSplitterWindow *m_splitterEditorFind;
+    wxPanel *m_panelFind, *m_panelEditor;
+ 
  #if USE_RICH_EDIT
     MyRichTextCtrl* m_editor;
 #else
@@ -159,6 +163,9 @@ protected:
     
     void OnFindTextEnter(wxCommandEvent& event);  
     void OnTreeFindSelChanged(wxTreeEvent& event);
+ 
+    void OnShowFindPanel(wxCommandEvent& event);
+    void OnHideFindPanel(wxSplitterEvent& event); 
   
  #if USE_RICH_EDIT
     void OnBold(wxCommandEvent& event);
@@ -236,11 +243,9 @@ protected:
     void OnUpdateUndo(wxUpdateUIEvent& event);
     void OnUpdateRedo(wxUpdateUIEvent& event);    
  #endif
-    
-    // Forward command events to the current (rich) text control, if any
-    bool ProcessEvent(wxEvent& event);
-   
+     
 private:
+    const int sashPositionFindEditor = -125; //todo save position before hide ?
     // Write text
 #if USE_RICH_EDIT
     void WriteInitialText(); // ce n'est pas utile 

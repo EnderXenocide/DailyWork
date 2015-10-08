@@ -44,6 +44,7 @@
     <File Name="gui2.cpp"/>
     <File Name="myrichtext.cpp"/>
     <File Name="prefs.cpp"/>
+    <File Name="mystyledtext.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="gui.h"/>
@@ -54,7 +55,6 @@
     <File Name="gui2.h"/>
     <File Name="myrichtext.h"/>
     <File Name="currentdates.h"/>
-    <File Name="mystyledtext.cpp"/>
     <File Name="mystyledtext.h"/>
     <File Name="prefs.h"/>
     <File Name="defsext.h"/>

@@ -10,6 +10,37 @@
 
 #include "myrichtext.h"
 
+// Forward command events to the current rich text control, if any
+bool MyRichTextCtrl::ProcessEvent(wxEvent& event)
+{
+    static wxEvent* s_lastEvent = NULL;
+   
+    //prevent infinite recursion
+    if (&event == s_lastEvent )
+        return false;
+        
+    if ( event.IsCommandEvent() && 
+        !event.IsKindOf(CLASSINFO(wxChildFocusEvent)) &&
+        !event.IsKindOf(CLASSINFO(wxContextMenuEvent))  )
+    {
+       s_lastEvent = & event;
+
+        wxWindow* focusWin = wxFindFocusDescendant(this);
+        bool success = false;
+        if (focusWin)
+            success = focusWin->GetEventHandler()->ProcessEvent(event);
+        
+        if (!success)
+            success = wxRichTextCtrl::ProcessEvent(event);
+        
+        s_lastEvent = NULL;    
+
+        return success;
+    }   
+    else {
+        return wxRichTextCtrl::ProcessEvent(event);
+    }
+}
 
 void MyRichTextCtrl::PrepareContent(wxRichTextParagraphLayoutBox& container)
 {

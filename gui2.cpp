@@ -89,7 +89,9 @@ enum
     
     ID_STAY_ON_TOP,
         
-    ID_TEXT_FIND,
+    ID_TEXT_FIND,    
+    ID_SPLITTER_EDITORFIND, 
+    ID_SHOW_FIND,    
 };
 
 // BEGIN EVENTS
@@ -134,44 +136,44 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
 
     // Create the wxSplitterWindow window
     // and set a minimum pane size to prevent unsplitting
-    wxSplitterWindow* splitterEditorFind = new wxSplitterWindow(this, wxID_ANY);
-    splitterEditorFind->SetMinimumPaneSize(50);     
+    m_splitterEditorFind = new wxSplitterWindow(this, wxID_ANY);
+    //m_splitterEditorFind->SetMinimumPaneSize(50);     
 
-    wxPanel* editorPanel = new wxPanel(splitterEditorFind, wxID_ANY);	
+    m_panelEditor = new wxPanel(m_splitterEditorFind, wxID_ANY);	
     wxBoxSizer* editorSizer = new wxBoxSizer( wxVERTICAL );
 	
-	m_buttonGoNextAvailable = new wxButton( editorPanel, wxID_ANY, _("Go to the next available date"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_buttonGoNextAvailable = new wxButton( m_panelEditor, wxID_ANY, _("Go to the next available date"), wxDefaultPosition, wxDefaultSize, 0 );
 	editorSizer->Add( m_buttonGoNextAvailable, 0, wxEXPAND | wxALL, 2 );
 	
-	m_buttonAddTomorrow = new wxButton( editorPanel, wxID_ANY, _("Add Tomorrow"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_buttonAddTomorrow = new wxButton( m_panelEditor, wxID_ANY, _("Add Tomorrow"), wxDefaultPosition, wxDefaultSize, 0 );
 	editorSizer->Add( m_buttonAddTomorrow, 0, wxEXPAND | wxALL, 2 );
 
-    CreateEditor(editorPanel);    
+    CreateEditor(m_panelEditor);    
     editorSizer->Add( m_editor, 1, wxEXPAND | wxALL, 2 );
         
-	m_buttonAddYesterday = new wxButton( editorPanel, wxID_ANY, _("Add Yesterday"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_buttonAddYesterday = new wxButton( m_panelEditor, wxID_ANY, _("Add Yesterday"), wxDefaultPosition, wxDefaultSize, 0 );
 	editorSizer->Add( m_buttonAddYesterday, 0, wxEXPAND | wxALL, 2 );
 	
-	m_buttonGoPrevAvailable = new wxButton( editorPanel, wxID_ANY, _("Go to the preivous available date"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_buttonGoPrevAvailable = new wxButton( m_panelEditor, wxID_ANY, _("Go to the preivous available date"), wxDefaultPosition, wxDefaultSize, 0 );
 	editorSizer->Add( m_buttonGoPrevAvailable, 0, wxEXPAND | wxALL, 2 );
     
-    editorPanel->SetSizer(editorSizer);		
+    m_panelEditor->SetSizer(editorSizer);		
 
  	wxBoxSizer* findSizer = new wxBoxSizer( wxVERTICAL );
     
-    wxPanel* findPanel = new wxPanel(splitterEditorFind, wxID_ANY);
-    m_textFind = new wxTextCtrl( findPanel, wxID_ANY); //, wxEmptyString, wxDefaultPosition, wxSize(150,-1)
+    m_panelFind = new wxPanel(m_splitterEditorFind, wxID_ANY);
+    m_textFind = new wxTextCtrl( m_panelFind, wxID_ANY); //, wxEmptyString, wxDefaultPosition, wxSize(150,-1)
     m_textFind->SetHint(_("Find"));
     findSizer->Add(m_textFind, 0, wxEXPAND | wxALL, 2);    
-    m_treeFind = new wxTreeCtrl( findPanel, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTR_DEFAULT_STYLE );
+    m_treeFind = new wxTreeCtrl( m_panelFind, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTR_DEFAULT_STYLE );
 	findSizer->Add( m_treeFind, 1, wxALL|wxEXPAND, 2 );
 	
-    findPanel->SetSizer(findSizer);
+    m_panelFind->SetSizer(findSizer);
     
-    splitterEditorFind->SplitVertically(editorPanel, findPanel);
-    splitterEditorFind->SetSashGravity(1.0);
+    m_splitterEditorFind->SplitVertically(m_panelEditor, m_panelFind); //sashPositionFindEditor
+    m_splitterEditorFind->Unsplit();
     
-    mainSizer->Add(splitterEditorFind, 1, wxEXPAND, 2 );     //mainSizer->Add( m_editor, 1, wxEXPAND | wxALL, 5 );
+    mainSizer->Add(m_splitterEditorFind, 1, wxEXPAND, 2 );     //mainSizer->Add( m_editor, 1, wxEXPAND | wxALL, 5 );
  
 	this->SetSizer( mainSizer );
 	this->Layout();
@@ -179,7 +181,8 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     CreateMainToolBar();
 
     ConnectEvents();
-}   
+}
+
  
 MainFrame::~MainFrame() 
 { 
@@ -301,6 +304,7 @@ void MainFrame::CreateMenu()
     fileMenu->Append(wxID_EXIT, _("E&xit\tAlt+X"), _("Quit this program")); 
 
     wxMenu* editMenu = new wxMenu;
+    m_editMenu = editMenu;
     editMenu->Append(ID_DELETE_DATE, _("&Delete date\tCtrl+D")); 
     editMenu->AppendSeparator();
     editMenu->Append(wxID_UNDO, _("&Undo\tCtrl+Z")); 
@@ -309,13 +313,17 @@ void MainFrame::CreateMenu()
     editMenu->Append(wxID_CUT, _("Cu&t\tCtrl+X")); 
     editMenu->Append(wxID_COPY, _("&Copy\tCtrl+C")); 
     editMenu->Append(wxID_PASTE, _("&Paste\tCtrl+V")); 
-
+    editMenu->AppendSeparator();
+    editMenu->AppendCheckItem(ID_SHOW_FIND, "&Find\tCtrl+F");
+    editMenu->Check(ID_SHOW_FIND, false);
+    
 #if USE_RICH_EDIT
     editMenu->AppendSeparator();
     editMenu->Append(wxID_SELECTALL, _("Select A&ll\tCtrl+A")); 
     editMenu->AppendSeparator();
     editMenu->Append(ID_SET_FONT_SCALE, _("Set &Text Scale..."));
     editMenu->Append(ID_SET_DIMENSION_SCALE, _("Set &Dimension Scale..."));
+
 
     wxMenu* formatMenu = new wxMenu;
     formatMenu->AppendCheckItem(ID_FORMAT_BOLD, _("&Bold\tCtrl+B"));
@@ -438,7 +446,59 @@ void MainFrame::ConnectEvents()
     m_buttonAddYesterday->Bind( wxEVT_COMMAND_BUTTON_CLICKED,  &MainFrame::OnButtonAddYesterdayClick, this);
     m_textFind->Bind(wxEVT_TEXT,  &MainFrame::OnFindTextEnter, this);        //wxEVT_TEXT_ENTER
 	m_treeFind->Bind( wxEVT_TREE_SEL_CHANGED, &MainFrame::OnTreeFindSelChanged, this );
-        
+
+#if USE_RICH_EDIT == false
+    // common
+    Bind(wxEVT_SIZE,  &MyStyledTextCtrl::OnSize, m_editor);
+    // edit
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnEditClear, m_editor, wxID_CLEAR);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnEditCut, m_editor, wxID_CUT);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnEditCopy, m_editor, wxID_COPY);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnEditPaste, m_editor, wxID_PASTE);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnEditIndentInc, m_editor, myID_INDENTINC);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnEditIndentRed, m_editor, myID_INDENTRED);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnEditSelectAll, m_editor, wxID_SELECTALL);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnEditSelectLine, m_editor, myID_SELECTLINE);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnEditRedo, m_editor, wxID_REDO);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnEditUndo, m_editor, wxID_UNDO);
+    // find
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnFind, m_editor, wxID_FIND);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnFindNext, m_editor, myID_FINDNEXT);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnReplace, m_editor, myID_REPLACE);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnReplaceNext, m_editor, myID_REPLACENEXT);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnBraceMatch, m_editor, myID_BRACEMATCH);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnGoto, m_editor, myID_GOTO);
+    // view
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnHilightLang, m_editor, myID_HILIGHTFIRST, myID_HILIGHTLAST);
+
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnDisplayEOL, m_editor, myID_DISPLAYEOL);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnIndentGuide, m_editor, myID_INDENTGUIDE);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnLineNumber, m_editor, myID_LINENUMBER);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnLongLineOn, m_editor, myID_LONGLINEON);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnWhiteSpace, m_editor, myID_WHITESPACE);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnFoldToggle, m_editor, myID_FOLDTOGGLE);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnSetOverType, m_editor, myID_OVERTYPE);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnSetReadOnly, m_editor, myID_READONLY);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnWrapmodeOn, m_editor, myID_WRAPMODEON);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnUseCharset, m_editor, myID_CHARSETANSI);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnUseCharset, m_editor, myID_CHARSETMAC);
+    // annotations
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnAnnotationAdd, m_editor, myID_ANNOTATION_ADD);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnAnnotationRemove, m_editor, myID_ANNOTATION_REMOVE);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnAnnotationClear, m_editor, myID_ANNOTATION_CLEAR);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnAnnotationStyle, m_editor, myID_ANNOTATION_STYLE_HIDDEN, myID_ANNOTATION_STYLE_BOXED); // + myID_ANNOTATION_STYLE_STANDARD
+    // extra
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnChangeCase, m_editor, myID_CHANGELOWER);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnChangeCase, m_editor, myID_CHANGEUPPER);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnConvertEOL, m_editor, myID_CONVERTCR, myID_CONVERTLF); // + myID_CONVERTCRLF
+    // stc
+    Bind(wxEVT_STC_MARGINCLICK,  &MyStyledTextCtrl::OnMarginClick, m_editor);
+    Bind(wxEVT_STC_CHARADDED,  &MyStyledTextCtrl::OnCharAdded, m_editor);
+    Bind(wxEVT_STC_KEY,  &MyStyledTextCtrl::OnKey, m_editor);
+
+    Bind(wxEVT_KEY_DOWN,  &MyStyledTextCtrl::OnKeyDown, m_editor);
+#endif;
+
     Bind(wxEVT_CLOSE_WINDOW, &MainFrame::OnCloseFrame, this);
     Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnQuit, this, wxID_EXIT);
     Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnAbout, this, wxID_ABOUT);
@@ -473,9 +533,9 @@ void MainFrame::ConnectEvents()
     Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnAlignCentre, this, ID_FORMAT_ALIGN_CENTRE);
     Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnAlignRight, this, ID_FORMAT_ALIGN_RIGHT);
 
-    Bind(ID_FORMAT_ALIGN_LEFT, wxEVT_UPDATE_UI,  &MainFrame::OnUpdateAlignLeft, this, );
-    Bind(ID_FORMAT_ALIGN_CENTRE, wxEVT_UPDATE_UI,  &MainFrame::OnUpdateAlignCentre, this, );
-    Bind(ID_FORMAT_ALIGN_RIGHT, wxEVT_UPDATE_UI,  &MainFrame::OnUpdateAlignRight, this, );
+    Bind(wxEVT_UPDATE_UI,  &MainFrame::OnUpdateAlignLeft, this, ID_FORMAT_ALIGN_LEFT);
+    Bind(wxEVT_UPDATE_UI,  &MainFrame::OnUpdateAlignCentre, this, ID_FORMAT_ALIGN_CENTRE);
+    Bind(wxEVT_UPDATE_UI,  &MainFrame::OnUpdateAlignRight, this, ID_FORMAT_ALIGN_RIGHT);
 
     Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnFont, this, ID_FORMAT_FONT);
     Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnImage, this, ID_FORMAT_IMAGE);
@@ -486,8 +546,8 @@ void MainFrame::ConnectEvents()
     //Bind(wxEVT_UPDATE_UI,  wxUpdateUIEventHandler(MainFrame::OnUpdateFormat, this, ID_FORMAT_PARAGRAPH);
     Bind(wxEVT_UPDATE_UI,  &MainFrame::OnUpdateImage, this, ID_FORMAT_IMAGE);
 
-    Bind(ID_FORMAT_INDENT_MORE, wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnIndentMore, this, );
-    Bind(ID_FORMAT_INDENT_LESS, wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnIndentLess, this, );
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnIndentMore, this, ID_FORMAT_INDENT_MORE);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnIndentLess, this, ID_FORMAT_INDENT_LESS);
 
     Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnLineSpacingHalf, this, ID_FORMAT_LINE_SPACING_HALF);
     Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnLineSpacingSingle, this, ID_FORMAT_LINE_SPACING_SINGLE);
@@ -523,17 +583,11 @@ void MainFrame::ConnectEvents()
     Bind(wxEVT_TEXT_URL,  &MainFrame::OnURL, this, wxID_ANY);
     Bind(wxEVT_RICHTEXT_STYLESHEET_REPLACING,  &MainFrame::OnStyleSheetReplacing, this, wxID_ANY);
     Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnSetFontScale, this, ID_SET_FONT_SCALE);
-    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnSetDimensionScale, this, ID_SET_DIMENSION_SCALE);
-    
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnSetDimensionScale, this, ID_SET_DIMENSION_SCALE);    
 #else
     Bind(wxEVT_UPDATE_UI,  &MainFrame::OnUpdateUndo, this, wxID_UNDO);
     Bind(wxEVT_UPDATE_UI,  &MainFrame::OnUpdateRedo, this, wxID_REDO);
 #endif
-
-//    m_comboBoxFavorite->Connect(wxEVT_TEXT_ENTER, wxCommandEventHandler(MainFrame::OnComboFavoriteTextEnter));
-//    Connect(wxID_ANY, wxEVT_TEXT, wxTextEventHandler(MainFrame::OnComboFavoriteUpdate));
-//    Connect(wxID_ANY, wxEVT_TEXT_ENTER, wxTextEventHandler(MainFrame::OnComboFavoriteUpdate));
-//    Connect(wxID_ANY, wxEVT_COMBOBOX, wxCommandEventHandler(MainFrame::OnComboFavoriteUpdate));
 
     Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnAddFavorite, this, ID_FAVORITE_ADD);
     Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnDeleteFavorite, this, ID_FAVORITE_DELETE);
@@ -543,7 +597,11 @@ void MainFrame::ConnectEvents()
     Bind(wxEVT_UPDATE_UI,  &MainFrame::OnUpdateDeleteFavorite, this, ID_FAVORITE_DELETE);
     Bind(wxEVT_UPDATE_UI,  &MainFrame::OnUpdateGoFavorite, this, ID_FAVORITE_GO);
     
-    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnFocusComboFavorite, this, ID_FOCUS_FAVORITES);   
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnFocusComboFavorite, this, ID_FOCUS_FAVORITES);  
+
+//    Bind(wxEVT_UPDATE_UI,  &MainFrame::OnHideFindPanel, this, ID_SHOW_FIND);  
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnShowFindPanel, this, ID_SHOW_FIND);  
+    Bind(wxEVT_SPLITTER_UNSPLIT,  &MainFrame::OnHideFindPanel, this, ID_SPLITTER_EDITORFIND); 
  }
 
 void MainFrame::SetText(wxString texte)
@@ -736,6 +794,25 @@ void MainFrame::OnUpdateGoFavorite(wxUpdateUIEvent& event)
     event.Enable(m_comboBoxFavorite->GetStringSelection() != ""); // (m_comboBoxFavorite->GetCount()==0) &&
 }
 
+void MainFrame::OnHideFindPanel(wxSplitterEvent& event)
+{
+    if (m_editMenu)
+        m_editMenu->Check(ID_SHOW_FIND, false);
+    event.Skip();
+}
+
+void MainFrame::OnShowFindPanel(wxCommandEvent& event)
+{
+    if (!m_splitterEditorFind || !m_panelEditor || !m_panelFind) return;
+
+    if (event.IsChecked()) {
+        m_splitterEditorFind->SplitVertically(m_panelEditor, m_panelFind, sashPositionFindEditor);
+    }
+    else {
+        m_splitterEditorFind->Unsplit();
+    }
+}
+    
 void MainFrame::OnButtonGoNextAvailableClick(wxCommandEvent& event)
 {
     wxGetApp().SetNextDateAsCurrentDate();    
@@ -899,37 +976,6 @@ void MainFrame::OnUpdateRedo(wxUpdateUIEvent& event)
 }
 #endif
 
-// Forward command events to the current rich text control, if any
-bool MainFrame::ProcessEvent(wxEvent& event)
-{
-    static wxEvent* s_lastEvent = NULL;
-   
-    //prevent infinite recursion
-    if (&event == s_lastEvent )
-        return false;
-        
-    if ( event.IsCommandEvent() && 
-        !event.IsKindOf(CLASSINFO(wxChildFocusEvent)) &&
-        !event.IsKindOf(CLASSINFO(wxContextMenuEvent))  )
-    {
-       s_lastEvent = & event;
-
-        wxWindow* focusWin = wxFindFocusDescendant(this);
-        bool success = false;
-        if (focusWin)
-            success = focusWin->GetEventHandler()->ProcessEvent(event);
-        
-        if (!success)
-            success = wxFrame::ProcessEvent(event);
-        
-        s_lastEvent = NULL;    
-
-        return success;
-    }   
-    else {
-        return wxFrame::ProcessEvent(event);
-    }
-}
 
 #if USE_RICH_EDIT
 

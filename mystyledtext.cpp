@@ -120,63 +120,9 @@ MyStyledTextCtrl::MyStyledTextCtrl (wxWindow *parent, wxWindowID id,
     StyleSetForeground (wxSTC_H_ATTRIBUTE,        wxColour(0,0,150));
     StyleSetForeground (wxSTC_H_ATTRIBUTEUNKNOWN, wxColour(0,0,150));
     StyleSetForeground (wxSTC_H_COMMENT,          wxColour(150,150,150));   
-    ConnectEvents();
 }
 
 MyStyledTextCtrl::~MyStyledTextCtrl () { }
-
-void MyStyledTextCtrl::ConnectEvents()
-{
-    // common
-    Bind(wxEVT_SIZE,  &MyStyledTextCtrl::OnSize, this);
-    // edit
-    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnEditClear, this, wxID_CLEAR);
-    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnEditCut, this, wxID_CUT);
-    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnEditCopy, this, wxID_COPY);
-    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnEditPaste, this, wxID_PASTE);
-    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnEditIndentInc, this, myID_INDENTINC);
-    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnEditIndentRed, this, myID_INDENTRED);
-    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnEditSelectAll, this, wxID_SELECTALL);
-    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnEditSelectLine, this, myID_SELECTLINE);
-    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnEditRedo, this, wxID_REDO);
-    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnEditUndo, this, wxID_UNDO);
-    // find
-    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnFind, this, wxID_FIND);
-    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnFindNext, this, myID_FINDNEXT);
-    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnReplace, this, myID_REPLACE);
-    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnReplaceNext, this, myID_REPLACENEXT);
-    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnBraceMatch, this, myID_BRACEMATCH);
-    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnGoto, this, myID_GOTO);
-    // view
-    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnHilightLang, this, myID_HILIGHTFIRST, myID_HILIGHTLAST);
-
-    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnDisplayEOL, this, myID_DISPLAYEOL);
-    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnIndentGuide, this, myID_INDENTGUIDE);
-    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnLineNumber, this, myID_LINENUMBER);
-    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnLongLineOn, this, myID_LONGLINEON);
-    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnWhiteSpace, this, myID_WHITESPACE);
-    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnFoldToggle, this, myID_FOLDTOGGLE);
-    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnSetOverType, this, myID_OVERTYPE);
-    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnSetReadOnly, this, myID_READONLY);
-    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnWrapmodeOn, this, myID_WRAPMODEON);
-    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnUseCharset, this, myID_CHARSETANSI);
-    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnUseCharset, this, myID_CHARSETMAC);
-    // annotations
-    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnAnnotationAdd, this, myID_ANNOTATION_ADD);
-    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnAnnotationRemove, this, myID_ANNOTATION_REMOVE);
-    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnAnnotationClear, this, myID_ANNOTATION_CLEAR);
-    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnAnnotationStyle, this, myID_ANNOTATION_STYLE_HIDDEN, myID_ANNOTATION_STYLE_BOXED); // + myID_ANNOTATION_STYLE_STANDARD
-    // extra
-    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnChangeCase, this, myID_CHANGELOWER);
-    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnChangeCase, this, myID_CHANGEUPPER);
-    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnConvertEOL, this, myID_CONVERTCR, myID_CONVERTLF); // + myID_CONVERTCRLF
-    // stc
-    Bind(wxEVT_STC_MARGINCLICK,  &MyStyledTextCtrl::OnMarginClick, this);
-    Bind(wxEVT_STC_CHARADDED,  &MyStyledTextCtrl::OnCharAdded, this);
-    Bind(wxEVT_STC_KEY,  &MyStyledTextCtrl::OnKey, this);
-
-    Bind(wxEVT_KEY_DOWN,  &MyStyledTextCtrl::OnKeyDown, this);
-}
 
 //----------------------------------------------------------------------------
 // common event handlers

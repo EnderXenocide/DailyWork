@@ -126,6 +126,8 @@ public:
         m_lockId = 0;
         m_locked = false;
     }
+    
+    bool ProcessEvent(wxEvent& event);
 
     void SetLockId(long id) { m_lockId = id; }
     long GetLockId() const { return m_lockId; }

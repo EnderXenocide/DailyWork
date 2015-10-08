@@ -42,7 +42,7 @@ public:
 
     //! destructor
     ~MyStyledTextCtrl ();
-
+    
     // event handlers
     // common
     void OnSize( wxSizeEvent &event );
@@ -120,7 +120,6 @@ private:
     int m_FoldingMargin;
     int m_DividerID;
 
-    void ConnectEvents();
 };
 
 //----------------------------------------------------------------------------
