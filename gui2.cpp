@@ -168,7 +168,8 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
 	
     findPanel->SetSizer(findSizer);
     
-    splitterEditorFind->SplitVertically(editorPanel, findPanel, 1);
+    splitterEditorFind->SplitVertically(editorPanel, findPanel);
+    splitterEditorFind->SetSashGravity(1.0);
     
     mainSizer->Add(splitterEditorFind, 1, wxEXPAND, 2 );     //mainSizer->Add( m_editor, 1, wxEXPAND | wxALL, 5 );
  
