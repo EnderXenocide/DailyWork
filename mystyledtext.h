@@ -119,7 +119,6 @@ private:
     int m_FoldingID;
     int m_FoldingMargin;
     int m_DividerID;
-
 };
 
 //----------------------------------------------------------------------------

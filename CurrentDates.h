@@ -50,7 +50,7 @@ private :
     wxString ToString(wxDateTime date) 
     {
         if (date.IsValid())
-            return date.Format("%A %d %B %Y"); 
+            return date.Format(_("%A %d %B %Y"));
         else
             return _("unknow");
     };      

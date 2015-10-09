@@ -406,18 +406,19 @@ void MainApp::DeleteDateSelected()
     wxTreeCtrl* tree = frame->m_treeDates;
     wxTreeItemId itemId = tree->GetSelection();
     if (itemId.IsOk()) {
+        wxDateTime date = GetDateFromItem(tree, itemId); 
         wxString textSelection = tree->GetItemText(itemId);
         wxString msg;
         if (! IsHierarchicalTree()) 
-            msg = _("the date");
+            msg = _("the date ")+date.FormatDate();
         else if (textSelection.length()==4) //année
-            msg = _("the year");
+            msg = date.Format(_("the year %Y"));
         else if (tree->ItemHasChildren(itemId))  // mois
-            msg = _("the month");
+            msg = date.Format(_("the month %B %Y"));
         else 
-            msg = _("the day");
- 
-        wxMessageDialog dial(frame, wxString::Format(_("Delete %s %s ?"),msg,textSelection), _("Warning"), wxYES_NO|wxCENTER_FRAME);
+            msg = _("the day ")+date.FormatDate();;
+
+        wxMessageDialog dial(frame, wxString::Format(_("Delete %s ?"),msg), _("Warning"), wxYES_NO|wxCENTER_FRAME);
         if (dial.ShowModal()==wxID_YES) { //on supprime            
             if (DeleteItemData(itemId)) {
                 tree->Delete(itemId); 
@@ -425,6 +426,11 @@ void MainApp::DeleteDateSelected()
             }
         }
     }       
+}
+
+void DeleteDate(wxDateTime date)
+{
+    //todo
 }
 
 // on ne supprime que les données parce que la suppression de l'itemId se fait recursivement
@@ -488,7 +494,7 @@ void MainApp::SelectDateInTree(const wxDateTime &date)
 void MainApp::SetCurrentDate(const wxDateTime &date)
 {
     if ( date.IsValid() ) {
-        wxDateTime treeDate = GetDateFromTreeSelection();
+        wxDateTime treeDate = GetDateFromTreeDatesSelection();
         if ( ( ! treeDate.IsValid() ) || ( ! date.IsSameDate(treeDate) ) )
             SelectDateInTree(date);        
     }
@@ -496,7 +502,7 @@ void MainApp::SetCurrentDate(const wxDateTime &date)
 
 void MainApp::SetCurrentDateFromTreeFindSelection()
 {
-    wxDateTime date = GetDateFromTree(frame->m_treeFind);
+    wxDateTime date = GetDateFromTreeSelection(frame->m_treeFind);
     if ( date.IsValid() ) 
         SetCurrentDate(date);
     else
@@ -550,10 +556,10 @@ void MainApp::AddYesterdayToTree()
         LOG(DEBUG) << "Yesterday invalid";    
 }
 
-void MainApp::SetCurrentDateFromTreeSelection()
+void MainApp::SetCurrentDateFromTreeDatesSelection()
 {
     wxString text("");
-    wxDateTime date = GetDateFromTreeSelection();
+    wxDateTime date = GetDateFromTreeDatesSelection();
     if (date.IsValid()) {
         LOG(DEBUG) << "Show date " << date.FormatDate();
         currentDates.today = date;    
@@ -572,25 +578,30 @@ void MainApp::SetCurrentDateFromTreeSelection()
     frame->m_editor->SetFocus(); //todo here ?
  }
  
-wxDateTime MainApp::GetDateFromTreeSelection()
+wxDateTime MainApp::GetDateFromTreeDatesSelection()
 {
-   return  GetDateFromTree(frame->m_treeDates);
+   return  GetDateFromTreeSelection(frame->m_treeDates);
 }
 
-wxDateTime MainApp::GetDateFromTree(wxTreeCtrl* tree)
+wxDateTime MainApp::GetDateFromTreeSelection(wxTreeCtrl* tree)
 {
-   wxTreeItemId itemId = tree->GetSelection();
+    return GetDateFromItem(tree, tree->GetSelection());
+}
+ 
+wxDateTime MainApp::GetDateFromItem(wxTreeCtrl* tree, wxTreeItemId itemId)
+{
     if(itemId.IsOk()) {
         DWItemData* itemData = (DWItemData*) tree->GetItemData(itemId);
-        if ( (itemData != NULL) && (!itemData->IsEmpty()) )
+//        if ( (itemData != NULL) && (!itemData->IsEmpty()) )
+        if (itemData != NULL)
             return itemData->GetDate();
         LOG(DEBUG) << "Elément selectionné vide";    
     } 
     else
         LOG(DEBUG) << "Aucun élément selectionné";
-    return wxDateTime((time_t)-1);
+    return wxDateTime((time_t)-1); 
 }
-      
+     
 wxString MainApp::GetCurrentDateWork()
 {
     return dwparser.GetWorkFromDate(currentDates.today);

@@ -62,13 +62,13 @@ public:
     int AddDateToTree(const wxDateTime& date, bool selectItem = false); // todo wxTreeCtrl& tree instead
     wxTreeItemId AddItem(wxTreeItemId parent, wxString text, wxDateTime date, bool setDataEmpty);
     void SetCurrentDate(const wxDateTime &date);
+    void SetCurrentDateFromTreeDatesSelection();
     void SetCurrentDateFromTreeFindSelection();  
-    void SetCurrentDateFromTreeSelection();
     void SetPrevDateAsCurrentDate();
     void SetNextDateAsCurrentDate();  
     void AddTomorrowToTree();
     void AddYesterdayToTree();    
-    wxDateTime GetDateFromTreeSelection();
+    wxDateTime GetDateFromTreeDatesSelection();
     wxString GetCurrentDateWork();
     void DeleteDateSelected();
     bool DeleteItemData(wxTreeItemId itemId);
@@ -81,7 +81,9 @@ public:
     int CountDates();
     int FindInDates(wxString text);
 private:
-    wxDateTime GetDateFromTree(wxTreeCtrl* tree);
+    wxDateTime GetDateFromTreeSelection(wxTreeCtrl* tree);
+    wxDateTime GetDateFromItem(wxTreeCtrl* tree, wxTreeItemId itemId);
+    void DeleteDate(wxDateTime date);
     CurrentDates currentDates;
     bool hierarchicalTree;
     wxLanguage m_language;  // language specified by user

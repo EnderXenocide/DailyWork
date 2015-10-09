@@ -699,12 +699,12 @@ void MainFrame::OnTreeSelChanging( wxTreeEvent& event )
 
 void MainFrame::OnTreeSelChanged( wxTreeEvent& event )
 {
-    wxGetApp().SetCurrentDateFromTreeSelection();   
+    wxGetApp().SetCurrentDateFromTreeDatesSelection();   
 }
 
 void MainFrame::OnTreeRightClick(wxTreeEvent& event)
 {
-    wxDateTime date = wxGetApp().GetDateFromTreeSelection();   
+    wxDateTime date = wxGetApp().GetDateFromTreeDatesSelection();   
     if (date.IsValid())
         m_calendar->SetDate(date);
 }
