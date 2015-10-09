@@ -315,9 +315,7 @@ void MainApp::LoadDailyWorkInTree()
     frame->OnStatusBarMessage(_("Dates loaded"));
     tree->ExpandAll();
     tree->Thaw(); // Re-enables window before selection
-    if (tree->HasChildren(rootId)) { //tree is never empty
-        tree->SelectItem(tree->GetFirstVisibleItem());
-    }
+    SelectFirstTreeDatesItem();
     long t = stopwatch.Time();
     LOG(INFO) << wxString::Format("Tree Loaded in %ldms", t);
 }
@@ -399,6 +397,26 @@ wxTreeItemId MainApp::AddItemData(wxTreeItemId itemId, wxDateTime date, bool set
     DWItemData *itemData = new DWItemData(date, setDataEmpty);
     frame->m_treeDates->SetItemData(itemId, itemData);  
     return itemId; 
+}
+
+void MainApp::SelectFirstTreeDatesItem()
+{
+    wxTreeCtrl* tree = frame->m_treeDates;
+    wxTreeItemId itemId = tree->GetRootItem();
+    if (tree->HasChildren(itemId)) { //tree is never empty
+        wxTreeItemIdValue cookie;
+        itemId = tree->GetFirstChild(itemId, cookie);
+        tree->ScrollTo(itemId);
+        if ( IsHierarchicalTree() && itemId.IsOk()) { //on a l'année
+            if (tree->HasChildren(itemId)) { 
+                itemId = tree->GetFirstChild(itemId, cookie); //le mois
+                if ( itemId.IsOk() && tree->HasChildren(itemId) ) { 
+                    itemId = tree->GetFirstChild(itemId, cookie); //le mois                    
+                }
+            }   
+        }
+        tree->SelectItem(itemId);
+    }
 }
 
 void MainApp::DeleteDateSelected()

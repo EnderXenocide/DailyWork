@@ -80,6 +80,7 @@ public:
     void UpdateCurrentWork();
     int CountDates();
     int FindInDates(wxString text);
+    void SelectFirstTreeDatesItem();
 private:
     wxDateTime GetDateFromTreeSelection(wxTreeCtrl* tree);
     wxDateTime GetDateFromItem(wxTreeCtrl* tree, wxTreeItemId itemId);
