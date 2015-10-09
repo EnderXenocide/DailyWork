@@ -497,8 +497,7 @@ void MainFrame::ConnectEvents()
     Bind(wxEVT_STC_KEY,  &MyStyledTextCtrl::OnKey, m_editor);
 
     Bind(wxEVT_KEY_DOWN,  &MyStyledTextCtrl::OnKeyDown, m_editor);
-#endif;
-
+#endif
     Bind(wxEVT_CLOSE_WINDOW, &MainFrame::OnCloseFrame, this);
     Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnQuit, this, wxID_EXIT);
     Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnAbout, this, wxID_ABOUT);
