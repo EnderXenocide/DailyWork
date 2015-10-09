@@ -94,6 +94,11 @@ public:
     wxToolBar* m_mainToolBar;
     wxComboBox* m_comboBoxFavorite;
  
+    wxMenu* m_editMenu;
+    wxSplitterWindow *m_splitterEditorFind;
+    wxPanel *m_panelFind, *m_panelEditor;
+    
+	wxStaticText* m_textCurDate;
     wxButton* m_buttonAddTomorrow;
     wxButton* m_buttonAddYesterday;
     wxButton* m_buttonGoNextAvailable;
@@ -101,10 +106,7 @@ public:
     
     wxTextCtrl* m_textFind;
     wxTreeCtrl* m_treeFind;
- 
-    wxMenu* m_editMenu;
-    wxSplitterWindow *m_splitterEditorFind;
-    wxPanel *m_panelFind, *m_panelEditor;
+ 	wxStaticText* m_textFindStat;
  
  #if USE_RICH_EDIT
     MyRichTextCtrl* m_editor;

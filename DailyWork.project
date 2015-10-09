@@ -38,7 +38,6 @@
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="src">
-    <File Name="gui.cpp"/>
     <File Name="main.cpp"/>
     <File Name="dailyworkparser.cpp"/>
     <File Name="gui2.cpp"/>
@@ -47,7 +46,6 @@
     <File Name="mystyledtext.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
-    <File Name="gui.h"/>
     <File Name="main.h"/>
     <File Name="easylogging++.h"/>
     <File Name="dwitemdata.h"/>
@@ -63,6 +61,8 @@
   <VirtualDirectory Name="resources">
     <File Name="gui.fbp"/>
     <File Name="win_resources.rc"/>
+    <File Name="gui.h"/>
+    <File Name="gui.cpp"/>
   </VirtualDirectory>
   <Settings Type="Executable">
     <GlobalSettings>

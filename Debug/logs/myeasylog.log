@@ -2852,3 +2852,193 @@ Etiquettes Europe Z.
 2015-10-09 10:26:31,860 INFO  [default] Tree Loaded in 9ms
 2015-10-09 10:26:38,719 DEBUG [default] [Trinquard@TRINQUARD-PC] [int DailyWorkParser::UpdateWork(const wxDateTime&, wxString)] [I:/Workspace/CodeLiteC++/DailyWork/dailyworkparser.cpp:70] Date non trouvée :2015-01-01
 2015-10-09 10:26:38,719 DEBUG [default] [Trinquard@TRINQUARD-PC] [int DailyWorkParser::UpdateWork(const wxDateTime&, wxString)] [I:/Workspace/CodeLiteC++/DailyWork/dailyworkparser.cpp:72] Mise à jour impossible
+2015-10-09 11:52:13,233 DEBUG [default] [Trinquard@TRINQUARD-PC] [virtual bool MainApp::OnInit()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:29] START
+2015-10-09 11:52:13,687 INFO  [default] Parse file dailywork.json
+2015-10-09 11:52:13,702 INFO  [default] Loading Tree with json data...
+2015-10-09 11:52:13,702 INFO  [default] Loading Tree Hierarchy... 
+2015-10-09 11:52:13,702 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:564] Show date 01/01/2015
+2015-10-09 11:52:13,702 DEBUG [default] [Trinquard@TRINQUARD-PC] [wxString DailyWorkParser::GetWorkFromDate(const wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/dailyworkparser.cpp:120] Date non trouvée :2015-01-01
+2015-10-09 11:52:13,702 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:607] No text to show in editor 
+2015-10-09 11:52:13,702 INFO  [default] Tree Loaded in 7ms
+2015-10-09 11:52:29,531 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:564] Show date 04/09/2015
+2015-10-09 11:52:29,531 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:621] precedent 03/09/2015 00:00:00
+2015-10-09 11:52:29,531 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:625] actuel 04/09/2015 00:00:00
+2015-10-09 11:52:29,531 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:627] suivant 07/09/2015 00:00:00
+2015-10-09 11:52:29,531 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:608] Text to show in editor <Delphi FicFac : modif textes clôture / ouverture
+Dailywork
+Feuile de débit S470 (suite)
+Datafic Historique
+Room Arranger
+Mail SAV Scansit
+Sauvegarde
+
+s>
+2015-10-09 11:52:31,625 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:564] Show date 09/09/2015
+2015-10-09 11:52:31,625 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:621] precedent 08/09/2015 00:00:00
+2015-10-09 11:52:31,625 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:625] actuel 09/09/2015 00:00:00
+2015-10-09 11:52:31,625 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:627] suivant 10/09/2015 00:00:00
+2015-10-09 11:52:31,625 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:607] No text to show in editor 
+2015-10-09 11:52:32,359 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:564] Show date 10/09/2015
+2015-10-09 11:52:32,359 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:621] precedent 09/09/2015 00:00:00
+2015-10-09 11:52:32,359 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:625] actuel 10/09/2015 00:00:00
+2015-10-09 11:52:32,359 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:627] suivant 01/01/1970 01:00:00
+2015-10-09 11:52:32,375 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:607] No text to show in editor 
+2015-10-09 14:31:45,951 DEBUG [default] [Trinquard@TRINQUARD-PC] [virtual bool MainApp::OnInit()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:29] START
+2015-10-09 14:31:46,763 INFO  [default] Parse file dailywork.json
+2015-10-09 14:31:46,779 INFO  [default] Loading Tree with json data...
+2015-10-09 14:31:46,779 INFO  [default] Loading Tree Hierarchy... 
+2015-10-09 14:31:46,779 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:564] Show date 01/01/2015
+2015-10-09 14:31:46,779 DEBUG [default] [Trinquard@TRINQUARD-PC] [wxString DailyWorkParser::GetWorkFromDate(const wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/dailyworkparser.cpp:120] Date non trouvée :2015-01-01
+2015-10-09 14:31:46,779 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:611] No text to show in editor 
+2015-10-09 14:31:46,795 INFO  [default] Tree Loaded in 8ms
+2015-10-09 14:35:57,711 DEBUG [default] [Trinquard@TRINQUARD-PC] [virtual bool MainApp::OnInit()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:29] START
+2015-10-09 14:35:58,148 INFO  [default] Parse file dailywork.json
+2015-10-09 14:35:58,148 INFO  [default] Loading Tree with json data...
+2015-10-09 14:35:58,148 INFO  [default] Loading Tree Hierarchy... 
+2015-10-09 14:35:58,164 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:564] Show date 01/01/2015
+2015-10-09 14:35:58,164 DEBUG [default] [Trinquard@TRINQUARD-PC] [wxString DailyWorkParser::GetWorkFromDate(const wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/dailyworkparser.cpp:120] Date non trouvée :2015-01-01
+2015-10-09 14:35:58,164 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:611] No text to show in editor 
+2015-10-09 14:35:58,164 INFO  [default] Tree Loaded in 8ms
+2015-10-09 14:36:01,805 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:564] Show date 07/09/2015
+2015-10-09 14:36:01,805 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:621] precedent 04/09/2015 00:00:00
+2015-10-09 14:36:01,805 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:625] actuel 07/09/2015 00:00:00
+2015-10-09 14:36:01,805 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:627] suivant 08/09/2015 00:00:00
+2015-10-09 14:36:01,805 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:612] Text to show in editor <Dailywork
+Datafic Historique : correction compta
+Saisie des heures du 28/8 au 4/9 
+	ajout 1748/S482D et 1748/S507
+Plan
+Impression "tampons" sur flyers
+Impression bis>
+2015-10-09 14:36:03,992 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:564] Show date 10/09/2015
+2015-10-09 14:36:03,992 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:621] precedent 09/09/2015 00:00:00
+2015-10-09 14:36:03,992 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:625] actuel 10/09/2015 00:00:00
+2015-10-09 14:36:03,992 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:627] suivant 01/01/1970 01:00:00
+2015-10-09 14:36:03,992 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:611] No text to show in editor 
+2015-10-09 14:36:04,977 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:564] Show date 01/01/2015
+2015-10-09 14:36:04,977 DEBUG [default] [Trinquard@TRINQUARD-PC] [wxString DailyWorkParser::GetWorkFromDate(const wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/dailyworkparser.cpp:120] Date non trouvée :2015-01-01
+2015-10-09 14:36:04,992 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:611] No text to show in editor 
+2015-10-09 14:41:21,802 DEBUG [default] [Trinquard@TRINQUARD-PC] [virtual bool MainApp::OnInit()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:29] START
+2015-10-09 14:41:22,271 INFO  [default] Parse file dailywork.json
+2015-10-09 14:41:22,271 INFO  [default] Loading Tree with json data...
+2015-10-09 14:41:22,271 INFO  [default] Loading Tree Hierarchy... 
+2015-10-09 14:41:22,286 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:564] Show date 01/01/2015
+2015-10-09 14:41:22,286 DEBUG [default] [Trinquard@TRINQUARD-PC] [wxString DailyWorkParser::GetWorkFromDate(const wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/dailyworkparser.cpp:120] Date non trouvée :2015-01-01
+2015-10-09 14:41:22,286 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:611] No text to show in editor 
+2015-10-09 14:41:22,286 INFO  [default] Tree Loaded in 8ms
+2015-10-09 14:41:32,834 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:564] Show date 09/09/2015
+2015-10-09 14:41:32,834 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:621] precedent 08/09/2015 00:00:00
+2015-10-09 14:41:32,834 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:625] actuel 09/09/2015 00:00:00
+2015-10-09 14:41:32,834 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:627] suivant 10/09/2015 00:00:00
+2015-10-09 14:41:32,834 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:611] No text to show in editor 
+2015-10-09 14:44:05,418 DEBUG [default] [Trinquard@TRINQUARD-PC] [virtual bool MainApp::OnInit()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:29] START
+2015-10-09 14:44:05,949 INFO  [default] Parse file dailywork.json
+2015-10-09 14:44:05,949 INFO  [default] Loading Tree with json data...
+2015-10-09 14:44:05,949 INFO  [default] Loading Tree Hierarchy... 
+2015-10-09 14:44:05,949 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:564] Show date 01/01/2015
+2015-10-09 14:44:05,949 DEBUG [default] [Trinquard@TRINQUARD-PC] [wxString DailyWorkParser::GetWorkFromDate(const wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/dailyworkparser.cpp:120] Date non trouvée :2015-01-01
+2015-10-09 14:44:05,996 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:611] No text to show in editor 
+2015-10-09 14:44:05,996 INFO  [default] Tree Loaded in 46ms
+2015-10-09 14:44:11,730 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:564] Show date 07/09/2015
+2015-10-09 14:44:11,730 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:621] precedent 04/09/2015 00:00:00
+2015-10-09 14:44:11,730 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:625] actuel 07/09/2015 00:00:00
+2015-10-09 14:44:11,730 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:627] suivant 08/09/2015 00:00:00
+2015-10-09 14:44:11,730 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:612] Text to show in editor <Dailywork
+Datafic Historique : correction compta
+Saisie des heures du 28/8 au 4/9 
+	ajout 1748/S482D et 1748/S507
+Plan
+Impression "tampons" sur flyers
+Impression bis>
+2015-10-09 15:09:29,867 DEBUG [default] [Trinquard@TRINQUARD-PC] [virtual bool MainApp::OnInit()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:29] START
+2015-10-09 15:09:30,359 INFO  [default] Parse file dailywork.json
+2015-10-09 15:09:30,360 INFO  [default] Loading Tree with json data...
+2015-10-09 15:09:30,360 INFO  [default] Loading Tree Hierarchy... 
+2015-10-09 15:09:30,364 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:564] Show date 01/01/2015
+2015-10-09 15:09:30,365 DEBUG [default] [Trinquard@TRINQUARD-PC] [wxString DailyWorkParser::GetWorkFromDate(const wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/dailyworkparser.cpp:120] Date non trouvée :2015-01-01
+2015-10-09 15:09:30,365 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:611] No text to show in editor 
+2015-10-09 15:09:30,369 INFO  [default] Tree Loaded in 8ms
+2015-10-09 15:14:48,394 DEBUG [default] [Trinquard@TRINQUARD-PC] [virtual bool MainApp::OnInit()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:29] START
+2015-10-09 15:14:48,894 INFO  [default] Parse file dailywork.json
+2015-10-09 15:14:48,894 INFO  [default] Loading Tree with json data...
+2015-10-09 15:14:48,894 INFO  [default] Loading Tree Hierarchy... 
+2015-10-09 15:14:48,909 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:564] Show date 01/01/2015
+2015-10-09 15:14:48,909 DEBUG [default] [Trinquard@TRINQUARD-PC] [wxString DailyWorkParser::GetWorkFromDate(const wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/dailyworkparser.cpp:120] Date non trouvée :2015-01-01
+2015-10-09 15:14:48,909 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:611] No text to show in editor 
+2015-10-09 15:14:48,909 INFO  [default] Tree Loaded in 9ms
+2015-10-09 15:33:13,703 DEBUG [default] [Trinquard@TRINQUARD-PC] [virtual bool MainApp::OnInit()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:29] START
+2015-10-09 15:33:14,188 INFO  [default] Parse file dailywork.json
+2015-10-09 15:33:14,188 INFO  [default] Loading Tree with json data...
+2015-10-09 15:33:14,188 INFO  [default] Loading Tree Hierarchy... 
+2015-10-09 15:33:14,188 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:565] Show date 01/01/2015
+2015-10-09 15:33:14,188 DEBUG [default] [Trinquard@TRINQUARD-PC] [wxString DailyWorkParser::GetWorkFromDate(const wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/dailyworkparser.cpp:120] Date non trouvée :2015-01-01
+2015-10-09 15:33:14,188 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:611] No text to show in editor 
+2015-10-09 15:33:14,188 INFO  [default] Tree Loaded in 8ms
+2015-10-09 15:37:13,880 DEBUG [default] [Trinquard@TRINQUARD-PC] [virtual bool MainApp::OnInit()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:29] START
+2015-10-09 15:37:14,334 INFO  [default] Parse file dailywork.json
+2015-10-09 15:37:14,334 INFO  [default] Loading Tree with json data...
+2015-10-09 15:37:14,334 INFO  [default] Loading Tree Hierarchy... 
+2015-10-09 15:37:14,334 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:565] Show date 01/01/2015
+2015-10-09 15:37:14,334 DEBUG [default] [Trinquard@TRINQUARD-PC] [wxString DailyWorkParser::GetWorkFromDate(const wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/dailyworkparser.cpp:120] Date non trouvée :2015-01-01
+2015-10-09 15:37:14,334 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:611] No text to show in editor 
+2015-10-09 15:37:14,349 INFO  [default] Tree Loaded in 10ms
+2015-10-09 15:38:25,227 DEBUG [default] [Trinquard@TRINQUARD-PC] [virtual bool MainApp::OnInit()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:29] START
+2015-10-09 15:38:25,680 INFO  [default] Parse file dailywork.json
+2015-10-09 15:38:25,680 INFO  [default] Loading Tree with json data...
+2015-10-09 15:38:25,680 INFO  [default] Loading Tree Hierarchy... 
+2015-10-09 15:38:25,680 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:565] Show date 01/01/2015
+2015-10-09 15:38:25,680 DEBUG [default] [Trinquard@TRINQUARD-PC] [wxString DailyWorkParser::GetWorkFromDate(const wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/dailyworkparser.cpp:120] Date non trouvée :2015-01-01
+2015-10-09 15:38:25,680 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:611] No text to show in editor 
+2015-10-09 15:38:25,696 INFO  [default] Tree Loaded in 8ms
+2015-10-09 15:39:15,885 DEBUG [default] [Trinquard@TRINQUARD-PC] [virtual bool MainApp::OnInit()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:29] START
+2015-10-09 15:39:16,338 INFO  [default] Parse file dailywork.json
+2015-10-09 15:39:16,338 INFO  [default] Loading Tree with json data...
+2015-10-09 15:39:16,338 INFO  [default] Loading Tree Hierarchy... 
+2015-10-09 15:39:16,354 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:565] Show date 01/01/2015
+2015-10-09 15:39:16,354 DEBUG [default] [Trinquard@TRINQUARD-PC] [wxString DailyWorkParser::GetWorkFromDate(const wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/dailyworkparser.cpp:120] Date non trouvée :2015-01-01
+2015-10-09 15:39:16,354 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:611] No text to show in editor 
+2015-10-09 15:39:16,354 INFO  [default] Tree Loaded in 9ms
+2015-10-09 15:40:00,637 DEBUG [default] [Trinquard@TRINQUARD-PC] [virtual bool MainApp::OnInit()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:29] START
+2015-10-09 15:40:01,106 INFO  [default] Parse file dailywork.json
+2015-10-09 15:40:01,106 INFO  [default] Loading Tree with json data...
+2015-10-09 15:40:01,106 INFO  [default] Loading Tree Hierarchy... 
+2015-10-09 15:40:01,106 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:565] Show date 01/01/2015
+2015-10-09 15:40:01,106 DEBUG [default] [Trinquard@TRINQUARD-PC] [wxString DailyWorkParser::GetWorkFromDate(const wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/dailyworkparser.cpp:120] Date non trouvée :2015-01-01
+2015-10-09 15:40:01,106 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:611] No text to show in editor 
+2015-10-09 15:40:01,106 INFO  [default] Tree Loaded in 9ms
+2015-10-09 15:40:06,137 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:565] Show date 08/09/2015
+2015-10-09 15:40:06,137 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:622] precedent 07/09/2015 00:00:00
+2015-10-09 15:40:06,137 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:626] actuel 08/09/2015 00:00:00
+2015-10-09 15:40:06,137 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:628] suivant 09/09/2015 00:00:00
+2015-10-09 15:40:06,137 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:612] Text to show in editor <Dailywork
+Impression "tampons" sur flyers
+Etiquettes GLCB240
+<html>cxwGLCB240
+<a href="">link</a>
+<!-- comment -->
+test
+>
+2015-10-09 16:08:51,658 DEBUG [default] [Trinquard@TRINQUARD-PC] [virtual bool MainApp::OnInit()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:29] START
+2015-10-09 16:08:52,189 INFO  [default] Parse file dailywork.json
+2015-10-09 16:08:52,189 INFO  [default] Loading Tree with json data...
+2015-10-09 16:08:52,189 INFO  [default] Loading Tree Hierarchy... 
+2015-10-09 16:08:52,205 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:565] Show date 01/01/2015
+2015-10-09 16:08:52,205 DEBUG [default] [Trinquard@TRINQUARD-PC] [wxString DailyWorkParser::GetWorkFromDate(const wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/dailyworkparser.cpp:120] Date non trouvée :2015-01-01
+2015-10-09 16:08:52,205 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:613] No text to show in editor 
+2015-10-09 16:08:52,205 INFO  [default] Tree Loaded in 9ms
+2015-10-09 16:12:20,996 DEBUG [default] [Trinquard@TRINQUARD-PC] [virtual bool MainApp::OnInit()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:29] START
+2015-10-09 16:12:21,600 INFO  [default] Parse file dailywork.json
+2015-10-09 16:12:21,601 INFO  [default] Loading Tree with json data...
+2015-10-09 16:12:21,601 INFO  [default] Loading Tree Hierarchy... 
+2015-10-09 16:12:21,606 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:565] Show date 01/01/2015
+2015-10-09 16:12:21,606 DEBUG [default] [Trinquard@TRINQUARD-PC] [wxString DailyWorkParser::GetWorkFromDate(const wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/dailyworkparser.cpp:120] Date non trouvée :2015-01-01
+2015-10-09 16:12:21,606 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:613] No text to show in editor 
+2015-10-09 16:12:21,612 INFO  [default] Tree Loaded in 11ms
+2015-10-09 16:15:10,902 DEBUG [default] [Trinquard@TRINQUARD-PC] [virtual bool MainApp::OnInit()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:29] START
+2015-10-09 16:15:12,537 INFO  [default] Parse file dailywork.json
+2015-10-09 16:15:12,564 INFO  [default] Loading Tree with json data...
+2015-10-09 16:15:12,565 INFO  [default] Loading Tree Hierarchy... 
+2015-10-09 16:15:12,587 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:565] Show date 01/01/2015
+2015-10-09 16:15:12,588 DEBUG [default] [Trinquard@TRINQUARD-PC] [wxString DailyWorkParser::GetWorkFromDate(const wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/dailyworkparser.cpp:120] Date non trouvée :2015-01-01
+2015-10-09 16:15:12,588 DEBUG [default] [Trinquard@TRINQUARD-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:613] No text to show in editor 
+2015-10-09 16:15:12,610 INFO  [default] Tree Loaded in 46ms

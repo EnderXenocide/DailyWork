@@ -2,12 +2,12 @@
 ## Auto Generated makefile by CodeLite IDE
 ## any manual changes will be erased      
 ##
-## Release
+## Debug
 ProjectName            :=DailyWork
-ConfigurationName      :=Release
+ConfigurationName      :=Debug
 WorkspacePath          := "I:\Workspace\CodeLiteC++"
 ProjectPath            := "I:\Workspace\CodeLiteC++\DailyWork"
-IntermediateDirectory  :=./Release
+IntermediateDirectory  :=./Debug
 OutDir                 := $(IntermediateDirectory)
 CurrentFileName        :=
 CurrentFilePath        :=
@@ -28,7 +28,7 @@ LibraryPathSwitch      :=-L
 PreprocessorSwitch     :=-D
 SourceSwitch           :=-c 
 OutputFile             :=$(IntermediateDirectory)/$(ProjectName)
-Preprocessors          :=$(PreprocessorSwitch)__WX__ $(PreprocessorSwitch)NDEBUG 
+Preprocessors          :=$(PreprocessorSwitch)__WX__ 
 ObjectSwitch           :=-o 
 ArchiveOutputSwitch    := 
 PreprocessOnlySwitch   :=-E
@@ -37,7 +37,7 @@ PCHCompileFlags        :=
 MakeDirCommand         :=makedir
 RcCmpOptions           := $(shell wx-config --rcflags)
 RcCompilerName         :=C:/Utils/TDM-GCC-64/bin/windres.exe
-LinkOptions            :=  -mwindows -s $(shell wx-config --debug=no  --libs std,stc --unicode=yes)
+LinkOptions            :=  -mwindows $(shell wx-config --debug=yes --libs std,stc --unicode=yes)
 IncludePath            :=  $(IncludeSwitch). $(IncludeSwitch)I:/Workspace/CodeLiteC++/rapidjson/include 
 IncludePCH             := 
 RcIncludePath          := 
@@ -52,8 +52,8 @@ LibPath                := $(LibraryPathSwitch).
 AR       := C:/Utils/TDM-GCC-64/bin/ar.exe rcu
 CXX      := C:/Utils/TDM-GCC-64/bin/g++.exe
 CC       := C:/Utils/TDM-GCC-64/bin/gcc.exe
-CXXFLAGS :=  -O2 -Wall -std=c++11 $(shell wx-config --cxxflags --unicode=yes --debug=no --libs std stc) $(Preprocessors)
-CFLAGS   :=  -O2 -Wall $(shell wx-config --cxxflags --unicode=yes --debug=no --libs std stc) $(Preprocessors)
+CXXFLAGS :=  -g -O0 -Wall -std=c++11 $(shell wx-config --cxxflags --unicode=yes --debug=yes) $(Preprocessors)
+CFLAGS   :=  -g -O0 -Wall $(shell wx-config --cxxflags --unicode=yes --debug=yes) $(Preprocessors)
 ASFLAGS  := 
 AS       := C:/Utils/TDM-GCC-64/bin/as.exe
 
@@ -64,7 +64,7 @@ AS       := C:/Utils/TDM-GCC-64/bin/as.exe
 CodeLiteDir:=C:\Program Files\CodeLite
 WXWIN:=C:\Utils\wxWidgets-3.0.2
 WXCFG:=gcc_dll\mswu
-Objects0=$(IntermediateDirectory)/gui.cpp$(ObjectSuffix) $(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IntermediateDirectory)/dailyworkparser.cpp$(ObjectSuffix) $(IntermediateDirectory)/gui2.cpp$(ObjectSuffix) $(IntermediateDirectory)/myrichtext.cpp$(ObjectSuffix) $(IntermediateDirectory)/prefs.cpp$(ObjectSuffix) $(IntermediateDirectory)/mystyledtext.cpp$(ObjectSuffix) $(IntermediateDirectory)/win_resources.rc$(ObjectSuffix) 
+Objects0=$(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IntermediateDirectory)/dailyworkparser.cpp$(ObjectSuffix) $(IntermediateDirectory)/gui2.cpp$(ObjectSuffix) $(IntermediateDirectory)/myrichtext.cpp$(ObjectSuffix) $(IntermediateDirectory)/prefs.cpp$(ObjectSuffix) $(IntermediateDirectory)/mystyledtext.cpp$(ObjectSuffix) $(IntermediateDirectory)/win_resources.rc$(ObjectSuffix) $(IntermediateDirectory)/gui.cpp$(ObjectSuffix) 
 
 
 
@@ -83,11 +83,11 @@ $(OutputFile): $(IntermediateDirectory)/.d $(Objects)
 	$(LinkerName) $(OutputSwitch)$(OutputFile) @$(ObjectsFileList) $(LibPath) $(Libs) $(LinkOptions)
 
 MakeIntermediateDirs:
-	@$(MakeDirCommand) "./Release"
+	@$(MakeDirCommand) "./Debug"
 
 
 $(IntermediateDirectory)/.d:
-	@$(MakeDirCommand) "./Release"
+	@$(MakeDirCommand) "./Debug"
 
 PreBuild:
 
@@ -95,14 +95,6 @@ PreBuild:
 ##
 ## Objects
 ##
-$(IntermediateDirectory)/gui.cpp$(ObjectSuffix): gui.cpp $(IntermediateDirectory)/gui.cpp$(DependSuffix)
-	$(CXX) $(IncludePCH) $(SourceSwitch) "I:/Workspace/CodeLiteC++/DailyWork/gui.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/gui.cpp$(ObjectSuffix) $(IncludePath)
-$(IntermediateDirectory)/gui.cpp$(DependSuffix): gui.cpp
-	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/gui.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/gui.cpp$(DependSuffix) -MM "gui.cpp"
-
-$(IntermediateDirectory)/gui.cpp$(PreprocessSuffix): gui.cpp
-	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/gui.cpp$(PreprocessSuffix) "gui.cpp"
-
 $(IntermediateDirectory)/main.cpp$(ObjectSuffix): main.cpp $(IntermediateDirectory)/main.cpp$(DependSuffix)
 	$(CXX) $(IncludePCH) $(SourceSwitch) "I:/Workspace/CodeLiteC++/DailyWork/main.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IncludePath)
 $(IntermediateDirectory)/main.cpp$(DependSuffix): main.cpp
@@ -153,12 +145,20 @@ $(IntermediateDirectory)/mystyledtext.cpp$(PreprocessSuffix): mystyledtext.cpp
 
 $(IntermediateDirectory)/win_resources.rc$(ObjectSuffix): win_resources.rc
 	$(RcCompilerName) -i "I:/Workspace/CodeLiteC++/DailyWork/win_resources.rc" $(RcCmpOptions)   $(ObjectSwitch)$(IntermediateDirectory)/win_resources.rc$(ObjectSuffix) $(RcIncludePath)
+$(IntermediateDirectory)/gui.cpp$(ObjectSuffix): gui.cpp $(IntermediateDirectory)/gui.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "I:/Workspace/CodeLiteC++/DailyWork/gui.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/gui.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/gui.cpp$(DependSuffix): gui.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/gui.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/gui.cpp$(DependSuffix) -MM "gui.cpp"
+
+$(IntermediateDirectory)/gui.cpp$(PreprocessSuffix): gui.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/gui.cpp$(PreprocessSuffix) "gui.cpp"
+
 
 -include $(IntermediateDirectory)/*$(DependSuffix)
 ##
 ## Clean
 ##
 clean:
-	$(RM) -r ./Release/
+	$(RM) -r ./Debug/
 
 

@@ -24,6 +24,7 @@
 #include <wx/treectrl.h>
 #include <wx/sizer.h>
 #include <wx/button.h>
+#include <wx/stattext.h>
 #include <wx/richtext/richtextctrl.h>
 #include <wx/statusbr.h>
 #include <wx/toolbar.h>
@@ -46,6 +47,7 @@ class MainFrameBase : public wxFrame
 		wxTreeCtrl* m_treeDates;
 		wxButton* m_buttonGoNextAvailable;
 		wxButton* m_buttonGoTomorrow;
+		wxStaticText* m_staticTextCurDate;
 		wxRichTextCtrl* m_editor;
 		wxButton* m_buttonYesterday;
 		wxButton* m_buttonGoPrevAvailable;

@@ -148,6 +148,10 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
 	m_buttonAddTomorrow = new wxButton( m_panelEditor, wxID_ANY, _("Add Tomorrow"), wxDefaultPosition, wxDefaultSize, 0 );
 	editorSizer->Add( m_buttonAddTomorrow, 0, wxEXPAND | wxALL, 2 );
 
+	m_textCurDate = new wxStaticText( m_panelEditor, wxID_ANY, _("Currente Date"), wxDefaultPosition, wxDefaultSize, wxALIGN_CENTRE|wxST_NO_AUTORESIZE );
+	//m_staticTextCurDate->Wrap( -1 );
+	editorSizer->Add( m_textCurDate, 0, wxEXPAND| wxALL, 2 );
+
     CreateEditor(m_panelEditor);    
     editorSizer->Add( m_editor, 1, wxEXPAND | wxALL, 2 );
         
@@ -160,14 +164,16 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     m_panelEditor->SetSizer(editorSizer);		
 
  	wxBoxSizer* findSizer = new wxBoxSizer( wxVERTICAL );
-    
     m_panelFind = new wxPanel(m_splitterEditorFind, wxID_ANY);
+    
     m_textFind = new wxTextCtrl( m_panelFind, wxID_ANY); //, wxEmptyString, wxDefaultPosition, wxSize(150,-1)
     m_textFind->SetHint(_("Find"));
     findSizer->Add(m_textFind, 0, wxEXPAND | wxALL, 2);    
     m_treeFind = new wxTreeCtrl( m_panelFind, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTR_DEFAULT_STYLE );
 	findSizer->Add( m_treeFind, 1, wxALL|wxEXPAND, 2 );
-	
+	m_textFindStat = new wxStaticText( m_panelFind, wxID_ANY, _("Result(s) Count"), wxDefaultPosition, wxDefaultSize, wxST_NO_AUTORESIZE );
+	findSizer->Add( m_textFindStat, 0, wxEXPAND| wxALL, 2 );	
+    
     m_panelFind->SetSizer(findSizer);
     
     m_splitterEditorFind->SplitVertically(m_panelEditor, m_panelFind); //sashPositionFindEditor
@@ -432,8 +438,7 @@ void MainFrame::CreateEditor(wxWindow *parent)
 
 void MainFrame::ConnectEvents()
 {
-    //todo prevenir wxEVT_TREE_SEL_CHANGING au demarage connection fait aprés chargement  dwparser 
-	m_treeDates->Bind( wxEVT_TREE_SEL_CHANGED, &MainFrame::OnTreeSelChanged, this );
+ 	m_treeDates->Bind( wxEVT_TREE_SEL_CHANGED, &MainFrame::OnTreeSelChanged, this );
 	m_treeDates->Bind( wxEVT_TREE_SEL_CHANGING, &MainFrame::OnTreeSelChanging, this );    
     m_treeDates->Bind( wxEVT_TREE_ITEM_RIGHT_CLICK, &MainFrame::OnTreeRightClick, this );
 	m_calendar->Bind( wxEVT_CALENDAR_SEL_CHANGED, &MainFrame::OnCalendarSelChanged, this );
@@ -806,6 +811,7 @@ void MainFrame::OnShowFindPanel(wxCommandEvent& event)
 
     if (event.IsChecked()) {
         m_splitterEditorFind->SplitVertically(m_panelEditor, m_panelFind, sashPositionFindEditor);
+        m_textFind->SetFocus();
     }
     else {
         m_splitterEditorFind->Unsplit();

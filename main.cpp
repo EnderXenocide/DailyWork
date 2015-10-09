@@ -330,9 +330,9 @@ wxTreeItemId MainApp::AddBranchHierarchy(wxTreeItemId rootId, wxDateTime date)
     wxTreeItemId itemId = AddItem(rootId, date.Format("%Y"), tempDate, true);
     
     tempDate.SetMonth(date.GetMonth()); //début de mois de date
-    itemId = AddItem(itemId, date.Format("%m %b"), tempDate, true);
+    itemId = AddItem(itemId, date.Format("%m %b"), tempDate, true); //"%B (%m)"
     
-    return AddItem(itemId, date.Format("%d %a"), date, false);  //%e ne marche pas 
+    return AddItem(itemId, date.Format("%d %a"), date, false);  //%e ne marche pas //"%A %d"
 }
 
 wxTreeItemId MainApp::AddBranchSimple(wxTreeItemId rootId, wxDateTime date)
@@ -515,6 +515,7 @@ void MainApp::SetButtonsState()
     frame->m_buttonAddYesterday->SetLabel(_("Add ")+currentDates.YesterdayToString());
     frame->m_buttonGoNextAvailable->SetLabel(_("Go to ")+currentDates.NextAvailableToString());
     frame->m_buttonGoPrevAvailable->SetLabel(_("Go to ")+currentDates.PrevAvailableToString());
+    frame->m_textCurDate->SetLabel(currentDates.TodayToString());
 
     bool enable = ( !currentDates.nextAvailable.IsValid() ) || ( currentDates.tomorrow!=currentDates.nextAvailable );
     frame->m_buttonAddTomorrow->Enable(enable);
@@ -762,12 +763,13 @@ int MainApp::FindInDates(wxString text)
             DWItemData *itemData = new DWItemData(it->date, false);
             tree->SetItemData(itemId, itemData);  
             tree->AppendItem(itemId, it->text); 
+            itemData = new DWItemData(it->date, false);
+            tree->SetItemData(itemId, itemData);  // rajoute la date à la ligne pour pouvoir aller à la date en selectionnant cet item
             // add data ?          
         }
         tree->ExpandAll();
-        tree->Thaw(); // Re-enables window before selection        
-        
-        return n;        
+        tree->Thaw(); // Re-enables window before selection     
     }
-    return 0;    
+    frame->m_textFindStat->SetLabel(wxString::Format(_("Result%s : %i"),n>1?"s":"",n));
+    return n;    
 }

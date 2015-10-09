@@ -47,6 +47,10 @@ MainFrameBase::MainFrameBase( wxWindow* parent, wxWindowID id, const wxString& t
 	m_buttonGoTomorrow = new wxButton( this, wxID_ANY, _("Go Tomorrow"), wxDefaultPosition, wxDefaultSize, 0 );
 	editorSizer->Add( m_buttonGoTomorrow, 0, wxALL|wxEXPAND, 2 );
 	
+	m_staticTextCurDate = new wxStaticText( this, wxID_ANY, _("Unknow"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
+	m_staticTextCurDate->Wrap( -1 );
+	editorSizer->Add( m_staticTextCurDate, 0, wxALL|wxEXPAND, 5 );
+	
 	m_editor = new wxRichTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0|wxVSCROLL|wxHSCROLL|wxNO_BORDER|wxWANTS_CHARS );
 	editorSizer->Add( m_editor, 1, wxEXPAND | wxALL, 2 );
 	
