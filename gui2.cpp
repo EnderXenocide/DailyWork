@@ -27,9 +27,6 @@ enum
 
     ID_RELOAD,
     ID_DELETE_DATE,
-
-//    ID_UNDO,
-//    ID_REDO,
     
     ID_INSERT_SYMBOL,
     ID_INSERT_URL,
@@ -106,7 +103,7 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
 #endif
     
     // set the frame icon
-    SetIcon(wxICON(sample));
+    SetIcon(wxICON(frame_icon)); //in resource file
 
     CreateMenu();
 
@@ -938,8 +935,12 @@ void MainFrame::OnOpen(wxCommandEvent&event)
     wxString filename;
     wxArrayInt fileTypes;
 
+#if USE_RICH_EDIT
     wxString filter = wxRichTextBuffer::GetExtWildcard(false, false, & fileTypes);
-    if (!filter.empty())
+#else   
+     wxString filter = "";
+#endif     
+   if (!filter.empty())
         filter += wxT("|");
     filter += wxT("All files (*.*)|*.*");
 

@@ -20,13 +20,14 @@
 #include "gui2.h"
 
 // main wxWidgets header file
-#include <wx/wx.h>
-
+#include <wx/string.h>
+#include <wx/treectrl.h>
 
 #if wxUSE_HELP
 #include "wx/cshelp.h"
 #endif
 
+#if USE_RICH_EDIT
 #include "wx/richtext/richtextctrl.h"
 #include "wx/richtext/richtextstyles.h"
 #include "wx/richtext/richtextxml.h"
@@ -36,6 +37,8 @@
 #include "wx/richtext/richtextstyledlg.h"
 #include "wx/richtext/richtextprint.h"
 #include "wx/richtext/richtextimagedlg.h"
+#endif
+
 ////////////////////////////////////////////////////////////////////////////////
 // application class declaration 
 ////////////////////////////////////////////////////////////////////////////////
