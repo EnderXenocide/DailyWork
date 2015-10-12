@@ -330,7 +330,7 @@ wxTreeItemId MainApp::AddBranchHierarchy(wxTreeItemId rootId, wxDateTime date)
     tempDate.SetMonth(date.GetMonth()); //début de mois de date
     itemId = AddItem(itemId, date.Format("%m %b"), tempDate, true); //"%B (%m)"
     
-    return AddItem(itemId, date.Format("%d %a"), date, false);  //%e ne marche pas //"%A %d"
+    return AddItem(itemId, date.Format("%d %A"), date, false);  //%e ne marche pas //"%A %d"
 }
 
 wxTreeItemId MainApp::AddBranchSimple(wxTreeItemId rootId, wxDateTime date)
