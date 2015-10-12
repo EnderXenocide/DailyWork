@@ -239,8 +239,7 @@ protected:
     void OnInsertImage(wxCommandEvent& event);
     
     void OnSetFontScale(wxCommandEvent& event);
-    void OnSetDimensionScale(wxCommandEvent& event);
-    
+    void OnSetDimensionScale(wxCommandEvent& event);    
  #else
     void OnUpdateUndo(wxUpdateUIEvent& event);
     void OnUpdateRedo(wxUpdateUIEvent& event);    

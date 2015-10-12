@@ -780,7 +780,7 @@ int MainApp::FindInDates(wxString text)
             wxTreeItemId itemId = tree->AppendItem(rootId, dwparser.ToTreeDate(it->date));  
             DWItemData *itemData = new DWItemData(it->date, false);
             tree->SetItemData(itemId, itemData);  
-            tree->AppendItem(itemId, it->text); 
+            itemId = tree->AppendItem(itemId, it->text); 
             itemData = new DWItemData(it->date, false);
             tree->SetItemData(itemId, itemData);  // rajoute la date à la ligne pour pouvoir aller à la date en selectionnant cet item
             // add data ?          
