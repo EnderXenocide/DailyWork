@@ -25,12 +25,12 @@
 #include <wx/combobox.h>
 #include <wx/sysopt.h>
 #include <wx/splitter.h>
+//#include <wx/srchctrl.h>
 
 #include "easylogging++.h"
 
 #if USE_RICH_EDIT
 #include <wx/richtext/richtextctrl.h>
-#include "wx/richtext/richtextctrl.h"
 #include "wx/richtext/richtextstyles.h"
 #include "wx/richtext/richtextxml.h"
 #include "wx/richtext/richtexthtml.h"
@@ -95,8 +95,8 @@ public:
     wxComboBox* m_comboBoxFavorite;
  
     wxMenu* m_editMenu;
-    wxSplitterWindow *m_splitterEditorFind;
-    wxPanel *m_panelFind, *m_panelEditor;
+    wxSplitterWindow *m_splitterEditorSearch;
+    wxPanel *m_panelSearch, *m_panelEditor;
     
 	wxStaticText* m_textCurDate;
     wxButton* m_buttonAddTomorrow;
@@ -104,9 +104,9 @@ public:
     wxButton* m_buttonGoNextAvailable;
     wxButton* m_buttonGoPrevAvailable;
     
-    wxTextCtrl* m_textFind;
-    wxTreeCtrl* m_treeFind;
- 	wxStaticText* m_textFindStat;
+    wxTextCtrl* m_textSearch; //NUMERO_CDES
+    wxTreeCtrl* m_treeSearch;
+ 	wxStaticText* m_textSearchStat;
  
  #if USE_RICH_EDIT
     MyRichTextCtrl* m_editor;
@@ -163,11 +163,11 @@ protected:
     
     void OnReload(wxCommandEvent& event);
     
-    void OnFindTextEnter(wxCommandEvent& event);  
-    void OnTreeFindSelChanged(wxTreeEvent& event);
+    void OnTextSearchEnter(wxCommandEvent& event);  
+    void OnTreeSearchSelChanged(wxTreeEvent& event);
  
-    void OnShowFindPanel(wxCommandEvent& event);
-    void OnHideFindPanel(wxSplitterEvent& event); 
+    void OnShowPanelSearch(wxCommandEvent& event);
+    void OnHidePanelSearch(wxSplitterEvent& event); 
   
  #if USE_RICH_EDIT
     void OnBold(wxCommandEvent& event);
@@ -246,7 +246,7 @@ protected:
  #endif
      
 private:
-    const int sashPositionFindEditor = -125; //todo save position before hide ?
+    const int sashPositionSearchEditor = -125; //todo save position before hide ?
     // Write text
 #if USE_RICH_EDIT
     void WriteInitialText(); // ce n'est pas utile 

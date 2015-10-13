@@ -518,13 +518,13 @@ void MainApp::SetCurrentDate(const wxDateTime &date)
     }
 }
 
-void MainApp::SetCurrentDateFromTreeFindSelection()
+void MainApp::SetCurrentDateFromTreeSearchSelection()
 {
-    wxDateTime date = GetDateFromTreeSelection(frame->m_treeFind);
+    wxDateTime date = GetDateFromTreeSelection(frame->m_treeSearch);
     if ( date.IsValid() ) 
         SetCurrentDate(date);
     else
-        LOG(DEBUG) << "Date in Find invalid";
+        LOG(DEBUG) << "Date in Search invalid";
 }
 
 void MainApp::SetButtonsState()
@@ -763,14 +763,14 @@ int MainApp::CountDates()
     return dwparser.CountItems();
 }
 
-int MainApp::FindInDates(wxString text)
+int MainApp::SearchInDates(wxString text)
 {
     if (text.length() < 3 ) return  -1; //on prend au moins 3 caractères
     
     MapFind results;
-    int n = dwparser.FindInDates(text, results);
+    int n = dwparser.SearchInDates(text, results);
     if (n>0) {
-        wxTreeCtrl *tree = frame->m_treeFind;
+        wxTreeCtrl *tree = frame->m_treeSearch;
         tree->Freeze(); //prevent drawing
         tree->DeleteAllItems();
         tree->SetWindowStyle(wxTR_HIDE_ROOT);
@@ -788,6 +788,6 @@ int MainApp::FindInDates(wxString text)
         tree->ExpandAll();
         tree->Thaw(); // Re-enables window before selection     
     }
-    frame->m_textFindStat->SetLabel(wxString::Format(_("Result%s : %i"),n>1?"s":"",n));
+    frame->m_textSearchStat->SetLabel(wxString::Format(_("Result%s : %i"),n>1?"s":"",n));
     return n;    
 }

@@ -66,7 +66,7 @@ public:
     wxTreeItemId AddItem(wxTreeItemId parent, wxString text, wxDateTime date, bool setDataEmpty);
     void SetCurrentDate(const wxDateTime &date);
     void SetCurrentDateFromTreeDatesSelection();
-    void SetCurrentDateFromTreeFindSelection();  
+    void SetCurrentDateFromTreeSearchSelection();  
     void SetPrevDateAsCurrentDate();
     void SetNextDateAsCurrentDate();  
     void AddTomorrowToTree();
@@ -82,7 +82,7 @@ public:
     int DeleteSelectedFavorite();
     void UpdateCurrentWork();
     int CountDates();
-    int FindInDates(wxString text);
+    int SearchInDates(wxString text);
     void SelectFirstTreeDatesItem();
 private:
     wxDateTime GetDateFromTreeSelection(wxTreeCtrl* tree);

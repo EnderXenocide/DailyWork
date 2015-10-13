@@ -133,10 +133,10 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
 
     // Create the wxSplitterWindow window
     // and set a minimum pane size to prevent unsplitting
-    m_splitterEditorFind = new wxSplitterWindow(this, wxID_ANY);
-    //m_splitterEditorFind->SetMinimumPaneSize(50);     
+    m_splitterEditorSearch = new wxSplitterWindow(this, wxID_ANY);
+    //m_splitterEditorSearch->SetMinimumPaneSize(50);     
 
-    m_panelEditor = new wxPanel(m_splitterEditorFind, wxID_ANY);	
+    m_panelEditor = new wxPanel(m_splitterEditorSearch, wxID_ANY);	
     wxBoxSizer* editorSizer = new wxBoxSizer( wxVERTICAL );
 	
 	m_buttonGoNextAvailable = new wxButton( m_panelEditor, wxID_ANY, _("Go to the next available date"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -160,23 +160,23 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     
     m_panelEditor->SetSizer(editorSizer);		
 
- 	wxBoxSizer* findSizer = new wxBoxSizer( wxVERTICAL );
-    m_panelFind = new wxPanel(m_splitterEditorFind, wxID_ANY);
+ 	wxBoxSizer* searchSizer = new wxBoxSizer( wxVERTICAL );
+    m_panelSearch = new wxPanel(m_splitterEditorSearch, wxID_ANY);
     
-    m_textFind = new wxTextCtrl( m_panelFind, wxID_ANY); //, wxEmptyString, wxDefaultPosition, wxSize(150,-1)
-    m_textFind->SetHint(_("Find"));
-    findSizer->Add(m_textFind, 0, wxEXPAND | wxALL, 2);    
-    m_treeFind = new wxTreeCtrl( m_panelFind, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTR_DEFAULT_STYLE );
-	findSizer->Add( m_treeFind, 1, wxALL|wxEXPAND, 2 );
-	m_textFindStat = new wxStaticText( m_panelFind, wxID_ANY, _("Result(s) Count"), wxDefaultPosition, wxDefaultSize, wxST_NO_AUTORESIZE );
-	findSizer->Add( m_textFindStat, 0, wxEXPAND| wxALL, 2 );	
+    m_textSearch = new wxTextCtrl( m_panelSearch, wxID_ANY); //, wxEmptyString, wxDefaultPosition, wxSize(150,-1)
+    m_textSearch->SetHint(_("Search"));
+    searchSizer->Add(m_textSearch, 0, wxEXPAND | wxALL, 2);    
+    m_treeSearch = new wxTreeCtrl( m_panelSearch, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTR_DEFAULT_STYLE );
+	searchSizer->Add( m_treeSearch, 1, wxALL|wxEXPAND, 2 );
+	m_textSearchStat = new wxStaticText( m_panelSearch, wxID_ANY, _("Result(s) Count"), wxDefaultPosition, wxDefaultSize, wxST_NO_AUTORESIZE );
+	searchSizer->Add( m_textSearchStat, 0, wxEXPAND| wxALL, 2 );	
     
-    m_panelFind->SetSizer(findSizer);
+    m_panelSearch->SetSizer(searchSizer);
     
-    m_splitterEditorFind->SplitVertically(m_panelEditor, m_panelFind); //sashPositionFindEditor
-    m_splitterEditorFind->Unsplit();
+    m_splitterEditorSearch->SplitVertically(m_panelEditor, m_panelSearch); //sashPositionSearchEditor
+    m_splitterEditorSearch->Unsplit();
     
-    mainSizer->Add(m_splitterEditorFind, 1, wxEXPAND, 2 );     //mainSizer->Add( m_editor, 1, wxEXPAND | wxALL, 5 );
+    mainSizer->Add(m_splitterEditorSearch, 1, wxEXPAND, 2 );     //mainSizer->Add( m_editor, 1, wxEXPAND | wxALL, 5 );
  
 	this->SetSizer( mainSizer );
 	this->Layout();
@@ -192,7 +192,7 @@ MainFrame::~MainFrame()
     // important pour les selections
 	m_treeDates->Unbind( wxEVT_TREE_SEL_CHANGED, &MainFrame::OnTreeSelChanged, this );
 	m_calendar->Unbind( wxEVT_CALENDAR_SEL_CHANGED, &MainFrame::OnCalendarSelChanged, this );
-	m_treeFind->Unbind( wxEVT_TREE_SEL_CHANGED, &MainFrame::OnTreeFindSelChanged, this );    
+	m_treeSearch->Unbind( wxEVT_TREE_SEL_CHANGED, &MainFrame::OnTreeSearchSelChanged, this );    
 }
 
 void MainFrame::CreateMainToolBar()
@@ -317,7 +317,7 @@ void MainFrame::CreateMenu()
     editMenu->Append(wxID_COPY, _("&Copy\tCtrl+C")); 
     editMenu->Append(wxID_PASTE, _("&Paste\tCtrl+V")); 
     editMenu->AppendSeparator();
-    editMenu->AppendCheckItem(ID_SHOW_FIND, "&Find\tCtrl+F");
+    editMenu->AppendCheckItem(ID_SHOW_FIND, "&Search\tCtrl+F");
     editMenu->Check(ID_SHOW_FIND, false);
     
 #if USE_RICH_EDIT
@@ -446,8 +446,8 @@ void MainFrame::ConnectEvents()
     m_buttonGoPrevAvailable->Bind( wxEVT_COMMAND_BUTTON_CLICKED,  &MainFrame::OnButtonGoPrevAvailableClick, this);
     m_buttonAddTomorrow->Bind( wxEVT_COMMAND_BUTTON_CLICKED,  &MainFrame::OnButtonAddTomorrowClick, this);
     m_buttonAddYesterday->Bind( wxEVT_COMMAND_BUTTON_CLICKED,  &MainFrame::OnButtonAddYesterdayClick, this);
-    m_textFind->Bind(wxEVT_TEXT,  &MainFrame::OnFindTextEnter, this);        //wxEVT_TEXT_ENTER
-	m_treeFind->Bind( wxEVT_TREE_SEL_CHANGED, &MainFrame::OnTreeFindSelChanged, this );
+    m_textSearch->Bind(wxEVT_TEXT,  &MainFrame::OnTextSearchEnter, this);        //wxEVT_TEXT_ENTER
+	m_treeSearch->Bind( wxEVT_TREE_SEL_CHANGED, &MainFrame::OnTreeSearchSelChanged, this );
 
 #if USE_RICH_EDIT == false
     // common
@@ -463,7 +463,7 @@ void MainFrame::ConnectEvents()
     Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnEditSelectLine, m_editor, myID_SELECTLINE);
     Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnEditRedo, m_editor, wxID_REDO);
     Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnEditUndo, m_editor, wxID_UNDO);
-    // find
+    // search
     Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnFind, m_editor, wxID_FIND);
     Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnFindNext, m_editor, myID_FINDNEXT);
     Bind(wxEVT_COMMAND_MENU_SELECTED,  &MyStyledTextCtrl::OnReplace, m_editor, myID_REPLACE);
@@ -601,8 +601,8 @@ void MainFrame::ConnectEvents()
     Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnFocusComboFavorite, this, ID_FOCUS_FAVORITES);  
 
 //    Bind(wxEVT_UPDATE_UI,  &MainFrame::OnHideFindPanel, this, ID_SHOW_FIND);  
-    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnShowFindPanel, this, ID_SHOW_FIND);  
-    Bind(wxEVT_SPLITTER_UNSPLIT,  &MainFrame::OnHideFindPanel, this, ID_SPLITTER_EDITORFIND); 
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnShowPanelSearch, this, ID_SHOW_FIND);  
+    Bind(wxEVT_SPLITTER_UNSPLIT,  &MainFrame::OnHidePanelSearch, this, ID_SPLITTER_EDITORFIND); 
  }
 
 void MainFrame::SetText(wxString texte)
@@ -795,23 +795,23 @@ void MainFrame::OnUpdateGoFavorite(wxUpdateUIEvent& event)
     event.Enable(m_comboBoxFavorite->GetStringSelection() != ""); // (m_comboBoxFavorite->GetCount()==0) &&
 }
 
-void MainFrame::OnHideFindPanel(wxSplitterEvent& event)
+void MainFrame::OnHidePanelSearch(wxSplitterEvent& event)
 {
     if (m_editMenu)
         m_editMenu->Check(ID_SHOW_FIND, false);
     event.Skip();
 }
 
-void MainFrame::OnShowFindPanel(wxCommandEvent& event)
+void MainFrame::OnShowPanelSearch(wxCommandEvent& event)
 {
-    if (!m_splitterEditorFind || !m_panelEditor || !m_panelFind) return;
+    if (!m_splitterEditorSearch || !m_panelEditor || !m_panelSearch) return;
 
     if (event.IsChecked()) {
-        m_splitterEditorFind->SplitVertically(m_panelEditor, m_panelFind, sashPositionFindEditor);
-        m_textFind->SetFocus();
+        m_splitterEditorSearch->SplitVertically(m_panelEditor, m_panelSearch, sashPositionSearchEditor);
+        m_textSearch->SetFocus();
     }
     else {
-        m_splitterEditorFind->Unsplit();
+        m_splitterEditorSearch->Unsplit();
     }
 }
     
@@ -835,14 +835,14 @@ void MainFrame::OnButtonAddYesterdayClick(wxCommandEvent& event)
    wxGetApp().AddYesterdayToTree();      
 }    
  
-void MainFrame::OnFindTextEnter(wxCommandEvent& event)
+void MainFrame::OnTextSearchEnter(wxCommandEvent& event)
 {
-   wxGetApp().FindInDates(m_textFind->GetValue());
+   wxGetApp().SearchInDates(m_textSearch->GetValue());
 }
 
-void MainFrame::OnTreeFindSelChanged(wxTreeEvent& event)
+void MainFrame::OnTreeSearchSelChanged(wxTreeEvent& event)
 {
-    wxGetApp().SetCurrentDateFromTreeFindSelection();
+    wxGetApp().SetCurrentDateFromTreeSearchSelection();
 }
  
 void MainFrame::OnReload(wxCommandEvent& event)

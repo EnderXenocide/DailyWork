@@ -315,7 +315,7 @@ bool DailyWorkParser::IsInFavorites(wxString text)
 }
 
 
-int DailyWorkParser::FindInDates(const wxString text, MapFind &results)
+int DailyWorkParser::SearchInDates(const wxString text, MapFind &results)
 {
     std::string utf8Text = text.ToUTF8().data();
     Value &array = document[JSON_ITEMS];    
