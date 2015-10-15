@@ -104,7 +104,7 @@ public:
     wxButton* m_buttonGoNextAvailable;
     wxButton* m_buttonGoPrevAvailable;
     
-    wxTextCtrl* m_textSearch; //NUMERO_CDES
+    wxTextCtrl* m_textSearch; //wxSearchCtrl ? pb icon too big
     wxTreeCtrl* m_treeSearch;
  	wxStaticText* m_textSearchStat;
  

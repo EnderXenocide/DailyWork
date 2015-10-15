@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-12 17:37+0200\n"
-"PO-Revision-Date: 2015-10-12 17:38+0200\n"
+"POT-Creation-Date: 2015-10-13 10:54+0200\n"
+"PO-Revision-Date: 2015-10-13 10:55+0200\n"
 "Last-Translator: Laurent Silvestre <silvestre.laurent@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr_FR\n"
@@ -366,10 +366,6 @@ msgstr "Favoris"
 msgid "File not found"
 msgstr "Fichier non trouvé"
 
-#: gui2.cpp:167
-msgid "Find"
-msgstr "Chercher"
-
 #: gui2.cpp:284
 msgid "Focus to Favorites List"
 msgstr "Cibler la Liste des Favoris"
@@ -559,7 +555,7 @@ msgstr "Renuméroter la liste"
 #: main.cpp:791
 #, c-format
 msgid "Result%s : %i"
-msgstr ""
+msgstr "Résultat%s : %i"
 
 #: gui2.cpp:171
 msgid "Result(s) Count"
@@ -593,6 +589,10 @@ msgstr "Enregistrer le travail"
 #: gui2.cpp:292
 msgid "Save to a new file"
 msgstr "Enregistrer dans un nouveau fichier"
+
+#: gui2.cpp:167
+msgid "Search"
+msgstr "Recherche"
 
 #: gui2.cpp:325
 msgid "Select A&ll\tCtrl+A"
@@ -695,7 +695,7 @@ msgstr "Annuler"
 
 #: gui.cpp:50
 msgid "Unknow"
-msgstr ""
+msgstr "Inconnu"
 
 #: gui2.cpp:304
 msgid "View HTML"
@@ -736,6 +736,9 @@ msgstr "inconnue"
 #: main.cpp:728
 msgid "unknown"
 msgstr "inconnue"
+
+#~ msgid "Find"
+#~ msgstr "Chercher"
 
 #~ msgid "%A, %B %d  %Y"
 #~ msgstr "%A %d %B %Y"

@@ -241,7 +241,7 @@ void MainFrame::CreateMainToolBar()
 #endif // USE_RICH_EDIT
     
     m_mainToolBar->AddSeparator();
-    m_comboBoxFavorite = new wxComboBox(m_mainToolBar, ID_FAVORITE_LIST, wxEmptyString, wxDefaultPosition, wxSize(150,-1));
+    m_comboBoxFavorite = new wxComboBox(m_mainToolBar, ID_FAVORITE_LIST, wxEmptyString, wxDefaultPosition, wxSize(150,-1), 0, NULL, wxCB_SORT);
     m_comboBoxFavorite->SetHint(_("Favorites"));
     m_mainToolBar->AddControl(m_comboBoxFavorite);
 
