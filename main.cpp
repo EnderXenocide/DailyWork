@@ -26,7 +26,7 @@ IMPLEMENT_APP(MainApp);
 bool MainApp::OnInit()
 {
     START_EASYLOGGINGPP(wxGetApp().argc, wxGetApp().argv);
-    LOG(DEBUG ) << "START";
+    LOG(INFO ) << "START";
 	
     if ( !wxApp::OnInit() )
         return false;
@@ -286,6 +286,7 @@ void MainApp::LoadDailyWorkInTree()
 {
     wxStopWatch stopwatch;
     LOG(INFO) << "Loading Tree with json data...";
+    frame->DisconnectSelectionEvents();
     wxTreeCtrl* tree = frame->m_treeDates;
     tree->Freeze(); //prevent drawing
     tree->DeleteAllItems();
@@ -315,6 +316,7 @@ void MainApp::LoadDailyWorkInTree()
     frame->OnStatusBarMessage(_("Dates loaded"));
     tree->ExpandAll();
     tree->Thaw(); // Re-enables window before selection
+    frame->ConnectSelectionEvents();    
     SelectFirstTreeDatesItem();
     long t = stopwatch.Time();
     LOG(INFO) << wxString::Format("Tree Loaded in %ldms", t);

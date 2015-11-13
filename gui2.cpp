@@ -147,6 +147,7 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
 
 	m_textCurDate = new wxStaticText( m_panelEditor, wxID_ANY, _("Currente Date"), wxDefaultPosition, wxDefaultSize, wxALIGN_CENTRE|wxST_NO_AUTORESIZE );
 	//m_staticTextCurDate->Wrap( -1 );
+    m_textCurDate->SetFont(m_textCurDate->GetFont().MakeBold());
 	editorSizer->Add( m_textCurDate, 0, wxEXPAND| wxALL, 2 );
 
     CreateEditor(m_panelEditor);    
@@ -158,8 +159,7 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
 	m_buttonGoPrevAvailable = new wxButton( m_panelEditor, wxID_ANY, _("Go to the preivous available date"), wxDefaultPosition, wxDefaultSize, 0 );
 	editorSizer->Add( m_buttonGoPrevAvailable, 0, wxEXPAND | wxALL, 2 );
     
-    m_panelEditor->SetSizer(editorSizer);		
-
+    m_panelEditor->SetSizer(editorSizer);
  	wxBoxSizer* searchSizer = new wxBoxSizer( wxVERTICAL );
     m_panelSearch = new wxPanel(m_splitterEditorSearch, wxID_ANY);
     
@@ -190,9 +190,7 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
 MainFrame::~MainFrame() 
 { 
     // important pour les selections
-	m_treeDates->Unbind( wxEVT_TREE_SEL_CHANGED, &MainFrame::OnTreeSelChanged, this );
-	m_calendar->Unbind( wxEVT_CALENDAR_SEL_CHANGED, &MainFrame::OnCalendarSelChanged, this );
-	m_treeSearch->Unbind( wxEVT_TREE_SEL_CHANGED, &MainFrame::OnTreeSearchSelChanged, this );    
+    DisconnectSelectionEvents();
 }
 
 void MainFrame::CreateMainToolBar()
@@ -432,13 +430,17 @@ void MainFrame::CreateEditor(wxWindow *parent)
 #endif  // USE_RICH_EDIT
     m_editor->SetMargins(5, 5);
 }
-
-void MainFrame::ConnectEvents()
+void MainFrame::ConnectSelectionEvents()
 {
  	m_treeDates->Bind( wxEVT_TREE_SEL_CHANGED, &MainFrame::OnTreeSelChanged, this );
 	m_treeDates->Bind( wxEVT_TREE_SEL_CHANGING, &MainFrame::OnTreeSelChanging, this );    
-    m_treeDates->Bind( wxEVT_TREE_ITEM_RIGHT_CLICK, &MainFrame::OnTreeRightClick, this );
+	m_treeSearch->Bind( wxEVT_TREE_SEL_CHANGED, &MainFrame::OnTreeSearchSelChanged, this );
 	m_calendar->Bind( wxEVT_CALENDAR_SEL_CHANGED, &MainFrame::OnCalendarSelChanged, this );
+}
+
+void MainFrame::ConnectEvents()
+{
+    m_treeDates->Bind( wxEVT_TREE_ITEM_RIGHT_CLICK, &MainFrame::OnTreeRightClick, this );
     m_calendar->Bind( wxEVT_KILL_FOCUS, &MainFrame::OnCalendarKillFocus, this );
 	m_calendar->Bind( wxEVT_SET_FOCUS,  &MainFrame::OnCalendarSetFocus, this );
     m_calendar->Bind( wxEVT_CALENDAR_DOUBLECLICKED, &MainFrame::OnCalendarDblClick, this );
@@ -447,8 +449,9 @@ void MainFrame::ConnectEvents()
     m_buttonAddTomorrow->Bind( wxEVT_COMMAND_BUTTON_CLICKED,  &MainFrame::OnButtonAddTomorrowClick, this);
     m_buttonAddYesterday->Bind( wxEVT_COMMAND_BUTTON_CLICKED,  &MainFrame::OnButtonAddYesterdayClick, this);
     m_textSearch->Bind(wxEVT_TEXT,  &MainFrame::OnTextSearchEnter, this);        //wxEVT_TEXT_ENTER
-	m_treeSearch->Bind( wxEVT_TREE_SEL_CHANGED, &MainFrame::OnTreeSearchSelChanged, this );
-
+    
+    ConnectSelectionEvents();
+    
 #if USE_RICH_EDIT == false
     // common
     Bind(wxEVT_SIZE,  &MyStyledTextCtrl::OnSize, m_editor);
@@ -604,6 +607,14 @@ void MainFrame::ConnectEvents()
     Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnShowPanelSearch, this, ID_SHOW_FIND);  
     Bind(wxEVT_SPLITTER_UNSPLIT,  &MainFrame::OnHidePanelSearch, this, ID_SPLITTER_EDITORFIND); 
  }
+
+void MainFrame::DisconnectSelectionEvents()
+{
+ 	m_treeDates->Unbind( wxEVT_TREE_SEL_CHANGED, &MainFrame::OnTreeSelChanged, this );
+	m_treeDates->Unbind( wxEVT_TREE_SEL_CHANGING, &MainFrame::OnTreeSelChanging, this );    
+	m_treeSearch->Unbind( wxEVT_TREE_SEL_CHANGED, &MainFrame::OnTreeSearchSelChanged, this );
+	m_calendar->Unbind( wxEVT_CALENDAR_SEL_CHANGED, &MainFrame::OnCalendarSelChanged, this );
+}
 
 void MainFrame::SetText(wxString texte)
 {

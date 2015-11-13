@@ -119,9 +119,10 @@ public:
     ~MainFrame();
  
     void OnStatusBarMessage(wxString msg);
-    void ConnectEvents();
     void EnableShowHirerarchicalTree(bool hiearchy);
     void SetText(wxString texte);    
+    void ConnectSelectionEvents();
+    void DisconnectSelectionEvents();
 protected:  
     // event handlers (these functions should _not_ be virtual)
     void OnCloseFrame(wxCloseEvent& event);
@@ -251,6 +252,7 @@ private:
 #if USE_RICH_EDIT
     void WriteInitialText(); // ce n'est pas utile 
 #endif   
+    void ConnectEvents();
     void CreateEditor(wxWindow *parent);
     void CreateMenu();
     void CreateMainToolBar();    
