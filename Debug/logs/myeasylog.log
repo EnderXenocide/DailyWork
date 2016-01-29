@@ -78,3 +78,147 @@ xwc
 2016-01-29 11:22:56,007 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:647] actuel 26/01/2016 00:00:00
 2016-01-29 11:22:56,008 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:649] suivant 27/01/2016 00:00:00
 2016-01-29 11:22:56,015 DEBUG [default] [Laurent@LAURENT-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:621] No text to show in editor 
+2016-01-29 11:59:13,011 INFO  [default] START
+2016-01-29 11:59:13,011 ERROR [default] Couldn't find/load the 'dailywork' catalog for locale 'French_France.1252'.
+2016-01-29 11:59:15,023 INFO  [default] Parse file dailywork.json
+2016-01-29 11:59:15,023 INFO  [default] Loading Tree with json 0data...
+2016-01-29 11:59:15,023 INFO  [default] Loading Tree Hierarchy... 
+2016-01-29 11:59:15,023 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:586] Show date 29/01/2016
+2016-01-29 12:01:54,823 INFO  [default] START
+2016-01-29 12:01:54,823 ERROR [default] Couldn't find/load the 'dailywork' catalog for locale 'French_France.1252'.
+2016-01-29 12:01:56,875 INFO  [default] Parse file dailywork.json
+2016-01-29 12:01:56,875 INFO  [default] Loading Tree with json 0data...
+2016-01-29 12:01:56,875 INFO  [default] Loading Tree Hierarchy... 
+2016-01-29 12:01:56,891 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:586] Show date 29/01/2016
+2016-01-29 12:03:03,620 INFO  [default] START
+2016-01-29 12:03:03,635 ERROR [default] Couldn't find/load the 'dailywork' catalog for locale 'French_France.1252'.
+2016-01-29 12:03:05,642 INFO  [default] Parse file dailywork.json
+2016-01-29 12:03:05,642 INFO  [default] Loading Tree with json 0data...
+2016-01-29 12:03:05,642 INFO  [default] Loading Tree Hierarchy... 
+2016-01-29 12:03:05,658 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:586] Show date 29/01/2016
+2016-01-29 12:03:15,772 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:647] actuel 29/01/2016 00:00:00
+2016-01-29 12:03:15,772 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:649] suivant 01/01/1970 01:00:00
+2016-01-29 12:03:15,772 DEBUG [default] [Laurent@LAURENT-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:622] Text to show in editor <456465>
+2016-01-29 12:03:15,772 INFO  [default] Tree Loaded in 10110ms
+2016-01-29 12:03:25,919 INFO  [default] Ajoute Date 2016-01-30
+2016-01-29 12:03:25,919 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:586] Show date 30/01/2016
+2016-01-29 12:03:25,919 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:643] precedent 29/01/2016 00:00:00
+2016-01-29 12:03:25,919 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:647] actuel 30/01/2016 00:00:00
+2016-01-29 12:03:25,919 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:649] suivant 01/01/1970 01:00:00
+2016-01-29 12:03:25,951 DEBUG [default] [Laurent@LAURENT-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:621] No text to show in editor 
+2016-01-29 12:03:39,124 INFO  [default] Ajoute Date 2016-01-31
+2016-01-29 12:03:39,124 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:586] Show date 31/01/2016
+2016-01-29 12:03:39,140 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:643] precedent 30/01/2016 00:00:00
+2016-01-29 12:03:39,140 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:647] actuel 31/01/2016 00:00:00
+2016-01-29 12:03:39,140 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:649] suivant 01/01/1970 01:00:00
+2016-01-29 12:03:39,140 DEBUG [default] [Laurent@LAURENT-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:621] No text to show in editor 
+2016-01-29 12:04:28,761 INFO  [default] START
+2016-01-29 12:04:28,761 ERROR [default] Couldn't find/load the 'dailywork' catalog for locale 'French_France.1252'.
+2016-01-29 12:04:29,089 INFO  [default] Parse file dailywork.json
+2016-01-29 12:04:29,089 INFO  [default] Set Excluded Days : saturday sunday 
+2016-01-29 12:04:29,089 INFO  [default] Loading Tree with json 0data...
+2016-01-29 12:04:29,089 INFO  [default] Loading Tree Hierarchy... 
+2016-01-29 12:04:29,089 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:586] Show date 29/01/2016
+2016-01-29 12:04:29,089 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:647] actuel 29/01/2016 00:00:00
+2016-01-29 12:04:29,089 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:649] suivant 01/01/1970 01:00:00
+2016-01-29 12:04:29,089 DEBUG [default] [Laurent@LAURENT-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:622] Text to show in editor <456465>
+2016-01-29 12:04:29,089 INFO  [default] Tree Loaded in 3ms
+2016-01-29 12:04:35,474 INFO  [default] Ajoute Date 2016-02-01
+2016-01-29 12:04:35,490 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:586] Show date 01/02/2016
+2016-01-29 12:04:35,490 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:643] precedent 29/01/2016 00:00:00
+2016-01-29 12:04:35,490 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:647] actuel 01/02/2016 00:00:00
+2016-01-29 12:04:35,490 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:649] suivant 01/01/1970 01:00:00
+2016-01-29 12:04:35,490 DEBUG [default] [Laurent@LAURENT-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:621] No text to show in editor 
+2016-01-29 12:04:36,036 INFO  [default] Ajoute Date 2016-02-02
+2016-01-29 12:04:36,036 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:586] Show date 02/02/2016
+2016-01-29 12:04:36,036 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:643] precedent 01/02/2016 00:00:00
+2016-01-29 12:04:36,036 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:647] actuel 02/02/2016 00:00:00
+2016-01-29 12:04:36,036 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:649] suivant 01/01/1970 01:00:00
+2016-01-29 12:04:36,051 DEBUG [default] [Laurent@LAURENT-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:621] No text to show in editor 
+2016-01-29 12:04:36,473 INFO  [default] Ajoute Date 2016-02-03
+2016-01-29 12:04:36,488 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:586] Show date 03/02/2016
+2016-01-29 12:04:36,488 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:643] precedent 02/02/2016 00:00:00
+2016-01-29 12:04:36,488 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:647] actuel 03/02/2016 00:00:00
+2016-01-29 12:04:36,488 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:649] suivant 01/01/1970 01:00:00
+2016-01-29 12:04:36,504 DEBUG [default] [Laurent@LAURENT-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:621] No text to show in editor 
+2016-01-29 12:04:36,925 INFO  [default] Ajoute Date 2016-02-04
+2016-01-29 12:04:36,941 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:586] Show date 04/02/2016
+2016-01-29 12:04:36,941 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:643] precedent 03/02/2016 00:00:00
+2016-01-29 12:04:36,941 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:647] actuel 04/02/2016 00:00:00
+2016-01-29 12:04:36,941 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:649] suivant 01/01/1970 01:00:00
+2016-01-29 12:04:36,941 DEBUG [default] [Laurent@LAURENT-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:621] No text to show in editor 
+2016-01-29 12:04:37,346 INFO  [default] Ajoute Date 2016-02-05
+2016-01-29 12:04:37,346 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:586] Show date 05/02/2016
+2016-01-29 12:04:37,346 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:643] precedent 04/02/2016 00:00:00
+2016-01-29 12:04:37,346 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:647] actuel 05/02/2016 00:00:00
+2016-01-29 12:04:37,346 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:649] suivant 01/01/1970 01:00:00
+2016-01-29 12:04:37,362 DEBUG [default] [Laurent@LAURENT-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:621] No text to show in editor 
+2016-01-29 12:04:37,955 INFO  [default] Ajoute Date 2016-02-08
+2016-01-29 12:04:37,955 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:586] Show date 08/02/2016
+2016-01-29 12:04:37,955 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:643] precedent 05/02/2016 00:00:00
+2016-01-29 12:04:37,955 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:647] actuel 08/02/2016 00:00:00
+2016-01-29 12:04:37,955 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:649] suivant 01/01/1970 01:00:00
+2016-01-29 12:04:37,970 DEBUG [default] [Laurent@LAURENT-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:621] No text to show in editor 
+2016-01-29 12:04:38,267 INFO  [default] Ajoute Date 2016-02-09
+2016-01-29 12:04:38,267 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:586] Show date 09/02/2016
+2016-01-29 12:04:38,267 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:643] precedent 08/02/2016 00:00:00
+2016-01-29 12:04:38,267 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:647] actuel 09/02/2016 00:00:00
+2016-01-29 12:04:38,267 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:649] suivant 01/01/1970 01:00:00
+2016-01-29 12:04:38,282 DEBUG [default] [Laurent@LAURENT-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:621] No text to show in editor 
+2016-01-29 12:04:38,532 INFO  [default] Ajoute Date 2016-02-10
+2016-01-29 12:04:38,548 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:586] Show date 10/02/2016
+2016-01-29 12:04:38,548 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:643] precedent 09/02/2016 00:00:00
+2016-01-29 12:04:38,548 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:647] actuel 10/02/2016 00:00:00
+2016-01-29 12:04:38,548 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:649] suivant 01/01/1970 01:00:00
+2016-01-29 12:04:38,548 DEBUG [default] [Laurent@LAURENT-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:621] No text to show in editor 
+2016-01-29 12:04:38,813 INFO  [default] Ajoute Date 2016-02-11
+2016-01-29 12:04:38,828 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:586] Show date 11/02/2016
+2016-01-29 12:04:38,828 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:643] precedent 10/02/2016 00:00:00
+2016-01-29 12:04:38,828 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:647] actuel 11/02/2016 00:00:00
+2016-01-29 12:04:38,828 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:649] suivant 01/01/1970 01:00:00
+2016-01-29 12:04:38,828 DEBUG [default] [Laurent@LAURENT-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:621] No text to show in editor 
+2016-01-29 12:04:39,078 INFO  [default] Ajoute Date 2016-02-12
+2016-01-29 12:04:39,078 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:586] Show date 12/02/2016
+2016-01-29 12:04:39,078 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:643] precedent 11/02/2016 00:00:00
+2016-01-29 12:04:39,078 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:647] actuel 12/02/2016 00:00:00
+2016-01-29 12:04:39,078 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:649] suivant 01/01/1970 01:00:00
+2016-01-29 12:04:39,094 DEBUG [default] [Laurent@LAURENT-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:621] No text to show in editor 
+2016-01-29 12:04:39,296 INFO  [default] Ajoute Date 2016-02-15
+2016-01-29 12:04:39,312 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:586] Show date 15/02/2016
+2016-01-29 12:04:39,312 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:643] precedent 12/02/2016 00:00:00
+2016-01-29 12:04:39,312 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:647] actuel 15/02/2016 00:00:00
+2016-01-29 12:04:39,312 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:649] suivant 01/01/1970 01:00:00
+2016-01-29 12:04:39,312 DEBUG [default] [Laurent@LAURENT-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:621] No text to show in editor 
+2016-01-29 12:04:39,499 INFO  [default] Ajoute Date 2016-02-16
+2016-01-29 12:04:39,499 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:586] Show date 16/02/2016
+2016-01-29 12:04:39,499 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:643] precedent 15/02/2016 00:00:00
+2016-01-29 12:04:39,499 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:647] actuel 16/02/2016 00:00:00
+2016-01-29 12:04:39,499 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:649] suivant 01/01/1970 01:00:00
+2016-01-29 12:04:39,515 DEBUG [default] [Laurent@LAURENT-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:621] No text to show in editor 
+2016-01-29 12:04:39,702 INFO  [default] Ajoute Date 2016-02-17
+2016-01-29 12:04:39,733 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:586] Show date 17/02/2016
+2016-01-29 12:04:39,733 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:643] precedent 16/02/2016 00:00:00
+2016-01-29 12:04:39,733 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:647] actuel 17/02/2016 00:00:00
+2016-01-29 12:04:39,733 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:649] suivant 01/01/1970 01:00:00
+2016-01-29 12:04:39,733 DEBUG [default] [Laurent@LAURENT-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:621] No text to show in editor 
+2016-01-29 12:04:39,889 INFO  [default] Ajoute Date 2016-02-18
+2016-01-29 12:04:39,905 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:586] Show date 18/02/2016
+2016-01-29 12:04:39,905 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:643] precedent 17/02/2016 00:00:00
+2016-01-29 12:04:39,905 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:647] actuel 18/02/2016 00:00:00
+2016-01-29 12:04:39,905 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:649] suivant 01/01/1970 01:00:00
+2016-01-29 12:04:39,920 DEBUG [default] [Laurent@LAURENT-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:621] No text to show in editor 
+2016-01-29 12:04:49,067 INFO  [default] Ajoute Date 2016-01-17
+2016-01-29 12:04:49,083 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:586] Show date 17/01/2016
+2016-01-29 12:04:49,083 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:647] actuel 17/01/2016 00:00:00
+2016-01-29 12:04:49,083 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:649] suivant 29/01/2016 00:00:00
+2016-01-29 12:04:49,098 DEBUG [default] [Laurent@LAURENT-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:621] No text to show in editor 
+2016-01-29 12:04:53,966 INFO  [default] Ajoute Date 2016-01-15
+2016-01-29 12:04:53,966 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:586] Show date 15/01/2016
+2016-01-29 12:04:53,966 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:647] actuel 15/01/2016 00:00:00
+2016-01-29 12:04:53,966 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:649] suivant 17/01/2016 00:00:00
+2016-01-29 12:04:53,982 DEBUG [default] [Laurent@LAURENT-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:621] No text to show in editor 
+2016-01-29 12:04:56,406 INFO  [default] Ajoute Date 2016-01-14
+2016-01-29 12:04:56,422 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:586] Show date 14/01/2016
+2016-01-29 12:04:56,422 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:647] actuel 14/01/2016 00:00:00
+2016-01-29 12:04:56,422 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:649] suivant 15/01/2016 00:00:00
+2016-01-29 12:04:56,422 DEBUG [default] [Laurent@LAURENT-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:621] No text to show in editor 

@@ -13,9 +13,10 @@ public:
     ExcludedDays();
     ~ExcludedDays();
     void Clear();    
-    wxDateTime NextDay(const wxDateTime& date);
-    wxDateTime PreviousDay(const wxDateTime& date);
+    wxDateTime NextDay(wxDateTime date);
+    wxDateTime PreviousDay(wxDateTime date);
     bool IsValid();
+    bool IsWeekDayValid(wxDateTime day);    
     void DefaultValidate();
 };
 

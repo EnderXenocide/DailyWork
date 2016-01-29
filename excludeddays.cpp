@@ -22,14 +22,24 @@ void ExcludedDays::Clear()
     sunday = false;
 }
 
-wxDateTime ExcludedDays::NextDay(const wxDateTime& date)
+wxDateTime ExcludedDays::NextDay(wxDateTime date)
 {
-    return date + wxDateSpan::Day(); 
+    if (!IsValid()) DefaultValidate();    
+    do { 
+        date = date + wxDateSpan::Day(); 
+    } 
+    while (!IsWeekDayValid(date));
+    return date; 
 }
 
-wxDateTime ExcludedDays::PreviousDay(const wxDateTime& date)
+wxDateTime ExcludedDays::PreviousDay(wxDateTime date)
 {
-    return date - wxDateSpan::Day(); 
+    if (!IsValid()) DefaultValidate();    
+    do { 
+        date = date - wxDateSpan::Day(); 
+    } 
+    while (!IsWeekDayValid(date));
+    return date; 
 }
 bool ExcludedDays::IsValid()
 {
@@ -42,4 +52,20 @@ void ExcludedDays::DefaultValidate()
 {
     LOG(INFO) << "Excluded Days. Remove first day";
     monday = false;
+}
+
+bool ExcludedDays::IsWeekDayValid(wxDateTime day)
+{ 
+    //wxDateTime::WeekDay weekday
+    switch (day.GetWeekDay())
+    {
+        case wxDateTime::WeekDay::Sun: return !sunday;
+        case wxDateTime::WeekDay::Mon: return !monday;    
+        case wxDateTime::WeekDay::Tue: return !tuesday;
+        case wxDateTime::WeekDay::Wed: return !wednesday;    
+        case wxDateTime::WeekDay::Thu: return !thursday;
+        case wxDateTime::WeekDay::Fri: return !friday;    
+        case wxDateTime::WeekDay::Sat: return !saturday;    
+        default: return false;
+    }
 }
