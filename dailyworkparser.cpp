@@ -250,23 +250,31 @@ void DailyWorkParser::TestAndUpdate()
         Value items(kArrayType);
         document.AddMember(JSON_ITEMS, items, allocator);  
         modified = true; 
-    }  
-    
+    } 
+ 
     if (!document.HasMember(JSON_VERSION))
     {
-        Value items(2);
+        Value items(JSON_VERSION_SCHEMA);
         document.AddMember(JSON_VERSION, items, allocator);  
         modified = true; 
     }  
     
     version = document[JSON_VERSION].GetInt();
     if (version==1) 
-       document[JSON_VERSION].SetInt(2);  //passage à la version 2
+       document[JSON_VERSION].SetInt(JSON_VERSION_SCHEMA);  //passage à la version n° JSON_VERSION_SCHEMA
+
     if (!document.HasMember(JSON_FAVORITES)) {
         Value items(kArrayType);
         document.AddMember(JSON_FAVORITES, items, allocator);  
         modified = true;          
     }                
+   
+    if (!document.HasMember(JSON_EXCLUDED_DAYS))
+    {
+        Value items(kArrayType);
+        document.AddMember(JSON_EXCLUDED_DAYS, items, allocator);  
+        modified = true; 
+    }  
 }
 
 bool DailyWorkParser::AddToFavorites(wxString text)
@@ -380,3 +388,100 @@ std::string DailyWorkParser::GetLine(const std::string &str, std::size_t idx) co
     else
         return str; // renvoie str qui est sur une ligne
 }
+
+bool DailyWorkParser::IsSelectedOk()
+{
+}
+
+int DailyWorkParser::GetExcludedDays(ExcludedDays &ed)
+{
+    Value &array = document[JSON_EXCLUDED_DAYS];
+    ed.Clear();
+    LOG(INFO) << "Get Excluded Days : ";
+    for (Value::ConstValueIterator itr = array.Begin(); itr != array.End(); itr++) {
+        std::string day = itr->GetString();
+        if (day=="monday") ed.monday = true;
+        else if (day=="tuesday") ed.tuesday = true;
+        else if (day=="wednesday") ed.wednesday = true;
+        else if (day=="thursday") ed.thursday = true;
+        else if (day=="saturday") ed.saturday = true;
+        else if (day=="sunday") ed.sunday = true;
+        LOG(INFO) << day;
+    } 
+    if (!ed.IsValid()) {
+        ed.DefaultValidate();
+        return 0; 
+    }
+    return  -1; 
+}
+
+int DailyWorkParser::SetExcludedDays(ExcludedDays ed)
+{
+    Value &array = document[JSON_EXCLUDED_DAYS];
+    array.Clear();
+    if (!ed.IsValid()) {
+        ed.DefaultValidate();
+    }
+    std::string listeExcludeDays;
+    Document::AllocatorType& allocator = document.GetAllocator();
+    Value valueString(kStringType);
+    if (ed.monday) {
+        std::string text = "monday";
+        valueString.SetString(text.c_str(), text.size(), allocator);
+        array.PushBack(valueString, allocator);
+        modified = true;
+        listeExcludeDays = text+" ";
+    }
+    if (ed.tuesday) {
+        std::string text = "tuesday";
+        valueString.SetString(text.c_str(), text.size(), allocator);
+        array.PushBack(valueString, allocator);
+        modified = true;
+        listeExcludeDays = listeExcludeDays+text+" ";
+    };
+    if (ed.wednesday) {
+        std::string text = "wednesday";
+        valueString.SetString(text.c_str(), text.size(), allocator);
+        array.PushBack(valueString, allocator);
+        modified = true;
+        listeExcludeDays = listeExcludeDays+text+" ";
+    };
+    if (ed.thursday) {
+        std::string text = "thursday";
+        valueString.SetString(text.c_str(), text.size(), allocator);
+        array.PushBack(valueString, allocator);
+        modified = true;
+        listeExcludeDays = listeExcludeDays+text+" ";
+    };
+    if (ed.saturday) {
+        std::string text = "saturday";
+        valueString.SetString(text.c_str(), text.size(), allocator);
+        array.PushBack(valueString, allocator);
+        modified = true;
+        listeExcludeDays = listeExcludeDays+text+" ";
+    };
+    if (ed.sunday) {
+        std::string text = "sunday";
+        valueString.SetString(text.c_str(), text.size(), allocator);
+        array.PushBack(valueString, allocator);
+        modified = true;
+        listeExcludeDays = listeExcludeDays+text+" ";
+    LOG(INFO) << "Set Excluded Days : "<< listeExcludeDays;
+    };
+    return  -1;        
+}
+/*
+    std::string utf8Text = text.ToUTF8().data();
+    if (IsInFavorites(text)) {
+         LOG(INFO) << "Pas d'ajout du favoris <" << utf8Text <<"> déja éxistant";
+        return false;
+    }
+    LOG(INFO) << "Ajoute le favoris <" << utf8Text <<">";
+    Document::AllocatorType& allocator = document.GetAllocator();
+    Value valueString(kStringType);
+    valueString.SetString(utf8Text.c_str(), utf8Text.size(), document.GetAllocator());
+    Value &array = document[JSON_FAVORITES];
+    array.PushBack(valueString, allocator); 
+    modified = true;
+    return true;
+*/

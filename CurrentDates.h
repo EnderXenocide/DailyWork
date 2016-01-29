@@ -1,7 +1,7 @@
 #ifndef CURRENTDATES_H
 #define CURRENTDATES_H
 
-#include <wx/wx.h>
+#include <wx/string.h>
 #include <set>
 #include <algorithm>
 

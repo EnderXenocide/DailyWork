@@ -67,7 +67,6 @@ int MainApp::OnExit()
 #if USE_RICH_EDIT
     delete m_styleSheet;
 #endif
-
     return 0;
 }
 
@@ -278,6 +277,8 @@ void MainApp::InitDailyWorkParser()
 {
    dwparser.Parse();
    currentDates.clear();
+  // dwparser.GetExcludedDays(excludedDays);
+   dwparser.SetExcludedDays(excludedDays);
    LoadDailyWorkInTree();  // même si parse renvoie -1,  on charge quand même l'arbre   
    LoadFavoritesInComboBox();
 }
@@ -285,7 +286,7 @@ void MainApp::InitDailyWorkParser()
 void MainApp::LoadDailyWorkInTree()
 {
     wxStopWatch stopwatch;
-    LOG(INFO) << "Loading Tree with json data...";
+    LOG(INFO) << "Loading Tree with json 0data...";
     frame->DisconnectSelectionEvents();
     wxTreeCtrl* tree = frame->m_treeDates;
     tree->Freeze(); //prevent drawing
@@ -299,7 +300,7 @@ void MainApp::LoadDailyWorkInTree()
     }
     else {
         LoadBranch = &AddBranchSimple;
-            LOG(INFO) << "Loading Tree Simple... ";
+        LOG(INFO) << "Loading Tree Simple... ";
     }
     wxTreeItemId itemId;
     for(SizeType i = 0; i < dwparser.CountItems(); i++) { //todo faire des appels de dwparser
@@ -436,7 +437,7 @@ void MainApp::DeleteDateSelected()
         else if (tree->ItemHasChildren(itemId))  // mois
             msg = date.Format(_("the month %B %Y"));
         else 
-            msg = _("the day ")+date.FormatDate();;
+            msg = _("the day ")+date.FormatDate();
 
         wxMessageDialog dial(frame, wxString::Format(_("Delete %s ?"),msg), _("Warning"), wxYES_NO|wxCENTER_FRAME);
         if (dial.ShowModal()==wxID_YES) { //on supprime            
@@ -584,8 +585,8 @@ void MainApp::SetCurrentDateFromTreeDatesSelection()
     if (date.IsValid()) {
         LOG(DEBUG) << "Show date " << date.FormatDate();
         currentDates.today = date;    
-        currentDates.yesterday = date - wxDateSpan::Day();
-        currentDates.tomorrow = date + wxDateSpan::Day();
+        currentDates.yesterday = excludedDays.PreviousDay(date);
+        currentDates.tomorrow = excludedDays.NextDay(date);
         GetDatesAround(date, currentDates.prevAvailable, currentDates.nextAvailable);
         text = dwparser.GetWorkFromDate(date);        
    }

@@ -10,14 +10,14 @@
 				"properties": {
 					"date": {
 						"description": "date au format YYYY-MM-DD",
-						"type": "string"
+						"type": "string",
 					},
 					"work": {
 						"description": "note à la date",
-						"type": "string"
-					}
+						"type": "string",
+					},
 				},
-				"required": ["date", "work"]
+				"required": ["date", "work"],
 			},
 			"minItems": 0,
 			"uniqueItems": true,
@@ -30,8 +30,18 @@
 			"type": "array",
 			"items": {
 				"type": "string",
-			}
+			},
+		},
+		"excluded days": {
+			"type": "array",
+			"items": {
+				"type": "string",
+				"enum": ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"],
+			},
+			"minItems": 0,
+			"maxItems": 6,
+			"uniqueItems": true,
 		},
 	},
-	"required": ["dailyworks", "version"]
+	"required": ["dailyworks", "version"],
 }

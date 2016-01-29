@@ -11,6 +11,9 @@
 
 #include "dwitemdata.h"
 #include "results.h"
+#include "excludeddays.h"
+
+#define JSON_VERSION_SCHEMA 3
 
 #define JSON_FILE "dailywork.json"
 #define JSON_DATE_FORMAT_EXT "%Y-%m-%d" // strptime()-like format string
@@ -21,7 +24,7 @@
 #define JSON_DATE "date"
 #define JSON_VERSION "version"
 #define JSON_FAVORITES "favorites"
-
+#define JSON_EXCLUDED_DAYS "excluded days"
 
 using namespace rapidjson;
 
@@ -61,6 +64,9 @@ public:
     int DeleteFavorite(wxString text);
     wxString GetFavorite(int itemIndex);
     bool IsInFavorites(wxString text);
+
+    int GetExcludedDays(ExcludedDays &ed);
+    int SetExcludedDays(ExcludedDays ed);
 
     int SearchInDates(const wxString text, MapFind &results);
     std::string GetLine(const std::string &str, std::size_t idx) const;

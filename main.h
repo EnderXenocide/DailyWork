@@ -20,23 +20,25 @@
 #include "gui2.h"
 
 // main wxWidgets header file
+#include <wx/wx.h>
 #include <wx/string.h>
 #include <wx/treectrl.h>
+#include <wx/msgdlg.h>
 
 #if wxUSE_HELP
-#include "wx/cshelp.h"
+#include <wx/cshelp.h>
 #endif
 
 #if USE_RICH_EDIT
-#include "wx/richtext/richtextctrl.h"
-#include "wx/richtext/richtextstyles.h"
-#include "wx/richtext/richtextxml.h"
-#include "wx/richtext/richtexthtml.h"
-#include "wx/richtext/richtextformatdlg.h"
-#include "wx/richtext/richtextsymboldlg.h"
-#include "wx/richtext/richtextstyledlg.h"
-#include "wx/richtext/richtextprint.h"
-#include "wx/richtext/richtextimagedlg.h"
+#include <wx/richtext/richtextctrl.h>
+#include <wx/richtext/richtextstyles.h>
+#include <wx/richtext/richtextxml.h>
+#include <wx/richtext/richtexthtml.h>
+#include <wx/richtext/richtextformatdlg.h>
+#include <wx/richtext/richtextsymboldlg.h>
+#include <wx/richtext/richtextstyledlg.h>
+#include <wx/richtext/richtextprint.h>
+#include <wx/richtext/richtextimagedlg.h>
 #endif
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -93,6 +95,7 @@ private:
     wxLanguage m_language;  // language specified by user
     wxLocale* m_locale;  // locale we'll be using
     DailyWorkParser dwparser; 
+    ExcludedDays excludedDays;
     void InitLanguageSupport();
      wxTreeItemId AddItemData(wxTreeItemId itemId, wxDateTime date, bool setDataEmpty);
     void SelectDateInTree(const wxDateTime &date);
