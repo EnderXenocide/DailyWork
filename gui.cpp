@@ -97,3 +97,41 @@ MainFrameBase::~MainFrameBase()
 	m_buttonGoNextAvailable->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MainFrameBase::OnButtonGoNextAvailableClick ), NULL, this );
 	
 }
+
+DlgPreference::DlgPreference( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
+{
+	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+	
+	wxBoxSizer* bSizer4;
+	bSizer4 = new wxBoxSizer( wxVERTICAL );
+	
+	wxStaticBoxSizer* sbSizer1;
+	sbSizer1 = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Excludes Days") ), wxVERTICAL );
+	
+	wxString m_checkListExcludeDaysChoices[] = { _("Monday"), _("Tuesday"), _("Thusday") };
+	int m_checkListExcludeDaysNChoices = sizeof( m_checkListExcludeDaysChoices ) / sizeof( wxString );
+	m_checkListExcludeDays = new wxCheckListBox( sbSizer1->GetStaticBox(), wxID_ANY, wxDefaultPosition, wxDefaultSize, m_checkListExcludeDaysNChoices, m_checkListExcludeDaysChoices, 0 );
+	sbSizer1->Add( m_checkListExcludeDays, 1, wxALL|wxEXPAND, 5 );
+	
+	
+	bSizer4->Add( sbSizer1, 1, wxEXPAND, 5 );
+	
+	m_sdbSizer1 = new wxStdDialogButtonSizer();
+	m_sdbSizer1OK = new wxButton( this, wxID_OK );
+	m_sdbSizer1->AddButton( m_sdbSizer1OK );
+	m_sdbSizer1Cancel = new wxButton( this, wxID_CANCEL );
+	m_sdbSizer1->AddButton( m_sdbSizer1Cancel );
+	m_sdbSizer1->Realize();
+	
+	bSizer4->Add( m_sdbSizer1, 0, wxEXPAND, 5 );
+	
+	
+	this->SetSizer( bSizer4 );
+	this->Layout();
+	
+	this->Centre( wxBOTH );
+}
+
+DlgPreference::~DlgPreference()
+{
+}

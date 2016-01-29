@@ -222,3 +222,122 @@ xwc
 2016-01-29 12:04:56,422 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:647] actuel 14/01/2016 00:00:00
 2016-01-29 12:04:56,422 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:649] suivant 15/01/2016 00:00:00
 2016-01-29 12:04:56,422 DEBUG [default] [Laurent@LAURENT-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:621] No text to show in editor 
+2016-01-29 15:08:12,711 INFO  [default] START
+2016-01-29 15:08:12,712 ERROR [default] Couldn't find/load the 'dailywork' catalog for locale 'French_France.1252'.
+2016-01-29 15:08:13,013 INFO  [default] Parse file dailywork.json
+2016-01-29 15:08:13,013 INFO  [default] Set Excluded Days : saturday sunday 
+2016-01-29 15:08:13,013 INFO  [default] Loading Tree with json 0data...
+2016-01-29 15:08:13,013 INFO  [default] Loading Tree Hierarchy... 
+2016-01-29 15:08:13,013 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:586] Show date 29/01/2016
+2016-01-29 15:08:13,013 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:647] actuel 29/01/2016 00:00:00
+2016-01-29 15:08:13,013 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:649] suivant 01/01/1970 01:00:00
+2016-01-29 15:08:13,013 DEBUG [default] [Laurent@LAURENT-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:622] Text to show in editor <456465>
+2016-01-29 15:08:13,013 INFO  [default] Tree Loaded in 4ms
+2016-01-29 15:08:22,702 INFO  [default] Enregistrement
+2016-01-29 15:09:36,567 INFO  [default] START
+2016-01-29 15:09:36,567 ERROR [default] Couldn't find/load the 'dailywork' catalog for locale 'French_France.1252'.
+2016-01-29 15:09:36,866 INFO  [default] Parse file dailywork.json
+2016-01-29 15:09:36,882 INFO  [default] Loading Tree with json 0data...
+2016-01-29 15:09:36,882 INFO  [default] Loading Tree Hierarchy... 
+2016-01-29 15:09:36,882 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:586] Show date 29/01/2016
+2016-01-29 15:09:36,882 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:647] actuel 29/01/2016 00:00:00
+2016-01-29 15:09:36,882 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:649] suivant 01/01/1970 01:00:00
+2016-01-29 15:09:36,882 DEBUG [default] [Laurent@LAURENT-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:626] Text to show in editor <456465>
+2016-01-29 15:09:36,882 INFO  [default] Tree Loaded in 5ms
+2016-01-29 15:20:47,367 INFO  [default] START
+2016-01-29 15:20:47,370 ERROR [default] Couldn't find/load the 'dailywork' catalog for locale 'French_France.1252'.
+2016-01-29 15:20:47,664 INFO  [default] Parse file dailywork.json
+2016-01-29 15:20:47,664 INFO  [default] Loading Tree with json 0data...
+2016-01-29 15:20:47,664 INFO  [default] Loading Tree Hierarchy... 
+2016-01-29 15:20:47,665 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:586] Show date 29/01/2016
+2016-01-29 15:20:47,665 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:647] actuel 29/01/2016 00:00:00
+2016-01-29 15:20:47,665 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:649] suivant 01/01/1970 01:00:00
+2016-01-29 15:20:47,666 DEBUG [default] [Laurent@LAURENT-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:626] Text to show in editor <456465>
+2016-01-29 15:20:47,669 INFO  [default] Tree Loaded in 4ms
+2016-01-29 15:50:54,621 INFO  [default] START
+2016-01-29 15:50:54,621 ERROR [default] Couldn't find/load the 'dailywork' catalog for locale 'French_France.1252'.
+2016-01-29 15:50:54,917 INFO  [default] Parse file dailywork.json
+2016-01-29 15:50:54,917 INFO  [default] Loading Tree with json 0data...
+2016-01-29 15:50:54,917 INFO  [default] Loading Tree Hierarchy... 
+2016-01-29 15:50:54,917 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:586] Show date 29/01/2016
+2016-01-29 15:50:54,917 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:647] actuel 29/01/2016 00:00:00
+2016-01-29 15:50:54,933 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:649] suivant 01/01/1970 01:00:00
+2016-01-29 15:50:54,933 DEBUG [default] [Laurent@LAURENT-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:626] Text to show in editor <456465>
+2016-01-29 15:50:54,933 INFO  [default] Tree Loaded in 8ms
+2016-01-29 15:53:59,878 INFO  [default] START
+2016-01-29 15:53:59,881 ERROR [default] Couldn't find/load the 'dailywork' catalog for locale 'French_France.1252'.
+2016-01-29 15:54:00,177 INFO  [default] Parse file dailywork.json
+2016-01-29 15:54:00,178 INFO  [default] Loading Tree with json 0data...
+2016-01-29 15:54:00,178 INFO  [default] Loading Tree Hierarchy... 
+2016-01-29 15:54:00,179 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:586] Show date 29/01/2016
+2016-01-29 15:54:00,179 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:647] actuel 29/01/2016 00:00:00
+2016-01-29 15:54:00,179 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:649] suivant 01/01/1970 01:00:00
+2016-01-29 15:54:00,179 DEBUG [default] [Laurent@LAURENT-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:626] Text to show in editor <456465>
+2016-01-29 15:54:00,182 INFO  [default] Tree Loaded in 4ms
+2016-01-29 16:11:20,894 INFO  [default] START
+2016-01-29 16:11:20,894 ERROR [default] Couldn't find/load the 'dailywork' catalog for locale 'French_France.1252'.
+2016-01-29 16:11:21,190 INFO  [default] Parse file dailywork.json
+2016-01-29 16:11:21,190 INFO  [default] Loading Tree with json 0data...
+2016-01-29 16:11:21,190 INFO  [default] Loading Tree Hierarchy... 
+2016-01-29 16:11:21,190 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:586] Show date 29/01/2016
+2016-01-29 16:11:21,190 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:647] actuel 29/01/2016 00:00:00
+2016-01-29 16:11:21,190 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:649] suivant 01/01/1970 01:00:00
+2016-01-29 16:11:21,190 DEBUG [default] [Laurent@LAURENT-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:626] Text to show in editor <456465>
+2016-01-29 16:11:21,190 INFO  [default] Tree Loaded in 3ms
+2016-01-29 16:25:43,421 INFO  [default] START
+2016-01-29 16:25:43,437 ERROR [default] Couldn't find/load the 'dailywork' catalog for locale 'French_France.1252'.
+2016-01-29 16:25:43,718 INFO  [default] Parse file dailywork.json
+2016-01-29 16:25:43,718 INFO  [default] Excluded Days. Remove first day
+2016-01-29 16:25:43,718 INFO  [default] Loading Tree with json 0data...
+2016-01-29 16:25:43,718 INFO  [default] Loading Tree Hierarchy... 
+2016-01-29 16:25:43,718 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:586] Show date 29/01/2016
+2016-01-29 16:25:43,718 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:647] actuel 29/01/2016 00:00:00
+2016-01-29 16:25:43,718 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:649] suivant 01/01/1970 01:00:00
+2016-01-29 16:25:43,718 DEBUG [default] [Laurent@LAURENT-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:626] Text to show in editor <456465>
+2016-01-29 16:25:43,718 INFO  [default] Tree Loaded in 3ms
+2016-01-29 16:35:13,437 INFO  [default] START
+2016-01-29 16:35:13,437 ERROR [default] Couldn't find/load the 'dailywork' catalog for locale 'French_France.1252'.
+2016-01-29 16:35:13,734 INFO  [default] Parse file dailywork.json
+2016-01-29 16:35:13,734 INFO  [default] Loading Tree with json 0data...
+2016-01-29 16:35:13,734 INFO  [default] Loading Tree Hierarchy... 
+2016-01-29 16:35:13,749 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:586] Show date 29/01/2016
+2016-01-29 16:35:13,749 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:647] actuel 29/01/2016 00:00:00
+2016-01-29 16:35:13,749 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:649] suivant 01/01/1970 01:00:00
+2016-01-29 16:35:13,749 DEBUG [default] [Laurent@LAURENT-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:626] Text to show in editor <456465>
+2016-01-29 16:35:13,749 INFO  [default] Tree Loaded in 4ms
+2016-01-29 16:35:37,531 INFO  [default] Enregistrement
+2016-01-29 16:37:50,055 INFO  [default] START
+2016-01-29 16:37:50,055 ERROR [default] Couldn't find/load the 'dailywork' catalog for locale 'French_France.1252'.
+2016-01-29 16:37:50,352 INFO  [default] Parse file dailywork.json
+2016-01-29 16:37:50,352 INFO  [default] Loading Tree with json 0data...
+2016-01-29 16:37:50,352 INFO  [default] Loading Tree Hierarchy... 
+2016-01-29 16:37:50,352 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:586] Show date 29/01/2016
+2016-01-29 16:37:50,352 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:647] actuel 29/01/2016 00:00:00
+2016-01-29 16:37:50,352 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:649] suivant 01/01/1970 01:00:00
+2016-01-29 16:37:50,352 DEBUG [default] [Laurent@LAURENT-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:626] Text to show in editor <456465>
+2016-01-29 16:37:50,352 INFO  [default] Tree Loaded in 4ms
+2016-01-29 16:38:12,856 INFO  [default] Enregistrement
+2016-01-29 16:38:45,111 INFO  [default] START
+2016-01-29 16:38:45,111 ERROR [default] Couldn't find/load the 'dailywork' catalog for locale 'French_France.1252'.
+2016-01-29 16:38:45,408 INFO  [default] Parse file dailywork.json
+2016-01-29 16:38:45,408 INFO  [default] Loading Tree with json 0data...
+2016-01-29 16:38:45,408 INFO  [default] Loading Tree Hierarchy... 
+2016-01-29 16:38:45,408 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:586] Show date 29/01/2016
+2016-01-29 16:38:45,408 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:647] actuel 29/01/2016 00:00:00
+2016-01-29 16:38:45,408 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:649] suivant 01/01/1970 01:00:00
+2016-01-29 16:38:45,408 DEBUG [default] [Laurent@LAURENT-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:626] Text to show in editor <456465>
+2016-01-29 16:38:45,408 INFO  [default] Tree Loaded in 4ms
+2016-01-29 16:41:06,539 INFO  [default] START
+2016-01-29 16:41:06,555 ERROR [default] Couldn't find/load the 'dailywork' catalog for locale 'French_France.1252'.
+2016-01-29 16:41:06,851 INFO  [default] Parse file dailywork.json
+2016-01-29 16:41:06,851 INFO  [default] Get Excluded Days : 
+2016-01-29 16:41:06,851 INFO  [default] thursday
+2016-01-29 16:41:06,851 INFO  [default] saturday
+2016-01-29 16:41:06,851 INFO  [default] Loading Tree with json 0data...
+2016-01-29 16:41:06,851 INFO  [default] Loading Tree Hierarchy... 
+2016-01-29 16:41:06,851 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:585] Show date 29/01/2016
+2016-01-29 16:41:06,851 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:646] actuel 29/01/2016 00:00:00
+2016-01-29 16:41:06,851 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::GetDatesAround(const wxDateTime&, wxDateTime&, wxDateTime&)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:648] suivant 01/01/1970 01:00:00
+2016-01-29 16:41:06,851 DEBUG [default] [Laurent@LAURENT-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:626] Text to show in editor <456465>
+2016-01-29 16:41:06,851 INFO  [default] Tree Loaded in 3ms
+2016-01-29 16:41:27,482 INFO  [default] Enregistrement

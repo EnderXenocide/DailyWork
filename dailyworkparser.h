@@ -52,7 +52,6 @@ public:
     bool IsModified() const { return modified; }
     int SaveAs(wxString filename);
     int Save();
-    bool IsSelectedOk();
     
     void AddItem(const wxDateTime& date, wxString work="");
     SizeType CountItems(); 

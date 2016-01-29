@@ -29,6 +29,9 @@
 #include <wx/statusbr.h>
 #include <wx/toolbar.h>
 #include <wx/frame.h>
+#include <wx/checklst.h>
+#include <wx/statbox.h>
+#include <wx/dialog.h>
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -69,6 +72,26 @@ class MainFrameBase : public wxFrame
 		MainFrameBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 699,413 ), long style = wxCLOSE_BOX|wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 		
 		~MainFrameBase();
+	
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class DlgPreference
+///////////////////////////////////////////////////////////////////////////////
+class DlgPreference : public wxDialog 
+{
+	private:
+	
+	protected:
+		wxCheckListBox* m_checkListExcludeDays;
+		wxStdDialogButtonSizer* m_sdbSizer1;
+		wxButton* m_sdbSizer1OK;
+		wxButton* m_sdbSizer1Cancel;
+	
+	public:
+		
+		DlgPreference( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Préférences"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 420,309 ), long style = wxDEFAULT_DIALOG_STYLE ); 
+		~DlgPreference();
 	
 };
 

@@ -69,6 +69,7 @@ enum
     ID_PRINT,
     ID_PREVIEW,
     ID_PAGE_SETUP,
+    ID_PREFERENCES,
 
     ID_RICHTEXT_CTRL,
     ID_RICHTEXT_STYLE_LIST,
@@ -296,7 +297,8 @@ void MainFrame::CreateMenu()
     fileMenu->Append(ID_RELOAD, _("&Reload\tF2"), _("Reload the file/tree"));
    // fileMenu->SetBitmap....
     fileMenu->AppendSeparator();
-    fileMenu->Append(ID_PAGE_SETUP, _("Page Set&up..."), _("Page setup"));
+  //  fileMenu->Append(ID_PAGE_SETUP, _("Page Set&up..."), _("Page setup"));
+    fileMenu->Append(ID_PREFERENCES, _("O&ptions"), _("Open options dialog"));
 #if USE_RICH_EDIT
     fileMenu->AppendSeparator();
     fileMenu->Append(ID_VIEW_HTML, _("View as HT&ML"), _("View HTML")); 
@@ -512,6 +514,8 @@ void MainFrame::ConnectEvents()
     Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnSave, this, wxID_SAVE);
     Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnSaveAs, this, wxID_SAVEAS);
     
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnOptions, this, ID_PREFERENCES);
+
     Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnShowHirerarchicalTree, this, ID_HIERACHY);
  
     Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnReload, this, ID_RELOAD);
@@ -933,6 +937,15 @@ void MainFrame::OnSaveAs(wxCommandEvent& event)
             //wxLogDebug(wxT("Saving took %ldms"), t);
             //wxMessageBox(wxString::Format(_("Saving took %ldms"), t));
         }
+    }
+}
+
+void MainFrame::OnOptions(wxCommandEvent& event)
+{
+    DlgOptions dialog(this, wxGetApp().GetExcludedDays());
+    if (dialog.ShowModal() == wxID_OK)
+    {
+        wxGetApp().SetExcludedDays(dialog.GetExcludedDays());
     }
 }
 
@@ -2006,4 +2019,76 @@ void MainFrame::WriteInitialText()
 
     r.Thaw();
 }
+
 #endif //USE_RICH_EDIT
+
+//DlgOptions::DlgOptions( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
+DlgOptions::DlgOptions(wxWindow* parent, ExcludedDays ed) : wxDialog( parent, wxID_ANY,  _("Preferences"), wxDefaultPosition, wxSize( 420,309 ), wxDEFAULT_DIALOG_STYLE )
+{
+	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+	
+	wxBoxSizer* bSizer4 = new wxBoxSizer( wxVERTICAL );
+	
+	wxStaticBoxSizer* sbSizer1 = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Excludes Days") ), wxVERTICAL );
+	
+    wxString m_checkListExcludeDaysChoices[] = { _("Monday"), _("Tuesday"), _("Wednesday"), _("Thirsday"), _("Friday"), _("Saturday"), _("Sundsay")};
+	int m_checkListExcludeDaysNChoices = sizeof( m_checkListExcludeDaysChoices ) / sizeof( wxString );
+	m_checkListExcludeDays = new wxCheckListBox( sbSizer1->GetStaticBox(), wxID_ANY, wxDefaultPosition, wxDefaultSize, m_checkListExcludeDaysNChoices, m_checkListExcludeDaysChoices, 0 );
+    
+    sbSizer1->Add( m_checkListExcludeDays, 1, wxALL|wxEXPAND, 5 );	
+	
+	wxStaticText* m_staticText2 = new wxStaticText( this, wxID_ANY, _("All days can't be checked"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText2->Wrap( -1 );
+	sbSizer1->Add( m_staticText2, 0, wxALIGN_CENTER|wxALL, 5 );
+
+	bSizer4->Add( sbSizer1, 1, wxEXPAND, 5 );
+	
+    wxStdDialogButtonSizer* m_sdbSizer = new wxStdDialogButtonSizer();
+	m_sdbSizerOK = new wxButton( this, wxID_OK );
+	m_sdbSizer->AddButton( m_sdbSizerOK );
+	m_sdbSizerCancel = new wxButton( this, wxID_CANCEL );
+	m_sdbSizer->AddButton( m_sdbSizerCancel );
+	m_sdbSizer->Realize();
+	
+	bSizer4->Add( m_sdbSizer, 0, wxEXPAND, 5 );
+		
+	this->SetSizer( bSizer4 );
+	this->Layout();
+	
+	this->Centre( wxBOTH );
+    
+    ExcludedDaysToIHM(ed);
+}
+
+DlgOptions::~DlgOptions()
+{
+    
+}
+
+ExcludedDays DlgOptions::GetExcludedDays()
+{
+    ExcludedDays excludedDays;
+    excludedDays.monday = m_checkListExcludeDays->IsChecked(0);
+    excludedDays.tuesday = m_checkListExcludeDays->IsChecked(1);
+    excludedDays.wednesday = m_checkListExcludeDays->IsChecked(2);
+    excludedDays.thursday = m_checkListExcludeDays->IsChecked(3);
+    excludedDays.friday = m_checkListExcludeDays->IsChecked(4);
+    excludedDays.saturday = m_checkListExcludeDays->IsChecked(5);
+    excludedDays.sunday = m_checkListExcludeDays->IsChecked(6);
+//    for (int i=0 ; i < m_checkListExcludeDays->GetCount(); i++)  {
+//        if (m_checkListExcludeDays->IsChecked(i))
+//            excludedDays.monday
+//    }     
+	return excludedDays;
+}
+
+void DlgOptions::ExcludedDaysToIHM(ExcludedDays excludedDays)
+{
+    m_checkListExcludeDays->Check(0, excludedDays.monday);
+    m_checkListExcludeDays->Check(1, excludedDays.tuesday);
+    m_checkListExcludeDays->Check(2, excludedDays.wednesday);
+    m_checkListExcludeDays->Check(3, excludedDays.thursday);
+    m_checkListExcludeDays->Check(4, excludedDays.friday);
+    m_checkListExcludeDays->Check(5, excludedDays.saturday);
+    m_checkListExcludeDays->Check(6, excludedDays.sunday);    
+}

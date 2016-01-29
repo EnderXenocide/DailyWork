@@ -25,9 +25,13 @@
 #include <wx/combobox.h>
 #include <wx/sysopt.h>
 #include <wx/splitter.h>
+#include <wx/checklst.h>
 //#include <wx/srchctrl.h>
+#include <wx/stattext.h>
 
 #include "easylogging++.h"
+
+#include "excludeddays.h"
 
 #if USE_RICH_EDIT
 #include <wx/richtext/richtextctrl.h>
@@ -162,6 +166,8 @@ protected:
     void OnSave(wxCommandEvent& event);
     void OnSaveAs(wxCommandEvent& event);
     
+    void OnOptions(wxCommandEvent& event);
+    
     void OnReload(wxCommandEvent& event);
     
     void OnTextSearchEnter(wxCommandEvent& event);  
@@ -256,6 +262,27 @@ private:
     void CreateEditor(wxWindow *parent);
     void CreateMenu();
     void CreateMainToolBar();    
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class DlgOptions
+///////////////////////////////////////////////////////////////////////////////
+class DlgOptions : public wxDialog 
+{
+	private:
+
+	protected:
+		wxCheckListBox* m_checkListExcludeDays;
+		wxButton* m_sdbSizerOK;
+		wxButton* m_sdbSizerCancel;
+	
+	public:
+		
+        DlgOptions( wxWindow* parent, ExcludedDays ed); 
+        //DlgOptions( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Préférences"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 420,309 ), long style = wxDEFAULT_DIALOG_STYLE 
+		~DlgOptions();
+        ExcludedDays GetExcludedDays();	
+        void ExcludedDaysToIHM(ExcludedDays excludedDays);
 };
 
 #endif //__GUI_H__

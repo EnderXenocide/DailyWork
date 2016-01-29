@@ -6,6 +6,17 @@ ExcludedDays::ExcludedDays()
     Clear();
 }
 
+ExcludedDays::ExcludedDays(const ExcludedDays& ed)
+{
+    monday = ed.monday;
+    tuesday = ed.tuesday;
+    wednesday = ed.wednesday;
+    thursday = ed.thursday;
+    friday = ed.friday;
+    saturday = ed.saturday;
+    sunday = ed.sunday;
+}
+
 ExcludedDays::~ExcludedDays()
 {
     
@@ -50,7 +61,7 @@ bool ExcludedDays::IsValid()
 
 void ExcludedDays::DefaultValidate()
 {
-    LOG(INFO) << "Excluded Days. Remove first day";
+    LOG(INFO) << "Excluded Days : remove first day";
     monday = false;
 }
 
@@ -67,5 +78,12 @@ bool ExcludedDays::IsWeekDayValid(wxDateTime day)
         case wxDateTime::WeekDay::Fri: return !friday;    
         case wxDateTime::WeekDay::Sat: return !saturday;    
         default: return false;
+    }
+}
+
+void ExcludedDays::AutoValid()
+{
+    if (!IsValid()) {
+        DefaultValidate();
     }
 }

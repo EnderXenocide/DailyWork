@@ -11,13 +11,17 @@ class ExcludedDays
 public:
     bool monday,tuesday,wednesday,thursday,friday, saturday,sunday;
     ExcludedDays();
+    ExcludedDays(const ExcludedDays& ed);
     ~ExcludedDays();
     void Clear();    
     wxDateTime NextDay(wxDateTime date);
     wxDateTime PreviousDay(wxDateTime date);
-    bool IsValid();
     bool IsWeekDayValid(wxDateTime day);    
+    bool IsValid();
     void DefaultValidate();
+    void AutoValid();
+protected:
+    
 };
 
 #endif // EXCLUDEDDAYS_H

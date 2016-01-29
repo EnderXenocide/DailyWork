@@ -389,10 +389,6 @@ std::string DailyWorkParser::GetLine(const std::string &str, std::size_t idx) co
         return str; // renvoie str qui est sur une ligne
 }
 
-bool DailyWorkParser::IsSelectedOk()
-{
-}
-
 int DailyWorkParser::GetExcludedDays(ExcludedDays &ed)
 {
     Value &array = document[JSON_EXCLUDED_DAYS];
@@ -419,9 +415,7 @@ int DailyWorkParser::SetExcludedDays(ExcludedDays ed)
 {
     Value &array = document[JSON_EXCLUDED_DAYS];
     array.Clear();
-    if (!ed.IsValid()) {
-        ed.DefaultValidate();
-    }
+    ed.AutoValid();
     std::string listeExcludeDays;
     Document::AllocatorType& allocator = document.GetAllocator();
     Value valueString(kStringType);
@@ -468,6 +462,7 @@ int DailyWorkParser::SetExcludedDays(ExcludedDays ed)
         listeExcludeDays = listeExcludeDays+text+" ";
     LOG(INFO) << "Set Excluded Days : "<< listeExcludeDays;
     };
+    
     return  -1;        
 }
 /*

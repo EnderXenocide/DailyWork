@@ -86,6 +86,8 @@ public:
     int CountDates();
     int SearchInDates(wxString text);
     void SelectFirstTreeDatesItem();
+    ExcludedDays GetExcludedDays();
+    void SetExcludedDays(ExcludedDays ed);
 private:
     wxDateTime GetDateFromTreeSelection(wxTreeCtrl* tree);
     wxDateTime GetDateFromItem(wxTreeCtrl* tree, wxTreeItemId itemId);

@@ -277,8 +277,7 @@ void MainApp::InitDailyWorkParser()
 {
    dwparser.Parse();
    currentDates.clear();
-  // dwparser.GetExcludedDays(excludedDays);
-   dwparser.SetExcludedDays(excludedDays);
+   dwparser.GetExcludedDays(excludedDays);
    LoadDailyWorkInTree();  // même si parse renvoie -1,  on charge quand même l'arbre   
    LoadFavoritesInComboBox();
 }
@@ -793,4 +792,16 @@ int MainApp::SearchInDates(wxString text)
     }
     frame->m_textSearchStat->SetLabel(wxString::Format(_("Result%s : %i"),n>1?"s":"",n));
     return n;    
+}
+
+ExcludedDays MainApp::GetExcludedDays()
+{
+	return excludedDays;
+}
+
+void MainApp::SetExcludedDays(ExcludedDays ed)
+{
+    ed.AutoValid();
+    dwparser.SetExcludedDays(ed);
+    excludedDays = ed;
 }
