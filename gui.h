@@ -84,13 +84,14 @@ class DlgPreference : public wxDialog
 	
 	protected:
 		wxCheckListBox* m_checkListExcludeDays;
+		wxStaticText* m_staticText2;
 		wxStdDialogButtonSizer* m_sdbSizer1;
 		wxButton* m_sdbSizer1OK;
 		wxButton* m_sdbSizer1Cancel;
 	
 	public:
 		
-		DlgPreference( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Préférences"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 420,309 ), long style = wxDEFAULT_DIALOG_STYLE ); 
+		DlgPreference( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Preferences"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 420,309 ), long style = wxDEFAULT_DIALOG_STYLE ); 
 		~DlgPreference();
 	
 };

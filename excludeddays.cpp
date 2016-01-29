@@ -22,6 +22,11 @@ ExcludedDays::~ExcludedDays()
     
 }
 
+bool ExcludedDays::operator != (const ExcludedDays& ed) const
+{
+    return  monday != ed.monday ||  tuesday != ed.tuesday || wednesday != ed.wednesday || thursday != ed.thursday || friday != ed.friday || saturday != ed.saturday ||  sunday != ed.sunday;
+}
+
 void ExcludedDays::Clear()
 {
     monday = false;
@@ -35,7 +40,7 @@ void ExcludedDays::Clear()
 
 wxDateTime ExcludedDays::NextDay(wxDateTime date)
 {
-    if (!IsValid()) DefaultValidate();    
+    AutoValid();    
     do { 
         date = date + wxDateSpan::Day(); 
     } 
@@ -45,7 +50,7 @@ wxDateTime ExcludedDays::NextDay(wxDateTime date)
 
 wxDateTime ExcludedDays::PreviousDay(wxDateTime date)
 {
-    if (!IsValid()) DefaultValidate();    
+    AutoValid();    
     do { 
         date = date - wxDateSpan::Day(); 
     } 

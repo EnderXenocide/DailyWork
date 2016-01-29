@@ -13,6 +13,7 @@ public:
     ExcludedDays();
     ExcludedDays(const ExcludedDays& ed);
     ~ExcludedDays();
+    bool operator != (const ExcludedDays& ed) const;
     void Clear();    
     wxDateTime NextDay(wxDateTime date);
     wxDateTime PreviousDay(wxDateTime date);

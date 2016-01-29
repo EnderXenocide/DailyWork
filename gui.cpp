@@ -108,10 +108,14 @@ DlgPreference::DlgPreference( wxWindow* parent, wxWindowID id, const wxString& t
 	wxStaticBoxSizer* sbSizer1;
 	sbSizer1 = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Excludes Days") ), wxVERTICAL );
 	
-	wxString m_checkListExcludeDaysChoices[] = { _("Monday"), _("Tuesday"), _("Thusday") };
+	wxString m_checkListExcludeDaysChoices[] = { _("Monday"), _("Tuesday") };
 	int m_checkListExcludeDaysNChoices = sizeof( m_checkListExcludeDaysChoices ) / sizeof( wxString );
 	m_checkListExcludeDays = new wxCheckListBox( sbSizer1->GetStaticBox(), wxID_ANY, wxDefaultPosition, wxDefaultSize, m_checkListExcludeDaysNChoices, m_checkListExcludeDaysChoices, 0 );
 	sbSizer1->Add( m_checkListExcludeDays, 1, wxALL|wxEXPAND, 5 );
+	
+	m_staticText2 = new wxStaticText( sbSizer1->GetStaticBox(), wxID_ANY, _("All days can't be checked"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText2->Wrap( -1 );
+	sbSizer1->Add( m_staticText2, 0, wxALIGN_CENTER|wxALL, 5 );
 	
 	
 	bSizer4->Add( sbSizer1, 1, wxEXPAND, 5 );

@@ -801,7 +801,9 @@ ExcludedDays MainApp::GetExcludedDays()
 
 void MainApp::SetExcludedDays(ExcludedDays ed)
 {
-    ed.AutoValid();
-    dwparser.SetExcludedDays(ed);
-    excludedDays = ed;
+    if (ed != excludedDays) {
+        ed.AutoValid();
+        dwparser.SetExcludedDays(ed);
+        excludedDays = ed;    
+    }
 }

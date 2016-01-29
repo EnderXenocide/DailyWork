@@ -2031,7 +2031,7 @@ DlgOptions::DlgOptions(wxWindow* parent, ExcludedDays ed) : wxDialog( parent, wx
 	
 	wxStaticBoxSizer* sbSizer1 = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Excludes Days") ), wxVERTICAL );
 	
-    wxString m_checkListExcludeDaysChoices[] = { _("Monday"), _("Tuesday"), _("Wednesday"), _("Thirsday"), _("Friday"), _("Saturday"), _("Sundsay")};
+    wxString m_checkListExcludeDaysChoices[] = { _("Monday"), _("Tuesday"), _("Wednesday"), _("Thursday"), _("Friday"), _("Saturday"), _("Sundsay")};
 	int m_checkListExcludeDaysNChoices = sizeof( m_checkListExcludeDaysChoices ) / sizeof( wxString );
 	m_checkListExcludeDays = new wxCheckListBox( sbSizer1->GetStaticBox(), wxID_ANY, wxDefaultPosition, wxDefaultSize, m_checkListExcludeDaysNChoices, m_checkListExcludeDaysChoices, 0 );
     
