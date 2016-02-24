@@ -253,7 +253,7 @@ protected:
  #endif
      
 private:
-    const int sashPositionSearchEditor = -125; //todo save position before hide ?
+    const int sashPositionSearchEditor = -225; //todo save position before hide ?
     // Write text
 #if USE_RICH_EDIT
     void WriteInitialText(); // ce n'est pas utile 

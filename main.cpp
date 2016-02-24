@@ -43,7 +43,7 @@ bool MainApp::OnInit()
     
     // create the main application window
     wxSize size = wxGetDisplaySize();
-    size.Scale(0.75, 0.75);
+    size.Scale(0.65, 0.75); // (largeur, hauteur)
     frame = new MainFrame(wxT("DailyWork"), wxID_ANY, wxDefaultPosition, size);
 
 
