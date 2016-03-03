@@ -13,7 +13,7 @@ CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
 User                   :=Laurent
-Date                   :=24/02/2016
+Date                   :=03/03/2016
 CodeLitePath           :="C:\Program Files\CodeLite"
 LinkerName             :=C:/Utils/TDM-GCC-64/bin/g++.exe
 SharedObjectLinkerName :=C:/Utils/TDM-GCC-64/bin/g++.exe -shared -fPIC
@@ -62,7 +62,7 @@ AS       := C:/Utils/TDM-GCC-64/bin/as.exe
 ## User defined environment variables
 ##
 CodeLiteDir:=C:\Program Files\CodeLite
-WXWIN:=C:\utils\wxWidgets-3.0.2
+WXWIN:=C:\utils\wxWidgets
 Objects0=$(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IntermediateDirectory)/dailyworkparser.cpp$(ObjectSuffix) $(IntermediateDirectory)/gui2.cpp$(ObjectSuffix) $(IntermediateDirectory)/myrichtext.cpp$(ObjectSuffix) $(IntermediateDirectory)/prefs.cpp$(ObjectSuffix) $(IntermediateDirectory)/mystyledtext.cpp$(ObjectSuffix) $(IntermediateDirectory)/excludeddays.cpp$(ObjectSuffix) $(IntermediateDirectory)/win_resources.rc$(ObjectSuffix) $(IntermediateDirectory)/gui.cpp$(ObjectSuffix) 
 
 
