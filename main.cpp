@@ -330,7 +330,7 @@ wxTreeItemId MainApp::AddBranchHierarchy(wxTreeItemId rootId, wxDateTime date)
     wxTreeItemId itemId = AddItem(rootId, date.Format("%Y"), tempDate, true);
     
     tempDate.SetMonth(date.GetMonth()); //début de mois de date
-    itemId = AddItem(itemId, date.Format("%m %b"), tempDate, true); //"%B (%m)"
+    itemId = AddItem(itemId, date.Format("%m [%b]"), tempDate, true); //"%B (%m)"
     
     return AddItem(itemId, date.Format("%d %A"), date, false);  //%e ne marche pas //"%A %d"
 }
@@ -442,7 +442,8 @@ void MainApp::DeleteDateSelected()
         if (dial.ShowModal()==wxID_YES) { //on supprime            
             if (DeleteItemData(itemId)) {
                 tree->Delete(itemId); 
-                frame->SetText("");            
+                tree->Unselect();
+                frame->m_textCurDate->SetLabel("");                
             }
         }
     }       
