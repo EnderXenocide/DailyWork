@@ -276,7 +276,7 @@ void MainApp::CreateStyles()
 void MainApp::InitDailyWorkParser()
 {
    dwparser.Parse();
-   currentDates.clear();
+   currentDates.Clear();
    dwparser.GetExcludedDays(excludedDays);
    LoadDailyWorkInTree();  // même si parse renvoie -1,  on charge quand même l'arbre   
    LoadFavoritesInComboBox();
@@ -405,7 +405,7 @@ void MainApp::SelectFirstTreeDatesItem()
 {
     wxTreeCtrl* tree = frame->m_treeDates;
     wxTreeItemId itemId = tree->GetRootItem();
-    if (tree->HasChildren(itemId)) { //tree is never empty
+    if (tree->HasChildren(itemId)) { 
         wxTreeItemIdValue cookie;
         itemId = tree->GetFirstChild(itemId, cookie);
         tree->ScrollTo(itemId);
@@ -418,6 +418,9 @@ void MainApp::SelectFirstTreeDatesItem()
             }   
         }
         tree->SelectItem(itemId);
+    } // tree is empty
+    else {
+        SetCurrentDateFromTreeDatesSelection();
     }
 }
 
@@ -587,12 +590,11 @@ void MainApp::SetCurrentDateFromTreeDatesSelection()
         currentDates.today = date;    
         currentDates.yesterday = excludedDays.PreviousDay(date);
         currentDates.tomorrow = excludedDays.NextDay(date);
-        GetDatesAround(date, currentDates.prevAvailable, currentDates.nextAvailable);
+        GetWorkDatesAround(date, currentDates.prevAvailable, currentDates.nextAvailable);
         text = dwparser.GetWorkFromDate(date);        
    }
     else {
         currentDates.Init(); 
-        //
         LOG(DEBUG) << "Date invalid, nothing to show";        
     }
     SetButtonsState();
@@ -629,7 +631,7 @@ wxString MainApp::GetCurrentDateWork()
     return dwparser.GetWorkFromDate(currentDates.today);
 }
 
-void MainApp::GetDatesAround(const wxDateTime& date, wxDateTime& prevDate, wxDateTime& nextDate)
+void MainApp::GetWorkDatesAround(const wxDateTime& date, wxDateTime& prevDate, wxDateTime& nextDate)
 {
     std::set<wxDateTime>::iterator it; 
 //currentNextAvailable = GetNextDateFromTree(date);
@@ -807,4 +809,10 @@ void MainApp::SetExcludedDays(ExcludedDays ed)
         dwparser.SetExcludedDays(ed);
         excludedDays = ed;    
     }
+}
+
+void MainApp::SetFirstTimeWhenEmpty()
+{
+    currentDates.tomorrow = wxDateTime::Now();
+    currentDates.yesterday = excludedDays.PreviousDay(currentDates.tomorrow);   
 }

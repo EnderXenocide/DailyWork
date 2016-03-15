@@ -226,7 +226,9 @@ wxString DailyWorkParser::GetFavorite(int itemIndex)
         return "";        
     }
 }
-
+/*
+ * Doublon avec TestAndUpdate() ?
+ * */
 void DailyWorkParser::New()
 {
     document.SetObject();
@@ -234,7 +236,8 @@ void DailyWorkParser::New()
     Value items(kArrayType);
     document.AddMember(JSON_ITEMS, items, allocator);
     document.AddMember(JSON_FAVORITES, items, allocator);
-    Value version(1);
+    document.AddMember(JSON_EXCLUDED_DAYS, items, allocator);  
+    Value version(JSON_VERSION_SCHEMA);
     document.AddMember(JSON_VERSION, version, allocator);
     modified = true;
 }
@@ -245,23 +248,23 @@ void DailyWorkParser::TestAndUpdate()
     if (document.IsNull())
         document.SetObject();
         
-    if (!document.HasMember(JSON_ITEMS))
-    {
+    if (!document.HasMember(JSON_ITEMS)) {
         Value items(kArrayType);
         document.AddMember(JSON_ITEMS, items, allocator);  
         modified = true; 
     } 
  
-    if (!document.HasMember(JSON_VERSION))
-    {
+    if (!document.HasMember(JSON_VERSION)) {
         Value items(JSON_VERSION_SCHEMA);
         document.AddMember(JSON_VERSION, items, allocator);  
         modified = true; 
     }  
     
     version = document[JSON_VERSION].GetInt();
-    if (version==1) 
+    if (version<JSON_VERSION_SCHEMA) {
        document[JSON_VERSION].SetInt(JSON_VERSION_SCHEMA);  //passage à la version n° JSON_VERSION_SCHEMA
+        modified = true;          
+    }                
 
     if (!document.HasMember(JSON_FAVORITES)) {
         Value items(kArrayType);
@@ -269,8 +272,7 @@ void DailyWorkParser::TestAndUpdate()
         modified = true;          
     }                
    
-    if (!document.HasMember(JSON_EXCLUDED_DAYS))
-    {
+    if (!document.HasMember(JSON_EXCLUDED_DAYS)) {
         Value items(kArrayType);
         document.AddMember(JSON_EXCLUDED_DAYS, items, allocator);  
         modified = true; 

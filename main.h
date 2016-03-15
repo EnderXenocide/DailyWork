@@ -59,7 +59,7 @@ public:
     void InitDailyWorkParser();
     void LoadFavoritesInComboBox();
     void LoadDailyWorkInTree();
-    MainApp& SetHierarchicalTree( bool hierarchy){this->hierarchicalTree = hierarchy; return *this; }
+    MainApp& SetHierarchicalTree(bool hierarchy) {this->hierarchicalTree = hierarchy; return *this; }
     bool IsHierarchicalTree() const{ return hierarchicalTree; }
 #if USE_RICH_EDIT
     wxRichTextStyleSheet* GetStyleSheet() const { return m_styleSheet; } 
@@ -91,7 +91,7 @@ public:
 private:
     wxDateTime GetDateFromTreeSelection(wxTreeCtrl* tree);
     wxDateTime GetDateFromItem(wxTreeCtrl* tree, wxTreeItemId itemId);
-    void DeleteDate(wxDateTime date);
+    //void DeleteDate(wxDateTime date);
     CurrentDates currentDates;
     bool hierarchicalTree;
     wxLanguage m_language;  // language specified by user
@@ -104,9 +104,9 @@ private:
     wxTreeItemId SelectDateInChild(wxTreeItemId parent, wxDateTime date);
     wxTreeItemId AddBranchHierarchy(wxTreeItemId rootId, wxDateTime date);
     wxTreeItemId AddBranchSimple(wxTreeItemId rootId, wxDateTime date);
-    void GetDatesAround(const wxDateTime &date, wxDateTime &prevDate, wxDateTime &nextDate);
+    void GetWorkDatesAround(const wxDateTime &date, wxDateTime &prevDate, wxDateTime &nextDate);
     void SetButtonsState();
- 
+    void SetFirstTimeWhenEmpty(); 
  #if USE_RICH_EDIT   
     wxRichTextStyleSheet*   m_styleSheet;
     void InitRichText(); 

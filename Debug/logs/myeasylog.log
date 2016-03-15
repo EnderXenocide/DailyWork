@@ -754,3 +754,92 @@ xwc
 2016-03-14 17:36:26,855 INFO  [default] Supprime la date 2016-03-17
 2016-03-14 17:36:26,855 DEBUG [default] [Laurent@LAURENT-PC] [bool MainApp::DeleteItemData(wxTreeItemId)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:477] Pas de donné associée à l'item
 2016-03-14 17:36:26,855 DEBUG [default] [Laurent@LAURENT-PC] [bool MainApp::DeleteItemData(wxTreeItemId)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:477] Pas de donné associée à l'item
+2016-03-14 17:41:25,268 INFO  [default] Enregistrement
+2016-03-14 17:44:03,275 INFO  [default] START
+2016-03-14 17:44:03,278 ERROR [default] Couldn't find/load the 'dailywork' catalog for locale 'French_France.1252'.
+2016-03-14 17:44:03,685 INFO  [default] Parse file dailywork.json
+2016-03-14 17:44:03,686 INFO  [default] Get Excluded Days : 
+2016-03-14 17:44:03,686 INFO  [default] monday
+2016-03-14 17:44:03,686 INFO  [default] thursday
+2016-03-14 17:44:03,686 INFO  [default] saturday
+2016-03-14 17:44:03,686 INFO  [default] Loading Tree with json 0data...
+2016-03-14 17:44:03,686 INFO  [default] Loading Tree Hierarchy... 
+2016-03-14 17:55:43,367 INFO  [default] Tree Loaded in 698465ms
+2016-03-14 17:56:10,519 INFO  [default] START
+2016-03-14 17:56:10,519 ERROR [default] Couldn't find/load the 'dailywork' catalog for locale 'French_France.1252'.
+2016-03-14 17:56:10,906 INFO  [default] Parse file dailywork.json
+2016-03-14 17:56:10,906 INFO  [default] Get Excluded Days : 
+2016-03-14 17:56:10,906 INFO  [default] monday
+2016-03-14 17:56:10,906 INFO  [default] thursday
+2016-03-14 17:56:10,906 INFO  [default] saturday
+2016-03-14 17:56:10,906 INFO  [default] Loading Tree with json 0data...
+2016-03-14 17:56:10,906 INFO  [default] Loading Tree Hierarchy... 
+2016-03-14 17:56:49,730 DEBUG [default] [Laurent@LAURENT-PC] [wxDateTime MainApp::GetDateFromItem(wxTreeCtrl*, wxTreeItemId)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:626] Aucun élément selectionné
+2016-03-14 17:56:55,751 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:599] Date invalid, nothing to show
+2016-03-14 17:56:57,111 DEBUG [default] [Laurent@LAURENT-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:625] No text to show in editor 
+2016-03-14 17:56:59,867 INFO  [default] Tree Loaded in 48874ms
+2016-03-14 17:58:21,032 INFO  [default] START
+2016-03-14 17:58:21,032 ERROR [default] Couldn't find/load the 'dailywork' catalog for locale 'French_France.1252'.
+2016-03-14 17:58:21,338 INFO  [default] Parse file dailywork.json
+2016-03-14 17:58:21,338 INFO  [default] Get Excluded Days : 
+2016-03-14 17:58:21,338 INFO  [default] monday
+2016-03-14 17:58:21,338 INFO  [default] thursday
+2016-03-14 17:58:21,338 INFO  [default] saturday
+2016-03-14 17:58:21,338 INFO  [default] Loading Tree with json 0data...
+2016-03-14 17:58:21,338 INFO  [default] Loading Tree Hierarchy... 
+2016-03-14 17:58:21,338 DEBUG [default] [Laurent@LAURENT-PC] [wxDateTime MainApp::GetDateFromItem(wxTreeCtrl*, wxTreeItemId)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:628] Aucun élément selectionné
+2016-03-14 17:58:21,338 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:600] Date invalid, nothing to show
+2016-03-14 17:58:21,338 DEBUG [default] [Laurent@LAURENT-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:625] No text to show in editor 
+2016-03-14 17:58:21,338 INFO  [default] Tree Loaded in 4ms
+2016-03-14 18:02:27,671 INFO  [default] START
+2016-03-14 18:02:27,671 ERROR [default] Couldn't find/load the 'dailywork' catalog for locale 'French_France.1252'.
+2016-03-14 18:02:27,978 INFO  [default] Parse file dailywork.json
+2016-03-14 18:02:27,978 INFO  [default] Get Excluded Days : 
+2016-03-14 18:02:27,978 INFO  [default] monday
+2016-03-14 18:02:27,978 INFO  [default] thursday
+2016-03-14 18:02:27,978 INFO  [default] saturday
+2016-03-14 18:02:27,978 INFO  [default] Loading Tree with json 0data...
+2016-03-14 18:02:27,978 INFO  [default] Loading Tree Hierarchy... 
+2016-03-14 18:02:27,981 DEBUG [default] [Laurent@LAURENT-PC] [wxDateTime MainApp::GetDateFromItem(wxTreeCtrl*, wxTreeItemId)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:628] Aucun élément selectionné
+2016-03-14 18:02:27,981 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:600] Date invalid, nothing to show
+2016-03-14 18:02:27,981 DEBUG [default] [Laurent@LAURENT-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:625] No text to show in editor 
+2016-03-14 18:02:27,983 INFO  [default] Tree Loaded in 4ms
+2016-03-14 18:03:13,987 INFO  [default] START
+2016-03-14 18:03:13,987 ERROR [default] Couldn't find/load the 'dailywork' catalog for locale 'French_France.1252'.
+2016-03-14 18:03:14,335 INFO  [default] Parse file dailywork.json
+2016-03-14 18:03:14,335 INFO  [default] Get Excluded Days : 
+2016-03-14 18:03:14,335 INFO  [default] monday
+2016-03-14 18:03:14,335 INFO  [default] thursday
+2016-03-14 18:03:14,335 INFO  [default] saturday
+2016-03-14 18:03:14,335 INFO  [default] Loading Tree with json 0data...
+2016-03-14 18:03:14,335 INFO  [default] Loading Tree Hierarchy... 
+2016-03-14 18:03:35,799 DEBUG [default] [Laurent@LAURENT-PC] [wxDateTime MainApp::GetDateFromItem(wxTreeCtrl*, wxTreeItemId)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:628] Aucun élément selectionné
+2016-03-14 18:03:43,651 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:600] Date invalid, nothing to show
+2016-03-14 18:05:30,923 DEBUG [default] [Laurent@LAURENT-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:625] No text to show in editor 
+2016-03-14 18:05:30,935 INFO  [default] Tree Loaded in 136364ms
+2016-03-15 10:39:39,918 INFO  [default] START
+2016-03-15 10:39:39,933 ERROR [default] Couldn't find/load the 'dailywork' catalog for locale 'French_France.1252'.
+2016-03-15 10:39:40,263 INFO  [default] Parse file dailywork.json
+2016-03-15 10:39:40,263 INFO  [default] Get Excluded Days : 
+2016-03-15 10:39:40,263 INFO  [default] monday
+2016-03-15 10:39:40,263 INFO  [default] thursday
+2016-03-15 10:39:40,263 INFO  [default] saturday
+2016-03-15 10:39:40,263 INFO  [default] Loading Tree with json 0data...
+2016-03-15 10:39:40,263 INFO  [default] Loading Tree Hierarchy... 
+2016-03-15 10:39:40,263 DEBUG [default] [Laurent@LAURENT-PC] [wxDateTime MainApp::GetDateFromItem(wxTreeCtrl*, wxTreeItemId)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:625] Aucun élément selectionné
+2016-03-15 10:39:40,263 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:598] Date invalid, nothing to show
+2016-03-15 10:39:40,263 DEBUG [default] [Laurent@LAURENT-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:625] No text to show in editor 
+2016-03-15 10:39:40,263 INFO  [default] Tree Loaded in 3ms
+2016-03-15 10:41:02,259 INFO  [default] START
+2016-03-15 10:41:02,259 ERROR [default] Couldn't find/load the 'dailywork' catalog for locale 'French_France.1252'.
+2016-03-15 10:41:02,306 INFO  [default] Parse file dailywork.json
+2016-03-15 10:41:02,306 INFO  [default] Get Excluded Days : 
+2016-03-15 10:41:02,306 INFO  [default] monday
+2016-03-15 10:41:02,306 INFO  [default] thursday
+2016-03-15 10:41:02,306 INFO  [default] saturday
+2016-03-15 10:41:02,306 INFO  [default] Loading Tree with json 0data...
+2016-03-15 10:41:02,306 INFO  [default] Loading Tree Hierarchy... 
+2016-03-15 10:41:02,306 DEBUG [default] [Laurent@LAURENT-PC] [wxDateTime MainApp::GetDateFromItem(wxTreeCtrl*, wxTreeItemId)] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:625] Aucun élément selectionné
+2016-03-15 10:41:02,306 DEBUG [default] [Laurent@LAURENT-PC] [void MainApp::SetCurrentDateFromTreeDatesSelection()] [I:/Workspace/CodeLiteC++/DailyWork/main.cpp:598] Date invalid, nothing to show
+2016-03-15 10:41:02,306 DEBUG [default] [Laurent@LAURENT-PC] [void MainFrame::SetText(wxString)] [I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp:625] No text to show in editor 
+2016-03-15 10:41:02,306 INFO  [default] Tree Loaded in 3ms
