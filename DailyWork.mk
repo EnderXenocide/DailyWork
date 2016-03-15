@@ -63,7 +63,8 @@ AS       := C:/Utils/TDM-GCC-64/bin/as.exe
 ##
 CodeLiteDir:=C:\Program Files\CodeLite
 WXWIN:=C:\utils\wxWidgets
-Objects0=$(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IntermediateDirectory)/dailyworkparser.cpp$(ObjectSuffix) $(IntermediateDirectory)/gui2.cpp$(ObjectSuffix) $(IntermediateDirectory)/myrichtext.cpp$(ObjectSuffix) $(IntermediateDirectory)/prefs.cpp$(ObjectSuffix) $(IntermediateDirectory)/mystyledtext.cpp$(ObjectSuffix) $(IntermediateDirectory)/excludeddays.cpp$(ObjectSuffix) $(IntermediateDirectory)/win_resources.rc$(ObjectSuffix) $(IntermediateDirectory)/gui.cpp$(ObjectSuffix) 
+Objects0=$(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IntermediateDirectory)/dailyworkparser.cpp$(ObjectSuffix) $(IntermediateDirectory)/gui2.cpp$(ObjectSuffix) $(IntermediateDirectory)/myrichtext.cpp$(ObjectSuffix) $(IntermediateDirectory)/prefs.cpp$(ObjectSuffix) $(IntermediateDirectory)/mystyledtext.cpp$(ObjectSuffix) $(IntermediateDirectory)/excludeddays.cpp$(ObjectSuffix) $(IntermediateDirectory)/controler.cpp$(ObjectSuffix) $(IntermediateDirectory)/win_resources.rc$(ObjectSuffix) $(IntermediateDirectory)/gui.cpp$(ObjectSuffix) \
+	
 
 
 
@@ -149,6 +150,14 @@ $(IntermediateDirectory)/excludeddays.cpp$(DependSuffix): excludeddays.cpp
 
 $(IntermediateDirectory)/excludeddays.cpp$(PreprocessSuffix): excludeddays.cpp
 	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/excludeddays.cpp$(PreprocessSuffix) "excludeddays.cpp"
+
+$(IntermediateDirectory)/controler.cpp$(ObjectSuffix): controler.cpp $(IntermediateDirectory)/controler.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "I:/Workspace/CodeLiteC++/DailyWork/controler.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/controler.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/controler.cpp$(DependSuffix): controler.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/controler.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/controler.cpp$(DependSuffix) -MM "controler.cpp"
+
+$(IntermediateDirectory)/controler.cpp$(PreprocessSuffix): controler.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/controler.cpp$(PreprocessSuffix) "controler.cpp"
 
 $(IntermediateDirectory)/win_resources.rc$(ObjectSuffix): win_resources.rc
 	$(RcCompilerName) -i "I:/Workspace/CodeLiteC++/DailyWork/win_resources.rc" $(RcCmpOptions)   $(ObjectSwitch)$(IntermediateDirectory)/win_resources.rc$(ObjectSuffix) $(RcIncludePath)

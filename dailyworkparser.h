@@ -38,7 +38,8 @@ class DailyWorkParser
 public:
     DailyWorkParser();
     ~DailyWorkParser();
-    void ConnectCallback(CallbackMessageInfo cb);
+    void StatusBarMessageCallback(CallbackMessageInfo cb);
+    void DialogMessageCallback(CallbackMessageInfo cb);
     int Parse();
     void New();
 
@@ -77,6 +78,8 @@ private:
     
     // The callback provided by the client via ConnectCallback().
     CallbackMessageInfo m_cbMessageInfo;
+    CallbackMessageInfo m_cbDialog;
+    
     Document document;
     int version;
     bool modified; // set if document was modified or not

@@ -49,7 +49,8 @@ bool MainApp::OnInit()
 
     MainFrame* sameframe  = frame;    
     
-    dwparser.ConnectCallback([sameframe](wxString msg) { sameframe->OnStatusBarMessage(msg); });
+    dwparser.StatusBarMessageCallback([sameframe](wxString msg) { sameframe->OnStatusBarMessage(msg); });
+    dwparser.DialogMessageCallback([sameframe](wxString msg) { sameframe->OnDialogMessage(msg); });
     InitDailyWorkParser();
     // and show it (the frames, unlike simple controls, are not shown when
     // created initially)

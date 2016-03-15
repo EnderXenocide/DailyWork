@@ -123,6 +123,7 @@ public:
     ~MainFrame();
  
     void OnStatusBarMessage(wxString msg);
+    void OnDialogMessage(wxString msg);
     void EnableShowHirerarchicalTree(bool hiearchy);
     void SetText(wxString texte);    
     void ConnectSelectionEvents();

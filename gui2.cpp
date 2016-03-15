@@ -733,6 +733,11 @@ void MainFrame::OnStatusBarMessage(wxString msg)
     m_statusBar->SetStatusText(msg);
 }
 
+void MainFrame::OnDialogMessage(wxString msg)
+{
+    wxMessageDialog(this, msg, _("Information"), wxOK|wxCENTER_FRAME).ShowModal();
+}
+
 void MainFrame::OnShowHirerarchicalTree(wxCommandEvent& event)
 {
     bool c = m_menuBar->IsChecked(ID_HIERACHY);

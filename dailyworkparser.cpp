@@ -15,10 +15,16 @@ DailyWorkParser::~DailyWorkParser()
 {
 }
 
-void DailyWorkParser::ConnectCallback(CallbackMessageInfo cb)
+void DailyWorkParser::StatusBarMessageCallback(CallbackMessageInfo cb)
 {
     m_cbMessageInfo = cb;
 }
+
+void DailyWorkParser::DialogMessageCallback(CallbackMessageInfo cb)
+{
+    m_cbDialog = cb;
+}
+
 
 int DailyWorkParser::Parse()
 {
@@ -52,7 +58,9 @@ int DailyWorkParser::Parse()
     }
 
     TestAndUpdate();
-
+    if (modified) {
+       m_cbDialog( wxString::Format(_("File updated to version %d"),JSON_VERSION_SCHEMA)); 
+    }
     return retour;
 }
 
