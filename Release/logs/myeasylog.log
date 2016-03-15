@@ -380,3 +380,9 @@
 2016-03-15 17:29:32,131 INFO  [default] Loading Tree Hierarchy... 
 2016-03-15 17:29:32,159 INFO  [default] Tree Loaded in 29ms
 2016-03-15 17:29:44,174 INFO  [default] Enregistrement
+2016-03-15 17:31:53,715 INFO  [default] START
+2016-03-15 17:31:54,033 INFO  [default] Parse file dailywork.json
+2016-03-15 17:31:54,033 INFO  [default] Get Excluded Days : 
+2016-03-15 17:31:54,033 INFO  [default] Loading Tree with json 0data...
+2016-03-15 17:31:54,033 INFO  [default] Loading Tree Hierarchy... 
+2016-03-15 17:31:54,039 INFO  [default] Tree Loaded in 5ms

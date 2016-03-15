@@ -59,7 +59,9 @@ int DailyWorkParser::Parse()
 
     TestAndUpdate();
     if (modified) {
-       m_cbDialog( wxString::Format(_("File updated to version %d"),JSON_VERSION_SCHEMA)); 
+       wxString msg = wxString::Format(_("File updated to version %d"),JSON_VERSION_SCHEMA);
+       LOG(INFO) << msg;
+       m_cbDialog(msg); 
     }
     return retour;
 }
