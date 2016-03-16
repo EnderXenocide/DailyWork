@@ -14,9 +14,7 @@
 #ifndef __main__
 #define __main__
 
-
-#include "dailyworkparser.h"
-#include "currentdates.h"
+#include "controler.h"
 #include "gui2.h"
 
 // main wxWidgets header file
@@ -56,16 +54,12 @@ public:
     virtual int OnExit();
     
     void CreateStyles();
-    void InitDailyWorkParser();
-    void LoadFavoritesInComboBox();
     void LoadDailyWorkInTree();
     MainApp& SetHierarchicalTree(bool hierarchy) {this->hierarchicalTree = hierarchy; return *this; }
     bool IsHierarchicalTree() const{ return hierarchicalTree; }
 #if USE_RICH_EDIT
     wxRichTextStyleSheet* GetStyleSheet() const { return m_styleSheet; } 
 #endif    
-    int AddDateToTree(const wxDateTime& date, bool selectItem = false); // todo wxTreeCtrl& tree instead
-    wxTreeItemId AddItem(wxTreeItemId parent, wxString text, wxDateTime date, bool setDataEmpty);
     void SetCurrentDate(const wxDateTime &date);
     void SetCurrentDateFromTreeDatesSelection();
     void SetCurrentDateFromTreeSearchSelection();  
@@ -92,18 +86,12 @@ private:
     wxDateTime GetDateFromTreeSelection(wxTreeCtrl* tree);
     wxDateTime GetDateFromItem(wxTreeCtrl* tree, wxTreeItemId itemId);
     //void DeleteDate(wxDateTime date);
-    CurrentDates currentDates;
-    bool hierarchicalTree;
     wxLanguage m_language;  // language specified by user
     wxLocale* m_locale;  // locale we'll be using
-    DailyWorkParser dwparser; 
-    ExcludedDays excludedDays;
+    Controler controler;
     void InitLanguageSupport();
-     wxTreeItemId AddItemData(wxTreeItemId itemId, wxDateTime date, bool setDataEmpty);
     void SelectDateInTree(const wxDateTime &date);
     wxTreeItemId SelectDateInChild(wxTreeItemId parent, wxDateTime date);
-    wxTreeItemId AddBranchHierarchy(wxTreeItemId rootId, wxDateTime date);
-    wxTreeItemId AddBranchSimple(wxTreeItemId rootId, wxDateTime date);
     void GetWorkDatesAround(const wxDateTime &date, wxDateTime &prevDate, wxDateTime &nextDate);
     void SetButtonsState();
     void SetFirstTimeWhenEmpty(); 
