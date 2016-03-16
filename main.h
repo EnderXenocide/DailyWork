@@ -41,6 +41,7 @@
 #include <wx/richtext/richtextimagedlg.h>
 #endif
 
+
 ////////////////////////////////////////////////////////////////////////////////
 // application class declaration 
 ////////////////////////////////////////////////////////////////////////////////
@@ -66,7 +67,7 @@ public:
 #endif    
     int AddDateToTree(const wxDateTime& date, bool selectItem = false); // todo wxTreeCtrl& tree instead
     wxTreeItemId AddItem(wxTreeItemId parent, wxString text, wxDateTime date, bool setDataEmpty);
-    void SetCurrentDate(const wxDateTime &date);
+    void SetCurrentDate(const wxDateTime &date, wxWindow *sender);
     void SetCurrentDateFromTreeDatesSelection();
     void SetCurrentDateFromTreeSearchSelection();  
     void SetPrevDateAsCurrentDate();

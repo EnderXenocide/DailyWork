@@ -109,7 +109,7 @@ MyStyledTextCtrl::MyStyledTextCtrl (wxWindow *parent, wxWindowID id,
 //    SetLayoutCache (wxSTC_CACHE_PAGE);
 
     SetWrapMode(true);
-    wxFont font(11, wxROMAN, wxNORMAL, wxNORMAL);
+    wxFont font (11, wxFONTFAMILY_ROMAN, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL);
     StyleSetFont(0, font); //utile ?
     SetLexer(wxSTC_LEX_HTML);
     StyleSetForeground (wxSTC_H_DOUBLESTRING,     wxColour(255,0,0));
@@ -472,7 +472,7 @@ bool MyStyledTextCtrl::InitializePrefs (const wxString &name) {
     // default fonts for all styles!
     int Nr;
     for (Nr = 0; Nr < wxSTC_STYLE_LASTPREDEFINED; Nr++) {
-        wxFont font (10, wxMODERN, wxNORMAL, wxNORMAL);
+        wxFont font (10, wxFONTFAMILY_MODERN, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL);
         StyleSetFont (Nr, font);
     }
 
@@ -486,7 +486,7 @@ bool MyStyledTextCtrl::InitializePrefs (const wxString &name) {
         for (Nr = 0; Nr < STYLE_TYPES_COUNT; Nr++) {
             if (curInfo->styles[Nr].type == -1) continue;
             const StyleInfo &curType = g_StylePrefs [curInfo->styles[Nr].type];
-            wxFont font (curType.fontsize, wxMODERN, wxNORMAL, wxNORMAL, false,
+            wxFont font (curType.fontsize, wxFONTFAMILY_MODERN, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false,
                          curType.fontname);
             StyleSetFont (Nr, font);
             if (curType.foreground) {
