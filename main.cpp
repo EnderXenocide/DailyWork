@@ -430,6 +430,7 @@ bool MainApp::SelectFirstTreeDatesItem()
 
 void MainApp::DeleteDateSelected()
 {
+   // wxDateTime date = GetDateFromTreeDatesSelection(); ne marche pas ici parceque ne renvoie que les dates non "empty" i.e ni les années ni les mois
     wxTreeCtrl* tree = frame->m_treeDates;
     wxTreeItemId itemId = tree->GetSelection();
     if (itemId.IsOk()) {
@@ -621,8 +622,8 @@ wxDateTime MainApp::GetDateFromItem(wxTreeCtrl* tree, wxTreeItemId itemId)
 {
     if(itemId.IsOk()) {
         DWItemData* itemData = (DWItemData*) tree->GetItemData(itemId);
-//        if ( (itemData != NULL) && (!itemData->IsEmpty()) )
-        if (itemData != NULL)
+        if ( (itemData != NULL) && (!itemData->IsEmpty()) )
+//        if (itemData != NULL)
             return itemData->GetDate();
         LOG(DEBUG) << "Elément selectionné vide";    
     } 

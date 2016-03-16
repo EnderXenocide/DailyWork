@@ -2,12 +2,12 @@
 ## Auto Generated makefile by CodeLite IDE
 ## any manual changes will be erased      
 ##
-## Release
+## Debug
 ProjectName            :=DailyWork
-ConfigurationName      :=Release
+ConfigurationName      :=Debug
 WorkspacePath          :=I:/Workspace/CodeLiteC++
 ProjectPath            :=I:/Workspace/CodeLiteC++/DailyWork
-IntermediateDirectory  :=./Release
+IntermediateDirectory  :=./Debug
 OutDir                 := $(IntermediateDirectory)
 CurrentFileName        :=
 CurrentFilePath        :=
@@ -28,7 +28,7 @@ LibraryPathSwitch      :=-L
 PreprocessorSwitch     :=-D
 SourceSwitch           :=-c 
 OutputFile             :=$(IntermediateDirectory)/$(ProjectName)
-Preprocessors          :=$(PreprocessorSwitch)__WX__ $(PreprocessorSwitch)NDEBUG 
+Preprocessors          :=$(PreprocessorSwitch)__WX__ 
 ObjectSwitch           :=-o 
 ArchiveOutputSwitch    := 
 PreprocessOnlySwitch   :=-E
@@ -37,7 +37,7 @@ PCHCompileFlags        :=
 MakeDirCommand         :=makedir
 RcCmpOptions           := $(shell wx-config --rcflags)
 RcCompilerName         :=C:/Utils/TDM-GCC-64/bin/windres.exe
-LinkOptions            :=  -mwindows -s $(shell wx-config --debug=no  --libs std,stc --unicode=yes)
+LinkOptions            :=  -mwindows $(shell wx-config --debug=yes --libs std,stc --unicode=yes)
 IncludePath            :=  $(IncludeSwitch). $(IncludeSwitch)I:/Workspace/CodeLiteC++/rapidjson/include 
 IncludePCH             := 
 RcIncludePath          := 
@@ -52,8 +52,8 @@ LibPath                := $(LibraryPathSwitch).
 AR       := C:/Utils/TDM-GCC-64/bin/ar.exe rcu
 CXX      := C:/Utils/TDM-GCC-64/bin/g++.exe
 CC       := C:/Utils/TDM-GCC-64/bin/gcc.exe
-CXXFLAGS :=  -O2 -Wall -std=c++11 $(shell wx-config --cxxflags --unicode=yes --debug=no --libs std stc) $(Preprocessors)
-CFLAGS   :=  -O2 -Wall $(shell wx-config --cxxflags --unicode=yes --debug=no --libs std stc) $(Preprocessors)
+CXXFLAGS :=  -g -O0 -Wall -std=c++11 $(shell wx-config --cxxflags --unicode=yes --debug=yes) $(Preprocessors)
+CFLAGS   :=  -g -O0 -Wall $(shell wx-config --cxxflags --unicode=yes --debug=yes) $(Preprocessors)
 ASFLAGS  := 
 AS       := C:/Utils/TDM-GCC-64/bin/as.exe
 
@@ -82,11 +82,11 @@ $(OutputFile): $(IntermediateDirectory)/.d $(Objects)
 	$(LinkerName) $(OutputSwitch)$(OutputFile) @$(ObjectsFileList) $(LibPath) $(Libs) $(LinkOptions)
 
 MakeIntermediateDirs:
-	@$(MakeDirCommand) "./Release"
+	@$(MakeDirCommand) "./Debug"
 
 
 $(IntermediateDirectory)/.d:
-	@$(MakeDirCommand) "./Release"
+	@$(MakeDirCommand) "./Debug"
 
 PreBuild:
 
@@ -166,6 +166,6 @@ $(IntermediateDirectory)/gui.cpp$(PreprocessSuffix): gui.cpp
 ## Clean
 ##
 clean:
-	$(RM) -r ./Release/
+	$(RM) -r ./Debug/
 
 
