@@ -833,20 +833,24 @@ bool MainApp::OnCmdLineParsed(wxCmdLineParser& parser)
 {
     //silent_mode = parser.Found(wxT("l"));
     m_language = wxLANGUAGE_DEFAULT; 
-    wxString optlang;
-    if (parser.Found( wxT("l"), &optlang)){
-        if (optlang=="en") 
+    wxString option;
+    if (parser.Found( wxT("l"), &option)){
+        if (option=="en") 
             m_language = wxLANGUAGE_ENGLISH;
-        else if (optlang=="en") 
+        else if (option=="en") 
             m_language = wxLANGUAGE_FRENCH;
+    }
+
+    if (parser.Found( wxT("d"), &option)){
+        dwparser.SetJsonFile(option);
     }
     
     // to get at your unnamed parameters use
-    wxArrayString files;
-    for (int i = 0; i < parser.GetParamCount(); i++)
-    {
-            files.Add(parser.GetParam(i));
-    }
+//    wxArrayString files;
+//    for (int i = 0; i < parser.GetParamCount(); i++)
+//    {
+//            files.Add(parser.GetParam(i));
+//    }
 
     // and other command line parameters
  

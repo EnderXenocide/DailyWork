@@ -38,6 +38,9 @@ class DailyWorkParser
 public:
     DailyWorkParser();
     ~DailyWorkParser();
+    
+    void SetJsonFile(wxString fileName) { jsonFile = fileName;};
+    
     void StatusBarMessageCallback(CallbackMessageInfo cb);
     void DialogMessageCallback(CallbackMessageInfo cb);
     int Parse();
@@ -81,6 +84,7 @@ private:
     CallbackMessageInfo m_cbDialog;
     
     Document document;
+    wxString jsonFile;
     int version;
     bool modified; // set if document was modified or not
 };

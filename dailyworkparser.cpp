@@ -9,6 +9,7 @@
 DailyWorkParser::DailyWorkParser()
 {
     modified = false;
+    jsonFile = JSON_FILE;
 }
 
 DailyWorkParser::~DailyWorkParser()
@@ -34,8 +35,8 @@ int DailyWorkParser::Parse()
     modified = false;
     int retour = 0;
 
-    LOG(INFO) << "Parse file " << JSON_FILE;
-    std::ifstream ifs(JSON_FILE);
+    LOG(INFO) << "Parse file " << jsonFile;
+    std::ifstream ifs(jsonFile);
     if(ifs) {
         std::stringstream ss;
         ss << ifs.rdbuf();
@@ -85,13 +86,13 @@ int DailyWorkParser::UpdateWork(const wxDateTime& date, wxString text)
 
 int DailyWorkParser::Save()
 {    
-    return SaveAs(JSON_FILE);
+    return SaveAs(jsonFile);
 }
 
 int DailyWorkParser::SaveAs(wxString filename)
 {
     wxString msg = "Enregistrement";
-    if (filename != JSON_FILE)
+    if (filename != jsonFile)
         msg += " sous "+filename;
     LOG(INFO) << msg;
     FILE* fp = fopen(filename, "wb"); // non-Windows use "w"
