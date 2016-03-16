@@ -45,7 +45,6 @@
     <File Name="prefs.cpp"/>
     <File Name="mystyledtext.cpp"/>
     <File Name="excludeddays.cpp"/>
-    <File Name="controler.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="main.h"/>
@@ -60,7 +59,6 @@
     <File Name="defsext.h"/>
     <File Name="results.h"/>
     <File Name="excludeddays.h"/>
-    <File Name="controler.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="resources">
     <File Name="gui.fbp"/>

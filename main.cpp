@@ -318,7 +318,9 @@ void MainApp::LoadDailyWorkInTree()
     tree->ExpandAll();
     tree->Thaw(); // Re-enables window before selection
     frame->ConnectSelectionEvents();    
-    SelectFirstTreeDatesItem();
+    bool succeed = SelectFirstTreeDatesItem();
+    if (! succeed)
+        SetEmptyWorkSpace();
     long t = stopwatch.Time();
     LOG(INFO) << wxString::Format("Tree Loaded in %ldms", t);
 }
@@ -402,7 +404,7 @@ wxTreeItemId MainApp::AddItemData(wxTreeItemId itemId, wxDateTime date, bool set
     return itemId; 
 }
 
-void MainApp::SelectFirstTreeDatesItem()
+bool MainApp::SelectFirstTreeDatesItem()
 {
     wxTreeCtrl* tree = frame->m_treeDates;
     wxTreeItemId itemId = tree->GetRootItem();
@@ -419,10 +421,11 @@ void MainApp::SelectFirstTreeDatesItem()
             }   
         }
         tree->SelectItem(itemId);
+        return true;
     } // tree is empty
-//    else {
-//        SetCurrentDateFromTreeDatesSelection();
-//    }
+    else {
+        return false;
+    }
 }
 
 void MainApp::DeleteDateSelected()
@@ -538,14 +541,7 @@ void MainApp::SetCurrentDate(const wxDateTime &date, wxWindow *sender)
    }
     else {
         currentDates.Init(); 
-        wxString senderName("unknow");
-        if (sender==frame->m_treeDates) 
-            senderName = "tree";
-        else if (sender==frame->m_treeSearch) 
-            senderName = "search";
-        else if (sender==frame->m_calendar) 
-            senderName = "calendar";    
-        LOG(DEBUG) << "Date invalid from "<< senderName << ", nothing to show";        
+        LOG(DEBUG) << "Date invalid, nothing to show";        
     }
     SetButtonsState();
     
@@ -553,14 +549,16 @@ void MainApp::SetCurrentDate(const wxDateTime &date, wxWindow *sender)
     frame->m_editor->SetFocus(); //todo here ?
 }
 
-void MainApp::DoCurrentDateFromTreeDatesSelection()
+void MainApp::SetCurrentDateFromTreeDatesSelection()
 {
+    LOG(DEBUG) << "Select Date From tree";
     wxDateTime date = GetDateFromTreeDatesSelection();
     SetCurrentDate(date, frame->m_treeDates);
 }
  
-void MainApp::DoCurrentDateFromTreeSearchSelection()
+void MainApp::SetCurrentDateFromTreeSearchSelection()
 {
+    LOG(DEBUG) << "Select Date From Search";
     wxDateTime date = GetDateFromTreeSelection(frame->m_treeSearch);
     SetCurrentDate(date, frame->m_treeSearch);
 }
@@ -581,20 +579,16 @@ void MainApp::SetButtonsState()
     frame->m_buttonGoPrevAvailable->Enable(currentDates.prevAvailable.IsValid());   
 }
     
-void MainApp::DoNextDateAsCurrentDate()
+void MainApp::SetNextDateAsCurrentDate()
 {
-    if (currentDates.nextAvailable.IsValid())
-        SetCurrentDate(currentDates.nextAvailable, frame->m_buttonGoNextAvailable);
-    else
-        LOG(DEBUG) << "Next Date Available invalid";
+    LOG(DEBUG) << "Select Next Date Available";
+    SetCurrentDate(currentDates.nextAvailable, frame->m_buttonGoNextAvailable);
 }
 
-void MainApp::DoPrevDateAsCurrentDate()
+void MainApp::SetPrevDateAsCurrentDate()
 {
-     if (currentDates.prevAvailable.IsValid())
-        SetCurrentDate(currentDates.prevAvailable, frame->m_buttonGoPrevAvailable);
-    else
-        LOG(DEBUG) << "Prev Date Available invalid";
+    LOG(DEBUG) << "Select Prev Date Available";
+    SetCurrentDate(currentDates.prevAvailable, frame->m_buttonGoPrevAvailable);
 }
   
 void MainApp::AddTomorrowToTree()
@@ -822,8 +816,10 @@ void MainApp::SetExcludedDays(ExcludedDays ed)
     }
 }
 
-void MainApp::SetFirstTimeWhenEmpty()
+void MainApp::SetEmptyWorkSpace()
 {
     currentDates.tomorrow = wxDateTime::Now();
     currentDates.yesterday = excludedDays.PreviousDay(currentDates.tomorrow);   
+    SetButtonsState();    
+    frame->SetText("");  
 }

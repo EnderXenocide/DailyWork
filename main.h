@@ -86,7 +86,7 @@ public:
     void UpdateCurrentWork();
     int CountDates();
     int SearchInDates(wxString text);
-    void SelectFirstTreeDatesItem();
+    bool SelectFirstTreeDatesItem();
     ExcludedDays GetExcludedDays();
     void SetExcludedDays(ExcludedDays ed);
 private:
@@ -107,7 +107,7 @@ private:
     wxTreeItemId AddBranchSimple(wxTreeItemId rootId, wxDateTime date);
     void GetWorkDatesAround(const wxDateTime &date, wxDateTime &prevDate, wxDateTime &nextDate);
     void SetButtonsState();
-    void SetFirstTimeWhenEmpty(); 
+    void SetEmptyWorkSpace();
  #if USE_RICH_EDIT   
     wxRichTextStyleSheet*   m_styleSheet;
     void InitRichText(); 

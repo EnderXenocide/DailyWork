@@ -715,7 +715,7 @@ void MainFrame::OnTreeSelChanging( wxTreeEvent& event )
 
 void MainFrame::OnTreeSelChanged( wxTreeEvent& event )
 {
-    wxGetApp().DoCurrentDateFromTreeDatesSelection();   
+    wxGetApp().SetCurrentDateFromTreeDatesSelection();   
 }
 
 void MainFrame::OnTreeRightClick(wxTreeEvent& event)
@@ -837,12 +837,12 @@ void MainFrame::OnShowPanelSearch(wxCommandEvent& event)
     
 void MainFrame::OnButtonGoNextAvailableClick(wxCommandEvent& event)
 {
-    wxGetApp().DoNextDateAsCurrentDate();    
+    wxGetApp().SetNextDateAsCurrentDate();    
 }
 
 void MainFrame::OnButtonGoPrevAvailableClick(wxCommandEvent& event)
 {
-   wxGetApp().DoPrevDateAsCurrentDate();   
+   wxGetApp().SetPrevDateAsCurrentDate();   
 }
 
 void MainFrame::OnButtonAddTomorrowClick(wxCommandEvent& event)
@@ -862,7 +862,7 @@ void MainFrame::OnTextSearchEnter(wxCommandEvent& event)
 
 void MainFrame::OnTreeSearchSelChanged(wxTreeEvent& event)
 {
-    wxGetApp().DoCurrentDateFromTreeSearchSelection();
+    wxGetApp().SetCurrentDateFromTreeSearchSelection();
 }
  
 void MainFrame::OnReload(wxCommandEvent& event)
