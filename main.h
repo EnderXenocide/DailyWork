@@ -24,6 +24,7 @@
 #include <wx/string.h>
 #include <wx/treectrl.h>
 #include <wx/msgdlg.h>
+#include <wx/cmdline.h>
 
 #if wxUSE_HELP
 #include <wx/cshelp.h>
@@ -89,6 +90,8 @@ public:
     bool SelectFirstTreeDatesItem();
     ExcludedDays GetExcludedDays();
     void SetExcludedDays(ExcludedDays ed);
+    void OnInitCmdLine(wxCmdLineParser& parser);
+    bool OnCmdLineParsed(wxCmdLineParser& parser);    
 private:
     wxDateTime GetDateFromTreeSelection(wxTreeCtrl* tree);
     wxDateTime GetDateFromItem(wxTreeCtrl* tree, wxTreeItemId itemId);
@@ -100,6 +103,7 @@ private:
     DailyWorkParser dwparser; 
     ExcludedDays excludedDays;
     void InitLanguageSupport();
+    //wxLanguage GetUsersFavoriteLanguageOrDefault();
      wxTreeItemId AddItemData(wxTreeItemId itemId, wxDateTime date, bool setDataEmpty);
     void SelectDateInTree(const wxDateTime &date);
     wxTreeItemId SelectDateInChild(wxTreeItemId parent, wxDateTime date);
@@ -113,6 +117,16 @@ private:
     void InitRichText(); 
 #endif 
 
+};
+
+static const wxCmdLineEntryDesc g_cmdLineDesc [] =
+{
+     { wxCMD_LINE_SWITCH, "h", "help", "displays help on the command line parameters1",
+          wxCMD_LINE_VAL_NONE, wxCMD_LINE_OPTION_HELP },
+     { wxCMD_LINE_OPTION, "l", "lang", "Users Favorite Language"},
+     { wxCMD_LINE_OPTION, "d", "data", "specify data filename to use"},
+ 
+     { wxCMD_LINE_NONE }
 };
 
 // declare global static function wxGetApp()

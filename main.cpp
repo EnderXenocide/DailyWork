@@ -482,7 +482,7 @@ bool MainApp::DeleteItemData(wxTreeItemId itemId)
             dwparser.DeleteItem(itemData->GetDate());
         }
         else {
-            LOG(DEBUG) << "Pas de donné associée à l'item";
+            LOG(DEBUG) << "No data associated to item";
         }
     } 
     return true;    //todo revoir retour
@@ -648,13 +648,13 @@ void MainApp::GetWorkDatesAround(const wxDateTime& date, wxDateTime& prevDate, w
     if (it != currentDates.dates.end()) { // date trouvée
         if (it != currentDates.dates.begin()) {
             it--; //jour precedent
-            LOG(DEBUG) << "precedent " << (*it).Format().ToStdString(); 
+            LOG(DEBUG) << "previous " << (*it).Format().ToStdString(); 
             prevDate = *it;
             it++; //retour à date
         }
-        LOG(DEBUG) << "actuel " << (*it).Format().ToStdString(); 
+        LOG(DEBUG) << "current " << (*it).Format().ToStdString(); 
         it++;  //jour suivant
-        LOG(DEBUG) << "suivant " << (*it).Format().ToStdString(); 
+        LOG(DEBUG) << "next " << (*it).Format().ToStdString(); 
         if (it != currentDates.dates.end())
             nextDate = *it;     
     }    
@@ -705,11 +705,8 @@ int MainApp::DeleteSelectedFavorite()
 
 void MainApp::InitLanguageSupport()
 {
-    m_language =  wxLANGUAGE_DEFAULT;
- 
-    //todo fake functions, use proper implementation
-//    if( userWantsAnotherLanguageThanDefault() )
-//        m_language = getUsersFavoriteLanguage();
+    // m_language = wxLANGUAGE_DEFAULT; 
+    // m_language =  GetUsersFavoriteLanguageOrDefault(); fait dans OnCmdLineParsed
 
     const wxLanguageInfo* pInfo = wxLocale::GetLanguageInfo(m_language);
  
@@ -823,4 +820,37 @@ void MainApp::SetEmptyWorkSpace()
     currentDates.yesterday = excludedDays.PreviousDay(currentDates.tomorrow);   
     SetButtonsState();    
     frame->SetText("");  
+}
+
+void MainApp::OnInitCmdLine(wxCmdLineParser& parser)
+{
+    parser.SetDesc (g_cmdLineDesc);
+    // must refuse '/' as parameter starter or cannot use "/path" style paths
+    parser.SetSwitchChars (wxT("-"));
+}
+ 
+bool MainApp::OnCmdLineParsed(wxCmdLineParser& parser)
+{
+    //silent_mode = parser.Found(wxT("l"));
+    m_language = wxLANGUAGE_DEFAULT; 
+    wxString optlang;
+    if (parser.Found( wxT("l"), &optlang)){
+        if (optlang=="en") 
+            m_language = wxLANGUAGE_ENGLISH;
+        else if (optlang=="en") 
+            m_language = wxLANGUAGE_FRENCH;
+    }
+    
+    // to get at your unnamed parameters use
+    wxArrayString files;
+    for (int i = 0; i < parser.GetParamCount(); i++)
+    {
+            files.Add(parser.GetParam(i));
+    }
+
+    // and other command line parameters
+ 
+    // then do what you need with them.
+ 
+    return true;
 }
