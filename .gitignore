@@ -12,13 +12,10 @@
 *.so
 *.dylib
 *.dll
-<<<<<<< HEAD
 *.d
-=======
 
 # Fortran module files
 *.mod
->>>>>>> 14f082a7417625a25f68a4216eecf64fccfee4d5
 
 # Compiled Static libraries
 *.lai
@@ -30,8 +27,7 @@
 *.exe
 *.out
 *.app
-<<<<<<< HEAD
 
 listecppfiles.txt
-=======
->>>>>>> 14f082a7417625a25f68a4216eecf64fccfee4d5
+Release
+Debug
