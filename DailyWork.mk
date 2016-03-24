@@ -13,7 +13,7 @@ CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
 User                   :=Laurent
-Date                   :=21/03/2016
+Date                   :=24/03/2016
 CodeLitePath           :="C:/Program Files/CodeLite"
 LinkerName             :=C:/Utils/mingw-w64/x86_64-5.3.0-posix-seh-rt_v4-rev0/mingw64/bin/g++.exe
 SharedObjectLinkerName :=C:/Utils/mingw-w64/x86_64-5.3.0-posix-seh-rt_v4-rev0/mingw64/bin/g++.exe -shared -fPIC
@@ -28,7 +28,7 @@ LibraryPathSwitch      :=-L
 PreprocessorSwitch     :=-D
 SourceSwitch           :=-c 
 OutputFile             :=$(IntermediateDirectory)/$(ProjectName)
-Preprocessors          :=$(PreprocessorSwitch)__WX__ $(PreprocessorSwitch)NDEBUG 
+Preprocessors          :=$(PreprocessorSwitch)NDEBUG $(PreprocessorSwitch)__WX__ 
 ObjectSwitch           :=-o 
 ArchiveOutputSwitch    := 
 PreprocessOnlySwitch   :=-E
@@ -37,7 +37,7 @@ PCHCompileFlags        :=
 MakeDirCommand         :=makedir
 RcCmpOptions           := $(shell wx-config --rcflags)
 RcCompilerName         :=C:/Utils/mingw-w64/x86_64-5.3.0-posix-seh-rt_v4-rev0/mingw64/bin/windres.exe
-LinkOptions            :=  -mwindows -s $(shell wx-config --debug=no  --libs std,stc --unicode=yes)
+LinkOptions            :=  -mwindows -s $(shell wx-config --debug=no --libs std,stc --unicode=yes)
 IncludePath            :=  $(IncludeSwitch). $(IncludeSwitch)I:/Workspace/CodeLiteC++/rapidjson/include 
 IncludePCH             := 
 RcIncludePath          := 
@@ -52,8 +52,8 @@ LibPath                := $(LibraryPathSwitch).
 AR       := C:/Utils/mingw-w64/x86_64-5.3.0-posix-seh-rt_v4-rev0/mingw64/bin/ar.exe rcu
 CXX      := C:/Utils/mingw-w64/x86_64-5.3.0-posix-seh-rt_v4-rev0/mingw64/bin/g++.exe
 CC       := C:/Utils/mingw-w64/x86_64-5.3.0-posix-seh-rt_v4-rev0/mingw64/bin/gcc.exe
-CXXFLAGS :=  -O2 -Wall -std=gnu++14 $(shell wx-config --cxxflags --unicode=yes --debug=no --libs std stc) $(Preprocessors)
-CFLAGS   :=  -O2 -Wall $(shell wx-config --cxxflags --unicode=yes --debug=no --libs std stc) $(Preprocessors)
+CXXFLAGS :=  -O2 -std=gnu++14 -Wall $(shell wx-config --cxxflags --unicode=yes --debug=no) $(Preprocessors)
+CFLAGS   :=  -O2 -Wall $(shell wx-config --cxxflags --unicode=yes --debug=no) $(Preprocessors)
 ASFLAGS  := 
 AS       := C:/Utils/mingw-w64/x86_64-5.3.0-posix-seh-rt_v4-rev0/mingw64/bin/as.exe
 
@@ -63,7 +63,7 @@ AS       := C:/Utils/mingw-w64/x86_64-5.3.0-posix-seh-rt_v4-rev0/mingw64/bin/as.
 ##
 CodeLiteDir:=C:\Program Files\CodeLite
 WXWIN:=C:\utils\wxWidgets
-Objects0=$(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IntermediateDirectory)/dailyworkparser.cpp$(ObjectSuffix) $(IntermediateDirectory)/gui2.cpp$(ObjectSuffix) $(IntermediateDirectory)/myrichtext.cpp$(ObjectSuffix) $(IntermediateDirectory)/prefs.cpp$(ObjectSuffix) $(IntermediateDirectory)/mystyledtext.cpp$(ObjectSuffix) $(IntermediateDirectory)/excludeddays.cpp$(ObjectSuffix) $(IntermediateDirectory)/win_resources.rc$(ObjectSuffix) 
+Objects0=$(IntermediateDirectory)/src_dailyworkparser.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_excludeddays.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_gui2.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_main.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_myrichtext.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_mystyledtext.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_prefs.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_gui.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_win_resources.rc$(ObjectSuffix) 
 
 
 
@@ -94,64 +94,72 @@ PreBuild:
 ##
 ## Objects
 ##
-$(IntermediateDirectory)/main.cpp$(ObjectSuffix): main.cpp $(IntermediateDirectory)/main.cpp$(DependSuffix)
-	$(CXX) $(IncludePCH) $(SourceSwitch) "I:/Workspace/CodeLiteC++/DailyWork/main.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IncludePath)
-$(IntermediateDirectory)/main.cpp$(DependSuffix): main.cpp
-	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/main.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/main.cpp$(DependSuffix) -MM "main.cpp"
+$(IntermediateDirectory)/src_dailyworkparser.cpp$(ObjectSuffix): src/dailyworkparser.cpp $(IntermediateDirectory)/src_dailyworkparser.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "I:/Workspace/CodeLiteC++/DailyWork/src/dailyworkparser.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/src_dailyworkparser.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/src_dailyworkparser.cpp$(DependSuffix): src/dailyworkparser.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/src_dailyworkparser.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/src_dailyworkparser.cpp$(DependSuffix) -MM "src/dailyworkparser.cpp"
 
-$(IntermediateDirectory)/main.cpp$(PreprocessSuffix): main.cpp
-	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/main.cpp$(PreprocessSuffix) "main.cpp"
+$(IntermediateDirectory)/src_dailyworkparser.cpp$(PreprocessSuffix): src/dailyworkparser.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/src_dailyworkparser.cpp$(PreprocessSuffix) "src/dailyworkparser.cpp"
 
-$(IntermediateDirectory)/dailyworkparser.cpp$(ObjectSuffix): dailyworkparser.cpp $(IntermediateDirectory)/dailyworkparser.cpp$(DependSuffix)
-	$(CXX) $(IncludePCH) $(SourceSwitch) "I:/Workspace/CodeLiteC++/DailyWork/dailyworkparser.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/dailyworkparser.cpp$(ObjectSuffix) $(IncludePath)
-$(IntermediateDirectory)/dailyworkparser.cpp$(DependSuffix): dailyworkparser.cpp
-	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/dailyworkparser.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/dailyworkparser.cpp$(DependSuffix) -MM "dailyworkparser.cpp"
+$(IntermediateDirectory)/src_excludeddays.cpp$(ObjectSuffix): src/excludeddays.cpp $(IntermediateDirectory)/src_excludeddays.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "I:/Workspace/CodeLiteC++/DailyWork/src/excludeddays.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/src_excludeddays.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/src_excludeddays.cpp$(DependSuffix): src/excludeddays.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/src_excludeddays.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/src_excludeddays.cpp$(DependSuffix) -MM "src/excludeddays.cpp"
 
-$(IntermediateDirectory)/dailyworkparser.cpp$(PreprocessSuffix): dailyworkparser.cpp
-	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/dailyworkparser.cpp$(PreprocessSuffix) "dailyworkparser.cpp"
+$(IntermediateDirectory)/src_excludeddays.cpp$(PreprocessSuffix): src/excludeddays.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/src_excludeddays.cpp$(PreprocessSuffix) "src/excludeddays.cpp"
 
-$(IntermediateDirectory)/gui2.cpp$(ObjectSuffix): gui2.cpp $(IntermediateDirectory)/gui2.cpp$(DependSuffix)
-	$(CXX) $(IncludePCH) $(SourceSwitch) "I:/Workspace/CodeLiteC++/DailyWork/gui2.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/gui2.cpp$(ObjectSuffix) $(IncludePath)
-$(IntermediateDirectory)/gui2.cpp$(DependSuffix): gui2.cpp
-	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/gui2.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/gui2.cpp$(DependSuffix) -MM "gui2.cpp"
+$(IntermediateDirectory)/src_gui2.cpp$(ObjectSuffix): src/gui2.cpp $(IntermediateDirectory)/src_gui2.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "I:/Workspace/CodeLiteC++/DailyWork/src/gui2.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/src_gui2.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/src_gui2.cpp$(DependSuffix): src/gui2.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/src_gui2.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/src_gui2.cpp$(DependSuffix) -MM "src/gui2.cpp"
 
-$(IntermediateDirectory)/gui2.cpp$(PreprocessSuffix): gui2.cpp
-	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/gui2.cpp$(PreprocessSuffix) "gui2.cpp"
+$(IntermediateDirectory)/src_gui2.cpp$(PreprocessSuffix): src/gui2.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/src_gui2.cpp$(PreprocessSuffix) "src/gui2.cpp"
 
-$(IntermediateDirectory)/myrichtext.cpp$(ObjectSuffix): myrichtext.cpp $(IntermediateDirectory)/myrichtext.cpp$(DependSuffix)
-	$(CXX) $(IncludePCH) $(SourceSwitch) "I:/Workspace/CodeLiteC++/DailyWork/myrichtext.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/myrichtext.cpp$(ObjectSuffix) $(IncludePath)
-$(IntermediateDirectory)/myrichtext.cpp$(DependSuffix): myrichtext.cpp
-	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/myrichtext.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/myrichtext.cpp$(DependSuffix) -MM "myrichtext.cpp"
+$(IntermediateDirectory)/src_main.cpp$(ObjectSuffix): src/main.cpp $(IntermediateDirectory)/src_main.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "I:/Workspace/CodeLiteC++/DailyWork/src/main.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/src_main.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/src_main.cpp$(DependSuffix): src/main.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/src_main.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/src_main.cpp$(DependSuffix) -MM "src/main.cpp"
 
-$(IntermediateDirectory)/myrichtext.cpp$(PreprocessSuffix): myrichtext.cpp
-	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/myrichtext.cpp$(PreprocessSuffix) "myrichtext.cpp"
+$(IntermediateDirectory)/src_main.cpp$(PreprocessSuffix): src/main.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/src_main.cpp$(PreprocessSuffix) "src/main.cpp"
 
-$(IntermediateDirectory)/prefs.cpp$(ObjectSuffix): prefs.cpp $(IntermediateDirectory)/prefs.cpp$(DependSuffix)
-	$(CXX) $(IncludePCH) $(SourceSwitch) "I:/Workspace/CodeLiteC++/DailyWork/prefs.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/prefs.cpp$(ObjectSuffix) $(IncludePath)
-$(IntermediateDirectory)/prefs.cpp$(DependSuffix): prefs.cpp
-	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/prefs.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/prefs.cpp$(DependSuffix) -MM "prefs.cpp"
+$(IntermediateDirectory)/src_myrichtext.cpp$(ObjectSuffix): src/myrichtext.cpp $(IntermediateDirectory)/src_myrichtext.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "I:/Workspace/CodeLiteC++/DailyWork/src/myrichtext.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/src_myrichtext.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/src_myrichtext.cpp$(DependSuffix): src/myrichtext.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/src_myrichtext.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/src_myrichtext.cpp$(DependSuffix) -MM "src/myrichtext.cpp"
 
-$(IntermediateDirectory)/prefs.cpp$(PreprocessSuffix): prefs.cpp
-	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/prefs.cpp$(PreprocessSuffix) "prefs.cpp"
+$(IntermediateDirectory)/src_myrichtext.cpp$(PreprocessSuffix): src/myrichtext.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/src_myrichtext.cpp$(PreprocessSuffix) "src/myrichtext.cpp"
 
-$(IntermediateDirectory)/mystyledtext.cpp$(ObjectSuffix): mystyledtext.cpp $(IntermediateDirectory)/mystyledtext.cpp$(DependSuffix)
-	$(CXX) $(IncludePCH) $(SourceSwitch) "I:/Workspace/CodeLiteC++/DailyWork/mystyledtext.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/mystyledtext.cpp$(ObjectSuffix) $(IncludePath)
-$(IntermediateDirectory)/mystyledtext.cpp$(DependSuffix): mystyledtext.cpp
-	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/mystyledtext.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/mystyledtext.cpp$(DependSuffix) -MM "mystyledtext.cpp"
+$(IntermediateDirectory)/src_mystyledtext.cpp$(ObjectSuffix): src/mystyledtext.cpp $(IntermediateDirectory)/src_mystyledtext.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "I:/Workspace/CodeLiteC++/DailyWork/src/mystyledtext.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/src_mystyledtext.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/src_mystyledtext.cpp$(DependSuffix): src/mystyledtext.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/src_mystyledtext.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/src_mystyledtext.cpp$(DependSuffix) -MM "src/mystyledtext.cpp"
 
-$(IntermediateDirectory)/mystyledtext.cpp$(PreprocessSuffix): mystyledtext.cpp
-	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/mystyledtext.cpp$(PreprocessSuffix) "mystyledtext.cpp"
+$(IntermediateDirectory)/src_mystyledtext.cpp$(PreprocessSuffix): src/mystyledtext.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/src_mystyledtext.cpp$(PreprocessSuffix) "src/mystyledtext.cpp"
 
-$(IntermediateDirectory)/excludeddays.cpp$(ObjectSuffix): excludeddays.cpp $(IntermediateDirectory)/excludeddays.cpp$(DependSuffix)
-	$(CXX) $(IncludePCH) $(SourceSwitch) "I:/Workspace/CodeLiteC++/DailyWork/excludeddays.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/excludeddays.cpp$(ObjectSuffix) $(IncludePath)
-$(IntermediateDirectory)/excludeddays.cpp$(DependSuffix): excludeddays.cpp
-	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/excludeddays.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/excludeddays.cpp$(DependSuffix) -MM "excludeddays.cpp"
+$(IntermediateDirectory)/src_prefs.cpp$(ObjectSuffix): src/prefs.cpp $(IntermediateDirectory)/src_prefs.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "I:/Workspace/CodeLiteC++/DailyWork/src/prefs.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/src_prefs.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/src_prefs.cpp$(DependSuffix): src/prefs.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/src_prefs.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/src_prefs.cpp$(DependSuffix) -MM "src/prefs.cpp"
 
-$(IntermediateDirectory)/excludeddays.cpp$(PreprocessSuffix): excludeddays.cpp
-	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/excludeddays.cpp$(PreprocessSuffix) "excludeddays.cpp"
+$(IntermediateDirectory)/src_prefs.cpp$(PreprocessSuffix): src/prefs.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/src_prefs.cpp$(PreprocessSuffix) "src/prefs.cpp"
 
-$(IntermediateDirectory)/win_resources.rc$(ObjectSuffix): win_resources.rc
-	$(RcCompilerName) -i "I:/Workspace/CodeLiteC++/DailyWork/win_resources.rc" $(RcCmpOptions)   $(ObjectSwitch)$(IntermediateDirectory)/win_resources.rc$(ObjectSuffix) $(RcIncludePath)
+$(IntermediateDirectory)/src_gui.cpp$(ObjectSuffix): src/gui.cpp $(IntermediateDirectory)/src_gui.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "I:/Workspace/CodeLiteC++/DailyWork/src/gui.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/src_gui.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/src_gui.cpp$(DependSuffix): src/gui.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/src_gui.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/src_gui.cpp$(DependSuffix) -MM "src/gui.cpp"
+
+$(IntermediateDirectory)/src_gui.cpp$(PreprocessSuffix): src/gui.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/src_gui.cpp$(PreprocessSuffix) "src/gui.cpp"
+
+$(IntermediateDirectory)/src_win_resources.rc$(ObjectSuffix): src/win_resources.rc
+	$(RcCompilerName) -i "I:/Workspace/CodeLiteC++/DailyWork/src/win_resources.rc" $(RcCmpOptions)   $(ObjectSwitch)$(IntermediateDirectory)/src_win_resources.rc$(ObjectSuffix) $(RcIncludePath)
 
 -include $(IntermediateDirectory)/*$(DependSuffix)
 ##
