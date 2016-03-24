@@ -13,10 +13,10 @@ CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
 User                   :=Laurent
-Date                   :=16/03/2016
+Date                   :=21/03/2016
 CodeLitePath           :="C:/Program Files/CodeLite"
-LinkerName             :=C:/Utils/TDM-GCC-64/bin/g++.exe
-SharedObjectLinkerName :=C:/Utils/TDM-GCC-64/bin/g++.exe -shared -fPIC
+LinkerName             :=C:/Utils/mingw-w64/x86_64-5.3.0-posix-seh-rt_v4-rev0/mingw64/bin/g++.exe
+SharedObjectLinkerName :=C:/Utils/mingw-w64/x86_64-5.3.0-posix-seh-rt_v4-rev0/mingw64/bin/g++.exe -shared -fPIC
 ObjectSuffix           :=.o
 DependSuffix           :=.o.d
 PreprocessSuffix       :=.i
@@ -36,7 +36,7 @@ ObjectsFileList        :="DailyWork.txt"
 PCHCompileFlags        :=
 MakeDirCommand         :=makedir
 RcCmpOptions           := $(shell wx-config --rcflags)
-RcCompilerName         :=C:/Utils/TDM-GCC-64/bin/windres.exe
+RcCompilerName         :=C:/Utils/mingw-w64/x86_64-5.3.0-posix-seh-rt_v4-rev0/mingw64/bin/windres.exe
 LinkOptions            :=  -mwindows -s $(shell wx-config --debug=no  --libs std,stc --unicode=yes)
 IncludePath            :=  $(IncludeSwitch). $(IncludeSwitch)I:/Workspace/CodeLiteC++/rapidjson/include 
 IncludePCH             := 
@@ -49,13 +49,13 @@ LibPath                := $(LibraryPathSwitch).
 ## Common variables
 ## AR, CXX, CC, AS, CXXFLAGS and CFLAGS can be overriden using an environment variables
 ##
-AR       := C:/Utils/TDM-GCC-64/bin/ar.exe rcu
-CXX      := C:/Utils/TDM-GCC-64/bin/g++.exe
-CC       := C:/Utils/TDM-GCC-64/bin/gcc.exe
-CXXFLAGS :=  -O2 -Wall -std=c++11 $(shell wx-config --cxxflags --unicode=yes --debug=no --libs std stc) $(Preprocessors)
+AR       := C:/Utils/mingw-w64/x86_64-5.3.0-posix-seh-rt_v4-rev0/mingw64/bin/ar.exe rcu
+CXX      := C:/Utils/mingw-w64/x86_64-5.3.0-posix-seh-rt_v4-rev0/mingw64/bin/g++.exe
+CC       := C:/Utils/mingw-w64/x86_64-5.3.0-posix-seh-rt_v4-rev0/mingw64/bin/gcc.exe
+CXXFLAGS :=  -O2 -Wall -std=gnu++14 $(shell wx-config --cxxflags --unicode=yes --debug=no --libs std stc) $(Preprocessors)
 CFLAGS   :=  -O2 -Wall $(shell wx-config --cxxflags --unicode=yes --debug=no --libs std stc) $(Preprocessors)
 ASFLAGS  := 
-AS       := C:/Utils/TDM-GCC-64/bin/as.exe
+AS       := C:/Utils/mingw-w64/x86_64-5.3.0-posix-seh-rt_v4-rev0/mingw64/bin/as.exe
 
 
 ##
@@ -63,7 +63,7 @@ AS       := C:/Utils/TDM-GCC-64/bin/as.exe
 ##
 CodeLiteDir:=C:\Program Files\CodeLite
 WXWIN:=C:\utils\wxWidgets
-Objects0=$(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IntermediateDirectory)/dailyworkparser.cpp$(ObjectSuffix) $(IntermediateDirectory)/gui2.cpp$(ObjectSuffix) $(IntermediateDirectory)/myrichtext.cpp$(ObjectSuffix) $(IntermediateDirectory)/prefs.cpp$(ObjectSuffix) $(IntermediateDirectory)/mystyledtext.cpp$(ObjectSuffix) $(IntermediateDirectory)/excludeddays.cpp$(ObjectSuffix) $(IntermediateDirectory)/win_resources.rc$(ObjectSuffix) $(IntermediateDirectory)/gui.cpp$(ObjectSuffix) 
+Objects0=$(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IntermediateDirectory)/dailyworkparser.cpp$(ObjectSuffix) $(IntermediateDirectory)/gui2.cpp$(ObjectSuffix) $(IntermediateDirectory)/myrichtext.cpp$(ObjectSuffix) $(IntermediateDirectory)/prefs.cpp$(ObjectSuffix) $(IntermediateDirectory)/mystyledtext.cpp$(ObjectSuffix) $(IntermediateDirectory)/excludeddays.cpp$(ObjectSuffix) $(IntermediateDirectory)/win_resources.rc$(ObjectSuffix) 
 
 
 
@@ -152,14 +152,6 @@ $(IntermediateDirectory)/excludeddays.cpp$(PreprocessSuffix): excludeddays.cpp
 
 $(IntermediateDirectory)/win_resources.rc$(ObjectSuffix): win_resources.rc
 	$(RcCompilerName) -i "I:/Workspace/CodeLiteC++/DailyWork/win_resources.rc" $(RcCmpOptions)   $(ObjectSwitch)$(IntermediateDirectory)/win_resources.rc$(ObjectSuffix) $(RcIncludePath)
-$(IntermediateDirectory)/gui.cpp$(ObjectSuffix): gui.cpp $(IntermediateDirectory)/gui.cpp$(DependSuffix)
-	$(CXX) $(IncludePCH) $(SourceSwitch) "I:/Workspace/CodeLiteC++/DailyWork/gui.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/gui.cpp$(ObjectSuffix) $(IncludePath)
-$(IntermediateDirectory)/gui.cpp$(DependSuffix): gui.cpp
-	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/gui.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/gui.cpp$(DependSuffix) -MM "gui.cpp"
-
-$(IntermediateDirectory)/gui.cpp$(PreprocessSuffix): gui.cpp
-	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/gui.cpp$(PreprocessSuffix) "gui.cpp"
-
 
 -include $(IntermediateDirectory)/*$(DependSuffix)
 ##

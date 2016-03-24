@@ -416,13 +416,13 @@ void MainFrame::CreateMenu()
 void MainFrame::CreateEditor(wxWindow *parent)
 {    
 #if USE_RICH_EDIT
-    wxFont textFont = wxFont(12, wxROMAN, wxNORMAL, wxNORMAL);
-    wxFont boldFont = wxFont(12, wxROMAN, wxNORMAL, wxBOLD);
-    wxFont italicFont = wxFont(12, wxROMAN, wxITALIC, wxNORMAL);
-
+    wxFont textFont = wxFont(wxFontInfo(12).Family(wxFONTFAMILY_ROMAN));
+    wxFont boldFont = wxFont(wxFontInfo(12).Family(wxFONTFAMILY_ROMAN));
+    wxFont italicFont = wxFont(wxFontInfo(12).Family(wxFONTFAMILY_ROMAN).Italic());
+    
     m_editor = new MyRichTextCtrl(parent, ID_RICHTEXT_CTRL, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxVSCROLL|wxHSCROLL/*|wxWANTS_CHARS*/);
     wxASSERT(!m_editor->GetBuffer().GetAttributes().HasFontPixelSize());
-    wxFont font(12, wxROMAN, wxNORMAL, wxNORMAL);
+    wxFont font(wxFontInfo(12).Family(wxFONTFAMILY_ROMAN));
     m_editor->SetFont(font);
     wxASSERT(!m_editor->GetBuffer().GetAttributes().HasFontPixelSize());
     m_editor->SetStyleSheet(wxGetApp().GetStyleSheet()); 

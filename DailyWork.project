@@ -2,7 +2,7 @@
 <CodeLite_Project Name="DailyWork" InternalType="GUI">
   <Plugins>
     <Plugin Name="qmake">
-      <![CDATA[00010001N0005Debug000000000000]]>
+      <![CDATA[00020001N0005Debug0000000000000001N0007Release000000000000]]>
     </Plugin>
     <Plugin Name="CMakePlugin">
       <![CDATA[[{
@@ -61,10 +61,10 @@
     <File Name="excludeddays.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="resources">
-    <File Name="gui.fbp"/>
+    <File Name="gui.fbp" ExcludeProjConfig="Release"/>
     <File Name="win_resources.rc"/>
-    <File Name="gui.h"/>
-    <File Name="gui.cpp"/>
+    <File Name="gui.h" ExcludeProjConfig="Release"/>
+    <File Name="gui.cpp" ExcludeProjConfig="Release"/>
   </VirtualDirectory>
   <Dependencies Name="Debug"/>
   <Dependencies Name="Linux Release"/>
@@ -79,8 +79,8 @@
       </Linker>
       <ResourceCompiler Options=""/>
     </GlobalSettings>
-    <Configuration Name="Debug" CompilerType="MinGW ( gcc.exe (tdm64-1) 5.1.0 )" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
-      <Compiler Options="-g;-O0;-Wall;-std=c++11;$(shell wx-config --cxxflags --unicode=yes --debug=yes)" C_Options="-g;-O0;-Wall;$(shell wx-config --cxxflags --unicode=yes --debug=yes)" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
+    <Configuration Name="Debug" CompilerType="MinGW ( mingw64 )" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+      <Compiler Options="-g;-O0;-Wall;-std=gnu++14;$(shell wx-config --cxxflags --unicode=yes --debug=yes)" C_Options="-g;-O0;-Wall;$(shell wx-config --cxxflags --unicode=yes --debug=yes)" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
         <IncludePath Value="I:/Workspace/CodeLiteC++/rapidjson/include"/>
         <Preprocessor Value="__WX__"/>
       </Compiler>
@@ -158,8 +158,8 @@
         <SearchPaths/>
       </Completion>
     </Configuration>
-    <Configuration Name="Release" CompilerType="MinGW ( gcc.exe (tdm64-1) 5.1.0 )" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
-      <Compiler Options="-O2;-Wall;-std=c++11;$(shell wx-config --cxxflags --unicode=yes --debug=no --libs std stc)" C_Options="-O2;-Wall;$(shell wx-config --cxxflags --unicode=yes --debug=no --libs std stc)" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
+    <Configuration Name="Release" CompilerType="MinGW ( mingw64 )" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+      <Compiler Options="-O2;-Wall;-std=gnu++14;$(shell wx-config --cxxflags --unicode=yes --debug=no --libs std stc)" C_Options="-O2;-Wall;$(shell wx-config --cxxflags --unicode=yes --debug=no --libs std stc)" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
         <IncludePath Value="I:/Workspace/CodeLiteC++/rapidjson/include"/>
         <Preprocessor Value="__WX__"/>
         <Preprocessor Value="NDEBUG"/>
