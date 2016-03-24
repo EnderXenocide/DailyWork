@@ -20,7 +20,7 @@
 #include "gui2.h"
 
 // main wxWidgets header file
-#include <wx/wx.h>
+//#include <wx/wx.h>
 #include <wx/string.h>
 #include <wx/treectrl.h>
 #include <wx/msgdlg.h>

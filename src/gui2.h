@@ -3,6 +3,8 @@
 
 #define USE_RICH_EDIT false
 
+#include <wx/filedlg.h>
+#include <wx/statbox.h>
 #include <wx/artprov.h>
 #include <wx/xrc/xmlres.h>
 #include <wx/intl.h>
