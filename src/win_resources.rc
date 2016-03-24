@@ -1,0 +1,32 @@
+#include "wx/msw/wx.rc"
+frame_icon ICON "bitmaps/icon.ico"
+1 VERSIONINFO
+FILEVERSION     1,5,0,0
+PRODUCTVERSION  1,5,0,0
+BEGIN
+  BLOCK "StringFileInfo"
+  BEGIN
+    BLOCK "040904B0"
+    //BLOCK "080904E4"
+    BEGIN
+      VALUE "CompanyName", "Laurent Silvestre"
+      VALUE "FileDescription", "This is a daily notepad.\n(c) Laurent Silvestre, 2015"
+      VALUE "FileVersion", "1.5"
+      VALUE "InternalName", "DailyWork"
+      VALUE "LegalCopyright", "Daily Work"
+      VALUE "OriginalFilename", "DailyWork.exe"
+      VALUE "ProductName", "Daily Work"
+      VALUE "ProductVersion", "1.5"
+    END
+  END
+
+  BLOCK "VarFileInfo"
+  BEGIN
+    VALUE "Translation", 0x809, 1252
+  END
+END
+#ifdef WIN64
+1 24 "wx/msw/amd64.manifest"
+#else
+1 24 "wx/msw/wx.manifest"
+#endif
