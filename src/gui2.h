@@ -44,7 +44,6 @@
 #include "wx/richtext/richtextsymboldlg.h"
 #include "wx/richtext/richtextstyledlg.h"
 #include "wx/richtext/richtextprint.h"
-#include "wx/richtext/richtextimagedlg.h"
 #include "myrichtext.h"
 #else
 #include "mystyledtext.h"
@@ -127,7 +126,7 @@ public:
     void OnStatusBarMessage(wxString msg);
     void OnDialogMessage(wxString msg);
     void EnableShowHirerarchicalTree(bool hiearchy);
-    void SetText(wxString texte);
+    void SetText(wxString texte, bool focusEditor = false);
     void UpdateText();
     void ConnectSelectionEvents();
     void DisconnectSelectionEvents();
@@ -246,8 +245,6 @@ protected:
     void OnInsertURL(wxCommandEvent& event);
     void OnURL(wxTextUrlEvent& event);
     void OnStyleSheetReplacing(wxRichTextEvent& event);
-    
-    void OnInsertImage(wxCommandEvent& event);
     
     void OnSetFontScale(wxCommandEvent& event);
     void OnSetDimensionScale(wxCommandEvent& event);    

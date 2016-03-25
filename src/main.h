@@ -39,7 +39,6 @@
 #include <wx/richtext/richtextsymboldlg.h>
 #include <wx/richtext/richtextstyledlg.h>
 #include <wx/richtext/richtextprint.h>
-#include <wx/richtext/richtextimagedlg.h>
 #endif
 
 

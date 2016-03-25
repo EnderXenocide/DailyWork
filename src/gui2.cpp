@@ -30,7 +30,6 @@ enum
     
     ID_INSERT_SYMBOL,
     ID_INSERT_URL,
-    ID_INSERT_IMAGE,
 
     ID_FORMAT_ALIGN_LEFT,
     ID_FORMAT_ALIGN_CENTRE,
@@ -378,7 +377,6 @@ void MainFrame::CreateMenu()
     wxMenu* insertMenu = new wxMenu;
     insertMenu->Append(ID_INSERT_SYMBOL, _("&Symbol...\tCtrl+I"));
     insertMenu->Append(ID_INSERT_URL, _("&URL..."));
-    insertMenu->Append(ID_INSERT_IMAGE, _("&Image..."));
 #endif // USE_RICH_EDIT
 
     wxMenu* favoriteMenu = new wxMenu;
@@ -567,7 +565,6 @@ void MainFrame::ConnectEvents()
 
     Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnInsertSymbol, this, ID_INSERT_SYMBOL);
     Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnInsertURL, this, ID_INSERT_URL);
-    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnInsertImage, this, ID_INSERT_IMAGE);
 
     Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnNumberList, this, ID_FORMAT_NUMBER_LIST);
     Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnBulletsAndNumbering, this, ID_FORMAT_BULLETS_AND_NUMBERING);
@@ -621,7 +618,7 @@ void MainFrame::DisconnectSelectionEvents()
 	m_calendar->Unbind( wxEVT_CALENDAR_SEL_CHANGED, &MainFrame::OnCalendarSelChanged, this );
 }
 
-void MainFrame::SetText(wxString texte)
+void MainFrame::SetText(wxString texte, bool focusEditor)
 {
     LOG_IF(texte.IsEmpty(), DEBUG) << "No text to show in editor "; 
     LOG_IF(!texte.IsEmpty(), DEBUG) << "Text to show in editor <" << texte <<">";
@@ -638,6 +635,9 @@ void MainFrame::SetText(wxString texte)
     m_editor->EmptyUndoBuffer();
 #endif    
     m_editor->DiscardEdits();
+    
+    if (focusEditor)   
+        m_editor->SetFocus();
     
 //    bool retour = rtb.LoadFile(final); // == 0
 //    //rtb.AddParagraph(wxT("Testeeds"));
@@ -1656,18 +1656,6 @@ void MainFrame::OnInsertURL(wxCommandEvent& event)
         m_editor->WriteText(url);
         m_editor->EndURL();
         m_editor->EndStyle();
-    }
-}
-
-void MainFrame::OnInsertImage(wxCommandEvent& event)
-{
-    wxFileDialog dialog(this, _("Choose an image"), "", "", "BMP and GIF files (*.bmp;*.gif)|*.bmp;*.gif|PNG files (*.png)|*.png|JPEG files (*.jpg;*.jpeg)|*.jpg;*.jpeg");
-    if (dialog.ShowModal() == wxID_OK)
-    {
-        wxString path = dialog.GetPath();
-        wxImage image;
-        if (image.LoadFile(path) && image.GetType() != wxBITMAP_TYPE_INVALID)
-            m_editor->WriteImage(path, image.GetType());
     }
 }
 

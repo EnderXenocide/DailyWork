@@ -103,31 +103,14 @@ void MainApp::InitRichText()
 //    wxRichTextFieldTypeCompositeTest* s4 = new wxRichTextFieldTypeCompositeTest(wxT("composite"), wxT("This is a field value"));
 //    wxRichTextBuffer::AddFieldType(s4);
 //
-
-//    // Add image handlers
-//#if wxUSE_LIBPNG
-//    wxImage::AddHandler( new wxPNGHandler );
-//#endif
-//
-//#if wxUSE_LIBJPEG
-//    wxImage::AddHandler( new wxJPEGHandler );
-//#endif
-//
-//#if wxUSE_GIF
-//    wxImage::AddHandler( new wxGIFHandler );
-//#endif
-//
-//#if wxUSE_FILESYSTEM
-//    wxFileSystem::AddHandler( new wxMemoryFSHandler );
-//#endif
 }
 
 void MainApp::CreateStyles()
 {
     // Paragraph styles
 
-    wxFont romanFont(12, wxROMAN, wxNORMAL, wxNORMAL);
-    wxFont swissFont(12, wxSWISS, wxNORMAL, wxNORMAL);
+    wxFont romanFont(12, wxFONTFAMILY_ROMAN, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL);
+    wxFont swissFont(12, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL);
 
     wxRichTextParagraphStyleDefinition* normalPara = new wxRichTextParagraphStyleDefinition(wxT("Normal"));
     wxRichTextAttr normalAttr;
@@ -546,8 +529,7 @@ void MainApp::SetCurrentDate(const wxDateTime &date, wxWindow *sender)
     }
     SetButtonsState();
     
-    frame->SetText(text);    
-    frame->m_editor->SetFocus(); //todo here ?
+    frame->SetText(text, true); 
 }
 
 void MainApp::SetCurrentDateFromTreeDatesSelection()
