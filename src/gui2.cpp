@@ -656,17 +656,17 @@ void MainFrame::SetText(wxString texte, bool focusEditor)
 void MainFrame::UpdateText()
 {
     if (m_editor->IsModified() ) {
-#if USE_RICH_EDIT
-        wxString text;
-        wxStringOutputStream strStream(& text);
-        wxRichTextHTMLHandler htmlHandler;
-        if (htmlHandler.SaveFile(& m_editor->GetBuffer(), strStream))
-        {
-           wxGetApp().UpdateCurrentWork(text);
-        }
-#else
+//#if USE_RICH_EDIT
+//        wxString text;
+//        wxStringOutputStream strStream(& text);
+//        wxRichTextHTMLHandler htmlHandler;
+//        if (htmlHandler.SaveFile(& m_editor->GetBuffer(), strStream))
+//        {
+//           wxGetApp().UpdateCurrentWork(text);
+//        }
+//#else
         wxGetApp().UpdateCurrentWork(m_editor->GetValue());
-#endif         
+//#endif         
     }   
     m_editor->DiscardEdits();
 }
