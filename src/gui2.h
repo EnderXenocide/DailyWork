@@ -1,7 +1,7 @@
 #ifndef __GUI_H__
 #define __GUI_H__
 
-#define USE_RICH_EDIT false
+#define USE_RICH_EDIT true
 
 #include <wx/filedlg.h>
 #include <wx/statbox.h>
@@ -127,7 +127,8 @@ public:
     void OnStatusBarMessage(wxString msg);
     void OnDialogMessage(wxString msg);
     void EnableShowHirerarchicalTree(bool hiearchy);
-    void SetText(wxString texte);    
+    void SetText(wxString texte);
+    void UpdateText();
     void ConnectSelectionEvents();
     void DisconnectSelectionEvents();
 protected:  

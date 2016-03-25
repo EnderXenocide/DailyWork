@@ -426,6 +426,7 @@ void MainFrame::CreateEditor(wxWindow *parent)
     m_editor->SetFont(font);
     wxASSERT(!m_editor->GetBuffer().GetAttributes().HasFontPixelSize());
     m_editor->SetStyleSheet(wxGetApp().GetStyleSheet()); 
+    
 #else
     //m_editor = new  wxTextCtrl(this, wxID_ANY, wxT(""), wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER | wxTE_MULTILINE);
     m_editor = new MyStyledTextCtrl(parent);
@@ -652,6 +653,25 @@ void MainFrame::SetText(wxString texte)
     //OnStatusBarMessage(texte.ToStdString());
 }
 
+void MainFrame::UpdateText()
+{
+    if (m_editor->IsModified() ) {
+#if USE_RICH_EDIT
+        wxString text;
+        wxStringOutputStream strStream(& text);
+        wxRichTextHTMLHandler htmlHandler;
+        if (htmlHandler.SaveFile(& m_editor->GetBuffer(), strStream))
+        {
+           wxGetApp().UpdateCurrentWork(text);
+        }
+#else
+        wxGetApp().UpdateCurrentWork(m_editor->GetValue());
+#endif         
+    }   
+    m_editor->DiscardEdits();
+}
+
+
 void MainFrame::EnableShowHirerarchicalTree(bool hiearchy)
 {
      m_menuBar->Enable(ID_HIERACHY, hiearchy);
@@ -667,7 +687,7 @@ void MainFrame::OnFocusComboFavorite(wxCommandEvent& event)
 void MainFrame::OnCloseFrame(wxCloseEvent& event)
 {
     bool exit = true;
-    wxGetApp().UpdateCurrentWork();
+    UpdateText();
     if (wxGetApp().IsModified()) {
         wxMessageDialog dial(this, _("This document was modified, would you like to save ?"), _("Warning"), wxYES_NO|wxCANCEL|wxCENTER_FRAME);
         int retour = dial.ShowModal();
@@ -710,7 +730,7 @@ void MainFrame::OnCalendarSelChanged(wxCalendarEvent& event)
 
 void MainFrame::OnTreeSelChanging( wxTreeEvent& event )
 {
-    wxGetApp().UpdateCurrentWork();
+    UpdateText();
 }
 
 void MainFrame::OnTreeSelChanged( wxTreeEvent& event )
@@ -903,7 +923,7 @@ void MainFrame::OnStayOnTop(wxCommandEvent& event)
 
 void MainFrame::OnSave(wxCommandEvent& event)
 {
-   wxGetApp().UpdateCurrentWork(); // met à jour/ou pas le texte ecrit dans le richedit dans DWparser
+    UpdateText(); // met à jour/ou pas le texte ecrit dans le richedit dans DWparser
     wxGetApp().Save();    
 //    wxDateTime d; 
 //    for(auto i = wxGetApp().currentDates.dates.begin(); i != wxGetApp().currentDates.dates.end(); ++i) {
@@ -931,7 +951,7 @@ void MainFrame::OnSaveAs(wxCommandEvent& event)
 
         if (!path.empty())
         {
-            wxGetApp().UpdateCurrentWork(); // met à jour/ou pas le texte ecrit dans le richedit dans DWparser
+            UpdateText(); // met à jour/ou pas le texte ecrit dans le richedit dans DWparser
             wxGetApp().SaveAs(path);
             wxString s = wxString::Format(_("Save as <%s>"), path); 
             OnStatusBarMessage(s.ToStdString());

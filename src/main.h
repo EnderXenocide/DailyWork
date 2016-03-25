@@ -84,7 +84,7 @@ public:
     int SaveAs(wxString filename) ;
     int AddToFavorites(wxString text);
     int DeleteSelectedFavorite();
-    void UpdateCurrentWork();
+    void UpdateCurrentWork(wxString text);
     int CountDates();
     int SearchInDates(wxString text);
     bool SelectFirstTreeDatesItem();

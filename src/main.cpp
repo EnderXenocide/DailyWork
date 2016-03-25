@@ -754,18 +754,16 @@ void MainApp::InitLanguageSupport()
     } 
 }
 
-void MainApp::UpdateCurrentWork()
+void MainApp::UpdateCurrentWork(wxString text)
 {
-    if (frame->m_editor->IsModified() ) {
-        if (currentDates.today.IsValid()) {
-            dwparser.UpdateWork(currentDates.today, frame->m_editor->GetValue()); 
-        }
-        else {
-            LOG(DEBUG ) << "invalid date";
-        }
-        frame->m_editor->DiscardEdits();
-    }  
+    if (currentDates.today.IsValid()) {
+        dwparser.UpdateWork(currentDates.today, text); 
+    }
+    else {
+        LOG(DEBUG ) << "invalid date";
+    }
 }
+
 int MainApp::CountDates()
 {
     return dwparser.CountItems();
