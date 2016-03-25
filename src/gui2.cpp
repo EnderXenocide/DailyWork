@@ -1006,15 +1006,15 @@ void MainFrame::OnOpen(wxCommandEvent&event)
 
         if (!path.empty())
         {
-            #if USE_RICH_EDIT
+#if USE_RICH_EDIT
             int filterIndex = dialog.GetFilterIndex();
             int fileType = (filterIndex < (int) fileTypes.GetCount())
                            ? fileTypes[filterIndex]
                            : wxRICHTEXT_TYPE_TEXT;
             m_editor->LoadFile(path, fileType);
-            #else
+#else
             m_editor->LoadFile(path);
-            #endif
+#endif
         }
     }
 }
