@@ -308,7 +308,7 @@ void MainApp::LoadDailyWorkInTree()
     LOG(INFO) << wxString::Format("Tree Loaded in %ldms", t);
 }
 
-wxTreeItemId MainApp::AddBranchHierarchy(wxTreeItemId rootId, wxDateTime date)
+wxTreeItemId MainApp::AddBranchHierarchy(wxTreeItemId rootId, const wxDateTime date)
 {
     wxDateTime tempDate = date;
     
@@ -321,11 +321,10 @@ wxTreeItemId MainApp::AddBranchHierarchy(wxTreeItemId rootId, wxDateTime date)
     return AddItem(itemId, date.Format("%d %A"), date, false);  //%e ne marche pas //"%A %d"
 }
 
-wxTreeItemId MainApp::AddBranchSimple(wxTreeItemId rootId, wxDateTime date)
+wxTreeItemId MainApp::AddBranchSimple(wxTreeItemId rootId, const wxDateTime date)
 {
     return AddItem(rootId, date.Format("%Y-%m-%d %a"), date, false);   //% F ne marche pas = Short YYYY-MM-DD date, equivalent to %Y-%m-%d
 }
-
 
 int MainApp::AddDateToTree(const wxDateTime& date, bool selectItem)
 {
@@ -474,7 +473,7 @@ bool MainApp::DeleteItemData(wxTreeItemId itemId)
 /*
  *  return item selected or ! isOk
  * */
-wxTreeItemId MainApp::SelectDateInChild(wxTreeItemId parent, wxDateTime date)
+wxTreeItemId MainApp::SelectDateInChild(wxTreeItemId parent, const wxDateTime date)
 {
     wxTreeCtrl* tree = frame->m_treeDates;
     wxTreeItemIdValue cookie;
@@ -498,12 +497,12 @@ wxTreeItemId MainApp::SelectDateInChild(wxTreeItemId parent, wxDateTime date)
     return itemId;  // ! IsOk()
 }
 
-void MainApp::SelectDateInTree(const wxDateTime &date)
+void MainApp::SelectDateInTree(const wxDateTime date)
 {
     SelectDateInChild(frame->m_treeDates->GetRootItem(), date);
 }
 
-void MainApp::SetCurrentDate(const wxDateTime &date, wxWindow *sender)
+void MainApp::SetCurrentDate(const wxDateTime date, wxWindow *sender)
 {
     wxString text("");
     if (date.IsValid()) {
@@ -619,7 +618,7 @@ wxString MainApp::GetCurrentDateWork()
     return dwparser.GetWorkFromDate(currentDates.today);
 }
 
-void MainApp::GetWorkDatesAround(const wxDateTime& date, wxDateTime& prevDate, wxDateTime& nextDate)
+void MainApp::GetWorkDatesAround(const wxDateTime date, wxDateTime& prevDate, wxDateTime& nextDate)
 {
     std::set<wxDateTime>::iterator it; 
 //currentNextAvailable = GetNextDateFromTree(date);

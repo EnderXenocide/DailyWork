@@ -67,7 +67,7 @@ public:
 #endif    
     int AddDateToTree(const wxDateTime& date, bool selectItem = false); // todo wxTreeCtrl& tree instead
     wxTreeItemId AddItem(wxTreeItemId parent, wxString text, wxDateTime date, bool setDataEmpty);
-    void SetCurrentDate(const wxDateTime &date, wxWindow *sender);
+    void SetCurrentDate(const wxDateTime date, wxWindow *sender);
     void SetCurrentDateFromTreeDatesSelection();
     void SetCurrentDateFromTreeSearchSelection();  
     void SetPrevDateAsCurrentDate();
@@ -104,11 +104,11 @@ private:
     void InitLanguageSupport();
     //wxLanguage GetUsersFavoriteLanguageOrDefault();
      wxTreeItemId AddItemData(wxTreeItemId itemId, wxDateTime date, bool setDataEmpty);
-    void SelectDateInTree(const wxDateTime &date);
-    wxTreeItemId SelectDateInChild(wxTreeItemId parent, wxDateTime date);
-    wxTreeItemId AddBranchHierarchy(wxTreeItemId rootId, wxDateTime date);
-    wxTreeItemId AddBranchSimple(wxTreeItemId rootId, wxDateTime date);
-    void GetWorkDatesAround(const wxDateTime &date, wxDateTime &prevDate, wxDateTime &nextDate);
+    void SelectDateInTree(const wxDateTime date);
+    wxTreeItemId SelectDateInChild(wxTreeItemId parent, const wxDateTime date);
+    wxTreeItemId AddBranchHierarchy(wxTreeItemId rootId, const wxDateTime date);
+    wxTreeItemId AddBranchSimple(wxTreeItemId rootId, const wxDateTime date);
+    void GetWorkDatesAround(const wxDateTime date, wxDateTime &prevDate, wxDateTime &nextDate);
     void SetButtonsState();
     void SetEmptyWorkSpace();
  #if USE_RICH_EDIT   

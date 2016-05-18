@@ -1,7 +1,7 @@
 #ifndef __GUI_H__
 #define __GUI_H__
 
-#define USE_RICH_EDIT true
+#define USE_RICH_EDIT FALSE
 
 #include <wx/filedlg.h>
 #include <wx/statbox.h>
