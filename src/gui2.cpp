@@ -88,7 +88,14 @@ enum
         
     ID_TEXT_FIND,    
     ID_SPLITTER_EDITORFIND, 
-    ID_SHOW_FIND,    
+    ID_SHOW_FIND, 
+
+    ID_DATES_ADD_TOMORROW,
+    ID_DATES_ADD_YESTERDAY,
+    ID_DATES_GO_NEXT_AVAILABLE,
+    ID_DATES_GO_PREV_AVAILABLE,
+    ID_DATES_GO,
+    
 };
 
 // BEGIN EVENTS
@@ -379,6 +386,13 @@ void MainFrame::CreateMenu()
     insertMenu->Append(ID_INSERT_URL, _("&URL..."));
 #endif // USE_RICH_EDIT
 
+    wxMenu* datesMenu = new wxMenu;
+    // see MainApp::SetButtonsState() for hotkeys
+    m_menuGoNextAvailable = datesMenu->Append(ID_DATES_GO_NEXT_AVAILABLE,"", _("Go to this date"));
+    m_menuAddTomorrow = datesMenu->Append(ID_DATES_ADD_TOMORROW, "", _("Add this date"));
+    m_menuAddYesterday = datesMenu->Append(ID_DATES_ADD_YESTERDAY, "", _("Add this date"));
+    m_menuGoPrevAvailable = datesMenu->Append(ID_DATES_GO_PREV_AVAILABLE, "", _("Go to this date"));
+
     wxMenu* favoriteMenu = new wxMenu;
     favoriteMenu->Append(ID_FAVORITE_GO, _("&Insert\tF6"), _("Insert selected favorite"));
     favoriteMenu->AppendSeparator();
@@ -390,6 +404,7 @@ void MainFrame::CreateMenu()
     m_menuBar = new wxMenuBar();
     m_menuBar->Append(fileMenu, _("&File")); 
     m_menuBar->Append(editMenu, _("&Edit")); 
+    m_menuBar->Append(datesMenu, _("&Dates"));     
 #if USE_RICH_EDIT
     m_menuBar->Append(formatMenu, _("F&ormat")); 
     m_menuBar->Append(listsMenu, _("&Lists")); 
@@ -404,10 +419,10 @@ void MainFrame::CreateMenu()
 
 #if USE_RICH_EDIT
     // désactive les options de mise en forme du text parceque pas de lecture de fichier rtf...
-    m_menuBar->EnableTop(2, false); //formatMenu
-    m_menuBar->EnableTop(3, false); //listsMenu
-    m_menuBar->EnableTop(4, false); //tableMenu
-    m_menuBar->EnableTop(5, false); //insertMenu  
+    m_menuBar->EnableTop(3, false); //formatMenu
+    m_menuBar->EnableTop(4, false); //listsMenu
+    m_menuBar->EnableTop(5, false); //tableMenu
+    m_menuBar->EnableTop(6, false); //insertMenu  
 #endif // USE_RICH_EDIT  
 }
 
@@ -449,6 +464,12 @@ void MainFrame::ConnectEvents()
     m_buttonGoPrevAvailable->Bind( wxEVT_COMMAND_BUTTON_CLICKED,  &MainFrame::OnButtonGoPrevAvailableClick, this);
     m_buttonAddTomorrow->Bind( wxEVT_COMMAND_BUTTON_CLICKED,  &MainFrame::OnButtonAddTomorrowClick, this);
     m_buttonAddYesterday->Bind( wxEVT_COMMAND_BUTTON_CLICKED,  &MainFrame::OnButtonAddYesterdayClick, this);
+
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnButtonGoNextAvailableClick, this, ID_DATES_GO_NEXT_AVAILABLE);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnButtonGoPrevAvailableClick, this, ID_DATES_GO_PREV_AVAILABLE);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnButtonAddTomorrowClick, this, ID_DATES_ADD_TOMORROW);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnButtonAddYesterdayClick, this, ID_DATES_ADD_YESTERDAY);
+ 
     m_textSearch->Bind(wxEVT_TEXT,  &MainFrame::OnTextSearchEnter, this);        //wxEVT_TEXT_ENTER
     
     ConnectSelectionEvents();

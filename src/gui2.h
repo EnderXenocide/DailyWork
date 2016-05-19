@@ -3,6 +3,11 @@
 
 #define USE_RICH_EDIT TRUE
 
+//#define HOTKEYS_ADD_TOMORROW = "\tCtrl++"
+//#define HOTKEYS_ADD_YESTERDAY = "\tCtrl+-"
+//#define HOTKEYS_GO_NEXT_AVAILABLE = "\tCtrl+Up"
+//#define HOTKEYS_GO_PREV_AVAILABLE = "\tCtrl+Down"
+    
 #include <wx/filedlg.h>
 #include <wx/statbox.h>
 #include <wx/artprov.h>
@@ -109,6 +114,11 @@ public:
     wxButton* m_buttonAddYesterday;
     wxButton* m_buttonGoNextAvailable;
     wxButton* m_buttonGoPrevAvailable;
+
+    wxMenuItem* m_menuAddTomorrow;
+    wxMenuItem* m_menuAddYesterday;
+    wxMenuItem* m_menuGoNextAvailable;
+    wxMenuItem* m_menuGoPrevAvailable;
     
     wxTextCtrl* m_textSearch; //wxSearchCtrl ? pb icon too big
     wxTreeCtrl* m_treeSearch;

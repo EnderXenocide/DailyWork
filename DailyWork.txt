@@ -1,1 +1,1 @@
-./Debug/src_dailyworkparser.cpp.o ./Debug/src_excludeddays.cpp.o ./Debug/src_gui2.cpp.o ./Debug/src_main.cpp.o ./Debug/src_myrichtext.cpp.o ./Debug/src_mystyledtext.cpp.o ./Debug/src_prefs.cpp.o ./Debug/src_win_resources.rc.o
+./Release/src_dailyworkparser.cpp.o ./Release/src_excludeddays.cpp.o ./Release/src_gui2.cpp.o ./Release/src_main.cpp.o ./Release/src_myrichtext.cpp.o ./Release/src_mystyledtext.cpp.o ./Release/src_prefs.cpp.o ./Release/src_gui.cpp.o ./Release/src_win_resources.rc.o

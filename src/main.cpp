@@ -547,18 +547,31 @@ void MainApp::SetCurrentDateFromTreeSearchSelection()
 
 void MainApp::SetButtonsState()
 {
-    frame->m_buttonAddTomorrow->SetLabel(_("Add ")+currentDates.TomorrowToString());
-    frame->m_buttonAddYesterday->SetLabel(_("Add ")+currentDates.YesterdayToString());
-    frame->m_buttonGoNextAvailable->SetLabel(_("Go to ")+currentDates.NextAvailableToString());
-    frame->m_buttonGoPrevAvailable->SetLabel(_("Go to ")+currentDates.PrevAvailableToString());
+    wxString label;
+    label = _("Add ")+currentDates.TomorrowToString();
+    frame->m_buttonAddTomorrow->SetLabel(label);
+    frame->m_menuAddTomorrow->SetItemLabel(label+ _("\tCtrl+PgUp"));
+    label = _("Add ")+currentDates.YesterdayToString();
+    frame->m_buttonAddYesterday->SetLabel(label);
+    frame->m_menuAddYesterday->SetItemLabel(label+ _("\tCtrl+PgDn"));
+    label = _("Go to ")+currentDates.NextAvailableToString();
+    frame->m_buttonGoNextAvailable->SetLabel(label);
+    frame->m_menuGoNextAvailable->SetItemLabel(label+ _("\tCtrl+Up"));
+    label = _("Go to ")+currentDates.PrevAvailableToString();
+    frame->m_buttonGoPrevAvailable->SetLabel(label);
+    frame->m_menuGoPrevAvailable->SetItemLabel(label+ _("\tCtrl+Down"));
     frame->m_textCurDate->SetLabel(currentDates.TodayToString());
 
     bool enable = ( !currentDates.nextAvailable.IsValid() ) || ( currentDates.tomorrow!=currentDates.nextAvailable );
     frame->m_buttonAddTomorrow->Enable(enable);
+    frame->m_menuAddTomorrow->Enable(enable);
     enable = ( !currentDates.prevAvailable.IsValid() ) || ( currentDates.yesterday!=currentDates.prevAvailable );
     frame->m_buttonAddYesterday->Enable(enable);
+    frame->m_menuAddYesterday->Enable(enable);
     frame->m_buttonGoNextAvailable->Enable(currentDates.nextAvailable.IsValid());
+    frame->m_menuGoNextAvailable->Enable(frame->m_buttonGoNextAvailable->IsEnabled());
     frame->m_buttonGoPrevAvailable->Enable(currentDates.prevAvailable.IsValid());   
+    frame->m_menuGoPrevAvailable->Enable(frame->m_buttonGoPrevAvailable->IsEnabled());   
 }
     
 void MainApp::SetNextDateAsCurrentDate()
