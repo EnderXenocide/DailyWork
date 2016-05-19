@@ -1,7 +1,7 @@
 #ifndef __GUI_H__
 #define __GUI_H__
 
-#define USE_RICH_EDIT FALSE
+#define USE_RICH_EDIT TRUE
 
 #include <wx/filedlg.h>
 #include <wx/statbox.h>
@@ -43,6 +43,7 @@
 #include "wx/richtext/richtextformatdlg.h"
 #include "wx/richtext/richtextsymboldlg.h"
 #include "wx/richtext/richtextstyledlg.h"
+#include "wx/richtext/richtextimagedlg.h"
 #include "wx/richtext/richtextprint.h"
 #include "myrichtext.h"
 #else
