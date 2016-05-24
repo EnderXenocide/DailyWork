@@ -88,7 +88,7 @@ enum
         
     ID_TEXT_FIND,    
     ID_SPLITTER_EDITORFIND, 
-    ID_SHOW_FIND, 
+    ID_SHOW_SEARCH, 
 
     ID_DATES_ADD_TOMORROW,
     ID_DATES_ADD_YESTERDAY,
@@ -229,6 +229,8 @@ void MainFrame::CreateMainToolBar()
     m_mainToolBar->AddSeparator();
     m_mainToolBar->AddTool(wxID_UNDO, wxEmptyString, wxBitmap(undo_xpm), _("Undo")); 
     m_mainToolBar->AddTool(wxID_REDO, wxEmptyString, wxBitmap(redo_xpm), _("Redo"));
+    m_mainToolBar->AddSeparator();
+    m_mainToolBar->AddTool(ID_SHOW_SEARCH, wxEmptyString, wxBitmap(search_xpm), _T("Search"), wxITEM_CHECK);
 #if USE_RICH_EDIT
     m_mainToolBar->AddSeparator();
     m_mainToolBar->AddCheckTool(ID_FORMAT_BOLD, wxEmptyString, wxBitmap(bold_xpm), wxNullBitmap, _("Bold")); 
@@ -323,8 +325,8 @@ void MainFrame::CreateMenu()
     editMenu->Append(wxID_COPY, _("&Copy\tCtrl+C")); 
     editMenu->Append(wxID_PASTE, _("&Paste\tCtrl+V")); 
     editMenu->AppendSeparator();
-    editMenu->AppendCheckItem(ID_SHOW_FIND, "&Search\tCtrl+F");
-    editMenu->Check(ID_SHOW_FIND, false);
+    editMenu->AppendCheckItem(ID_SHOW_SEARCH, "&Search\tCtrl+F");
+    editMenu->Check(ID_SHOW_SEARCH, false);
     
 #if USE_RICH_EDIT
     editMenu->AppendSeparator();
@@ -627,7 +629,8 @@ void MainFrame::ConnectEvents()
     Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnFocusComboFavorite, this, ID_FOCUS_FAVORITES);  
 
 //    Bind(wxEVT_UPDATE_UI,  &MainFrame::OnHideFindPanel, this, ID_SHOW_FIND);  
-    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnShowPanelSearch, this, ID_SHOW_FIND);  
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnShowPanelSearch, this, ID_SHOW_SEARCH);  
+    Bind(wxEVT_UPDATE_UI,  &MainFrame::OnUpdateShowPanelSearch, this, ID_SHOW_SEARCH);
     Bind(wxEVT_SPLITTER_UNSPLIT,  &MainFrame::OnHidePanelSearch, this, ID_SPLITTER_EDITORFIND); 
  }
 
@@ -751,7 +754,7 @@ void MainFrame::OnCalendarSelChanged(wxCalendarEvent& event)
 
 void MainFrame::OnTreeSelChanging( wxTreeEvent& event )
 {
-    UpdateText();
+//    UpdateText(); //todo remove ?
 }
 
 void MainFrame::OnTreeSelChanged( wxTreeEvent& event )
@@ -859,7 +862,7 @@ void MainFrame::OnUpdateGoFavorite(wxUpdateUIEvent& event)
 void MainFrame::OnHidePanelSearch(wxSplitterEvent& event)
 {
     if (m_editMenu)
-        m_editMenu->Check(ID_SHOW_FIND, false);
+        m_editMenu->Check(ID_SHOW_SEARCH, false);
     event.Skip();
 }
 
@@ -875,7 +878,13 @@ void MainFrame::OnShowPanelSearch(wxCommandEvent& event)
         m_splitterEditorSearch->Unsplit();
     }
 }
-    
+
+void MainFrame::OnUpdateShowPanelSearch(wxUpdateUIEvent& event)
+{
+    if (!m_splitterEditorSearch) return;
+    event.Check(m_splitterEditorSearch->IsSplit());
+}
+  
 void MainFrame::OnButtonGoNextAvailableClick(wxCommandEvent& event)
 {
     wxGetApp().SetNextDateAsCurrentDate();    
@@ -929,7 +938,7 @@ void MainFrame::OnQuit(wxCommandEvent& event)
 
 void MainFrame::OnAbout(wxCommandEvent& event)
 {
- #if USE_RICH_EDIT
+#if USE_RICH_EDIT
     wxString msg = _("This is a daily notepad.\n(c) Laurent Silvestre\nThanks to Julian Smart and his wxRichTextCtrl demo (currently unused), 2005");
 #else
     wxString msg = _("This is a daily notepad.\n(c) Laurent Silvestre\nThanks to Wyo and his STC test module, 2015");
@@ -2053,7 +2062,6 @@ void MainFrame::WriteInitialText()
 
     r.Thaw();
 }
-
 #endif //USE_RICH_EDIT
 
 //DlgOptions::DlgOptions( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )

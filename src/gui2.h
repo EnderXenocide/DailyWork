@@ -68,6 +68,8 @@
 #include "bitmaps/reload.xpm"
 #include "bitmaps/delete.xpm"
 
+#include "bitmaps/search.xpm"
+
 #include "bitmaps/open.xpm"
 #include "bitmaps/save.xpm"
 #include "bitmaps/copy.xpm"
@@ -189,6 +191,7 @@ protected:
  
     void OnShowPanelSearch(wxCommandEvent& event);
     void OnHidePanelSearch(wxSplitterEvent& event); 
+    void OnUpdateShowPanelSearch(wxUpdateUIEvent& event);
   
  #if USE_RICH_EDIT
     void OnBold(wxCommandEvent& event);

@@ -78,9 +78,9 @@ int DailyWorkParser::UpdateWork(const wxDateTime& date, wxString text)
                 return 0;
             }
         }
-        LOG(DEBUG) << "Date non trouvée :" << sdate;
+        LOG(DEBUG) << "Date nt found :" << sdate;
     }
-    LOG(DEBUG) << "Mise à jour impossible";
+    LOG(DEBUG) << "Update impossible";
     return -1;
 }
 
@@ -91,9 +91,9 @@ int DailyWorkParser::Save()
 
 int DailyWorkParser::SaveAs(wxString filename)
 {
-    wxString msg = "Enregistrement";
+    wxString msg = "Save";
     if (filename != jsonFile)
-        msg += " sous "+filename;
+        msg += " as "+filename;
     LOG(INFO) << msg;
     FILE* fp = fopen(filename, "wb"); // non-Windows use "w"
     char writeBuffer[65536];
@@ -128,10 +128,10 @@ wxString DailyWorkParser::GetWorkFromDate(const wxDateTime& date)
                 return GetWorkFromItem(array[i]);
             }
         }
-        LOG(DEBUG) << "Date non trouvée :" << sdate;
+        LOG(DEBUG) << "Date not found :" << sdate;
     } 
     else {
-        LOG(DEBUG) << "Date non valide";        
+        LOG(DEBUG) << "Invalid Date";        
     }
     return "";    
 }
@@ -186,7 +186,7 @@ int DailyWorkParser::DeleteItem(wxDateTime date)
         for (Value::ConstValueIterator itr = array.Begin(); itr != array.End(); itr++) {
             if (itr->FindMember(JSON_DATE)->value.GetString()==sdate) {
                 array.Erase(itr);
-                LOG(INFO) << "Supprime la date " << sdate;
+                LOG(INFO) << "Delete date " << sdate;
                 modified = true;               
                 return 0;   
             }        
@@ -199,7 +199,7 @@ void DailyWorkParser::AddItem(const wxDateTime& date, wxString work)
 {  
     std::string DWDate = ToDWDate(date).ToStdString();
     std::string utf8Work = work.ToUTF8().data();
-    LOG(INFO) << "Ajoute Date " << DWDate;
+    LOG(INFO) << "Add Date " << DWDate;
     Document::AllocatorType& allocator = document.GetAllocator();
     Value value(kObjectType);
     Value valueStringDate(kStringType);
@@ -294,10 +294,10 @@ bool DailyWorkParser::AddToFavorites(wxString text)
 {
     std::string utf8Text = text.ToUTF8().data();
     if (IsInFavorites(text)) {
-         LOG(INFO) << "Pas d'ajout du favoris <" << utf8Text <<"> déja éxistant";
+         LOG(INFO) << "Can't add existing favorite <" << utf8Text <<">";
         return false;
     }
-    LOG(INFO) << "Ajoute le favoris <" << utf8Text <<">";
+    LOG(INFO) << "Add favorite <" << utf8Text <<">";
     Document::AllocatorType& allocator = document.GetAllocator();
     Value valueString(kStringType);
     valueString.SetString(utf8Text.c_str(), utf8Text.size(), document.GetAllocator());
@@ -314,12 +314,12 @@ int DailyWorkParser::DeleteFavorite(wxString text)
     for (Value::ConstValueIterator itr = array.Begin(); itr != array.End(); itr++) {
         if (itr->GetString()==utf8Text) {
             array.Erase(itr);
-            LOG(INFO) << "Supprime le favoris <" << utf8Text <<">";
+            LOG(INFO) << "Delete favorite <" << utf8Text <<">";
             modified = true;               
             return 0;   
         }        
     } 
-    LOG(DEBUG) << "Favoris <" << utf8Text <<"> non trouvé";
+    LOG(DEBUG) << "Favorite <" << utf8Text <<"> not found";
     return  -1; 
 }
 

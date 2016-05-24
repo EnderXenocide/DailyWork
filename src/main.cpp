@@ -484,8 +484,8 @@ wxTreeItemId MainApp::SelectDateInChild(wxTreeItemId parent, const wxDateTime da
         DWItemData *itemData = (DWItemData *) tree->GetItemData(itemId);
         if ( (itemData != NULL) && (!itemData->IsEmpty()) ){ //Compare only valid dates
             itemDate = itemData->GetDate();
-            if(itemDate == date) {
                 tree->SelectItem(itemId); 
+            if(itemDate == date) {
                 return itemId;                
             }
         }
@@ -504,6 +504,7 @@ void MainApp::SelectDateInTree(const wxDateTime date)
 
 void MainApp::SetCurrentDate(const wxDateTime date, wxWindow *sender)
 {
+    frame->UpdateText();
     wxString text("");
     if (date.IsValid()) {
         LOG(DEBUG) << "Show date " << date.FormatDate();
@@ -754,7 +755,7 @@ void MainApp::UpdateCurrentWork(wxString text)
         dwparser.UpdateWork(currentDates.today, text); 
     }
     else {
-        LOG(DEBUG ) << "invalid date";
+        LOG(DEBUG ) << "Invalid date";
     }
 }
 
