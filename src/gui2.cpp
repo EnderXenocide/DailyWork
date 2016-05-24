@@ -462,15 +462,15 @@ void MainFrame::ConnectEvents()
     m_calendar->Bind( wxEVT_KILL_FOCUS, &MainFrame::OnCalendarKillFocus, this );
 	m_calendar->Bind( wxEVT_SET_FOCUS,  &MainFrame::OnCalendarSetFocus, this );
     m_calendar->Bind( wxEVT_CALENDAR_DOUBLECLICKED, &MainFrame::OnCalendarDblClick, this );
-    m_buttonGoNextAvailable->Bind( wxEVT_COMMAND_BUTTON_CLICKED,  &MainFrame::OnButtonGoNextAvailableClick, this);
-    m_buttonGoPrevAvailable->Bind( wxEVT_COMMAND_BUTTON_CLICKED,  &MainFrame::OnButtonGoPrevAvailableClick, this);
-    m_buttonAddTomorrow->Bind( wxEVT_COMMAND_BUTTON_CLICKED,  &MainFrame::OnButtonAddTomorrowClick, this);
-    m_buttonAddYesterday->Bind( wxEVT_COMMAND_BUTTON_CLICKED,  &MainFrame::OnButtonAddYesterdayClick, this);
+    m_buttonGoNextAvailable->Bind( wxEVT_COMMAND_BUTTON_CLICKED,  &MainFrame::OnGoNextAvailableClick, this);
+    m_buttonGoPrevAvailable->Bind( wxEVT_COMMAND_BUTTON_CLICKED,  &MainFrame::OnGoPrevAvailableClick, this);
+    m_buttonAddTomorrow->Bind( wxEVT_COMMAND_BUTTON_CLICKED,  &MainFrame::OnAddTomorrowClick, this);
+    m_buttonAddYesterday->Bind( wxEVT_COMMAND_BUTTON_CLICKED,  &MainFrame::OnAddYesterdayClick, this);
 
-    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnButtonGoNextAvailableClick, this, ID_DATES_GO_NEXT_AVAILABLE);
-    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnButtonGoPrevAvailableClick, this, ID_DATES_GO_PREV_AVAILABLE);
-    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnButtonAddTomorrowClick, this, ID_DATES_ADD_TOMORROW);
-    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnButtonAddYesterdayClick, this, ID_DATES_ADD_YESTERDAY);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnGoNextAvailableClick, this, ID_DATES_GO_NEXT_AVAILABLE);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnGoPrevAvailableClick, this, ID_DATES_GO_PREV_AVAILABLE);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnAddTomorrowClick, this, ID_DATES_ADD_TOMORROW);
+    Bind(wxEVT_COMMAND_MENU_SELECTED,  &MainFrame::OnAddYesterdayClick, this, ID_DATES_ADD_YESTERDAY);
  
     m_textSearch->Bind(wxEVT_TEXT,  &MainFrame::OnTextSearchEnter, this);        //wxEVT_TEXT_ENTER
     
@@ -885,22 +885,22 @@ void MainFrame::OnUpdateShowPanelSearch(wxUpdateUIEvent& event)
     event.Check(m_splitterEditorSearch->IsSplit());
 }
   
-void MainFrame::OnButtonGoNextAvailableClick(wxCommandEvent& event)
+void MainFrame::OnGoNextAvailableClick(wxCommandEvent& event)
 {
     wxGetApp().SetNextDateAsCurrentDate();    
 }
 
-void MainFrame::OnButtonGoPrevAvailableClick(wxCommandEvent& event)
+void MainFrame::OnGoPrevAvailableClick(wxCommandEvent& event)
 {
    wxGetApp().SetPrevDateAsCurrentDate();   
 }
 
-void MainFrame::OnButtonAddTomorrowClick(wxCommandEvent& event)
+void MainFrame::OnAddTomorrowClick(wxCommandEvent& event)
 {
    wxGetApp().AddTomorrowToTree();  
 }
 
-void MainFrame::OnButtonAddYesterdayClick(wxCommandEvent& event)
+void MainFrame::OnAddYesterdayClick(wxCommandEvent& event)
 {
    wxGetApp().AddYesterdayToTree();      
 }    

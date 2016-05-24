@@ -173,10 +173,10 @@ protected:
     void OnUpdateGoFavorite(wxUpdateUIEvent& event);
     void OnUpdateDeleteFavorite(wxUpdateUIEvent& event);
 
-	void OnButtonGoNextAvailableClick(wxCommandEvent& event);
-	void OnButtonGoPrevAvailableClick(wxCommandEvent& event);
-	void OnButtonAddTomorrowClick(wxCommandEvent& event);
-	void OnButtonAddYesterdayClick(wxCommandEvent& event);
+	void OnGoNextAvailableClick(wxCommandEvent& event);
+	void OnGoPrevAvailableClick(wxCommandEvent& event);
+	void OnAddTomorrowClick(wxCommandEvent& event);
+	void OnAddYesterdayClick(wxCommandEvent& event);
 
     void OnOpen(wxCommandEvent& event);
     void OnSave(wxCommandEvent& event);
