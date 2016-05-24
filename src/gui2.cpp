@@ -230,7 +230,7 @@ void MainFrame::CreateMainToolBar()
     m_mainToolBar->AddTool(wxID_UNDO, wxEmptyString, wxBitmap(undo_xpm), _("Undo")); 
     m_mainToolBar->AddTool(wxID_REDO, wxEmptyString, wxBitmap(redo_xpm), _("Redo"));
     m_mainToolBar->AddSeparator();
-    m_mainToolBar->AddTool(ID_SHOW_SEARCH, wxEmptyString, wxBitmap(search_xpm), _T("Search"), wxITEM_CHECK);
+    m_mainToolBar->AddTool(ID_SHOW_SEARCH, wxEmptyString, wxBitmap(search_xpm), _("Search"), wxITEM_CHECK);
 #if USE_RICH_EDIT
     m_mainToolBar->AddSeparator();
     m_mainToolBar->AddCheckTool(ID_FORMAT_BOLD, wxEmptyString, wxBitmap(bold_xpm), wxNullBitmap, _("Bold")); 

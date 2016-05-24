@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-16 14:21+0100\n"
+"POT-Creation-Date: 2016-05-24 17:54+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,23 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: gui2.cpp:896
+#: main.cpp:563
+msgid "\tCtrl+Down"
+msgstr ""
+
+#: main.cpp:557
+msgid "\tCtrl+PgDn"
+msgstr ""
+
+#: main.cpp:554
+msgid "\tCtrl+PgUp"
+msgstr ""
+
+#: main.cpp:560
+msgid "\tCtrl+Up"
+msgstr ""
+
+#: gui2.cpp:946
 #, c-format
 msgid ""
 "\n"
@@ -28,227 +44,227 @@ msgstr ""
 msgid "%A, %B %d %Y"
 msgstr ""
 
-#: gui2.cpp:279
+#: gui2.cpp:287
 msgid "&About\tF1"
 msgstr ""
 
-#: gui2.cpp:387
+#: gui2.cpp:401
 msgid "&Add"
 msgstr ""
 
-#: gui2.cpp:373
+#: gui2.cpp:381
 msgid "&Add Column"
 msgstr ""
 
-#: gui2.cpp:332
+#: gui2.cpp:340
 msgid "&Bold\tCtrl+B"
 msgstr ""
 
-#: gui2.cpp:342
+#: gui2.cpp:350
 msgid "&Centre"
 msgstr ""
 
-#: gui2.cpp:1350
+#: gui2.cpp:1400
 msgid "&Close"
 msgstr ""
 
-#: gui2.cpp:317
+#: gui2.cpp:325
 msgid "&Copy\tCtrl+C"
 msgstr ""
 
-#: gui2.cpp:388
-msgid "&Delete"
-msgstr ""
-
-#: gui2.cpp:376
-msgid "&Delete Row"
-msgstr ""
-
-#: gui2.cpp:311
-msgid "&Delete date\tCtrl+D"
-msgstr ""
-
-#: gui2.cpp:394
-msgid "&Edit"
-msgstr ""
-
-#: gui2.cpp:283
-msgid "&Favorites List\tF5"
-msgstr ""
-
-#: gui.cpp:22 gui2.cpp:393
-msgid "&File"
-msgstr ""
-
-#: gui2.cpp:354
-msgid "&Font..."
+#: gui2.cpp:409
+msgid "&Dates"
 msgstr ""
 
 #: gui2.cpp:402
+msgid "&Delete"
+msgstr ""
+
+#: gui2.cpp:384
+msgid "&Delete Row"
+msgstr ""
+
+#: gui2.cpp:319
+msgid "&Delete date\tCtrl+D"
+msgstr ""
+
+#: gui2.cpp:408
+msgid "&Edit"
+msgstr ""
+
+#: gui2.cpp:291
+msgid "&Favorites List\tF5"
+msgstr ""
+
+#: gui.cpp:22 gui2.cpp:407
+msgid "&File"
+msgstr ""
+
+#: gui2.cpp:362
+msgid "&Font..."
+msgstr ""
+
+#: gui2.cpp:417
 msgid "&Help"
 msgstr ""
 
-#: gui2.cpp:294
+#: gui2.cpp:302
 msgid "&Hierarchical Tree"
 msgstr ""
 
-#: gui2.cpp:381
-msgid "&Image..."
-msgstr ""
-
-#: gui2.cpp:399
+#: gui2.cpp:414
 msgid "&Insert"
 msgstr ""
 
-#: gui2.cpp:385
+#: gui2.cpp:399
 msgid "&Insert\tF6"
 msgstr ""
 
-#: gui2.cpp:333
+#: gui2.cpp:341
 msgid "&Italic\tCtrl+I"
 msgstr ""
 
-#: gui2.cpp:397
+#: gui2.cpp:412
 msgid "&Lists"
 msgstr ""
 
-#: gui2.cpp:389
+#: gui2.cpp:403
 msgid "&Manage"
 msgstr ""
 
-#: gui2.cpp:360
+#: gui2.cpp:368
 msgid "&Manage Styles"
 msgstr ""
 
-#: gui2.cpp:288
+#: gui2.cpp:296
 msgid "&Open\tCtrl+O"
 msgstr ""
 
-#: gui2.cpp:356
+#: gui2.cpp:364
 msgid "&Paragraph..."
 msgstr ""
 
-#: gui2.cpp:318
+#: gui2.cpp:326
 msgid "&Paste\tCtrl+V"
 msgstr ""
 
-#: gui2.cpp:314
+#: gui2.cpp:322
 msgid "&Redo\tCtrl+Y"
 msgstr ""
 
-#: gui2.cpp:297
+#: gui2.cpp:305
 msgid "&Reload\tF2"
 msgstr ""
 
-#: gui2.cpp:341
+#: gui2.cpp:349
 msgid "&Right Align"
 msgstr ""
 
-#: gui2.cpp:290
+#: gui2.cpp:298
 msgid "&Save\tCtrl+S"
 msgstr ""
 
-#: gui2.cpp:281
+#: gui2.cpp:289
 msgid "&Stay on top\tF11"
 msgstr ""
 
-#: gui2.cpp:359
+#: gui2.cpp:367
 msgid "&Switch Style Sheets"
 msgstr ""
 
-#: gui2.cpp:379
+#: gui2.cpp:387
 msgid "&Symbol...\tCtrl+I"
 msgstr ""
 
-#: gui2.cpp:398
+#: gui2.cpp:413
 msgid "&Tables"
 msgstr ""
 
-#: gui2.cpp:380
+#: gui2.cpp:388
 msgid "&URL..."
 msgstr ""
 
-#: gui2.cpp:334
+#: gui2.cpp:342
 msgid "&Underline\tCtrl+U"
 msgstr ""
 
-#: gui2.cpp:313
+#: gui2.cpp:321
 msgid "&Undo\tCtrl+Z"
 msgstr ""
 
-#: gui2.cpp:351
+#: gui2.cpp:359
 msgid "1.5 Line Spacing"
 msgstr ""
 
-#: gui2.cpp:896
+#: gui2.cpp:946
 msgid "About Dailywork"
 msgstr ""
 
-#: main.cpp:568 main.cpp:569
+#: main.cpp:552 main.cpp:555
 msgid "Add "
 msgstr ""
 
-#: gui2.cpp:374
+#: gui2.cpp:382
 msgid "Add &Row"
 msgstr ""
 
-#: gui2.cpp:146
+#: gui2.cpp:152
 msgid "Add Tomorrow"
 msgstr ""
 
-#: gui2.cpp:157
+#: gui2.cpp:163
 msgid "Add Yesterday"
 msgstr ""
 
-#: gui2.cpp:387
+#: gui2.cpp:401
 msgid "Add selected text to favorites"
 msgstr ""
 
-#: gui2.cpp:249
+#: gui2.cpp:394 gui2.cpp:395
+msgid "Add this date"
+msgstr ""
+
+#: gui2.cpp:257
 msgid "Add to favorites"
 msgstr ""
 
-#: gui2.cpp:232
+#: gui2.cpp:240
 msgid "Align Left"
 msgstr ""
 
-#: gui2.cpp:234
+#: gui2.cpp:242
 msgid "Align Right"
 msgstr ""
 
-#: gui.cpp:116 gui2.cpp:2045
+#: gui.cpp:116 gui2.cpp:2082
 msgid "All days can't be checked"
 msgstr ""
 
-#: gui2.cpp:228
+#: gui2.cpp:236
 msgid "Bold"
 msgstr ""
 
-#: gui2.cpp:1510
+#: gui2.cpp:1560
 msgid "Bullet List 1"
 msgstr ""
 
-#: gui2.cpp:363
+#: gui2.cpp:371
 msgid "Bullets and &Numbering..."
 msgstr ""
 
-#: gui2.cpp:1497
+#: gui2.cpp:1547
 msgid "Bullets and Numbering"
 msgstr ""
 
-#: gui2.cpp:233
+#: gui2.cpp:241
 msgid "Centre"
 msgstr ""
 
-#: gui2.cpp:922 gui2.cpp:977
+#: gui2.cpp:972 gui2.cpp:1027
 msgid "Choose a filename"
 msgstr ""
 
-#: gui2.cpp:1644
-msgid "Choose an image"
-msgstr ""
-
-#: gui2.cpp:370
+#: gui2.cpp:378
 msgid "Clear List Formatting"
 msgstr ""
 
@@ -256,11 +272,11 @@ msgstr ""
 msgid "Common"
 msgstr ""
 
-#: gui2.cpp:221
+#: gui2.cpp:227
 msgid "Copy"
 msgstr ""
 
-#: gui2.cpp:316
+#: gui2.cpp:324
 msgid "Cu&t\tCtrl+X"
 msgstr ""
 
@@ -272,56 +288,56 @@ msgstr ""
 msgid "Current pos"
 msgstr ""
 
-#: gui2.cpp:149
+#: gui2.cpp:155
 msgid "Currente Date"
 msgstr ""
 
-#: gui2.cpp:220
+#: gui2.cpp:226
 msgid "Cut"
 msgstr ""
 
-#: main.cpp:317
+#: main.cpp:300
 msgid "Dates loaded"
 msgstr ""
 
-#: gui2.cpp:348
+#: gui2.cpp:356
 msgid "Decrease &Paragraph Spacing"
 msgstr ""
 
-#: main.cpp:448
+#: main.cpp:431
 #, c-format
 msgid "Delete %s ?"
 msgstr ""
 
-#: gui2.cpp:375
+#: gui2.cpp:383
 msgid "Delete &Column"
 msgstr ""
 
-#: gui2.cpp:218
+#: gui2.cpp:224
 msgid "Delete date"
 msgstr ""
 
-#: gui2.cpp:250
+#: gui2.cpp:258
 msgid "Delete favorite"
 msgstr ""
 
-#: gui2.cpp:388
+#: gui2.cpp:402
 msgid "Delete selected favorite"
 msgstr ""
 
-#: gui2.cpp:369
+#: gui2.cpp:377
 msgid "Demote List Items"
 msgstr ""
 
-#: gui2.cpp:1681
+#: gui2.cpp:1719
 msgid "Dimension Scale Factor"
 msgstr ""
 
-#: gui2.cpp:352
+#: gui2.cpp:360
 msgid "Double Line Spacing"
 msgstr ""
 
-#: gui2.cpp:692
+#: gui2.cpp:736
 msgid "Double-clicking on a date to add it on the tree"
 msgstr ""
 
@@ -329,66 +345,66 @@ msgstr ""
 msgid "E&xit"
 msgstr ""
 
-#: gui2.cpp:307
+#: gui2.cpp:315
 msgid "E&xit\tAlt+X"
 msgstr ""
 
-#: gui2.cpp:1681
+#: gui2.cpp:1719
 msgid "Enter a dimension scale factor:"
 msgstr ""
 
-#: gui2.cpp:1669
+#: gui2.cpp:1707
 msgid "Enter a text scale factor:"
 msgstr ""
 
-#: main.cpp:312
+#: main.cpp:295
 #, c-format
 msgid "Error loading date <%s>"
 msgstr ""
 
-#: dailyworkparser.cpp:46
+#: dailyworkparser.cpp:47
 #, c-format
 msgid "Error reading file (offset %u): %s\n"
 msgstr ""
 
-#: gui.cpp:109 gui2.cpp:2037
+#: gui.cpp:109 gui2.cpp:2074
 msgid "Excludes Days"
 msgstr ""
 
-#: gui2.cpp:396
+#: gui2.cpp:411
 msgid "F&ormat"
 msgstr ""
 
-#: gui2.cpp:401
+#: gui2.cpp:416
 msgid "Fa&vorites"
 msgstr ""
 
-#: gui2.cpp:244
+#: gui2.cpp:252
 msgid "Favorites"
 msgstr ""
 
-#: dailyworkparser.cpp:55 dailyworkparser.cpp:56
+#: dailyworkparser.cpp:56 dailyworkparser.cpp:57
 msgid "File not found"
 msgstr ""
 
-#: dailyworkparser.cpp:62
+#: dailyworkparser.cpp:63
 #, c-format
 msgid "File updated to version %d"
 msgstr ""
 
-#: gui2.cpp:283
+#: gui2.cpp:291
 msgid "Focus to Favorites List"
 msgstr ""
 
-#: gui2.cpp:239
+#: gui2.cpp:247
 msgid "Font"
 msgstr ""
 
-#: gui2.cpp:357
+#: gui2.cpp:365
 msgid "Font and Pa&ragraph...\tShift+Ctrl+F"
 msgstr ""
 
-#: gui2.cpp:2039
+#: gui2.cpp:2076
 msgid "Friday"
 msgstr ""
 
@@ -404,47 +420,51 @@ msgstr ""
 msgid "Go Yesterday"
 msgstr ""
 
-#: main.cpp:570 main.cpp:571
+#: main.cpp:558 main.cpp:561
 msgid "Go to "
 msgstr ""
 
-#: gui.cpp:44 gui2.cpp:143
+#: gui.cpp:44 gui2.cpp:149
 msgid "Go to the next available date"
 msgstr ""
 
-#: gui.cpp:62 gui2.cpp:160
+#: gui.cpp:62 gui2.cpp:166
 msgid "Go to the preivous available date"
 msgstr ""
 
-#: gui2.cpp:1342
+#: gui2.cpp:393 gui2.cpp:396
+msgid "Go to this date"
+msgstr ""
+
+#: gui2.cpp:1392
 msgid "HTML"
 msgstr ""
 
-#: gui2.cpp:355
+#: gui2.cpp:363
 msgid "Image Property"
 msgstr ""
 
-#: gui2.cpp:347
+#: gui2.cpp:355
 msgid "Increase Paragraph &Spacing"
 msgstr ""
 
-#: gui2.cpp:345
+#: gui2.cpp:353
 msgid "Indent &Less"
 msgstr ""
 
-#: gui2.cpp:344
+#: gui2.cpp:352
 msgid "Indent &More"
 msgstr ""
 
-#: gui2.cpp:236
+#: gui2.cpp:244
 msgid "Indent Less"
 msgstr ""
 
-#: gui2.cpp:237
+#: gui2.cpp:245
 msgid "Indent More"
 msgstr ""
 
-#: gui2.cpp:738 gui2.cpp:792
+#: gui2.cpp:782 gui2.cpp:836
 msgid "Information"
 msgstr ""
 
@@ -452,27 +472,27 @@ msgstr ""
 msgid "Informations"
 msgstr ""
 
-#: gui2.cpp:1626
+#: gui2.cpp:1676
 msgid "Insert URL"
 msgstr ""
 
-#: gui2.cpp:247
+#: gui2.cpp:255
 msgid "Insert favorite"
 msgstr ""
 
-#: gui2.cpp:385
+#: gui2.cpp:399
 msgid "Insert selected favorite"
 msgstr ""
 
-#: gui2.cpp:229
+#: gui2.cpp:237
 msgid "Italic"
 msgstr ""
 
-#: gui2.cpp:366
+#: gui2.cpp:374
 msgid "Itemize List"
 msgstr ""
 
-#: gui2.cpp:340
+#: gui2.cpp:348
 msgid "L&eft Align"
 msgstr ""
 
@@ -492,31 +512,31 @@ msgstr ""
 msgid "Line endings"
 msgstr ""
 
-#: gui2.cpp:248 gui2.cpp:389
+#: gui2.cpp:256 gui2.cpp:403
 msgid "Manage favorites"
 msgstr ""
 
-#: gui.cpp:111 gui2.cpp:2039
+#: gui.cpp:111 gui2.cpp:2076
 msgid "Monday"
 msgstr ""
 
-#: gui2.cpp:350
+#: gui2.cpp:358
 msgid "Normal Line Spacing"
 msgstr ""
 
-#: gui2.cpp:792
+#: gui2.cpp:836
 msgid "Not yet implemented..."
 msgstr ""
 
-#: gui2.cpp:365
+#: gui2.cpp:373
 msgid "Number List"
 msgstr ""
 
-#: gui2.cpp:1487
+#: gui2.cpp:1537
 msgid "Numbered List 1"
 msgstr ""
 
-#: gui2.cpp:301
+#: gui2.cpp:309
 msgid "O&ptions"
 msgstr ""
 
@@ -524,23 +544,23 @@ msgstr ""
 msgid "OK"
 msgstr ""
 
-#: gui2.cpp:288
+#: gui2.cpp:296
 msgid "Open a file"
 msgstr ""
 
-#: gui2.cpp:301
+#: gui2.cpp:309
 msgid "Open options dialog"
 msgstr ""
 
-#: gui2.cpp:222
+#: gui2.cpp:228
 msgid "Paste"
 msgstr ""
 
-#: gui2.cpp:2031 gui.h:94
+#: gui2.cpp:2068 gui.h:94
 msgid "Preferences"
 msgstr ""
 
-#: gui2.cpp:368
+#: gui2.cpp:376
 msgid "Promote List Items"
 msgstr ""
 
@@ -548,89 +568,89 @@ msgstr ""
 msgid "Properties"
 msgstr ""
 
-#: gui2.cpp:307
+#: gui2.cpp:315
 msgid "Quit this program"
 msgstr ""
 
-#: gui2.cpp:225
+#: gui2.cpp:231
 msgid "Redo"
 msgstr ""
 
-#: gui2.cpp:214
+#: gui2.cpp:220
 msgid "Reload"
 msgstr ""
 
-#: gui2.cpp:870
+#: gui2.cpp:920
 msgid "Reload document ? You may lose modification(s)."
 msgstr ""
 
-#: gui2.cpp:297
+#: gui2.cpp:305
 msgid "Reload the file/tree"
 msgstr ""
 
-#: gui2.cpp:367
+#: gui2.cpp:375
 msgid "Renumber List"
 msgstr ""
 
-#: main.cpp:801
+#: main.cpp:792
 #, c-format
 msgid "Result%s : %i"
 msgstr ""
 
-#: gui2.cpp:172
+#: gui2.cpp:178
 msgid "Result(s) Count"
 msgstr ""
 
-#: gui2.cpp:2039
+#: gui2.cpp:2076
 msgid "Saturday"
 msgstr ""
 
-#: gui2.cpp:216
+#: gui2.cpp:222
 msgid "Save"
 msgstr ""
 
-#: gui2.cpp:291
+#: gui2.cpp:299
 msgid "Save As...\tF12"
 msgstr ""
 
-#: main.cpp:670
+#: main.cpp:666
 msgid "Save As... at "
 msgstr ""
 
-#: gui2.cpp:936
+#: gui2.cpp:986
 #, c-format
 msgid "Save as <%s>"
 msgstr ""
 
-#: main.cpp:664
+#: main.cpp:660
 msgid "Save at "
 msgstr ""
 
-#: gui2.cpp:290
+#: gui2.cpp:298
 msgid "Save the work"
 msgstr ""
 
-#: gui2.cpp:291
+#: gui2.cpp:299
 msgid "Save to a new file"
 msgstr ""
 
-#: gui2.cpp:168
+#: gui2.cpp:174 gui2.cpp:233
 msgid "Search"
 msgstr ""
 
-#: gui2.cpp:325
+#: gui2.cpp:333
 msgid "Select A&ll\tCtrl+A"
 msgstr ""
 
-#: gui2.cpp:328
+#: gui2.cpp:336
 msgid "Set &Dimension Scale..."
 msgstr ""
 
-#: gui2.cpp:327
+#: gui2.cpp:335
 msgid "Set &Text Scale..."
 msgstr ""
 
-#: gui2.cpp:279
+#: gui2.cpp:287
 msgid "Show about dialog"
 msgstr ""
 
@@ -638,15 +658,15 @@ msgstr ""
 msgid "Statistics"
 msgstr ""
 
-#: gui2.cpp:281
+#: gui2.cpp:289
 msgid "Stay on top"
 msgstr ""
 
-#: gui2.cpp:336
+#: gui2.cpp:344
 msgid "Stri&kethrough"
 msgstr ""
 
-#: gui2.cpp:1443
+#: gui2.cpp:1493
 msgid "Style Manager"
 msgstr ""
 
@@ -654,45 +674,45 @@ msgstr ""
 msgid "Style types"
 msgstr ""
 
-#: gui2.cpp:338
+#: gui2.cpp:346
 msgid "Subscrip&t"
 msgstr ""
 
-#: gui2.cpp:2039
+#: gui2.cpp:2076
 msgid "Sundsay"
 msgstr ""
 
-#: gui2.cpp:337
+#: gui2.cpp:345
 msgid "Superscrip&t"
 msgstr ""
 
-#: gui2.cpp:1669
+#: gui2.cpp:1707
 msgid "Text Scale Factor"
 msgstr ""
 
-#: gui2.cpp:672
+#: gui2.cpp:716
 msgid "This document was modified, would you like to save ?"
 msgstr ""
 
-#: gui2.cpp:892
+#: gui2.cpp:942
 msgid ""
 "This is a daily notepad.\n"
 "(c) Laurent Silvestre\n"
 "Thanks to Julian Smart and his wxRichTextCtrl demo (currently unused), 2005"
 msgstr ""
 
-#: gui2.cpp:894
+#: gui2.cpp:944
 msgid ""
 "This is a daily notepad.\n"
 "(c) Laurent Silvestre\n"
 "Thanks to Wyo and his STC test module, 2015"
 msgstr ""
 
-#: gui2.cpp:2039
+#: gui2.cpp:2076
 msgid "Thursday"
 msgstr ""
 
-#: gui2.cpp:294
+#: gui2.cpp:302
 msgid "Toggle Simple/Hierarchical Tree"
 msgstr ""
 
@@ -704,19 +724,19 @@ msgstr ""
 msgid "Total lines"
 msgstr ""
 
-#: gui.cpp:111 gui2.cpp:2039
+#: gui.cpp:111 gui2.cpp:2076
 msgid "Tuesday"
 msgstr ""
 
-#: gui2.cpp:1626
+#: gui2.cpp:1676
 msgid "URL:"
 msgstr ""
 
-#: gui2.cpp:230
+#: gui2.cpp:238
 msgid "Underline"
 msgstr ""
 
-#: gui2.cpp:224
+#: gui2.cpp:230
 msgid "Undo"
 msgstr ""
 
@@ -724,39 +744,39 @@ msgstr ""
 msgid "Unknow"
 msgstr ""
 
-#: gui2.cpp:304
+#: gui2.cpp:312
 msgid "View HTML"
 msgstr ""
 
-#: gui2.cpp:304
+#: gui2.cpp:312
 msgid "View as HT&ML"
 msgstr ""
 
-#: gui2.cpp:672 gui2.cpp:870 main.cpp:448
+#: gui2.cpp:716 gui2.cpp:920 main.cpp:431
 msgid "Warning"
 msgstr ""
 
-#: gui2.cpp:2039
+#: gui2.cpp:2076
 msgid "Wednesday"
 msgstr ""
 
-#: gui2.cpp:119
+#: gui2.cpp:125
 msgid "Welcome to Dailywork!"
 msgstr ""
 
-#: main.cpp:440
+#: main.cpp:423
 msgid "the date "
 msgstr ""
 
-#: main.cpp:446
+#: main.cpp:429
 msgid "the day "
 msgstr ""
 
-#: main.cpp:444
+#: main.cpp:427
 msgid "the month %B %Y"
 msgstr ""
 
-#: main.cpp:442
+#: main.cpp:425
 msgid "the year %Y"
 msgstr ""
 
@@ -764,6 +784,6 @@ msgstr ""
 msgid "unknow"
 msgstr ""
 
-#: main.cpp:738
+#: main.cpp:731
 msgid "unknown"
 msgstr ""
