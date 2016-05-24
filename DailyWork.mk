@@ -2,12 +2,12 @@
 ## Auto Generated makefile by CodeLite IDE
 ## any manual changes will be erased      
 ##
-## Debug
+## Release
 ProjectName            :=DailyWork
-ConfigurationName      :=Debug
+ConfigurationName      :=Release
 WorkspacePath          :=I:/Workspace/CodeLiteC++
 ProjectPath            :=I:/Workspace/CodeLiteC++/DailyWork
-IntermediateDirectory  :=./Debug
+IntermediateDirectory  :=./Release
 OutDir                 := $(IntermediateDirectory)
 CurrentFileName        :=
 CurrentFilePath        :=
@@ -28,7 +28,7 @@ LibraryPathSwitch      :=-L
 PreprocessorSwitch     :=-D
 SourceSwitch           :=-c 
 OutputFile             :=$(IntermediateDirectory)/$(ProjectName)
-Preprocessors          :=$(PreprocessorSwitch)__WX__ 
+Preprocessors          :=$(PreprocessorSwitch)NDEBUG $(PreprocessorSwitch)__WX__ 
 ObjectSwitch           :=-o 
 ArchiveOutputSwitch    := 
 PreprocessOnlySwitch   :=-E
@@ -37,8 +37,8 @@ PCHCompileFlags        :=
 MakeDirCommand         :=makedir
 RcCmpOptions           := $(shell wx-config --rcflags)
 RcCompilerName         :=C:/Utils/mingw-w64/x86_64-5.3.0-posix-seh-rt_v4-rev0/mingw64/bin/windres.exe
-LinkOptions            :=  -mwindows $(shell wx-config   --libs std,stc --unicode=yes)
-IncludePath            :=  $(IncludeSwitch). $(IncludeSwitch)I:/Workspace/CodeLiteC++/rapidjson/include 
+LinkOptions            :=  -mwindows -s $(shell wx-config --debug=no --libs std,stc --unicode=yes)
+IncludePath            :=  $(IncludeSwitch). $(IncludeSwitch)../rapidjson/include 
 IncludePCH             := 
 RcIncludePath          := 
 Libs                   := 
@@ -52,8 +52,8 @@ LibPath                := $(LibraryPathSwitch).
 AR       := C:/Utils/mingw-w64/x86_64-5.3.0-posix-seh-rt_v4-rev0/mingw64/bin/ar.exe rcu
 CXX      := C:/Utils/mingw-w64/x86_64-5.3.0-posix-seh-rt_v4-rev0/mingw64/bin/g++.exe
 CC       := C:/Utils/mingw-w64/x86_64-5.3.0-posix-seh-rt_v4-rev0/mingw64/bin/gcc.exe
-CXXFLAGS :=  -g -O0 -std=gnu++14 -Wall $(shell wx-config --cxxflags --unicode=yes  ) $(Preprocessors)
-CFLAGS   :=  -g -O0 -Wall $(shell wx-config --cxxflags --unicode=yes  ) $(Preprocessors)
+CXXFLAGS :=  -O2 -std=gnu++14 -Wall $(shell wx-config --cxxflags --unicode=yes --debug=no) $(Preprocessors)
+CFLAGS   :=  -O2 -Wall $(shell wx-config --cxxflags --unicode=yes --debug=no) $(Preprocessors)
 ASFLAGS  := 
 AS       := C:/Utils/mingw-w64/x86_64-5.3.0-posix-seh-rt_v4-rev0/mingw64/bin/as.exe
 
@@ -63,7 +63,7 @@ AS       := C:/Utils/mingw-w64/x86_64-5.3.0-posix-seh-rt_v4-rev0/mingw64/bin/as.
 ##
 CodeLiteDir:=C:\Program Files\CodeLite
 WXWIN:=C:\utils\wxWidgets
-Objects0=$(IntermediateDirectory)/src_dailyworkparser.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_excludeddays.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_gui2.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_main.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_myrichtext.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_mystyledtext.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_prefs.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_win_resources.rc$(ObjectSuffix) 
+Objects0=$(IntermediateDirectory)/src_dailyworkparser.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_excludeddays.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_gui2.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_main.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_myrichtext.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_mystyledtext.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_prefs.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_gui.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_win_resources.rc$(ObjectSuffix) 
 
 
 
@@ -82,11 +82,11 @@ $(OutputFile): $(IntermediateDirectory)/.d $(Objects)
 	$(LinkerName) $(OutputSwitch)$(OutputFile) @$(ObjectsFileList) $(LibPath) $(Libs) $(LinkOptions)
 
 MakeIntermediateDirs:
-	@$(MakeDirCommand) "./Debug"
+	@$(MakeDirCommand) "./Release"
 
 
 $(IntermediateDirectory)/.d:
-	@$(MakeDirCommand) "./Debug"
+	@$(MakeDirCommand) "./Release"
 
 PreBuild:
 
@@ -150,6 +150,14 @@ $(IntermediateDirectory)/src_prefs.cpp$(DependSuffix): src/prefs.cpp
 $(IntermediateDirectory)/src_prefs.cpp$(PreprocessSuffix): src/prefs.cpp
 	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/src_prefs.cpp$(PreprocessSuffix) "src/prefs.cpp"
 
+$(IntermediateDirectory)/src_gui.cpp$(ObjectSuffix): src/gui.cpp $(IntermediateDirectory)/src_gui.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "I:/Workspace/CodeLiteC++/DailyWork/src/gui.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/src_gui.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/src_gui.cpp$(DependSuffix): src/gui.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/src_gui.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/src_gui.cpp$(DependSuffix) -MM "src/gui.cpp"
+
+$(IntermediateDirectory)/src_gui.cpp$(PreprocessSuffix): src/gui.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/src_gui.cpp$(PreprocessSuffix) "src/gui.cpp"
+
 $(IntermediateDirectory)/src_win_resources.rc$(ObjectSuffix): src/win_resources.rc
 	$(RcCompilerName) -i "I:/Workspace/CodeLiteC++/DailyWork/src/win_resources.rc" $(RcCmpOptions)   $(ObjectSwitch)$(IntermediateDirectory)/src_win_resources.rc$(ObjectSuffix) $(RcIncludePath)
 
@@ -158,6 +166,6 @@ $(IntermediateDirectory)/src_win_resources.rc$(ObjectSuffix): src/win_resources.
 ## Clean
 ##
 clean:
-	$(RM) -r ./Debug/
+	$(RM) -r ./Release/
 
 
