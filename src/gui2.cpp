@@ -171,7 +171,7 @@ MainFrame::MainFrame(const wxString& title, wxWindowID id, const wxPoint& pos,
     m_panelSearch = new wxPanel(m_splitterEditorSearch, wxID_ANY);
     
     m_textSearch = new wxTextCtrl( m_panelSearch, wxID_ANY); //, wxEmptyString, wxDefaultPosition, wxSize(150,-1)
-    m_textSearch->SetHint(_("Search"));
+    m_textSearch->SetHint(_("Search..."));
     searchSizer->Add(m_textSearch, 0, wxEXPAND | wxALL, 2);    
     m_treeSearch = new wxTreeCtrl( m_panelSearch, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTR_DEFAULT_STYLE );
 	searchSizer->Add( m_treeSearch, 1, wxALL|wxEXPAND, 2 );
@@ -325,7 +325,7 @@ void MainFrame::CreateMenu()
     editMenu->Append(wxID_COPY, _("&Copy\tCtrl+C")); 
     editMenu->Append(wxID_PASTE, _("&Paste\tCtrl+V")); 
     editMenu->AppendSeparator();
-    editMenu->AppendCheckItem(ID_SHOW_SEARCH, "&Search\tCtrl+F");
+    editMenu->AppendCheckItem(ID_SHOW_SEARCH, _("&Search\tCtrl+F"));
     editMenu->Check(ID_SHOW_SEARCH, false);
     
 #if USE_RICH_EDIT
