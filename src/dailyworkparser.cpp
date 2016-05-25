@@ -67,18 +67,18 @@ int DailyWorkParser::Parse()
     return retour;
 }
 
-int DailyWorkParser::UpdateWork(const wxDateTime& date, wxString text)
+int DailyWorkParser::UpdateWork(const wxDateTime& date, wxString work, wxString format)
 {
     if(date.IsValid()) {
         std::string sdate = ToDWDate(date).ToStdString();
         Value &array = document[JSON_ITEMS];
         for (SizeType i = 0; i < array.Size(); i++) {
             if (array[i][JSON_DATE].GetString()==sdate) {
-                SetWorkFromItem(array[i], text); 
+                SetWorkFromItem(array[i], work, format); 
                 return 0;
             }
         }
-        LOG(DEBUG) << "Date nt found :" << sdate;
+        LOG(DEBUG) << "Date not found :" << sdate;
     }
     LOG(DEBUG) << "Update impossible";
     return -1;
@@ -158,12 +158,15 @@ wxString DailyWorkParser::ToTreeDate(const wxDateTime& date) const
     return wxString::Format(TREE_DATE_FORMAT, date.GetDay(), date.GetMonth()+1, date.GetYear());
 }
 
-int DailyWorkParser::SetWorkFromItem(Value& item, wxString text)
+int DailyWorkParser::SetWorkFromItem(Value& item, wxString work, wxString format)
 {
     assert(item.IsObject());
-    std::string utf8 = text.ToUTF8().data();
+    std::string utf8 = work.ToUTF8().data();
     item[JSON_WORK].SetString(utf8.data(), utf8.size(), document.GetAllocator());
-    LOG(DEBUG ) << "Edit modified : " << utf8;
+    if ((format!=JSON_WORK_FORMAT_HTML) && (format!=JSON_WORK_FORMAT_TEXT)) 
+       format = JSON_WORK_FORMAT_TEXT; 
+    item[JSON_WORK_FORMAT].SetString(format.data(), format.size(), document.GetAllocator());
+    LOG(DEBUG ) << "Edit modified ("<< format <<") :" << utf8;
     modified = true;
     return 0;
 }
@@ -195,19 +198,20 @@ int DailyWorkParser::DeleteItem(wxDateTime date)
     return 1; //non supprimé
 }
 
-void DailyWorkParser::AddItem(const wxDateTime& date, wxString work)
+void DailyWorkParser::AddItem(const wxDateTime& date, wxString work, wxString format)
 {  
     std::string DWDate = ToDWDate(date).ToStdString();
     std::string utf8Work = work.ToUTF8().data();
     LOG(INFO) << "Add Date " << DWDate;
     Document::AllocatorType& allocator = document.GetAllocator();
     Value value(kObjectType);
-    Value valueStringDate(kStringType);
-    valueStringDate.SetString(DWDate.data(), DWDate.size(), document.GetAllocator());
-    value.AddMember(JSON_DATE, valueStringDate, allocator); 
     Value valueString(kStringType);
+    valueString.SetString(DWDate.data(), DWDate.size(), document.GetAllocator());
+    value.AddMember(JSON_DATE, valueString, allocator); 
     valueString.SetString(utf8Work.data(), utf8Work.size(), document.GetAllocator());
     value.AddMember(JSON_WORK, valueString, allocator);  
+    valueString.SetString(format.data(), format.size(), document.GetAllocator());
+    value.AddMember(JSON_WORK_FORMAT, valueString, allocator);  
     Value &array = document[JSON_ITEMS];
     array.PushBack(value, allocator); 
     modified = true;
@@ -274,18 +278,30 @@ void DailyWorkParser::TestAndUpdate()
     version = document[JSON_VERSION].GetInt();
     if (version<JSON_VERSION_SCHEMA) {
        document[JSON_VERSION].SetInt(JSON_VERSION_SCHEMA);  //passage à la version n° JSON_VERSION_SCHEMA
-        modified = true;          
+       modified = true;          
     }                
+    
+//    if (version<4) {
+    Value & items = document[JSON_ITEMS];
+    for (Value::ValueIterator itr = items.Begin(); itr != items.End(); itr++) {
+        if (!itr->HasMember(JSON_WORK_FORMAT)) {
+            Value format(kStringType);
+            format.SetString(JSON_WORK_FORMAT_TEXT, strlen(JSON_WORK_FORMAT_TEXT), allocator);
+            itr->AddMember(JSON_WORK_FORMAT, format, allocator);  
+            modified = true;  
+        }             
+    }   
+//    }
 
     if (!document.HasMember(JSON_FAVORITES)) {
-        Value items(kArrayType);
-        document.AddMember(JSON_FAVORITES, items, allocator);  
+        Value favorites(kArrayType);
+        document.AddMember(JSON_FAVORITES, favorites, allocator);  
         modified = true;          
     }                
    
     if (!document.HasMember(JSON_EXCLUDED_DAYS)) {
-        Value items(kArrayType);
-        document.AddMember(JSON_EXCLUDED_DAYS, items, allocator);  
+        Value excludedDays(kArrayType);
+        document.AddMember(JSON_EXCLUDED_DAYS, excludedDays, allocator);  
         modified = true; 
     }  
 }

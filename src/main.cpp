@@ -269,7 +269,7 @@ void MainApp::InitDailyWorkParser()
 void MainApp::LoadDailyWorkInTree()
 {
     wxStopWatch stopwatch;
-    LOG(INFO) << "Loading Tree with json 0data...";
+    LOG(INFO) << "Loading Tree with json data...";
     frame->DisconnectSelectionEvents();
     wxTreeCtrl* tree = frame->m_treeDates;
     tree->Freeze(); //prevent drawing

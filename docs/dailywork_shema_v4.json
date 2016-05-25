@@ -1,0 +1,51 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "dailywork",
+	"type": "object",
+	"properties": {
+		"dailyworks": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"properties": {
+					"date": {
+						"description": "date in YYYY-MM-DD format",
+						"type": "string",
+					},
+					"work": {
+						"description": "note at the date",
+						"type": "string",
+					},
+					"format": {
+						"description": "work field's format (text/html)",
+						"type": "string",
+					},
+				},
+				"required": ["date", "work"],
+			},
+			"minItems": 0,
+			"uniqueItems": true,
+		},
+		"version": {
+			"type": "integer",
+			"minimum": 1,
+		},
+		"favorites": {
+			"type": "array",
+			"items": {
+				"type": "string",
+			},
+		},
+		"excluded days": {
+			"type": "array",
+			"items": {
+				"type": "string",
+				"enum": ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"],
+			},
+			"minItems": 0,
+			"maxItems": 6,
+			"uniqueItems": true,
+		},
+	},
+	"required": ["dailyworks", "version"],
+}

@@ -37,6 +37,7 @@
     <File Name="src/myrichtext.cpp"/>
     <File Name="src/mystyledtext.cpp"/>
     <File Name="src/prefs.cpp"/>
+    <File Name="src/tinyrichtexthtml.cpp" ExcludeProjConfig="Debug;Release"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="src/CurrentDates.h"/>
@@ -51,6 +52,7 @@
     <File Name="src/mystyledtext.h"/>
     <File Name="src/prefs.h"/>
     <File Name="src/results.h"/>
+    <File Name="src/tinyrichtexthtml.h" ExcludeProjConfig="Debug;Release"/>
   </VirtualDirectory>
   <VirtualDirectory Name="resources">
     <File Name="src/gui.cpp" ExcludeProjConfig="Debug"/>

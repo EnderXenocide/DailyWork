@@ -13,7 +13,7 @@
 #include "results.h"
 #include "excludeddays.h"
 
-#define JSON_VERSION_SCHEMA 3
+#define JSON_VERSION_SCHEMA 4
 
 #define JSON_FILE "dailywork.json"
 #define JSON_DATE_FORMAT_EXT "%Y-%m-%d" // strptime()-like format string
@@ -22,9 +22,14 @@
 #define JSON_ITEMS "dailyworks"
 #define JSON_WORK "work"
 #define JSON_DATE "date"
+#define JSON_WORK_FORMAT "format"
+
 #define JSON_VERSION "version"
 #define JSON_FAVORITES "favorites"
 #define JSON_EXCLUDED_DAYS "excluded days"
+
+#define JSON_WORK_FORMAT_TEXT "text"
+#define JSON_WORK_FORMAT_HTML "html"
 
 using namespace rapidjson;
 
@@ -46,7 +51,7 @@ public:
     int Parse();
     void New();
 
-    int UpdateWork(const wxDateTime& date, wxString text);
+    int UpdateWork(const wxDateTime& date, wxString work, wxString format=JSON_WORK_FORMAT_TEXT);
     wxDateTime GetDateFromItem(int itemIndex);
     wxString ToDWDate(const wxDateTime& date) const;
     wxString ToTreeDate(const wxDateTime& date) const;
@@ -57,7 +62,7 @@ public:
     int SaveAs(wxString filename);
     int Save();
     
-    void AddItem(const wxDateTime& date, wxString work="");
+    void AddItem(const wxDateTime& date, wxString work="", wxString format=JSON_WORK_FORMAT_TEXT);
     SizeType CountItems(); 
     int DeleteItem(wxDateTime date);
     wxString GetWorkFromDate(const wxDateTime& date);
@@ -75,7 +80,7 @@ public:
     std::string GetLine(const std::string &str, std::size_t idx) const;
     std::size_t findStringIC(const std::string &strHaystack, const std::string &strNeedle) const;
 private:
-    int SetWorkFromItem(Value& item, wxString text);
+    int SetWorkFromItem(Value& item, wxString work, wxString format);
     wxString GetWorkFromItem(const Value& item); 
     void TestAndUpdate();
     
