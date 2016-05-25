@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-24 18:00+0200\n"
-"PO-Revision-Date: 2016-05-24 18:01+0200\n"
+"POT-Creation-Date: 2016-05-24 18:04+0200\n"
+"PO-Revision-Date: 2016-05-24 18:06+0200\n"
 "Last-Translator: Laurent Silvestre <silvestre.laurent@gmail.com>\n"
 "Language-Team: \n"
 "Language: fr_FR\n"
@@ -166,6 +166,10 @@ msgstr "Aligner à &droite"
 #: gui2.cpp:298
 msgid "&Save\tCtrl+S"
 msgstr "Enregi&strer\tCtrl+S"
+
+#: gui2.cpp:328
+msgid "&Search\tCtrl+F"
+msgstr "&Rechercher\tCtrl+F"
 
 #: gui2.cpp:289
 msgid "&Stay on top\tF11"
